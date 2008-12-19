@@ -1,0 +1,818 @@
+#!/usr/bin/perl -w
+# vim:ts=4
+# check_esx Version 2.4
+#
+# Check the status of a virtual machine on a VMware ESX server, via SNMP
+# Return status in format for either Nagios or MRTG
+#
+# Steve Shipway (www.steveshipway.org) Nov 2004
+# Released under GNU GPL
+#
+# Usage:
+# check_esx [-N|-M] [-C community] -H hostname [-v virtualhost] [-l thing [-w warn -c crit]] [-t timeout]
+# -N nagios mode (need -w and -c for CPU, MEM), -M MRTG mode
+# -l thing can be CPU, MEM, STATE, LIST, LISTNET, NET
+# -v virtualhost if not specified uses total ESX system stats.  Required for STATE
+# -t timeout gives timeout for individual lookups
+# default community is public
+# default mode is Nagios
+#
+# Version 2.0: Added SNMP agent extension to get memory split and ready time
+#         2.1: Corrected some bugs.  Use >0.01 instead of >0.
+#         2.2: corrected opt_r bug, fa bug
+#         2.3:
+#         2.4: simpler guest names for list report
+
+use Net::SNMP;
+use Getopt::Std;
+
+my($STATEFILE) = "/var/tmp/esx_state";    # For rate counter (if not agent)
+my($VMOID) = "1.3.6.1.4.1.6876";          # VMware MIB
+my($UCDOID) = "1.3.6.1.4.1.2021.1000.10"; # where to find the agent plugin
+my($SYSOID) = "1.3.6.1.2.1.1.1.0";        # system object to test SNMP working
+my($OK,$WARNING,$CRITICAL,$UNKNOWN) = (0,1,2,3);
+my($DEBUG) = 0;
+my($TIMEOUT) = 5;
+my($RETRIES) = 1;
+my($SWAPINCRIT) = 2; # this many bps swap in is critical (else warn)
+my($SWAPPCCRIT) = 4; # this % usage of swap is critical (else warn)
+my($from,$to) = (0,99999);
+my($snmp,$resp,$snmperr);
+my($hostname) = '';
+my($community) = 'public'; # Default community string
+my($vhost) = '';
+my($A, $B, $MSG) = ('U','U','');
+my($STATUS) = $UNKNOWN;
+my($MODE) = 0;
+my($VMID) = -1; # set to -1 if not running
+my($VMNO) = -1; # set to -1 if not defined
+my($warn,$crit) = (70,90);   # usage warn/crit: 70/90 is virtualcentre default
+my($rwarn,$rcrit) = (5,10); # cpu readytime warn/crit: VMWare say to crit at 5%
+my(%lookup) = ();
+my(%states) = ();
+my(%tmpnet) = ();
+my($fa,$sa,$fb,$sb);
+
+use vars qw($opt_C $opt_H $opt_N $opt_M $opt_h $opt_c $opt_t $opt_i $opt_d $opt_w $opt_l $opt_v $opt_r $opt_R);
+
+sub base($) {
+	return '?' if(!$_[0]);
+	return $1 if( $_[0]=~/^(\S+)/ );
+	return $_[0];
+}
+
+sub dohelp {
+	print "Usage: check_esx [-d][-h] -H host [-C community] [-N | -M [-r]]\n                -l check [-v vhost] [-i interface] [-c crit -w warn]]\n                [-t timeout] [-R retries]\n";
+	print "-l can be CPU MEM STATE LIST NET LISTNET\n-N : Nagios mode\n-M : MRTG mode ( -r specifies rate rather than counter)\n-c -w : Nagios thresholds\n-i : Only valid for NET\n\n";
+	print "\nFor MRTG, \nCPU is total seconds (counter) for vhost or total over all if no vhost given.\nMEM is memory remaining in K.  \nSTATE is 1 for up, 0 for down. \nLIST is number of vhosts. \nNET is network throughput in bytes for specified vhost and/or interface (total\nof all if not specified).\n";
+	print "\nFor Nagios, specify thresholds as follows.\nCPU is percentage of allocated CPU (for vhosts) and of total CPU (if no vhost)\nMEM is active memory (for vhosts) or free phys memory (if no vhost) in K or %.\nSTATE is CRITICAL if vhost is down.\nLIST is WARN if some are down, CRIT is all vhosts are down.\nNET is bytes/sec since last check, if possible (otherwise UNKNOWN).\n\n";
+
+	print "Thresholds for MEM or LIST under Nagios, can be in K or %\n";
+	print "eg: -l MEM -w 2048K -c 1024K\n";
+	print "eg: -l MEM -v vhost -w 80% -c 90%\n";
+	print "eg: -l LIST -w 90% -c 0\n";
+	print "eg: -l LIST -w 10 -c 1\n";
+	print "Thresholds for CPU are in % (the trailing % symbol is optional)\n";
+	print "eg: -l CPU -w 80 -c 90\n";
+	print "Thresholds for NET are in BYTES/SEC (cannot use %)\n";
+	exit 0;
+}
+
+sub readstate {
+	return if(! -r $STATEFILE);
+	open STATE, "<$STATEFILE";
+	flock STATE,1; # read lock
+	while( <STATE> ) { $states{$1}=$2 if( /^(\S+)=(\d+)/ ); }
+	flock STATE,8; # unlock
+	close STATE;
+}
+sub writestate {
+	my(%new) = @_;
+
+	if(-r $STATEFILE) {
+		open STATE, "<$STATEFILE";
+		flock STATE,1; # read lock
+		while( <STATE> ) { $states{$1}=$2 if( /^(\S+)=(\d+)/ ); }
+		flock STATE,8; # unlock
+		close STATE;
+	} # Eek, a race condition...
+	open STATE, ">$STATEFILE";
+	flock STATE,2; # write lock
+	foreach ( keys %new ) { $states{$_} = $new{$_}; }
+	foreach ( keys %states ) { print STATE "$_=".$states{$_}."\n"; }
+	flock STATE,8; # unlock
+	close STATE;
+}
+
+sub dooutput {
+	if( $MODE ) {
+		# MRTG
+		$A = 'U' if(!defined $A);
+		$B = $A if(!defined $B);
+		$MSG = "Returned values: $A, $B\n" if(!$MSG);
+		print "$A\n$B\n\n$MSG\n";
+		exit 0;
+	} else {
+		# Nagios
+		#print "$STATUS\n";
+		print "$MSG\n";
+		exit $STATUS;
+	}
+	# should never get here
+}
+
+sub makesnmp() {
+	($snmp,$snmperr) = Net::SNMP->session( -hostname=>$hostname,
+		-community=>$community, -timeout=>$TIMEOUT, -retries=>$RETRIES );
+	if($snmperr) {
+		$A = $B = 'U';
+		print "($snmperr)\n" if($DEBUG);
+		$MSG = "Error: $snmperr";
+		$STATUS = $UNKNOWN;
+		dooutput; # exit 
+		exit(0);
+	}
+}
+###########################################################################
+# Read detailed memory and CPU data from extended snmp daemon, if possible
+my(%stats) = ();
+my($donereadagent) = 0;
+sub readagent {
+	return "" if($donereadagent);
+	$MSG = "";
+	makesnmp() if(!$snmp);
+	$resp = $snmp->get_request( -varbindlist=>["$UCDOID.2.1"] ); 
+	if(!$resp) {  # Fall back to the old way
+		return 1;
+	}
+	if( $resp->{"$UCDOID.2.1"} ne 'vmware' ) {
+		$MSG = "Incorrect SNMPD configuration: found '".$resp->{"$UCDOID.2.1"}."' when expected 'vmware'";
+		$STATUS = $UNKNOWN;
+		return 1;
+	}
+	$resp = $snmp->get_table( -baseoid=>"$UCDOID.101" ); 
+	if(!$resp) {  # Fall back to the old way
+#		$MSG = "SNMP error: ".$snmp->error;
+		return 1;
+	}
+	# Convert the retrieved values to lookup hash
+	foreach my $oid ( keys %$resp ) {
+		if(( $oid =~ /\.101\.\d+$/ ) and ( $resp->{$oid}=~/^(\S+)=(.*)$/)) {
+			$stats{$1}=$2; 
+		}
+	}
+	$donereadagent = 1;
+	return "";
+}
+
+# Read all the VM IDs from the vmware-snmpd MIB
+sub getvmid {
+	print "(snmp lookup)\n" if($DEBUG);
+
+	makesnmp() if(!$snmp);
+	$resp = $snmp->get_table( -baseoid=>"$VMOID.2.1.1");
+	if(!$resp) {
+		$resp = $snmp->get_request( -varbindlist=>[ "$VMOID.1.1.0" ] );
+		if(!$resp) {
+			if(readagent) {
+				$MSG = "Error: No VMWare SNMP sub-agent running (vmware-snmpd)"
+					if(!$MSG);
+				$STATUS = $UNKNOWN;
+				dooutput; # exit 
+				exit(0);
+			}
+			if(!$stats{'has-names'}) {
+				$MSG = "Error: No VMWare SNMP sub-agent running (vmware-snmpd)";
+				$STATUS = $UNKNOWN;
+				dooutput; # exit 
+				exit(0);
+			}
+			foreach ( keys %stats ) {
+				if( /vhost-(\d+)-name/ ) {
+					$lookup{$1} = $stats{$_}; # id->name
+					$lookup{$stats{$_}} = "vmno-$1" ; # name->dummyOID
+					$lookup{"vmno-$1"} = $1 ; # dummyOID->id
+				}
+			}
+		} else {
+			print "No guests are defined on this server\n" if($DEBUG);
+			$MSG = "No guests defined on this server";
+			return;
+		}
+	} else {
+		foreach my $oid ( keys %$resp ) {
+			$oid =~ /(\d+)\.(\d+)$/;
+			if( $1 == 2 ) {
+				$lookup{$resp->{$oid}} = $2;
+				$lookup{$2} = $resp->{"$VMOID.2.1.1.7.$2"};
+				$lookup{$resp->{"$VMOID.2.1.1.7.$2"}} = $resp->{$oid};
+#		} elsif( $1 == 7 ) {
+#			$lookup{$2} = $resp->{$oid};
+			}
+		}
+	}
+	return if(!$vhost); # we're just getting the table
+	if(defined $lookup{$vhost}) {
+		$VMNO = $lookup{$vhost};
+		if( defined $lookup{$VMNO} ) {
+			$VMID = $lookup{$VMNO};
+		} else {
+			$STATUS = $CRITICAL;
+			$MSG = "Virtual host $vhost($VMNO) is not running!";
+		}
+	} else {
+		# lets see if they just gave part of the vhost name?
+		foreach ( keys %lookup ) {
+			if( /^$vhost/i ) {
+				$VMNO = $lookup{$_};
+				if( defined $lookup{$VMNO} ) {
+					$VMID = $lookup{$VMNO};
+					$vhost = $_;
+				} else {
+					$STATUS = $CRITICAL;
+					$MSG = "Virtual host $vhost($VMNO) is not running!";
+				}
+				last;
+			}
+		}
+		if($VMNO<0) {
+			$STATUS = $UNKNOWN;
+			$MSG = "Virtual host $vhost is not defined!";
+			dooutput; # exit 
+			exit(0);
+		}
+	}
+
+	print "(hostno=$VMNO, ID=$VMID)\n" if($DEBUG);
+}
+
+sub listvm {
+	my(@vh);
+	%lookup = (); @vh = ();
+	print "(snmp lookup)\n" if($DEBUG);
+	makesnmp() if(!$snmp);
+	$resp = $snmp->get_table( -baseoid=>"$VMOID.2.1.1");
+	if(!$resp) {
+		$resp = $snmp->get_request( -varbindlist=>[ "$VMOID.1.1.0" ] );
+		if(!$resp) {
+			if(readagent) {
+				$A = $B = 'U';
+				$MSG = "Error: No VMWare SNMP sub-agent running (vmware-snmpd)"
+					if(!$MSG);
+				$STATUS = $UNKNOWN;
+				dooutput; # exit 
+				exit(0);
+			}
+			if(!$stats{'has-names'}) {
+				$MSG = "Error: No VMWare SNMP sub-agent running (vmware-snmpd)";
+				$STATUS = $UNKNOWN;
+				dooutput; # exit 
+				exit(0);
+			}
+			foreach ( keys %stats ) {
+				if( /vhost-(\d+)-name/ ) {
+					$lookup{$1} = $stats{$_}; # id->name
+					$lookup{$stats{$_}} = "vmno-$1" ; # name->dummyOID
+					$lookup{"vmno-$1"} = $1 ; # dummyOID->id
+					push @vh,$stats{$_};
+				}
+			}
+		} else {
+			$A = $B = 0;
+			$MSG = "No VHosts are defined on this server";
+			$STATUS = $OK;
+			dooutput; # exit 
+			exit(0);
+		}
+	} else {
+		foreach my $oid ( keys %$resp ) {
+			$oid =~ /(\d+)\.(\d+)$/;
+			if( $1 == 2 ) {
+				$lookup{$resp->{$oid}} = $2;
+				push @vh, $resp->{$oid};
+			} elsif( $1 == 7 ) {
+				$lookup{$2} = $resp->{$oid};
+			}
+		}
+	}
+	$A = $B = 0;
+	foreach ( @vh ) { 
+		next if(!$_);
+		$B++; 
+		if( defined $lookup{$lookup{$_}} and ($lookup{$lookup{$_}} > 0)) {
+			$_ = (substr $_,0,16)."(".$lookup{$lookup{$_}}.")"; $A++; 
+		} else {
+			$_ = (substr $_,0,16)."(DOWN)";	
+		}
+		$_ =~ s/\([^\)]+\)?(\(.*\))/$1/;
+	}
+	$MSG = "VHosts: $A/$B up: ".(join ", ",@vh);
+	$STATUS = $OK;  
+}
+
+sub readnet {
+	my($found);
+
+	$resp = $snmp->get_table( -baseoid=>"$VMOID.3.4.1");
+	if(!$resp) {
+		$resp = $snmp->get_request( -varbindlist=>[ "$VMOID.1.1" ] );
+		if($resp) { $A = $B = 0; 
+			$MSG = "No VHosts defined"; $STATUS = $OK; return; }
+		$MSG = "Error: Unable to retrieve SNMP data";
+		$STATUS = $UNKNOWN;
+		return;
+	}
+	foreach my $oid ( keys %$resp ) {
+		$oid =~ /(\d+)\.(\d+)$/; # Type, index.
+		if( $1 == 3 ) {
+			$tmpnet{$2} = [ 
+				$resp->{$oid},
+				$resp->{"$VMOID.3.4.1.2.$2"},
+				($resp->{"$VMOID.3.4.1.7.$2"}*1024),
+				($resp->{"$VMOID.3.4.1.9.$2"}*1024)
+			];
+		}
+	}
+	return if($opt_l =~ /LIST/);
+	# We now have all the network statistics indexed by card or VMID
+	$A = $B = 0; $found = 0;
+	foreach ( keys %tmpnet ) {
+		if((($VMID<0) or ($VMID == $tmpnet{$_}[0])) # vm matches
+			and ((!$opt_i) or ($opt_i eq $tmpnet{$_}[1]))) { # net matches
+			$A += $tmpnet{$_}[2];
+			$B += $tmpnet{$_}[3];
+			$found = 1;
+		}
+	}
+	if(!$found) {
+		$MSG = "No network interfaces exist for ";
+		$MSG .= "vhost $vhost" if($VMID>-1);
+		$MSG .= " and " if($VMID>-1 and $opt_i);
+		$MSG .= " interface $opt_i" if ($opt_i);
+		$STATUS = $UNKNOWN;
+	}
+}
+
+###########################################################################
+# Read general memory and CPU data from vmware-snmpd
+# This is what we do if we can't get the detailed information.
+sub readcpu {
+	my($k,@k);
+	my($t1,$t2,$a1);
+
+	$MSG = ""; $A = 0; $B = 0;
+	if( !$MODE or $opt_r ) { 
+		readstate; 
+		$t1 = $states{"$hostname-CPU-$vhost-time"}; 
+		$a1 = $states{"$hostname-CPU-$vhost"}; 
+		$t2 = time;
+	}
+
+	@k = ();
+	if( $VMID < 0 ) {
+		foreach ( keys %lookup ) {
+			push @k, "$VMOID.3.1.2.1.3.".$_ if( /^\d+$/ and $_>99);
+		}
+	} else {
+		$k = "$VMOID.3.1.2.1.3.$VMID";
+		@k = ( $k );
+	}
+	foreach $k ( @k ) { print "(retrieving $k)\n" if($DEBUG); }
+	$resp = $snmp->get_request( -varbindlist=>\@k );
+	if( $resp ) {
+		if($VMID<0){
+			$A = 0;
+			foreach ( keys %$resp ) { $A += $resp->{$_}; 
+				print "$_: ".$resp->{$_}."\n" if($DEBUG); }
+		} else {
+			$A = $resp->{$k}; 
+		}
+		$B = 0;
+	} else {
+		$A = $B = 'U';
+		if($VMID<0){
+			$MSG = "Unable to retrieve CPU statistics for ESX server: ".$snmp->error;
+		} else {
+			$MSG = "Unable to retrieve CPU statistics for $vhost: ".$snmp->error;
+		}
+		$STATUS = $UNKNOWN;
+	}
+	if(!$MSG){ # IE, no errors
+		$MSG = "CPU has used $A seconds";
+		$MSG .= " on $vhost" if($vhost);
+		if( !$MODE or $opt_r ) { 
+			writestate( "$hostname-CPU-$vhost"=>$A, "$hostname-CPU-$vhost-time"=>$t2 )
+				if(!$t1 or ($t2-$t1)>30); 
+			if(!$t1 or !$a1 or ($t1 >= $t2) or ( ($t2-$t1)>1000 ) ) { 	
+				if($vhost) {
+					$MSG = "No saved state for $vhost CPU time yet - wait for next poll.";	
+				} else {
+					$MSG = "No saved state for ESX system CPU time yet - wait for next poll.";
+				}
+				$A = $B = "U";
+				$STATUS = $UNKNOWN;
+			} else {
+				print "Usage: $A-$a1 in $t2-$t1 = ".($A-$a1)." in ".($t2-$t1)
+					if($DEBUG);
+				$A = int((($A - $a1)/($t2 - $t1))*10000)/100;
+				print " = $A\n" if($DEBUG);
+				$B = 0;
+				$MSG = "CPU usage is $A% ";
+				$MSG .= "on $vhost" if($vhost);
+				$MSG .= " (".($t2-$t1)."s average)";
+				if($A>110 or $A<0) {
+					$B = $A = 0;
+					$MSG = "Error reading CPU usage information."
+				}
+			}
+		}
+	}
+}
+
+sub readmem {
+	my($k1,$k2);
+
+	if($VMID < 0) {
+		$k1 = "$VMOID.3.2.1.0"; #   Total physical present
+		$k2 = "$VMOID.3.2.3.0"; #   Memory free
+	} else {
+		$k1 = "$VMOID.3.2.4.1.3.$VMID"; # VM memory max
+		$k2 = "$VMOID.3.2.4.1.4.$VMID"; # VM memory used
+	}
+	print "(retrieving $k1,$k2)\n" if($DEBUG);
+	$resp = $snmp->get_request( -varbindlist=>[$k1,$k2] );
+	if( $resp ) {
+		if($VMID < 0 ) {
+			$A = $resp->{$k2}; $B = $resp->{$k1};
+		} else {
+			$A = $resp->{$k2}; $B = $resp->{$k1}*1024;
+			$A = $B - $A; # memory remaining
+		}
+	} else {
+		$A = $B = 'U';
+		if($VMID<0) {
+		$MSG = "Unable to retrieve memory statistics for ESX server: ".$snmp->error;
+		} else {
+		$MSG = "Unable to retrieve memory statistics for $vhost: ".$snmp->error;
+		}
+		$STATUS = $UNKNOWN;
+	}
+}
+sub readxcpu {
+	my($k,$C);
+	$MSG = ""; $A = 0; $B = 0; $STATUS = 0;
+	if( readagent ) {
+		print "(readagent failed: $MSG)\n" if($DEBUG);
+		readcpu if(!$MSG); # no vmware agent, no error
+		return;
+	}
+	if($vhost) { 
+		$k = "vhost-$VMID"; 
+		$A = $stats{"$k-cpu-used-pc"};
+		$B = $stats{"$k-cpu-ready-pc"};
+		$C = $A;
+	} else { 
+		$k = "sys"; 
+		$A = $stats{"sys-cpu-used-pc"};
+		$B = $stats{"allvms-cpu-used-pc"};
+		$C = $A + $B if(defined $A and defined $B);
+	}
+	if(!defined $A or !defined $B) {
+		$A=$B='U'; $MSG="Gathering statistics, please wait.";
+		$STATUS = 3;
+		dooutput; exit 3;
+	}
+
+	if($vhost) { $MSG = "vhost CPU used=$A% ready=$B%"; }
+	else { $MSG = "CPU used sys=$A% vhosts=$B% readytime="
+		.$stats{'sys-cpu-ready-pc'}."%"; }
+
+	# MRTG only
+	if($MODE) { dooutput; exit 0; } 
+	# Nagios only
+	$crit =~ s/[^\d\.]//g; $warn =~ s/[^\d\.]//g;
+	$crit = 100 if(!$crit); $warn = 100 if(!$warn);
+	if( $C >= $crit ) {
+		$MSG .= "<BR>" if($MSG);
+		$MSG .= "CPU usage is CRITICAL ($C%)";
+		$STATUS = 2;
+	} elsif( $C >= $warn ) {
+		$MSG .= "<BR>" if($MSG);
+		$MSG .= "CPU usage is WARNING ($C%)";
+		$STATUS = 1 if($STATUS<2);
+	}
+
+	# Ready time
+	if( $stats{"$k-cpu-ready-pc"} >= $rcrit ) {
+		$MSG .= "<BR>" if($MSG);
+		$MSG .= "Ready time is CRITICAL (".$stats{"$k-cpu-ready-pc"}."%)";
+		$STATUS = 2;
+	} elsif( $stats{"$k-cpu-ready-pc"} >= $rwarn ) {
+		$MSG .= "<BR>" if($MSG);
+		$MSG .= "Ready time is WARNING (".$stats{"$k-cpu-ready-pc"}."%)";
+		$STATUS = 1 if($STATUS<2);
+	}
+	if(!$vhost) { # check all vhosts
+		foreach ( keys %lookup ) {
+			next if(!defined $stats{"vhost-$_-cpu-used-pc"});
+			$C=$stats{"vhost-$_-cpu-used-pc"};
+			if( $C >= $crit ) {
+				$MSG .= "<BR>" if($MSG);
+				$MSG .= "'".base($lookup{$_})."' CPU CRITICAL ($C%)";
+				$STATUS = 2;
+			} elsif( $C >= $warn ) {
+				$MSG .= "<BR>" if($MSG);
+				$MSG .= "'".base($lookup{$_})."' CPU WARNING ($C%)";
+				$STATUS = 1 if($STATUS<2);
+			}
+			if( $stats{"vhost-$_-cpu-ready-pc"} >= $rcrit ) {
+				$MSG .= "<BR>" if($MSG);
+				$MSG .= "'".base($lookup{$_})."' Ready time CRITICAL (".$stats{"vhost-$_-cpu-ready-pc"}."%)";
+				$STATUS = 2;
+			} elsif( $stats{"vhost-$_-cpu-ready-pc"} >= $rwarn ) {
+				$MSG .= "<BR>" if($MSG);
+				$MSG .= "'".base($lookup{$_})."' Ready time WARNING (".$stats{"vhost-$_-cpu-ready-pc"}."%)";
+				$STATUS = 1 if($STATUS<2);
+			}
+		}
+	}
+	dooutput;
+	exit 3; # not reached
+}
+sub readxmem {
+	my($pc,$max,$k);
+
+	$MSG = ""; $A = 0; $B = 0;
+	if( readagent() ) {
+		print "(readagent failed: $MSG)\n" if($DEBUG);
+		readmem if(!$MSG); # no vmware agent, no error
+		return;
+	}
+
+	if( $vhost ) {
+		$A = $stats{"vhost-$VMID-mem-active"}; 
+		$B = $stats{"vhost-$VMID-mem-max"};
+		if(!defined $A or !defined $B) { $A=$B='U'; 
+			$MSG="Please wait, data being gathered."; $STATUS=3;
+			dooutput; exit 0;
+		}
+		$pc = int($A/$B*10000)/100.0;
+		$MSG = "Memory active: ".int($A/1024000)."Mb ($pc%) [Total available ".int($B/1024000)."Mb]";
+		$max = $stats{"vhost-$VMID-mem-max"};
+		$k = "vhost-$VMID";
+		if($pc>=$crit) { $STATUS=2; $MSG = "CRIT: $MSG"; }
+		elsif($pc>=$warn) { $STATUS=1; $MSG = "WARN: $MSG"; }
+	} else {
+		$A = $stats{'mem-free'}; $B = $stats{'mem-total'};
+		if(!defined $A or !defined $B) { $A=$B='U'; 
+			$MSG="Please wait, data being gathered."; $STATUS=3;
+			dooutput; exit 0;
+		}
+		$pc = int($A/$B*10000)/100.0;
+		$MSG = "Memory free: ".int($A/1024000)."Mb ($pc%) [Total available ".int($B/1024000)."Mb]";
+		$max = $stats{'allvms-mem-max'};
+		$k = "allvms";
+		if($pc<=$crit) { $STATUS=2; $MSG = "CRIT: $MSG"; }
+		elsif($pc<=$warn) { $STATUS=1; $MSG = "WARN: $MSG"; }
+	}
+
+	# MRTG
+	if($MODE) { dooutput; exit 0; }
+
+	# Nagios	
+	if($max) {
+		$MSG .= "<BR>Memory split: pvt/shr/bal/swp = "
+			.(int(10000*$stats{"$k-mem-private"}/$max)/100.0)."%/"
+			.(int(10000*$stats{"$k-mem-shared"}/$max)/100.0)."%/"
+			.(int(10000*$stats{"$k-mem-balloon"}/$max)/100.0)."%/"
+			.(int(10000*$stats{"$k-mem-swap"}/$max)/100.0)."%";
+	
+		if($stats{"$k-mem-balloon"}) {
+			$pc = int(100000*$stats{"$k-mem-balloon"}/$max)/1000.0;
+			if($pc>=25) {
+				$MSG .= "<BR>CRIT: Balloon drivers in action! ($pc%)";
+				$STATUS = 2;
+			} elsif($pc>=0.01) {
+				$MSG .= "<BR>WARN: Balloon drivers in action! ($pc%)";
+				$STATUS = 1 if($STATUS<2);
+			}
+		}
+	}
+	if($stats{"$k-swap-in-bps"} and $stats{"$k-swap-in-bps"}>10) {
+		if($stats{"$k-swap-in-bps"}>$SWAPINCRIT) {
+			$MSG .= "<BR>CRIT: VMware swapping in action! (".$stats{"$k-swap-in-bps"}."Bps)";
+			$STATUS = 2;
+		} else {
+			$MSG .= "<BR>WARN: VMware swapping is starting!";
+			$STATUS = 1 if($STATUS<2);
+		}
+	} elsif($max and $stats{"$k-mem-swap"}) {
+		$pc = int(100000*$stats{"$k-mem-swap"}/$max)/1000.0;
+		if($pc>=$SWAPPCCRIT) {
+			$MSG .= "<BR>CRIT: VMWare swap space in use! ($pc%)";
+			$STATUS = 2;
+		} elsif($pc>=0.01) {
+			$MSG .= "<BR>WARN: VMWare swap space in use! ($pc%)";
+			$STATUS = 1 if($STATUS<2);	
+		}
+	}
+
+	dooutput;
+	exit 3; # not reached
+}
+
+###########################################################################
+getopts('hrdNMH:c:t:v:w:C:l:i:R:');
+$hostname = $opt_H if($opt_H);
+$vhost = $opt_v if($opt_v);
+$warn = $opt_w if($opt_w);
+$crit = $opt_c if($opt_c);
+$TIMEOUT = $opt_t if($opt_t);
+$RETRIES = $opt_R if($opt_R);
+$MODE = 1 if($opt_M);
+$community = $opt_C if($opt_C);
+$DEBUG = 1 if($opt_d);
+dohelp if($opt_h);
+
+if(!$hostname) {
+	$MSG = "No ESX server hostname specified with -H";
+	dooutput;
+	exit 0;
+}
+if( !$opt_l  ) {
+#	$MSG = "You need to specify a command with -l";
+#	dooutput;
+#	exit 0;
+	$opt_l = "LIST";
+}
+if( $opt_l =~ /LISTNET/i ) {
+	getvmid;
+	$MSG = "";
+	readnet;
+	if(!$MSG) {
+		my($tk);
+		foreach ( keys %tmpnet ) {
+			if(!$vhost or ($VMID eq $tmpnet{$_}[0]) ) {
+				$tk=$tmpnet{$_}[1];
+				next if($MSG=~/$tk/);
+				$MSG .= ', ' if($MSG);
+#				$MSG .= $lookup{$tmpnet{$_}[0]}."/" if(!$opt_v);
+				$MSG .= $tk;
+			}
+		}
+		$STATUS = $OK;
+	}
+	dooutput;
+	exit 0;
+}
+if( $opt_l =~ /LIST/i ) {
+	listvm;
+	if($warn =~ /(\d+)%/) {
+		$warn = $B * $1 / 100;
+	} elsif( $warn < 0 ) { $warn = $B - 1; }
+	if($crit =~ /(\d+)%/) {
+		$crit = $B * $1 / 100;
+	} elsif( $crit < 0 ) { $crit = 0; }
+	$STATUS = $WARNING if($A<=$warn); # If SOME are down
+	$STATUS = $CRITICAL if($A<=$crit); # If NONE are up
+	$STATUS = $OK if(!$B); # No guests at all
+	dooutput;
+	exit 3;
+}
+if( $opt_l !~ /NET|CPU|MEM|STAT/i ) {
+	$MSG = "Bad command $opt_l!";
+	dooutput;
+	exit 3;
+}
+if( $opt_l =~ /MEM|CPU|NET/ and !$MODE and ($crit<0 or $warn<0)) {
+	$MSG = "Invalid warn/critical thresholds for '$opt_l' (need -w and -c)"; 
+	dooutput;
+	exit 3;
+}
+
+
+# Now, we have host, vhost, community, and command
+getvmid; # also opens SNMP object
+if( $opt_l =~ /STAT/i ) {
+	if(!$vhost) {
+		$MSG = "No virtual hostname specified with -v";
+		dooutput;
+		exit 0;
+	}
+	if( $VMID < 0 ) {
+		$STATUS = $CRITICAL; ($A,$B) = (0,0);
+		$MSG = "VHost $vhost is down or undefined.";
+	} else {
+		$STATUS = $OK; ($A,$B) = (1,1);
+		$MSG = "VHost $vhost is up (ID: $VMID)";
+	}
+	dooutput;
+	exit 0;
+}
+if($vhost and ( $VMID < 0 )) {
+	$STATUS = $CRITICAL;
+	$MSG = "$vhost is not running." if(!$MSG);
+	dooutput;
+	exit 0;
+}
+
+$STATUS = $OK;
+if( $opt_l =~ /CPU/i ) {	
+	$MSG = "";
+	readxcpu; # attempt to use extended MIB, else use VMWare MIB
+} elsif( $opt_l =~ /NET/i ) {	
+	my($t1,$t2,$a1,$b1);
+	$opt_i = "" if(!defined $opt_i);
+	$vhost = "" if(!defined $vhost);
+	if( !$MODE or $opt_r ) { 
+		readstate; 
+		$t1 = $states{"$hostname-NET-$vhost-$opt_i-time"}; 
+		$a1 = $states{"$hostname-NET-$vhost-$opt_i-r"}; 
+		$b1 = $states{"$hostname-NET-$vhost-$opt_i-w"}; 
+		$t2 = time;
+	}
+	$MSG = "";
+	readnet;
+	if(!$MSG){ # IE, no errors
+		$MSG = "Network counters Read=$A Write=$B";
+		$MSG .= " on $vhost" if($vhost);
+		if( $opt_i ) {
+			if( $vhost ) { $MSG .= '/'; } else { $MSG .= ' on '; }
+			$MSG .= $opt_i;
+		}
+		if( !$MODE or $opt_r ) { 
+			writestate( "$hostname-NET-$vhost-$opt_i-r"=>$A, 
+				"$hostname-NET-$vhost-$opt_i-w"=>$B, 
+				"$hostname-NET-$vhost-$opt_i-time"=>$t2 ) 
+				if(!$t1 or ($t2-$t1)>30); 
+			if(!$t1 or (!$a1 and !$b1) or ($t1 >= $t2) or (($t2 - $t1)>3600)) {	
+				$MSG = "No saved state available yet - wait for next poll.";	
+				$A = $B = "U";
+				$STATUS = $UNKNOWN;
+			} else {
+				$A = ($A - $a1)/($t2 - $t1);
+				$B = ($B - $b1)/($t2 - $t1);
+				($fa,$sa,$fb,$sb) = ( $A, "", $B, "" );
+				if($fa >= 1024000) { $fa /= 1024000; $sa = 'M'; }
+				elsif($fa >= 1024) { $fa /= 1024; $sa = 'K'; }
+				if($fb >= 1024000) { $fb /= 1024000; $sb = 'M'; }
+				elsif($fb >= 1024) { $fb /= 1024; $sb = 'K'; }
+				$fa = int($fa * 100)/100; $fb = int($fb * 100)/100;
+				$MSG = "Network traffic $fa ".$sa."B/s read, $fb ".$sb."B/s write ";
+				$MSG .= "on $vhost" if($vhost);
+				if( $opt_i ) {
+					if( $vhost ) { $MSG .= '/'; } else { $MSG .= 'on '; }
+					$MSG .= $opt_i;
+				}
+				$MSG .= " (".($t2-$t1)."s average)";
+			}
+		}
+	}
+} elsif( $opt_l =~ /MEM/i ) {	
+	my($pc,$tot,$av,$sfx);
+	$MSG = "";
+	readxmem;
+	if(!$MSG) {
+		$pc = int($A/$B*10000.0)/100.0;	
+		$sfx = "Kb"; $av = $A;
+		if($av>2047) { $av = int($av/10.24)/100.0; $sfx="Mb"; }
+		$av .= $sfx;
+		$sfx = "Kb"; $tot = $B;
+		if($tot>2047) { $tot = int($tot/10.24)/100.0; $sfx="Mb"; }
+		$tot .= $sfx;
+		$MSG = "Memory free: $av ($pc%) [Total available $tot]" ;
+		$MSG .= " on vhost $vhost" if($vhost);
+	}
+} else {
+	$MSG = "Invalid command $opt_l";
+	$STATUS = $UNKNOWN;
+}
+
+if( !$MODE and $STATUS==$OK ) {
+	# Set Nagios thresholds
+	if( $opt_l=~/MEM/i and $warn =~ /([\d\.]+)%/ ) { $warn = $B * $1 / 100.0; }
+	elsif( $warn =~ /([\d\.]+)M/i ) { $warn = $1 * 1024; }
+	elsif( $warn =~ /([\d\.]+)/i ) { $warn = $1; }
+	if( $opt_l=~/MEM/i and $crit =~ /([\d\.]+)%/ ) { $crit = $B * $1 / 100.0; }
+	elsif( $crit =~ /([\d\.]+)M/i ) { $crit = $1 * 1024; }
+	elsif( $crit =~ /([\d\.]+)/i ) { $crit = $1; }
+	if( $opt_l =~ /MEM/i ) {
+		$STATUS = $WARNING  if( $A <= $warn );
+		$STATUS = $CRITICAL if( $A <= $crit );
+	} elsif( $opt_l =~ /CPU/i ) {
+		$STATUS = $WARNING  if( ($A+$B) >= $warn );
+		$STATUS = $CRITICAL if( ($A+$B) >= $crit );
+	} elsif( $opt_l =~ /NET/i ) {
+		$STATUS = $WARNING  if( $A >= $warn );
+		$STATUS = $WARNING  if( $B >= $warn );
+		$STATUS = $CRITICAL if( $A >= $crit );
+		$STATUS = $CRITICAL if( $B >= $crit );
+	} else {
+		$STATUS = $WARNING  if( $A <= $warn );
+		$STATUS = $CRITICAL if( $A <= $crit );
+	}
+}
+
+$snmp->close;
+dooutput;
+exit 0;

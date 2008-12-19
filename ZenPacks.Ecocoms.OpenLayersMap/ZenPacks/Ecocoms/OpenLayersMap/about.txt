@@ -1,0 +1,6 @@
+[about]
+title = OpenLayers Map
+url = http://www.ecocoms.com
+author = Nikolai Georgiev
+version = 1.0
+organization = Ecocoms Ltd.

@@ -1,0 +1,283 @@
+#!/usr/bin/perl
+#vim:ts=4
+#
+# vmware-stats version 2.4
+#
+# This should live in /etc/snmp/vmware-stats on the ESX server
+# In your /etc/snmp/snmpd.conf put the line:
+# exec 1.3.6.1.4.1.2021.1000.10 vmware /etc/snmp/vmware-stats
+# and then restart snmpd and vmware-snmpd
+#
+# Steve S, 2006, University of Auckland
+#
+# This script will collect VMWare statistics which can subsequently be
+# processed for MRTG graphing or Nagios alerting (or anything else)
+# after retrieval via SNMP. Note that output is cached for up to 20s by
+# snmpd hence the timestamp output plus interval
+# V2.0: collect data for CPU and MEM
+# v2.1: collect phys/logical CPU counts to identify hyperthreading
+#       fix a few /0 bugs
+# v2.3: parse proc files more closely to support multiple versions of ESX
+# v2.4: also obtain vm names in case vmware-snmp agent is dead
+#
+# Exit status: 0 = all OK, 1 = OK but no saved data update, 2 = ERROR,
+#	      3 = initial run so no data yet
+
+use strict;
+
+my($VERSION) = "2.4";
+my($TMPFILE) = "/var/tmp/vmware-stats.log";
+my($MININTERVAL) = 60; # seconds: stats must be at least this old (>20)
+my($REFRESHINTERVAL) = 120; # seconds: write new stats if stats this old (<300)
+my($MAXINTERVAL) = 610; # seconds: ignore stats this old (>2xREFRESHINTERVAL)
+my(%saved)=();
+my(%current)=();
+my(%memstat)=();
+my($int) = 0;
+my(%vms) = ();
+my($reuse) = 0;
+my(%vmnames) = ();
+############################################################################
+sub retr() {
+	open TMP,"<$TMPFILE" or return;
+	flock TMP, 2 or do { close TMP; return; };
+	while( <TMP> ) { if( /^(\S+)=(\d+)/ ) { $saved{$1}=$2 } }
+	flock TMP, 8; # unlock
+	close TMP;
+}
+sub sav() {
+	return if($reuse); # if we're using the OLD data
+	open TMP,">$TMPFILE" or return;
+	flock TMP, 2 or do { close TMP; return; };
+	foreach ( keys %current ) { print TMP $_.'='.$current{$_}."\n"; }
+	if( ($current{'time'}-$saved{'time'})<$MAXINTERVAL ) {
+	foreach ( keys %saved ) { 
+		print TMP 'OLD-'.$_.'='.$saved{$_}."\n"
+			if( $_ !~ /^OLD-/ ); }
+	}
+	flock TMP, 8; # unlock
+	close TMP;
+}
+############################################################################
+sub doerror($) {
+	print "status=error\n";
+	print "error-message=".$_[0]."\n";
+	exit 2;
+}
+############################################################################
+sub getvmnames() {
+	my($line,$file);
+	%vmnames = ();
+	foreach $file ( glob( "/proc/vmware/vm/*/names" ) ) {
+		open NAMES, "<$file" or next;
+		$line = <NAMES>;
+		if( $line =~ /vmid=(\d+)\s.*displayName="(.*)"/ ) { $vmnames{$1}=$2; }
+		close NAMES;
+	}
+}
+############################################################################
+sub getcpu() {
+	my($line); my(@line);
+	my($k,$numcpu);
+	my(%fields) = ();
+	my(@columns) = ();
+	$current{"sys-cpu-used"}=0;
+	$current{"sys-cpu-sys"}=0;
+	$current{"sys-cpu-wait"}=0;
+	$current{"sys-cpu-idle"}=0;
+	$current{"sys-cpu-ready"}=0;
+	$current{"sys-cpu-max"}=0;
+	open CPU, "</proc/vmware/sched/ncpus" 
+		or doerror "Unable to open ncpus file";
+	while( $line = <CPU> ) {
+		$current{"sys-cpu-pcpu"} = $1 if( $line =~ /(\d+)\s+physical/ );
+		$current{"sys-cpu-lcpu"} = $1 if( $line =~ /(\d+)\s+logical/ );
+	}
+	close CPU;
+	open CPU, "</proc/vmware/sched/cpu" 
+		or doerror "Unable to open cpu stats";
+	$line = <CPU>;
+	@columns = split /\s+/,$line;
+	shift @columns if(!$columns[0]);
+	while( $line = <CPU> ) {
+		@line = split /\s+/,$line;
+		shift @line if(!$line[0]);
+		%fields = ();
+		foreach (@columns) { $fields{$_} = (shift @line); }
+		if($fields{type} eq 'V') { # vhost
+			$k = 'vhost-'.$fields{vm};
+			$vms{$k}=1;
+			if(!defined $current{"$k-cpu-used"}) {
+				$current{"$k-cpu-used"}=$fields{usedsec};
+				$current{"$k-cpu-sys"}=$fields{syssec};
+				$current{"$k-cpu-wait"}=$fields{waitsec};
+				$current{"$k-cpu-ready"}=0;
+				$current{"$k-cpu-idle"}=0;
+				$current{"$k-cpu-idle"}=$fields{idlesec}
+					if(defined $fields{idlesec});
+				$current{"$k-cpu-ready"}=$fields{readysec}
+					if(defined $fields{readysec});
+				$current{"$k-cpu-max"}=$fields{max}/100;
+			} else {
+				$current{"$k-cpu-used"}+=$fields{usedsec};
+				$current{"$k-cpu-sys"}+=$fields{syssec};
+				$current{"$k-cpu-wait"}+=$fields{waitsec};
+				$current{"$k-cpu-idle"}+=$fields{idlesec}
+					if(defined $fields{idlesec});
+				$current{"$k-cpu-ready"}+=$fields{readysec}
+					if(defined $fields{readysec});
+			}
+		} elsif( $fields{type} eq 'S' 
+			or $fields{type} eq 'SC' 
+			or $fields{type} eq 'N' 
+		) { # system Sys Help Nmigr SIidle SConsole
+			$current{"sys-cpu-used"}+=$fields{usedsec};
+			$current{"sys-cpu-sys"}+=$fields{syssec};
+			$current{"sys-cpu-wait"}+=$fields{waitsec};
+			$current{"sys-cpu-idle"}+=$fields{idlesec}
+				if(defined $fields{idlesec});
+			$current{"sys-cpu-ready"}+=$fields{readysec}
+				if(defined $fields{readysec});
+		} elsif( $fields{type} eq 'SI' ) { # count idle threads
+			$current{"sys-cpu-max"}+=1;
+		}
+	}
+	close CPU;
+	$current{"sys-cpu-max"} = $current{"sys-cpu-pcpu"}
+		if( $current{"sys-cpu-pcpu"} );
+}
+sub getmem() {
+	my($line,@line,$k);
+	my(@columns) = ();
+	my(%fields) = ();
+
+	open MEM, "</proc/vmware/sched/mem" or doerror "Unable to open memory stats";
+	# first the header
+	while(<MEM>) {
+		last if( /^\s*vm/ );
+		$memstat{'mem-total'} = $1*1024 if(/^\s*(\d+)\s*Managed$/);
+		$memstat{'mem-free'} = $1*1024 if(/^\s*(\d+)\s*Free$/);
+		$memstat{'mem-reserved'} = $1*1024 if(/^\s*(\d+)\s*MemReserved$/);
+		$memstat{'mem-avail'} = $1*1024 if(/^\s*(\d+)\s*MemAvailable$/);
+		$memstat{'swap-reserved'} = $1*1024 if(/^\s*(\d+)\s*SwapReserved$/);
+		$memstat{'swap-avail'} = $1*1024 if(/^\s*(\d+)\s*SwapAvailable$/);
+	}
+	# headings line
+	if( $_ and /^\s*vm/ ) {
+		@columns = split /[\s\/]+/,$_;
+		shift @columns if(!$columns[0]);
+	} else { close MEM; return; }
+	# now the vhosts
+	print "read-vhost-mem=1\n";
+	while($line = <MEM>) {
+		@line = split /[\s\/]+/,$line;
+		shift @line if(!$line[0]);
+		%fields = ();
+		foreach ( @columns ) { $fields{$_} = (shift @line); }
+		if( $fields{vm} eq 'TOTAL' ) {
+			$k = "allvms";
+		} elsif( defined $vms{"vhost-".$fields{vm}} ) {
+			$k = "vhost-".$fields{vm};
+		} else {
+			$k = "unknown-".$fields{vm};
+#			next;
+		}
+		$memstat{"$k-mem-max"} = $fields{max}*1024;
+		$memstat{"$k-mem-shared"} = $fields{shared}*1024;
+		$memstat{"$k-mem-balloon"} = $fields{memctl}*1024;
+		$memstat{"$k-mem-swap"} = $fields{swapped}*1024;
+		$memstat{"$k-mem-private"} = ($fields{max}-$fields{memctl}-$fields{swapped}-$fields{shared})*1024;
+		$memstat{"$k-mem-used"} = $fields{size}*1024;
+		$memstat{"$k-mem-active"} = $fields{active}*1024;
+		$memstat{"$k-swap-in"} = $fields{swapin};
+	}
+	
+	close MEM;
+}
+############################################################################
+sub printvmnames() {
+	print "has-names=1\n";
+	foreach ( keys %vmnames ) { print "vhost-$_-name=".$vmnames{$_}."\n"; }
+}
+############################################################################
+sub printcpu() {
+	my($v,$k,$num);
+	my(%allvms) = ( used=>0, sys=>0, wait=>0, ready=>0 ); # idle=>0
+	print "has-cpu=1\n";
+	print "sys-cpu-pcpu=".$current{"sys-cpu-pcpu"}."\n";
+	print "sys-cpu-lcpu=".$current{"sys-cpu-lcpu"}."\n";
+	foreach $v ( 'sys', keys %vms ) {
+		$num = $current{"$v-cpu-max"};
+		print "$v-cpu-max=$num\n";
+		next if(!$saved{"$v-cpu-used"});
+		foreach $k ( keys %allvms ) {
+			$allvms{$k} += $current{"$v-cpu-$k"}-$saved{"$v-cpu-$k"} 
+				if($v ne 'sys');
+			print "$v-cpu-$k-count=".$current{"$v-cpu-$k"}."\n";
+			printf "$v-cpu-$k-pc=%.2f\n",
+				(100.0*($current{"$v-cpu-$k"}-$saved{"$v-cpu-$k"})/($int*$num))
+				if($int);
+		}
+	}
+	return if(!$int);
+	foreach $k ( keys %allvms ) {
+		printf "allvms-cpu-$k-pc=%.2f\n",
+			(100.0*$allvms{$k}/($int*$current{"sys-cpu-max"}));
+	}
+}
+sub printmem() {
+	print "has-mem=1\n";
+	foreach ( keys %memstat ) {
+		if( /-swap-in$/ ) {
+			if(defined $saved{$_}) {
+				printf "$_-bps=%.2f\n",
+					(($memstat{$_}-$saved{$_})/$int)
+					if($int);
+			}
+			$current{$_}=$memstat{$_};
+		} 
+		print $_."=".$memstat{$_}."\n"; 
+	}
+}
+############################################################################
+
+# Get old data
+retr;
+
+# Get new data
+$current{"time"} = time;
+getvmnames;
+getcpu;
+getmem;
+
+# Output information
+$int = $current{"time"}-$saved{"time"} if($saved{"time"});
+if($int and ($int < $MININTERVAL) and $saved{"OLD-time"}) {
+	$reuse = 1;
+	foreach ( keys %saved ) {
+		if( /^OLD-(\S+)/ ) { $saved{$1} = $saved{$_}; }
+	}
+	$int = $current{"time"}-$saved{"time"};
+}
+print "time=".$current{"time"}."\n";
+print "interval=$int\n";
+if(!$int) { print "status=first\n"; }
+elsif($int > $MAXINTERVAL) { $int = 0; print "status=stale\n"; }
+elsif($int < $MININTERVAL) { $int = 0; print "status=raw\n"; }
+elsif( $reuse ) { print "status=ok-reused\n"; }
+elsif($int < $REFRESHINTERVAL) { print "status=ok-noupdate\n"; }
+else { print "status=ok\n"; }
+
+print "version=$VERSION\n";
+printvmnames;
+printmem;
+printcpu;
+
+# Save new data if necessary, and exit
+if( !$int or ($int >= $REFRESHINTERVAL) ) {
+	sav;
+	exit 3 if(!$int); # ran OK on initial run
+	exit 0;	   # ran OK and updated saved data
+}
+exit 1;		   # ran but no update of saved data
+

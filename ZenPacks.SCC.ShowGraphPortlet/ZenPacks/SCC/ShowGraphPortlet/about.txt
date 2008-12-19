@@ -1,0 +1,8 @@
+[about]
+title = ShowGraphPortlet
+url = 
+author = Anton Menshutin may@chg.ru
+version = 0.2
+objectpaths = 
+organization =  
+

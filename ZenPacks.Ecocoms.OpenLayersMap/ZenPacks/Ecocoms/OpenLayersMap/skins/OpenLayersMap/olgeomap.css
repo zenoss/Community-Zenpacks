@@ -1,0 +1,10 @@
+#olgeomapcontainer {
+    border:1px solid black;
+}
+
+#olgeomaperrormsg {
+    text-align:center;
+    font-size:2em;
+    height:400px;
+    background-color:white;
+}

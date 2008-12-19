@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'WMIFilesMonitor') -->
+<object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/WMIFilesMonitor' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Monitor files on physical or mapped drives on a windows server:
+- Checks for existences: use zProperty zWMIFileChecks: space separated list of quoted paths.
+- Monitor sizes for fo files specified in template data source, requires local copy to monitor a customized list of files.
+</property>
+<tomanycont id='datasources'>
+<object id='wmifiles' module='ZenPacks.community.WMIFilesMonitor.datasources.WMIFilesMonitorDataSource' class='WMIFilesMonitorDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+WMIFilesMonitor
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Storage/Files
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="hostname" mode="w" >
+${here/manageIp}
+</property>
+<property type="string" id="username" mode="w" >
+${here/zWinUser}
+</property>
+<property type="string" id="password" mode="w" >
+${here/zWinPassword}
+</property>
+<property type="string" id="fileChecks" mode="w" >
+${here/zWMIFiles}
+</property>
+<property type="boolean" id="autoGraph" mode="w" >
+True
+</property>
+<property type="int" id="timeout" mode="w" >
+15
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Storage', 'Files') -->
+<object id='/zport/dmd/Events/Storage/Files' module='Products.ZenEvents.EventClass' class='EventClass'>
+</object>
+</objects>

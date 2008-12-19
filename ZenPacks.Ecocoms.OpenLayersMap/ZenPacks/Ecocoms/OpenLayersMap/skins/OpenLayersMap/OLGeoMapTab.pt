@@ -1,0 +1,42 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+
+<tal:block metal:fill-slot="head-local">
+    <link type="text/css" rel="stylesheet" href='olgeomap.css'/>
+    <style type="text/css">
+    v\:* {
+      behavior:url(#default#VML);
+    }
+    </style>
+    <script tal:content="string:
+        var nodedata = ${here/getChildGeomapData};
+        var linkdata = ${here/getChildLinks};
+    "></script>
+    <script>
+        function maximizeMapHeight() {
+            mapdiv = $('olgeomapcontainer');
+            mapoffset = getElementPosition(mapdiv).y;
+            maxbottom = getViewportDimensions().h;
+            newdims = {'h':maxbottom-mapoffset-20};
+            setElementDimensions(mapdiv, newdims);
+        }
+        connect(currentWindow(), 'onresize', maximizeMapHeight);
+        addLoadEvent(maximizeMapHeight);
+    </script>
+    <script type="text/javascript" src="OpenLayers.js"> </script>
+    <script type="text/javascript" src="olgeomap.js"> </script>
+</tal:block>
+
+<tal:block metal:fill-slot="breadCrumbPane">
+    /<a tal:attributes="
+        href string:${here/absolute_url_path}/${template/id}">OpenLayers Map
+    </a>
+</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+<div id="olgeomapcontainer">
+    <!-- OpenLayers script adds map here -->
+</div>
+</tal:block>
+
+</tal:block>
+

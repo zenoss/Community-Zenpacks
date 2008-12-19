@@ -1,0 +1,13 @@
+1. Copy the snmp.conf to /etc/snmp/snmpd.conf on your ESX server, and change 
+   it as required (at least change the system contact, location, and 
+   SNMP community name)
+2. Copy the vmware-stats script to the /etc/snmp directory, permission 755
+3. Copy the check_esx2 to the plugins directory.  You may need to change the
+   perl location and the statefile location in the script.
+4. Add the definitions in checkcommands.cfg to your checkcommands.cfg file
+5. You can now add services as in the example template!
+6. vmware_monitor2.pl is a script to generate .rrd files and a dummy MRTG .cfg
+   file that graph lots of things and can be viewed from a MRTG frontend such
+   as routers2.  This script should be called with appropriate params every 5min
+   if you want to do the graphing.  It uses the same agent as the Nagios stuff.
+   Dont worry if you dont want to use it, it isnt compulsory!

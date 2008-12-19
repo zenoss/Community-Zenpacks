@@ -1,0 +1,57 @@
+<html><body>
+<script type="text/javascript" src="js/MochiKit.js"></script>
+<script> var YAHOO_config={load:{base: '/zport/dmd/yui/'}};</script>
+<script src="/zport/dmd/yui/yuiloader/yuiloader-beta-min.js"></script>
+<script src="/zport/dmd/yui/yahoo/yahoo-min.js"></script>
+<script src="/zport/dmd/javascript/zenoss-core.js"></script>
+<script src="/zport/dmd/javascript/zenoss-core.js"></script>
+<script type="text/javascript" src="OpenLayers.js"> </script>
+<link type="text/css" rel="stylesheet" href='css/zenoss.css'/>
+<link type="text/css" rel="stylesheet" href='olgeomap.css'/>
+<style>
+body {margin:0;padding:0}
+div#olgeomapcontainer { margin:0;padding:0;border:medium none; }
+</style>
+
+<style type="text/css">
+v\:* {
+  behavior:url(#default#VML);
+}
+</style>
+
+<link type="text/css" rel="stylesheet" href='olgeomap.css'/>
+
+<style type="text/css">
+    v\:* {
+      behavior:url(#default#VML);
+    }
+</style>
+
+
+<script tal:content="string:
+        var nodedata = ${here/getChildGeomapData};
+        var linkdata = ${here/getChildLinks};
+"></script>
+
+<script>
+        function maximizeMapHeight() {
+            mapdiv = $('olgeomapcontainer');
+            mapoffset = getElementPosition(mapdiv).y;
+            maxbottom = getViewportDimensions().h;
+            newdims = {'h':maxbottom-mapoffset};
+            setElementDimensions(mapdiv, newdims);
+        }
+        connect(currentWindow(), 'onresize', maximizeMapHeight);
+        addLoadEvent(maximizeMapHeight);
+</script>
+
+
+<div id="olgeomapcontainer">
+    <!-- OpenLayers script adds map here -->
+</div>
+
+
+<script type="text/javascript" src="olgeomap.js"> </script>
+
+
+</body></html>

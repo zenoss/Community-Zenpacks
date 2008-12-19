@@ -1,0 +1,72 @@
+check_esx ver 2
+
+Steve Shipway, 2006
+steve@steveshipway.org
+
+This script is for checking various things on an ESX server from Nagios.  It
+makes general checks for CPU and Memory and alerts on problem conditions.
+
+It can also be used from MRTG to extract numbers for graphing.
+
+The vmware-stats script is an extension for UCD SNMPD on the ESX server to 
+allow the check_esx2 to extract the necessary numbers.  You still need to
+run the snmpd and the vmware-snmpd agents on the vmware server!
+
+The INSTALL script tells you how to install it all.
+
+CPU:
+Monitoring CPU under ESX is problematic.  The check_esx will alert if the
+used CPU exceeds the threshold.  If you gave a vhost name, then this threshold
+is the max CPU *allocated to that guest*.  All CPU percentages are given 
+relative to the CPU *allocted to the guest*.  This is different from the VMWare
+web frontend which gives them relative to the total ESX CPU resources, but
+the same as the EUSED value in esxtop.
+'Ready time' is the percentage of time spent waiting for the ESX server, and
+should never go above 15%.  It is the time the guest *would* be running, if 
+there were resources available.  It indicates how overloaded your ESX server is.
+Note - CPU usage CAN GO OVER 100%!  If the resource is there, and asked for, it
+seems that ESX will give it if noone else wants it even if its over the max for
+a particular guest.  Yes I know, I didnt believe it either, but esxtop confirms
+this.
+Hyperthreading causes even more issues.  A hyperthreaded server CPU has two
+LCPUs each of which can give 30s of time per minute.  Non-hyperthreaded has 1
+LCPU with 60s per minute.  It is hard to work out if a server is hyperthreaded
+or not (I assume usually they will be).  However, a hyperthread isolated
+guest grabs 1 PCPU instead of 1 LCPU - ie, 2 LCPUs although they must be a
+logical pair.  Calculating % use of allocated CPU resource here is a bit ropey
+and not fully tested.  To make it easy, set server to hyperthread and dont
+have any hyperthread-isolated guests.  Then it works.
+
+Memory:
+The 'active memory' of a guest is how much of the memory is actually being
+actively used.  This is thresholded.  The overall server available memory is 
+also thresholded.
+A guest's memory is split into private, shared, baloon and swap.  If you have 
+any swapped, then this is BAD.  Any ballooning is an indication that the ESX
+server is getting worried and is stealing memory back from the guests.  This
+is a warning.  Some guests may have some memory swapped out and this is not
+too bad if the amount is low and there is no swap in activity for that guest.
+This is also checked for.  A very low (<1%) swap or baloon usage is not
+seen as significant, unless there's some page-in activity as well.  Tune the
+percentage thresholds in the script if you need to.
+
+Network:
+This cannot identify the max bandwidth on a virtual NIC, bond or switch.  So,
+you need to give thresholds in BYTES/sec.  If you dont specify a vhost, then
+you will threshold on total use for that vnic/bond.  If you dont specify a
+n interface, then you get total usage for that vhost.  If you specify neither
+then you get total network use for the ESX, which is useless unless your 
+ESX has only one physical nic for all guests (not counting the nic for the 
+SC or for VMotion).
+
+SAN HBAs:
+These are not yet checked for thresholding.  The monitor2 script for MRTG
+and RRD will gather these into a pretty mirrored graph with totalling.
+
+Go to www.steveshipway.org/forum for more help and discussion!  Monitoring
+ESX is a nightmare, and it is too easy to get out meaningless statistics or
+to miss the real ones.  A struggling ESX server can look quite healthy if you
+never think to check ready time, or balloon memory.  If you install this and
+immediately get lots of criticals for CPU on ready time, you probably have
+a real problem.  Dont assume that the test script is wrong...
+

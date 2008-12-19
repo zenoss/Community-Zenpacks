@@ -1,0 +1,12 @@
+1.0: Use vmware-snmpd subagent to collect all data
+2.0: Complete rewrite of CPU and MEM checks to use vmware-stats SNMP plugin
+2.1: Fixed LIST problem (down hosts shown as up)
+     Fixed LISTNET to show just interface names, and to use partial vhost names
+     Fixed some help text to be more helpful
+     Fixed vmware-stats to stop /0 error
+2.2: Fixed opt_r problem in check_esx2
+2.3: Fixed other problems in check_esx2 with Nagios2 embedded perl compiler
+2.4: Host names are simplified in Guests list report
+     vmware-stats now reports guest names as well, which are used if the
+     vmware-snmpd subagent dies
+     Report version name

@@ -1,134 +1,7 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'WiFi', 'Base Station', 'rrdTemplates', 'Traliccio_BreezeAccess VL') -->
-<object id='/zport/dmd/Devices/Network/WiFi/Base Station/rrdTemplates/Traliccio_BreezeAccess VL' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property type="text" id="description" mode="w" >
-AU BreezeAccess VL
-</property>
-<tomanycont id='datasources'>
-<object id='AU Associate' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.12394.1.1.1.13.0
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='AU Associate' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.2.1.1.3.0
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='graphDefs'>
-<object id='AU Connesse' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-<tomanycont id='graphPoints'>
-<object id='AU Associate' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-AU Associate_AU Associate
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-</tomanycont>
-</object>
-</tomanycont>
-</object>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'WiFi', 'Bridge', 'rrdTemplates', 'BreezNet') -->
-<object id='/zport/dmd/Devices/Network/WiFi/Bridge/rrdTemplates/BreezNet' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'BreezNet') -->
+<object id='/zport/dmd/Devices/Network/rrdTemplates/BreezNet' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <tomanycont id='datasources'>
 <object id='Modulazione' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -371,8 +244,8 @@ ${graphPoint/id}
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'WiFi', 'CPE', 'rrdTemplates', 'BreezeAccess VL') -->
-<object id='/zport/dmd/Devices/Network/WiFi/CPE/rrdTemplates/BreezeAccess VL' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'BreezeAccess VL') -->
+<object id='/zport/dmd/Devices/Network/rrdTemplates/BreezeAccess VL' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >
 SU - BreezeAccess VL
 </property>
@@ -765,713 +638,132 @@ ${graphPoint/id}
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', '4.0.24') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/4.0.24' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
-<property type="string" id="name" mode="w" >
-4.0.24
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'Traliccio_BreezeAccess VL') -->
+<object id='/zport/dmd/Devices/Network/rrdTemplates/Traliccio_BreezeAccess VL' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+AU BreezeAccess VL
 </property>
-<property type="lines" id="productKeys" mode="w" >
-['4.0.24']
+<tomanycont id='datasources'>
+<object id='AU Associate' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="boolean" id="isOS" mode="w" >
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12394.1.1.1.13.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
 False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Valle Salimbene/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Marini Luca/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/FAIRCOM sas di Roberto Mura _ C./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Costruzioni Meccaniche Agosti N./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Arena Vincenzo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Keytechnologies/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/D_Imperio Milena/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Massimo Prina/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mariconti Giuseppe/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/AL.DO.RA/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vighi Rovida Elvezia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Riva Maurizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vailati Elisa/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beduschi Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beduschi Riccardo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ferrari Ivan/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Chiofalo Angela/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vietri Carlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Boschi Diego/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ravasio Manuel/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Albertazzi Maurizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Augello Giusy/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Panigada Simona/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fraschini Cinzia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/ECO 3 Sas di Locatelli _ C./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Food System/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bianchi Antonia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marchesi Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cardella Girolamo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Media 20 Informatica Vignes E./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Jolly Soft S.a.s./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/PLC Impianti/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marco Vernetti - DISDETTATO/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Coni Massimo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sciaravel Davide/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Piccoli Angelo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Comaschi Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giubilato Ignazio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carta Laura/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cominetti Marco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Manente Diego/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/MotiveGeeks/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pastura Antonio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Garretti Alessandro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cremaschi Manuela/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Condominio via Mazzini 9/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Savino Vito/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Savioni Danilo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cavalli Emanuele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marchese Raffaella/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cavaldonati Fabrizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giovinazzo Vincenzo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/AP s.n.c. di Palladini/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Audoglio Roberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Amati Giuseppe/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cascina MONCUCCA/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sposter Bar di Gatto di D. Conta/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Muro Giovanni/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Danani Stefano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bianchi Sabrina Michela/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bertorelli Antonio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Corrarello Salvatore/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rossi Mauro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Testa Severo Marco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Travaco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/SA.GE di Angeleri Alessandra/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cusmai Marco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rota Vittorio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marchelli Stefano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Inzaghi Diego/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Dionigi Laura/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beniamini Claudio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Lardirago/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Zanchi Luigi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marraffa Francesco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Stefano Piero/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Max Pezzali 883/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Orlandi Giovanni/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Orlandi Francesco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Orlandi Marco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bono Gunther Renato/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Figar Franco Maurizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/R.T.A. S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Raccagni Massimo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gilardoni Chiara/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/In Evento srl/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Coppolecchia Maurizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gervasutti Cristina/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spinillo Arsenio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/BBD S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cosio Pierluigi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mandelli Massimo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sirio Sas Gianpaolo Gazzotti/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Assicurazioni Olivo Antonio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spairani Antonella/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rota Fabio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Link dorsale Acquedotto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beolchini Carlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fanchini Michela/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Belcanto D.A.C. S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Decaro Lucio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Imm. Torre Isola di Morelli/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Tonali Enrico/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vitali Claudio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gorini Attilio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Morelli Carlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Studio Medico Manfredi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Impresa Edile Tincu Vladimir/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vanda Patimo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Persegato Marisa/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Novena Franco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Nuova Protex S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fabrizio Vecchio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marcellini Daniele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Barbara Petracca/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bosatra Angelo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lodroni Roberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Conti Pierluigi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lodigiani Maria Cristina/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pasquinelli Paolo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bonetti Nicoletta/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Amandola Claudio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Russo Osvaldo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Maraschi Lorenzo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Osteria Aurora/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Maggioni Davide/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Braga Giuliano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/IN MARE di Claudio Gallino/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Betti Esperia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/DAEWON EUROPE/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Medical Center Marandola/os'/>
-</tomany>
+<tomanycont id='datapoints'>
+<object id='AU Associate' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', '4.0.27') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/4.0.27' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
-<property type="string" id="name" mode="w" >
-4.0.27
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['4.0.27']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giovanna Trinchella/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Cura Carpignano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fondazione Novello/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/R.M.T Informatica/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lovati Daniele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Unigest srl/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Barbieri Giuseppe/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vasile Andreika/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vetri Mauro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/MDC Di Luciano Luciani/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lanfranchi Angelo Pietro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cornaggia Maurizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Andreone Marco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Abele Paola/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pandale Michele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Grignani Luca/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Britton Karl/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Farah Majdi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Raimondo Davide/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Astraea Srl/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio di Torre Isola/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Caramagna Luis Bernardo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Art Plast/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Peroxitalia srl/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Kavecic Diana/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Perna Francesco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Tabaro Davide/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fiammenghi Angela/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pighetti Giancarlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pasquetto Giancarlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bonanno Claudia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Badini Stefano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pastore Ivan/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Serra Franco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Babusci Fedele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fusetto Andrea Erminio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Digiuni Terenzio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Electric System di Grassi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Manenti Massimo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Craciun Carmen/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giorgi Diego Srl Impresa    /os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Passi Siro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Logic S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bar Gipsy snc/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Client WiSquare - S.Alessio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Autofficina La Cura S.a.s./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cerruto Biagio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cambieri sas/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carboni Roberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marzola Rosalia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fossati Francesca/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bardoni Roberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cislaghi Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Berri Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carrara Stefania/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Verza Katia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Oldani Stefano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Laura Barbierato/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gallati Mario/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Francinox S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Montagna Gilberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fenini Paolo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vecchi Gabriele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Eicholzer Marina/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Andrea Re/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pellegrini Piercarlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Raisaro Arturo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vivaldini Fabio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Infomusic/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Bereguardo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Leo Annamaria/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pasi Luigi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Contardi Daniele/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Valentina Giordano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/ICABLE/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Linea Copy/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/55-01acqedotto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pozzoli Davide/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Quadrelli Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Locatelli Luca/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Chionna Francesco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/DaiDai S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Scutra Cinzia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Filini Simone/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Davini Davide/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sea Vision S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mancini Savino/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spairani Matteo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Rognano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ciavarella Gianfranco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Baldi Michelangelo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/SI Informatica/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Balzarotti Roberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gruppo Exse Srl/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lorenzo Lanzetta/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Changho Kim /os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Passaretti Franco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Global Teknica di S. Pasinetti/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gatti Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Caseificio Brusati/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lattuada Tiziano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Francia Paolo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Scaglioni Marco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rustioni Stefania/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Dani Strumentazione/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Claudio Fagioli Termoidraulica/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Inter Control S.r.l./os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Paravella Giovanni/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Paveri Alessandra Enrica/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mario Canepa/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cavenaghi Piera/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Quaroni Attilio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marino Carmelo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Grecchi Massimiliano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Truscello Antonio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sacchi Giacomo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Aprea Carmela/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Costante Marcello/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Diversified Technology/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mustarelli Massimo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cordara Stefano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Luciano Guerra/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cinzia Intermite/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Link dorsale Villarasca/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella 01 Acquedotto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carbone Alessandro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Master Montichiari/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Master Brescia/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Punto Vendita Latina/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Deposito/os'/>
-</tomany>
+</tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', '4.5.16') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/4.5.16' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
-<property type="string" id="name" mode="w" >
-4.5.16
+<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="lines" id="productKeys" mode="w" >
-['4.5.16']
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="boolean" id="isOS" mode="w" >
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.1.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
 False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bosone Daniele/os'/>
-</tomany>
+<tomanycont id='datapoints'>
+<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', 'AU-BS') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/AU-BS' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
-<property type="string" id="name" mode="w" >
-.1.3.6.1.4.1.12394.4.1.4
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['.1.3.6.1.4.1.12394.4.1.4']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP03/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP02/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP01/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID01/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID02/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID03/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID04/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID05/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN02/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN01/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP05/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN04/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN03/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP04/hw'/>
-</tomany>
+</tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', 'Alvarion BreezeACCESS') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/Alvarion BreezeACCESS' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
-<property type="string" id="name" mode="w" >
-Alvarion BreezeACCESS
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='AU Connesse' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
 </property>
-<property type="lines" id="productKeys" mode="w" >
-['Alvarion BreezeACCESS']
+<property type="int" id="width" mode="w" >
+500
 </property>
-<property type="boolean" id="isOS" mode="w" >
+<property type="boolean" id="log" mode="w" >
 False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Silvio Dell acqua/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rancati Pierenrico/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Parolo Dario/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Tocco Roberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Studio Architetto Bonizzoni/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Muzzio Claudio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mazzarella Santo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Biblioteca Cura Carpignano/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Simone Cortesi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giacometti Maurizio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sorbara Salvatore/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/O.R.A.P. snc/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Manidi Augusto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cinquetti Sergio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Musicco Francesco/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Colleoni Rossella/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gariboldi Armando/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Jvonne Rampoldi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spairani Ferruccio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Achille Lauro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Preti Pietro/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Torre Andrea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bonfanti Alberto/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vergani Carlo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fabio Drago/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Munoz Olivo Victor Sandy/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ferrari GianPaolo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Maurizio Fea/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Calligaro Flavio/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Venzaghi Italo/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP03/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP02/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP01/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID01/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID02/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID03/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID04/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella ID05/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN02/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN01/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP05/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN04/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDN03/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Base Station/devices/Cella IDMP04/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/S.C.M. Racing/os'/>
-</tomany>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='AU Associate' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+AU Associate_AU Associate
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', 'Alvarion BreezeNet') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/Alvarion BreezeNet' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
-<property type="string" id="name" mode="w" >
-Alvarion BreezeNet
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['Alvarion BreezeNet']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Punto Vendita Frosinone/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Punto Vendita Pisa/os'/>
-</tomany>
+</tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', 'BU-B100') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/BU-B100' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
-<property type="string" id="name" mode="w" >
-.1.3.6.1.4.1.12394.4.1.23
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['.1.3.6.1.4.1.12394.4.1.23']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Punto Vendita Frosinone/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Punto Vendita Pisa/hw'/>
-</tomany>
-</object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', 'SU Low Power') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/SU Low Power' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
-<property type="string" id="name" mode="w" >
-SU Low Power
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['SU Low Power']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giovanna Trinchella/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Valle Salimbene/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fondazione Novello/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Marini Luca/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/FAIRCOM sas di Roberto Mura _ C./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/R.M.T Informatica/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Costruzioni Meccaniche Agosti N./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lovati Daniele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Arena Vincenzo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Keytechnologies/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/D_Imperio Milena/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Unigest srl/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Barbieri Giuseppe/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Massimo Prina/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mariconti Giuseppe/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/AL.DO.RA/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vighi Rovida Elvezia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vasile Andreika/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Riva Maurizio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vailati Elisa/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vetri Mauro/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beduschi Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beduschi Riccardo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ferrari Ivan/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Chiofalo Angela/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vietri Carlo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Boschi Diego/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ravasio Manuel/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Albertazzi Maurizio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Augello Giusy/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Panigada Simona/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fraschini Cinzia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/ECO 3 Sas di Locatelli _ C./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Food System/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bianchi Antonia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/MDC Di Luciano Luciani/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lanfranchi Angelo Pietro/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marchesi Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cornaggia Maurizio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cardella Girolamo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Andreone Marco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Abele Paola/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pandale Michele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Media 20 Informatica Vignes E./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Grignani Luca/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Britton Karl/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Farah Majdi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Jolly Soft S.a.s./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Raimondo Davide/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Astraea Srl/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/PLC Impianti/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio di Torre Isola/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Caramagna Luis Bernardo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marco Vernetti - DISDETTATO/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Coni Massimo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Art Plast/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sciaravel Davide/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Piccoli Angelo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Comaschi Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giubilato Ignazio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carta Laura/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cominetti Marco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Peroxitalia srl/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Manente Diego/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/MotiveGeeks/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Kavecic Diana/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Perna Francesco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Tabaro Davide/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pastura Antonio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Garretti Alessandro/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fiammenghi Angela/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pighetti Giancarlo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Condominio via Mazzini 9/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pasquetto Giancarlo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bonanno Claudia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Badini Stefano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pastore Ivan/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Serra Franco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Babusci Fedele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Savino Vito/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Savioni Danilo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cavalli Emanuele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marchese Raffaella/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cavaldonati Fabrizio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giovinazzo Vincenzo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fusetto Andrea Erminio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/AP s.n.c. di Palladini/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Audoglio Roberto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Amati Giuseppe/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cascina MONCUCCA/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sposter Bar di Gatto di D. Conta/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Digiuni Terenzio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Muro Giovanni/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Electric System di Grassi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Danani Stefano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bianchi Sabrina Michela/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Manenti Massimo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bertorelli Antonio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Craciun Carmen/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Giorgi Diego Srl Impresa    /hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Passi Siro/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Corrarello Salvatore/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rossi Mauro/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Testa Severo Marco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Travaco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/SA.GE di Angeleri Alessandra/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cusmai Marco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rota Vittorio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marchelli Stefano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Inzaghi Diego/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Logic S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Dionigi Laura/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beniamini Claudio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bar Gipsy snc/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Client WiSquare - S.Alessio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Lardirago/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Autofficina La Cura S.a.s./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Zanchi Luigi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marraffa Francesco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cerruto Biagio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cambieri sas/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carboni Roberto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marzola Rosalia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fossati Francesca/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Stefano Piero/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Max Pezzali 883/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Orlandi Giovanni/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Orlandi Francesco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Orlandi Marco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bono Gunther Renato/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Figar Franco Maurizio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/R.T.A. S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Raccagni Massimo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gilardoni Chiara/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/In Evento srl/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Coppolecchia Maurizio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gervasutti Cristina/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bardoni Roberto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spinillo Arsenio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/BBD S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cosio Pierluigi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cislaghi Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mandelli Massimo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sirio Sas Gianpaolo Gazzotti/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Assicurazioni Olivo Antonio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Berri Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spairani Antonella/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carrara Stefania/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Verza Katia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rota Fabio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Link dorsale Acquedotto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Beolchini Carlo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fanchini Michela/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Oldani Stefano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Belcanto D.A.C. S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Laura Barbierato/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Decaro Lucio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gallati Mario/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Francinox S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Montagna Gilberto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fenini Paolo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vecchi Gabriele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Imm. Torre Isola di Morelli/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Tonali Enrico/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Eicholzer Marina/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vitali Claudio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gorini Attilio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Morelli Carlo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Andrea Re/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pellegrini Piercarlo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Raisaro Arturo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Studio Medico Manfredi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Impresa Edile Tincu Vladimir/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vanda Patimo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Persegato Marisa/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Vivaldini Fabio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Novena Franco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Infomusic/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Bereguardo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/De Leo Annamaria/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pasi Luigi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Nuova Protex S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Contardi Daniele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Valentina Giordano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/ICABLE/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Linea Copy/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/55-01acqedotto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pozzoli Davide/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Quadrelli Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Locatelli Luca/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Chionna Francesco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/DaiDai S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Fabrizio Vecchio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Scutra Cinzia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Filini Simone/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marcellini Daniele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Barbara Petracca/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Davini Davide/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sea Vision S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mancini Savino/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bosatra Angelo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Spairani Matteo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Rognano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Ciavarella Gianfranco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Baldi Michelangelo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/SI Informatica/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lodroni Roberto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Balzarotti Roberto/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gruppo Exse Srl/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Conti Pierluigi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lorenzo Lanzetta/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Changho Kim /hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Passaretti Franco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Global Teknica di S. Pasinetti/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Gatti Andrea/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Caseificio Brusati/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lattuada Tiziano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Francia Paolo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Scaglioni Marco/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Rustioni Stefania/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Lodigiani Maria Cristina/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Pasquinelli Paolo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bonetti Nicoletta/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Amandola Claudio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Dani Strumentazione/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Claudio Fagioli Termoidraulica/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Inter Control S.r.l./hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Paravella Giovanni/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Russo Osvaldo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Paveri Alessandra Enrica/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mario Canepa/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Maraschi Lorenzo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cavenaghi Piera/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Quaroni Attilio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Marino Carmelo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Grecchi Massimiliano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Osteria Aurora/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Truscello Antonio/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Sacchi Giacomo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Maggioni Davide/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Aprea Carmela/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Costante Marcello/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Braga Giuliano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/IN MARE di Claudio Gallino/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Diversified Technology/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Betti Esperia/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Mustarelli Massimo/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cordara Stefano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Luciano Guerra/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cinzia Intermite/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Link dorsale Villarasca/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/DAEWON EUROPE/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Medical Center Marandola/hw'/>
-</tomany>
-</object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Alvarion', 'products', 'SU Unit') -->
-<object id='/zport/dmd/Manufacturers/Alvarion/products/SU Unit' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
-<property type="string" id="name" mode="w" >
-SU Unit
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['SU Unit']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Municipio Cura Carpignano/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Cremaschi Manuela/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Bosone Daniele/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/CPE/devices/Carbone Alessandro/hw'/>
-</tomany>
+</tomanycont>
 </object>
 <!-- ('', 'zport', 'dmd', 'Mibs', 'Alvarion') -->
 <object id='/zport/dmd/Mibs/Alvarion' module='Products.ZenModel.MibOrganizer' class='MibOrganizer'>

@@ -21,7 +21,6 @@ class AlvarionDeviceMap(SnmpPlugin):
     snmpGetMap = GetMap({ 
        '.1.3.6.1.4.1.12394.3.2.9.16.1.0' : 'manufacturer',
        '.1.3.6.1.4.1.12394.3.2.1.2.0' : 'setHWProductKey',
-     #  '.1.3.6.1.4.1.12394.3.2.1.13 ' : 'setHWSerialNumber',
        '.1.3.6.1.4.1.12394.1.1.1.2.0': 'setOSProductKey',
          })
 

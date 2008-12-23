@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.AndreaConsadori.Alvarion'
-VERSION = '2.4'
+VERSION = '2.5'
 AUTHOR = 'Andrea Consadori'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori']

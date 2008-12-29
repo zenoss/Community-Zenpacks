@@ -1,5 +1,14 @@
 <?xml version="1.0"?>
 <objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Firewall', 'Netasq') -->
+<object id='/zport/dmd/Devices/Network/Firewall/Netasq' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.InterfaceMap', 'NetasqDeviceMap', 'zenoss.snmp.IpServiceMap', 'zenoss.snmp.HRFileSystemMap', 'zenoss.snmp.HRSWInstalledMap', 'zenoss.snmp.HRSWRunMap']
+</property>
+<property visible="True" type="string" id="zInterfaceMapIgnoreNames" >
+^lo|^ng|^vlan
+</property>
+</object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'Netasq System Performance') -->
 <object id='/zport/dmd/Devices/Network/rrdTemplates/Netasq System Performance' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <tomanycont id='datasources'>
@@ -323,6 +332,72 @@ False
 </property>
 <tomanycont id='datapoints'>
 <object id='clamavd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='count_auth_user' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+/usr/bin/snmpwalk -v1 -c${device/zSnmpCommunity} ${here/manageIp} 1.3.6.1.4.1.11256.1.2.1.1.3 |wc -l  | sed -e 's/.*/user:&amp;/'
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='user' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='count_host' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+/usr/bin/snmpwalk -v1 -c${device/zSnmpCommunity} ${here/manageIp} 1.3.6.1.4.1.11256.1.3.1.1.2 | wc -l |  sed -e 's/.*/host:&amp;/'
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='host' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -1058,6 +1133,89 @@ ${graphPoint/id}
 </property>
 <property type="string" id="dpName" mode="w" >
 Ping_min
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='User  Load' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='auth_user_user' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+count_auth_user_user
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='host_host' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+count_host_host
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE

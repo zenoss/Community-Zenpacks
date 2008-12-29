@@ -5,7 +5,7 @@ var GLOB_MARKERS = [];
 ZenOLGeoMap.prototype = {
     __init__: function(container){
         this.lock = new DeferredLock();
-        OpenLayers.ImgPath = './';
+        OpenLayers.ImgPath = 'oltheme/';
         this.map = new OpenLayers.Map(container,
                     {   //maxResolution: 0.703125, 
                         controls: [
@@ -23,7 +23,7 @@ ZenOLGeoMap.prototype = {
                             //new OpenLayers.Control.OverviewMap(),
                             new OpenLayers.Control.KeyboardDefaults()
                         ],
-                        theme: 'olstyle.css',
+                        theme: 'oltheme/style.css',
                         'maxZoomLevel': 18
                     }
         );
@@ -290,7 +290,8 @@ function olgeomap_initialize(){
 }
 
 addLoadEvent(function() {
-    YAHOO.zenoss.loader.require("container");
-    YAHOO.zenoss.loader.insert({onSuccess:olgeomap_initialize})
+    var loader = YAHOO.zenoss.getLoader(); //New since 2.2.3
+    loader.require("container");
+    loader.insert({onSuccess:olgeomap_initialize})
 });
 

@@ -23,53 +23,50 @@ class ZenPack(ZenPackBase):
 
     def _registerOLMapPortlet(self, app):
         zpm = app.zport.ZenPortletManager
-        portletsrc = zenPath('ZenPacks','ZenPacks.Ecocoms.OpenLayersMap-1.0-py2.4.egg','ZenPacks','Ecocoms','OpenLayersMap','OLMapsPortlet.js')
+        portletsrc = zenPath('ZenPacks','ZenPacks.Ecocoms.OpenLayersMap-1.1-py2.4.egg','ZenPacks','Ecocoms','OpenLayersMap','OLMapsPortlet.js')
         zpm.register_portlet( sourcepath=portletsrc, id='OpenLayersMapPortlet',
                         title='OpenLayers Map', permission=ZEN_COMMON)
+
+    def _registerOLMapTab(self, app):
         # Register new tab in locations
-        dmd = self.getDmdRoot('Locations')
-        actions = list(dmd.factory_type_information[0]['actions'])
+        dmdloc = self.getDmdRoot('Locations')
+        finfo = dmdloc.factory_type_information 
+        actions = list(finfo[0]['actions'])
         for i in range(len(actions)):
             if(self.olMapTab['id'] in actions[i].values()):
                 return
         actions.append(self.olMapTab)
-        dmd.Locations.factory_type_information[0]['actions'] = tuple(actions)
+        finfo[0]['actions'] = tuple(actions)
+        dmdloc.factory_type_information = finfo
         transaction.commit()
-        print "Reg: ",dmd.factory_type_information
-
-    # def _registerOLMapTab(self, app):
-        # actions = list(self.dmd.Locations.factory_type_information[0]['actions'])
-        # for i in range(len(actions)):
-            # if(self.olMapTab['id'] in actions[i].values()):
-                # return
-        # actions.append(self.olMapTab)
-        # self.dmd.Locations.factory_type_information[0]['actions'] = tuple(actions)
-        # transaction.commit()
-        # print "Reg: ",self.dmd.Locations.factory_type_information
+        print "Reg: ",dmdloc.factory_type_information
 
 
-    # def _unregisterOLMapTab(self, app):
-        # actions = list(self.dmd.Locations.factory_type_information[0]['actions'])
-        # for i in range(len(actions)):
-            # if(self.olMapTab['id'] in actions[i].values()):
-                # actions.remove(actions[i])
-        # self.dmd.Locations.factory_type_information[0]['actions'] = tuple(actions)
-        # transaction.commit()
-        # print "unReg: ",self.dmd.Locations.factory_type_information
+    def _unregisterOLMapTab(self, app):
+        dmdloc = self.getDmdRoot('Locations')
+        finfo = dmdloc.factory_type_information 
+        actions = list(finfo[0]['actions'])
+        for i in range(len(actions)):
+            if(self.olMapTab['id'] in actions[i].values()):
+                actions.remove(actions[i])
+        finfo[0]['actions'] = tuple(actions)
+        dmdloc.factory_type_information = finfo
+        transaction.commit()
+        print "unReg: ",self.dmd.Locations.factory_type_information
            
     def install(self, app):
         ZenPackBase.install(self, app)
         self._registerOLMapPortlet(app)
-#        self._registerOLMapTab(app)
+        #self._registerOLMapTab(app)
 
     def upgrade(self, app):
         ZenPackBase.upgrade(self, app)
         self._registerOLMapPortlet(app)
-#        self._unregisterOLMapTab(app)        
-#        self._registerOLMapTab(app)
+        #self._registerOLMapTab(app)
         
-    def remove(self, app):
-        ZenPackBase.remove(self, app)
+    def remove(self, app, leaveObjects):
+        ZenPackBase.remove(self, app, leaveObjects)
         zpm = app.zport.ZenPortletManager
         zpm.unregister_portlet('OpenLayersMapPortlet')
-#        self._unregisterOLMapTab(app)
+        #self._unregisterOLMapTab(app)
+

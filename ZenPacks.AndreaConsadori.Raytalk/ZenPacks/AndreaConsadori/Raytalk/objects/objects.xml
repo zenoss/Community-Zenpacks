@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'WiFi', 'Bridge', 'rrdTemplates', 'Raytalk MHAN-Z') -->
-<object id='/zport/dmd/Devices/Network/WiFi/Bridge/rrdTemplates/Raytalk MHAN-Z' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'Raytalk MHAN-Z') -->
+<object id='/zport/dmd/Devices/Network/rrdTemplates/Raytalk MHAN-Z' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <tomanycont id='datasources'>
 <object id='RX Dropped packets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -126,6 +126,39 @@ False
 </property>
 <tomanycont id='datapoints'>
 <object id='Tx packets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.1.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -279,39 +312,5 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
-</object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Raytalk', 'products', '4.1') -->
-<object id='/zport/dmd/Manufacturers/Raytalk/products/4.1' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
-<property type="string" id="name" mode="w" >
-4.1
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['4.1']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Traliccio Nord - Metano (Home)/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Master_Ghedi/os'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Traliccio Metano - Nord (Home)/os'/>
-</tomany>
-</object>
-<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Raytalk', 'products', 'MHAN-Z Wireless Bridge(TM)') -->
-<object id='/zport/dmd/Manufacturers/Raytalk/products/MHAN-Z Wireless Bridge(TM)' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
-<property type="string" id="name" mode="w" >
-MHAN-Z Wireless Bridge(TM)
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['MHAN-Z Wireless Bridge(TM)']
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Traliccio Nord - Metano (Home)/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Master_Ghedi/hw'/>
-<link objid='/zport/dmd/Devices/Network/WiFi/Bridge/devices/Traliccio Metano - Nord (Home)/hw'/>
-</tomany>
 </object>
 </objects>

@@ -388,7 +388,6 @@ HP J4819A ProCurve Switch 5308xl
 False
 </property>
 <tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/swgiga110.net.noid.in.sopra/hw'/>
 </tomany>
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'HP', 'products', 'ProCurve J4899B Switch 2650') -->
@@ -403,26 +402,6 @@ ProCurve J4899B Switch 2650
 False
 </property>
 <tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw113.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw1112.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw104.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw114.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw115.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw116.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw117.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw118.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw119.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw1111.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw101.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw102.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw103.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw105.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw106.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw1113.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw107.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw130.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw1115.net.noid.in.sopra/hw'/>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/sw132.net.noid.in.sopra/hw'/>
 </tomany>
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'HP', 'products', 'ProCurve J4904A Switch 2848') -->
@@ -437,7 +416,6 @@ ProCurve J4904A Switch 2848
 False
 </property>
 <tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/Switch/HP/devices/swgiga112.net.noid.in.sopra/hw'/>
 </tomany>
 </object>
 <!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'HP-BASE-MIB') -->

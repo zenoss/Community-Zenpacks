@@ -46,7 +46,7 @@ class VirtualMachine(DeviceComponent, ManagedEntity):
 			'icon'           : 'Device_icon.gif',
 			'product'        : 'VirtualMachines',
 			'factory'        : 'manage_addVirtualMachine',
-			'immediate_view' : 'terminalPerformance',
+			'immediate_view' : 'virtualmachinePerformance',
 			'actions'        :
 			(
 				{ 'id'            : 'perf'

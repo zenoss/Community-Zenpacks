@@ -6,7 +6,7 @@
 Template for monitoring VMWare ESX server virtual machines.
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.vmware.VirtualMachines.VMDevice
 </property>
 <tomanycont id='datasources'>
 <object id='CPU_Utilization' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>

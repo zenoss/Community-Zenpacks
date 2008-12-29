@@ -1,0 +1,94 @@
+<tal:block metal:use-macro="here/templates/macros/pageClean" >
+
+<tal:block metal:fill-slot="head-local">
+<!--  Store the post variables on our page -->
+<input type="hidden" id="mib_id" tal:attributes="value request/hrefid; name request/name" />
+
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/treeview/assets/skins/sam/treeview.css">
+
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/menu/assets/skins/sam/menu.css">
+        <script type="text/javascript" src="/zport/dmd/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="/zport/dmd/yui/container/container_core.js"></script>
+        <script type="text/javascript" src="/zport/dmd/yui/treeview/treeview.js"></script>
+
+        <script type="text/javascript" src="/zport/dmd/yui/menu/menu.js"></script>
+
+ <script type="text/javascript" src="mib_browser.js" ></script>
+<!--
+-->
+</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" tal:attributes="action string:${request/URL1}">
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+
+
+        <tal:block tal:define="tabletitle string:MIB Info as of ${here/getNowString}; menu_id string:MIB_info">
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+        <tal:block metal:fill-slot="zentablecontents">
+        <!-- BEGIN TABLE CONTENTS -->
+   <tr>
+       <td class="tableheader" title="MIB name" >Name</td>
+       <td> <input class="tablevalues" title="MIB name" type="text" size="20" id="mib_name" /> </td>
+       <td class="tableheader" title="Version of syntax used to write the MIB" >SMI version</td>
+       <td><input class="tablevalues" title="Version of syntax used to write the MIB" type="text" size="20" id="language" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Owner of the contents of the MIB" >Contact</td>
+       <td> <textarea class="tablevalues" title="Owner of the contents of the MIB" rows="5" cols="20" id="contact" ></textarea> </td>
+       <td class="tableheader" title="Description of the MIB" >Description</td>
+       <td> <textarea class="tablevalues" title="Description of the MIB" rows="5" cols="20" id="description" > </textarea></td>
+   </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+
+<tal:block metal:use-macro="here/templates/macros/contentSeparator"> </tal:block>
+
+<tal:block tal:define="tabletitle string:MIB Tree">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+<tal:block metal:fill-slot="zentablecontents">
+        <!-- BEGIN TABLE CONTENTS -->
+<tr>
+<td>
+
+</td>
+</tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<div class="tableheader" id="mib_browser"> &nbsp; </div>
+<script type="text/javascript" >
+initAll();
+</script>
+
+</tal:block>
+</tal:block>

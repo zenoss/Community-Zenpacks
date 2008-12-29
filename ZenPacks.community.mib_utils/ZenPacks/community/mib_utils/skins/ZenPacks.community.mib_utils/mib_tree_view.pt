@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>MIB tree view</title>
+        <!-- CSS for TreeView -->
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/treeview/assets/skins/sam/treeview.css">
+        
+        <!-- CSS for Menu -->
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/menu/assets/skins/sam/menu.css">
+
+        <link rel="stylesheet" type="text/css" href="zenoss.css">
+
+        <!-- Dependency source files -->
+        <script type="text/javascript" src="/zport/dmd/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="/zport/dmd/yui/container/container_core.js"></script>
+        <script type="text/javascript" src="/zport/dmd/yui/treeview/treeview.js"></script>
+
+        <!-- Menu source file -->
+        <script type="text/javascript" src="/zport/dmd/yui/menu/menu.js"></script>
+
+  </head>
+  <body>
+
+<div class="yui-skin-sam" id="mib_browser"> &nbsp; </div>
+<div class="yui-skin-sam" id="mib_trap_browser"> &nbsp; </div>
+    
+  </body>
+</html>
+

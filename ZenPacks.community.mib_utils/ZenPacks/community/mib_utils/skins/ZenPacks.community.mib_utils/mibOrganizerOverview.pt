@@ -1,0 +1,152 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" tal:attributes="action here/absolute_url_path">
+<tal:block tal:define="objects here/children;
+        menu_id string:Organizer_list;
+        tableName string:children;
+        showfilterbox python:True;
+        tabletitle string:Sub-Folders;
+        batch python:here.ZenTableManager.getBatch(tableName,objects);">
+    <input type='hidden' name='tableName' tal:attributes="value tableName" />
+    <input type="hidden" name="zenScreenName" 
+            tal:attributes="value template/id"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<!--==================== 
+Optional titlebar stuff
+
+<tal:block metal:fill-slot="menuslot">
+</tal:block>
+<tal:block metal:fill-slot="filterslot">
+</tal:block>
+
+  ====================-->
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'primarySortKey','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'countChildren','Sub-Folders')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'countClasses','Mibs')"/>
+    </tr>
+    <tal:block tal:repeat="svcorg batch">
+    <tr tal:define="odd repeat/svcorg/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" width="50%">
+            <input tal:condition="here/isManager" 
+                type="checkbox" name="organizerPaths:list" 
+                tal:attributes="value svcorg/getId"/>
+            <a href="_" 
+            tal:attributes="href svcorg/getPrimaryUrlPath"
+            tal:content="svcorg/id">Name</a>
+        </td>
+        <td class="tablevalues" align=center 
+            tal:content="svcorg/countChildren"/>
+        <td class="tablevalues" align=center tal:content="svcorg/countClasses"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader">
+            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+<script language="javascript" type="text/javascript">
+<!--
+function popup_browser( mib_id, url ) {
+ var full_url= 'mib_browser?name=' + mib_id + '&hrefid=' + url + '/showMibasXML';
+ var new_browser= window.open( full_url, 'mib_browser_popup', 'location=yes,height=450,width=600,resizable=yes,scrollbars=yes');
+
+ if( window.focus ) {
+    new_browser.focus();
+ }
+
+ /* ...  Prevent us from going to the URL specified in the href attribute  ... */
+ return false;
+}
+
+// -->
+</script>
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form name="mibsForm" method="post" tal:attributes="action here/absolute_url_path"
+      enctype="multipart/form-data" >
+<tal:block tal:define="objects here/mibs;
+	menu_id string:Mib_list;
+        tableName string:mibslist;
+        showfilterbox python:True;
+        tabletitle string:Mibs;
+        batch python:here.ZenTableManager.getBatch(tableName,objects);">
+<input type='hidden' name='tableName' tal:attributes="value tableName" />
+<input type="hidden" name="zenScreenName" 
+    tal:attributes="value template/id"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<!--==================== 
+Optional titlebar stuff
+
+<tal:block metal:fill-slot="menuslot">
+</tal:block>
+<tal:block metal:fill-slot="filterslot">
+</tal:block>
+
+  ====================-->
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'getId','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'description','Description')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'nodeCount','Nodes')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'notificationCount','Notifications')"/>
+    </tr>
+    <tr tal:repeat="mib batch">
+        <td class="tablevalues">
+            <input tal:condition="here/isManager" 
+                type="checkbox" name="ids:list" 
+                tal:attributes="value mib/getId"/>
+
+      <a tal:attributes="onclick python:'return popup_browser( \'' + mib.getId() + '\', \'' + mib.getPrimaryUrlPath() + '\' )';
+                         href mib/getPrimaryUrlPath" >
+            <img border-style="none" border="0" src="mib_browser.png"/></a>
+
+            <a tal:attributes="href mib/getPrimaryUrlPath" tal:content="mib/getId">Name</a>
+        </td>
+        <td class="tablevalues" tal:content="python:mib.description[:64]"/>
+        <td class="tablevalues" tal:content="mib/nodeCount"/>
+        <td class="tablevalues" tal:content="mib/notificationCount"/>
+    </tr>
+    <tr>
+        <td colspan="4" class="tableheader">
+            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+
+</tal:block>
+</tal:block>
+
+

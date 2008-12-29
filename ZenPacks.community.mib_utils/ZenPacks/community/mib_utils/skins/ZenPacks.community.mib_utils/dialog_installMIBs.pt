@@ -1,0 +1,21 @@
+<h2>Install MIB</h2>
+<span id="errmsg" style="color:red;"></span>
+<p style="text-align:left;">
+Select the MIB file (eg .tar, .mib, .zip) to upload and install.
+</p>
+<p style="text-align:right;">
+<input type="file" name="mib_file:file" size="40"/>
+</p>
+
+<div align="right" >
+<input tal:attributes="id string:dialog_submit;
+        type string:submit;
+        value string:OK;
+        onclick string:return $$('dialog').submit_form( '', 'mibsForm' )"
+        name="upload_installMIB:method" />
+<input tal:attributes="id string:dialog_cancel;
+                        type string:button;
+                        value string:Cancel;
+                        onclick string:$$('dialog').hide()" />
+</div>
+

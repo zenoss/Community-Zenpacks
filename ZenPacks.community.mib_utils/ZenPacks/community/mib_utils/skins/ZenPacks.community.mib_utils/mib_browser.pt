@@ -1,0 +1,273 @@
+<tal:block metal:use-macro="here/templates/macros/pageClean" >
+
+<tal:block metal:fill-slot="head-local">
+<!--  Store the post variables on our page -->
+<input type="hidden" id="mib_id" tal:attributes="value request/hrefid; name request/name" />
+
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/treeview/assets/skins/sam/treeview.css">
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/menu/assets/skins/sam/menu.css">
+
+<link rel="stylesheet" type="text/css" href="/zport/dmd/yui/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="/zport/dmd/yui/tabview/assets/skins/sam/tabview.css" />
+<script type="text/javascript" src="/zport/dmd/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/zport/dmd/yui/element/element-beta-min.js"></script>
+
+<script type="text/javascript" src="/zport/dmd/yui/tabview/tabview-min.js"></script>
+
+        <script type="text/javascript" src="/zport/dmd/yui/container/container_core-min.js"></script>
+        <script type="text/javascript" src="/zport/dmd/yui/treeview/treeview-min.js"></script>
+
+        <script type="text/javascript" src="/zport/dmd/yui/menu/menu-min.js"></script>
+
+ <script type="text/javascript" src="mib_browser-min.js" ></script>
+ <script type="text/javascript" src="oid_lookup-min.js" ></script>
+
+<!--  Custom styling information  -->
+<style type="text/css">
+/* .yui-navset defaults to .yui-navset-top */
+.yui-skin-sam .yui-navset .yui-nav,
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav { /* protect nested tabviews from other orientations */
+    border:solid #2647a0;  /* color between tab list and content */
+background: transparent url(img/titlebar_bg.gif) repeat-x bottom left;
+    border-width:0 0 5px;
+    Xposition:relative;
+    zoom:1;
+}
+.yui-skin-sam .yui-navset .yui-content {
+    background:#CCCCCC; /* content background color */
+}
+
+.yui-skin-sam .yui-navset .yui-content,
+.yui-skin-sam .yui-navset .yui-navset-top .yui-content {
+    border:1px solid #CCCCCC; /* content border */
+    border-top-color:#CCCCCC; /* different border color */
+    padding:0.25em 0.5em; /* content padding */
+}
+
+.yuimenu {
+    background: white; /* content background color */
+    text-decoration: none;
+    text-align: left;
+    white-space: nowrap;
+    border:1px solid black; /* content border */
+    padding:0.25em 0.5em; /* content padding */
+}
+
+.yuimenuitemlabel {
+    text-decoration: none;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.yuimenuitemlabel {
+    text-decoration: none;
+    text-align: left;
+    white-space: nowrap;
+    color: #CCCCCC;
+}
+</style>
+
+</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+<form method="post" tal:attributes="action string:${request/URL1}">
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+
+
+        <tal:block tal:define="tabletitle string:MIB Info as of ${here/getNowString}; menu_id string:MIB_info">
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+        <tal:block metal:fill-slot="zentablecontents">
+   <tr>
+   <td>   </td>
+   </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+
+<div class="yui-skin-sam" >
+<div id="mib_browser_tabview" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#tab_info"><em>MIB Info</em></a></li>
+        <li><a href="#tab_lookup"><em>Lookup</em></a></li>
+        <li><a href="#tab_test_settings"><em>Test Settings</em></a></li>
+        <li><a href="#snmp"><em>SNMP</em></a></li>
+        <li><a href="#tab_hide"><em>Hide Tabs</em></a></li>
+    </ul>            
+    <div class="yui-content" >
+        <div id="tab_info">
+<p>Information about the entire MIB.</p>
+<form method="post" tal:attributes="action python:'/zport/dmd/Mibs/mibs/' + request.name">
+<table>
+   <tr>
+       <td class="tableheader" title="MIB name" >Name</td>
+       <td> <input class="tablevalues" title="MIB name" type="text" size="20" name="newId" id="mib_name" readonly /> </td>
+       <td class="tableheader" title="Version of syntax used to write the MIB" >SMI version</td>
+       <td><input class="tablevalues" title="Version of syntax used to write the MIB" type="text" size="20" name="language" id="language" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Owner of the contents of the MIB" >Contact</td>
+       <td> <textarea class="tablevalues" title="Owner of the contents of the MIB" rows="5" cols="20" name="contact:text" id="contact" ></textarea> </td>
+       <td class="tableheader" title="Description of the MIB" >Description</td>
+       <td> <textarea class="tablevalues" title="Description of the MIB" rows="5" cols="20" name="description:text" id="description" > </textarea></td>
+   </tr>
+    <tr>
+<input type="hidden" name="dontRender" tal:attributes="value python:True" />
+<!--
+<input type="hidden" name="dontRedirect" tal:attributes="value python:True" />
+-->
+        <td class="tableheader" colspan="4">
+            <input class="tableheader" type="submit" value="Save"
+                name="zmanage_editProperties:method" />
+        </td>
+    </tr>
+</table>
+</form>
+</div>
+        <div id="tab_lookup">
+<p>Search for the definition of an OID by name (eg HOST-RESOURCES-MIB:hrSystemDate) or by number (eg 1.3.6.1.2.1.25.1.2)
+ and display information about that OID.</p>
+<table>
+   <tr>
+       <td class="tableheader" title="OID number or name to lookup" >OID name or number</td>
+       <td> <input class="tablevalues" title="OID number or name to lookup" type="text" size="20" onchange="start_oid_lookup();" id="oid_lookup" /> </td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Lookup result" >Result</td>
+       <td> <textarea class="tablevalues" title="Lookup result" rows="10" cols="40" id="oid_result" readonly> </textarea></td>
+   </tr>
+</table></div>
+        <div id="tab_test_settings">
+<p>The snmpwalk menu option uses this information to snmpwalk the device with the selected OID.
+  To select the snmpwalk menu option, navigate to the desired OID in the MIB tree and right-click to display
+the menu options, and then click 'snmpwalk'.</p>
+<table>
+   <tr>
+       <td class="tableheader" title="Device to test against" >Device</td>
+       <td> <input class="tablevalues" title="Device to test against" type="text" size="20" id="test_device" /> </td>
+       <td class="tableheader" title="Community name to use for contacting the device" >Community</td>
+       <td> <input class="tablevalues" title="Community name to use for contacting the device" type="text" size="20" id="test_community" /> </td>
+   </tr>
+<!-- 
+   <tr>
+       <td class="tableheader" title="Device to test against" >Device</td>
+       <td> <input class="tablevalues" title="Device to test against" type="text" size="20" id="test_device" /> </td>
+       <td class="tableheader" title="TCP/IP port to use for SNMP communications. Default is 161" >SNMP port</td>
+       <td> <input class="tablevalues" title="SNMP port" type="text" size="20" id="test_port" value="161" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Version of SNMP protocol to use" >SNMP version</td>
+       <td> <select class="tablevalues" title="Version of SNMP protocol to use" id="test_snmp_ver" >
+<option value="1" selected >1</option>
+<option value="2c">2c</option>
+<option value="3">3</option>
+</select>
+</td>
+       <td class="tableheader" title="How long to wait, in seconds, before giving up" >Timeout</td>
+       <td> <input class="tablevalues" title="How long to wait, in seconds, before giving up" type="text" size="20" id="test_timeout" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Community name to use for contacting the device" >Community</td>
+       <td> <input class="tablevalues" title="Community name to use for contacting the device" type="text" size="20" id="test_community" /> </td>
+       <td class="tableheader" title="xxx" >Security Name</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_security_name" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="xxx" >Privilege Type</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_priv_type" /></td>
+       <td class="tableheader" title="xxx" >Privilege Password</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_priv_password" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="xxx" >Auth Type</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_auth_type" /></td>
+       <td class="tableheader" title="xxx" >Auth Password</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_auth_password" /></td>
+   </tr>
+-->
+</table></div>
+        <div id="snmp">
+<p>Some background information about the Simple Network Management Protocol
+(SNMP) </p>
+<ul>
+  <li><a href="http://wikipedia.org/wiki/Simple_Network_Management_Protocol" target="_blank">Background information</a>
+about SNMP, MIBs, OIDs and how they are supposed to relate to each other.</li>
+  <li>Among the <a href="http://wikipedia.org/wiki/List_of_RFCs" target="_blank">Requests For Comment (RFCs)</a> there are some that describe the SNMP protocol versions:
+<a href="http://tools.ietf.org/html/rfc1213" target="_blank">1</a>,
+ <a href="http://tools.ietf.org/html/rfc1908" target="_blank">2c</a>,
+ <a href="http://tools.ietf.org/html/rfc3418" target="_blank">3</a>.</li>
+ <li>About the <a href="http://www.ibr.cs.tu-bs.de/projects/libsmi/index.html" target="_blank">libsmi</a>
+project, from which Zenoss uses 
+<a href="http://www.ibr.cs.tu-bs.de/projects/libsmi/smidump.html" target="_blank">smidump</a>
+ to import MIBs into the Zope Database.</li>
+ <li><a href="http://www.net-snmp.org" target="_blank">Net-SNMP</a>
+is a project which maintains SNMP command-line applications
+(eg snmpwalk, snmptranslate), a graphical MIB browser (tkmib), the SNMP
+agent (eg snmpd), a trap daemon (snmptrapd) and 
+libraries for this functionality.</li>
+  <li>There are some repositories of collected SNMP MIBs, such as
+<a href="http://www.mibdepot.com/cgi-bin/xsearch_index3.cgi" target="_blank">mibDepot</a> and
+<a href="http://www.mibsearch.com" target="_blank">MIB Search</a>.
+<uL>
+<li>Search sites such as these sometimes use captchas, which are used to
+verify that humans are doing the searches rather than programs.  The
+'Download MIB..." menu option specifically will not work with sites that
+use captchas.  You will need to download them by hand and then upload the MIBs into Zenoss./li>
+<li>Note that vendors for each device are expected to provide their MIBs,
+and that some vendors consider this information proprietary. 
+This means that not necessarily all MIBs will be available without a
+support contract from your vendors.</li>
+</uL>
+</ul>
+    </div>
+        <div id="tab_hide">
+    </div>
+</div>
+
+<tal:block tal:define="tabletitle string:MIB Tree">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+<tal:block metal:fill-slot="zentablecontents">
+        <!-- BEGIN TABLE CONTENTS -->
+<tr>
+<td>
+
+</td>
+</tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<div class="tableheader" id="mib_browser"> &nbsp; </div>
+
+<script type="text/javascript" >
+var tabView = new YAHOO.widget.TabView( 'mib_browser_tabview' );
+initAll();
+</script>
+
+
+</tal:block>
+</tal:block>
+

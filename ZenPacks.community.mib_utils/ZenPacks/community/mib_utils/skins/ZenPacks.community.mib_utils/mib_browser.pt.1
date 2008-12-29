@@ -1,0 +1,180 @@
+<tal:block metal:use-macro="here/templates/macros/pageClean" >
+
+<tal:block metal:fill-slot="head-local">
+<!--  Store the post variables on our page -->
+<input type="hidden" id="mib_id" tal:attributes="value request/hrefid; name request/name" />
+
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/treeview/assets/skins/sam/treeview.css">
+        <link rel="stylesheet" type="text/css" href="/zport/dmd/yui/menu/assets/skins/sam/menu.css">
+
+<link rel="stylesheet" type="text/css" href="/zport/dmd/yui/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="/zport/dmd/yui/tabview/assets/skins/sam/tabview.css" />
+<script type="text/javascript" src="/zport/dmd/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/zport/dmd/yui/element/element-beta-min.js"></script>
+
+<script type="text/javascript" src="/zport/dmd/yui/tabview/tabview-min.js"></script>
+
+        <script type="text/javascript" src="/zport/dmd/yui/container/container_core.js"></script>
+        <script type="text/javascript" src="/zport/dmd/yui/treeview/treeview.js"></script>
+
+        <script type="text/javascript" src="/zport/dmd/yui/menu/menu.js"></script>
+
+ <script type="text/javascript" src="mib_browser.js" ></script>
+ <script type="text/javascript" src="oid_lookup.js" ></script>
+</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+<form method="post" tal:attributes="action string:${request/URL1}">
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+
+
+        <tal:block tal:define="tabletitle string:MIB Info as of ${here/getNowString}; menu_id string:MIB_info">
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+        <tal:block metal:fill-slot="zentablecontents">
+   <tr>
+   <td>   </td>
+   </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+
+<div class="yui-skin-sam" >
+<div id="demo" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#tab1"><em>Info</em></a></li>
+        <li><a href="#tab2"><em>Lookup</em></a></li>
+        <li><a href="#tab3"><em>Test Setup</em></a></li>
+        <li><a href="#tab4"><em>Hide Tabs</em></a></li>
+    </ul>            
+    <div class="yui-content" >
+        <div id="tab1" class="zentable-body" >
+<p>Information about the entire MIB.</p>
+<table class="zentable" >
+   <tr>
+       <td class="tableheader" title="MIB name" >Name</td>
+       <td> <input class="tablevalues" title="MIB name" type="text" size="20" id="mib_name" /> </td>
+       <td class="tableheader" title="Version of syntax used to write the MIB" >SMI version</td>
+       <td><input class="tablevalues" title="Version of syntax used to write the MIB" type="text" size="20" id="language" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Owner of the contents of the MIB" >Contact</td>
+       <td> <textarea class="tablevalues" title="Owner of the contents of the MIB" rows="5" cols="20" id="contact" ></textarea> </td>
+       <td class="tableheader" title="Description of the MIB" >Description</td>
+       <td> <textarea class="tablevalues" title="Description of the MIB" rows="5" cols="20" id="description" > </textarea></td>
+   </tr>
+</table></div>
+        <div id="tab2">
+<p>Search for the definition of an OID by name (eg HOST-RESOURCES-MIB:hrSystemDate) or by number (eg 1.3.6.1.2.1.25.1.2)
+ and display information about that OID.</p>
+<table>
+   <tr>
+       <td class="tableheader" title="OID number or name to lookup" >OID name or number</td>
+       <td> <input class="tablevalues" title="OID number or name to lookup" type="text" size="20" onchange="start_oid_lookup();" id="oid_lookup" /> </td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Lookup result" >Result</td>
+       <td> <textarea class="tablevalues" title="Lookup result" rows="10" cols="40" id="oid_result" readonly> </textarea></td>
+   </tr>
+</table></div>
+        <div id="tab3">
+<p>The test menu option uses this information to snmpwalk the device with the selected OID.
+  To select the test menu option, navigate to the desired OID in the MIB tree and right-click to display
+the menu options, and then click 'test'.</p>
+<table>
+   <tr>
+       <td class="tableheader" title="Device to test against" >Device</td>
+       <td> <input class="tablevalues" title="Device to test against" type="text" size="20" id="test_device" /> </td>
+       <td class="tableheader" title="Community name to use for contacting the device" >Community</td>
+       <td> <input class="tablevalues" title="Community name to use for contacting the device" type="text" size="20" id="test_community" /> </td>
+   </tr>
+<!-- 
+   <tr>
+       <td class="tableheader" title="Device to test against" >Device</td>
+       <td> <input class="tablevalues" title="Device to test against" type="text" size="20" id="test_device" /> </td>
+       <td class="tableheader" title="TCP/IP port to use for SNMP communications. Default is 161" >SNMP port</td>
+       <td> <input class="tablevalues" title="SNMP port" type="text" size="20" id="test_port" value="161" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Version of SNMP protocol to use" >SNMP version</td>
+       <td> <select class="tablevalues" title="Version of SNMP protocol to use" id="test_snmp_ver" >
+<option value="1" selected >1</option>
+<option value="2c">2c</option>
+<option value="3">3</option>
+</select>
+</td>
+       <td class="tableheader" title="How long to wait, in seconds, before giving up" >Timeout</td>
+       <td> <input class="tablevalues" title="How long to wait, in seconds, before giving up" type="text" size="20" id="test_timeout" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Community name to use for contacting the device" >Community</td>
+       <td> <input class="tablevalues" title="Community name to use for contacting the device" type="text" size="20" id="test_community" /> </td>
+       <td class="tableheader" title="xxx" >Security Name</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_security_name" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="xxx" >Privilege Type</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_priv_type" /></td>
+       <td class="tableheader" title="xxx" >Privilege Password</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_priv_password" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="xxx" >Auth Type</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_auth_type" /></td>
+       <td class="tableheader" title="xxx" >Auth Password</td>
+       <td> <input class="tablevalues" title="xxx" type="text" size="20" id="test_auth_password" /></td>
+   </tr>
+-->
+</table></div>
+    </div>
+        <div id="tab4">
+    </div>
+</div>
+
+<tal:block tal:define="tabletitle string:MIB Tree">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+<tal:block metal:fill-slot="zentablecontents">
+        <!-- BEGIN TABLE CONTENTS -->
+<tr>
+<td>
+
+</td>
+</tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<div class="tableheader" id="mib_browser"> &nbsp; </div>
+
+<script type="text/javascript" >
+var tabView = new YAHOO.widget.TabView('demo');
+initAll();
+</script>
+
+
+</tal:block>
+</tal:block>
+

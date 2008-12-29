@@ -1,0 +1,17 @@
+<h2>Install MIB</h2>
+<p>Enter the URLs of SNMP MIBs, one URL per line.</p>
+<p>NB: Accepts .mib, .tar, .tar.gz, .tar.bz and .zip formats</p>
+<br/>
+
+ <textarea cols="50" rows="5" name="mib_urls" >
+ </textarea>
+
+<div id="dialog_buttons">
+    <input type="submit" name="download_install_MIBs:method"
+    	   value="Install"
+	   tal:attributes="onclick string:return $$('dialog').submit_form('${here/absolute_url_path}')" />
+
+    <input id="dialog_cancel" 
+    	   type="button" value="Cancel" 
+    	   onclick="$('dialog').hide()"/>
+</div>

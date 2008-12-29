@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<span xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      tal:replace="structure python:here.show_xml( context.absolute_url_path() )[22:]" >
+</span>
+

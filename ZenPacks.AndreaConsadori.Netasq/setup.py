@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.AndreaConsadori.Netasq'
-VERSION = '2.0'
+VERSION = '2.2'
 AUTHOR = 'Andrea Consadori'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori']

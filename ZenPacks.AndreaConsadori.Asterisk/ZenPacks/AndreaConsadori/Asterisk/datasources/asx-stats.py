@@ -134,7 +134,7 @@ try:
 	if re.compile(r"sip peers \[").search(i):
 	    stats["sip.peers.total"] = eval(i.split()[0])
 	    if len(i.split()) > 8:
-		stats["sip.peers.online"] = eval(i.split()[9])
+		stats["sip.peers.online"] = eval(i.split()[4])
 	    else:
 		stats["sip.peers.online"] = eval(i.split()[3][1:])
 
@@ -187,7 +187,7 @@ try:
 
     s = query("action: command\r\ncommand: iax2 show channels\r\n\r\n", "--END COMMAND--").split("\n")
     for i in s:
-	if re.compile("active IAX channels").search(i):
+	if re.compile("active IAX channel").search(i):
 	    stats["iax.channels"] = eval(i.split()[0])
 
     s = query("action: command\r\ncommand: group show channels\r\n\r\n", "--END COMMAND--").split("\n")

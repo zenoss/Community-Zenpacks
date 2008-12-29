@@ -135,9 +135,9 @@ True
 </object>
 </tomanycont>
 </object>
-<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<object id='quality' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
+COMMAND
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
@@ -148,17 +148,17 @@ True
 <property type="int" id="severity" mode="w" >
 3
 </property>
+<property type="string" id="commandTemplate" mode="w" >
+/usr/bin/snmpwalk -v1 -c${device/zSnmpCommunity} ${here/manageIp} 1.3.6.1.4.1.8433.1.1.2.11.1.2.1 | sed -e s/^SNMPv2-SMI::enterprises.8433.1.1.2.11.1.2.1// | grep -oE "[[:digit:]]{1,}" | sed -e 's/.*/quality:&amp;/'
+</property>
 <property type="int" id="cycletime" mode="w" >
 300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.2.1.1.3.0
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
 <tomanycont id='datapoints'>
-<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='quality' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -304,6 +304,60 @@ ${graphPoint/id}
 </property>
 <property type="string" id="dpName" mode="w" >
 Tx packets_Tx packets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='link quality' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='quality' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+quality_quality
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE

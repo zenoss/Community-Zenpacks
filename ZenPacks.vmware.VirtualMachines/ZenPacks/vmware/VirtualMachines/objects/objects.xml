@@ -1,32 +1,5 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'ESX', 'rrdTemplates', 'FileSystem', 'datasources', 'Disk_VDF', 'datapoints', 'availBlocks') -->
-<object id='/zport/dmd/Devices/Server/ESX/rrdTemplates/FileSystem/datasources/Disk_VDF/datapoints/availBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'ESX', 'rrdTemplates', 'FileSystem', 'datasources', 'Disk_VDF', 'datapoints', 'totalBlocks') -->
-<object id='/zport/dmd/Devices/Server/ESX/rrdTemplates/FileSystem/datasources/Disk_VDF/datapoints/totalBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'ESX', 'rrdTemplates', 'FileSystem', 'datasources', 'Disk_VDF', 'datapoints', 'usedBlocks') -->
-<object id='/zport/dmd/Devices/Server/ESX/rrdTemplates/FileSystem/datasources/Disk_VDF/datapoints/usedBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'ESX', 'rrdTemplates', 'VirtualMachine') -->
 <object id='/zport/dmd/Devices/Server/ESX/rrdTemplates/VirtualMachine' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >

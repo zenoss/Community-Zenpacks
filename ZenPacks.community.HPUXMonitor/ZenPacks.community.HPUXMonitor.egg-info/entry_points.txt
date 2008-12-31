@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.HPUXMonitor = ZenPacks.community.HPUXMonitor
+

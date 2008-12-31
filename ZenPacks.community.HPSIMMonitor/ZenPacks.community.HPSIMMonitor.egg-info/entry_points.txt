@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.HPSIMMonitor = ZenPacks.community.HPSIMMonitor
+

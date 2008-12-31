@@ -1,0 +1,6065 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Power', 'UPS', 'Eltek') -->
+<object id='/zport/dmd/Devices/Power/UPS/Eltek' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['Device', 'Eltek UPS']
+</property>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.InterfaceAliasMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'zenoss.snmp.NewRouteMap']
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Eltek UPS') -->
+<object id='/zport/dmd/Devices/rrdTemplates/Eltek UPS' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Eltek UPS status, voltages, load, temperature statistics, etc
+</property>
+<tomanycont id='datasources'>
+<object id='OutputVoltage' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.4.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='OutputVoltage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='acVoltage1' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6.1.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='acVoltage1' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='acVoltage2' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='acVoltage2' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='acVoltage3' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='acVoltage3' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmACmains' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.11.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmACmains' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmBatteryBreakerOpen' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.12.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmBatteryBreakerOpen' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmBatteryLifeEnded' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.18.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmBatteryLifeEnded' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmDistributionBreakerOpen' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.13.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmDistributionBreakerOpen' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmMajorBatteryHighTemp' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.5.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmMajorBatteryHighTemp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmMajorHighBattVolt' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.1.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmMajorHighBattVolt' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmMajorLowBattVolt' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmMajorLowBattVolt' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='alarmMajorRectifier' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.14.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='alarmMajorRectifier' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='batteryCapacityLeft' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='batteryCapacityLeft' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='batteryCurrent' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='batteryCurrent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='batteryTemp' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.4.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='batteryTemp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='batteryTimeToDisconnect' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.1.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='batteryTimeToDisconnect' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='batteryVoltage' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='batteryVoltage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rectifierTotalCurrent' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rectifierTotalCurrent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rectifierUtilization' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.4.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rectifierUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='AC Phase Loss' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmACmains_alarmACmains']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/PowerLoss
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Battery Breaker' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmDistributionBreakerOpen_alarmDistributionBreakerOpen']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Battery High Temp' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmMajorBatteryHighTemp_alarmMajorBatteryHighTemp']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Battery High Voltage' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmMajorHighBattVolt_alarmMajorHighBattVolt']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Battery Life Ended' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmBatteryLifeEnded_alarmBatteryLifeEnded']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Battery Low Voltage' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmMajorLowBattVolt_alarmMajorLowBattVolt']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Load Distribution breaker' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmDistributionBreakerOpen_alarmDistributionBreakerOpen']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Rectifier Alarm' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['alarmMajorRectifier_alarmMajorRectifier']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+0
+</property>
+<property type="string" id="maxval" mode="w" >
+0
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power/UPS
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Battery Status' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+minutes / percent
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='Battery Capacity Left' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+batteryCapacityLeft_batteryCapacityLeft
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Battery Time Remaining' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+batteryTimeToDisconnect_batteryTimeToDisconnect
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Rectifier Utilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+percent
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+100
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='Load' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rectifierUtilization_rectifierUtilization
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperatures' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Degrees of Celsius
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='Battery' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+batteryTemp_batteryTemp
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Total Loads' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Amperes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='Battery' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+batteryCurrent_batteryCurrent
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Rectifier' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rectifierTotalCurrent_rectifierTotalCurrent
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Voltages' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Voltes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Battery Voltage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+100,/
+</property>
+<property type="string" id="dpName" mode="w" >
+batteryVoltage_batteryVoltage
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Input Voltage Phase 1' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+acVoltage1_acVoltage1
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Input Voltage Phase 2' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+acVoltage2_acVoltage2
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Input Voltage Phase 3' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+acVoltage3_acVoltage3
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Eltek') -->
+<object id='/zport/dmd/Manufacturers/Eltek' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
+<property type="string" id="url" mode="w" >
+http://www.eltekvalere.com/
+</property>
+<tomanycont id='products'>
+<object id='smartpack' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+smartpack
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['1.3.6.1.4.1.12148.9']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+<tomany id='instances'>
+<link objid='/zport/dmd/Devices/Power/UPS/Eltek/devices/UPS1-Nov13/hw'/>
+<link objid='/zport/dmd/Devices/Power/UPS/Eltek/devices/UPS1-Esn29/hw'/>
+<link objid='/zport/dmd/Devices/Power/UPS/Eltek/devices/UPS1-Ost21/hw'/>
+<link objid='/zport/dmd/Devices/Power/UPS/Eltek/devices/UPS1-Msk20/hw'/>
+</tomany>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'ELTEK_COMMON-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/ELTEK_COMMON-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Harald Johnsen
+Postal: Eltek Energy AS
+P.O. Box 1500
+N-3007 Drammen
+Norway
+Tel: +47-32 20 32 00
+Fax: +47-32 20 31 20
+E-mail: harald.johnsen@eltekenergy.com
+web:  www.eltekenergy.com
+      
+</property>
+<property type="string" id="description" mode="w" >
+An ongoing effort toward a generic MIB for all ELTEK products.
+The origin of this MIB comes from Nextel spec as of May 2005 and is meant to
+ be a common basic mib for smartpack, aeon gold and mcu control units.
+This iteration is based on the distributed systems smartpack mib, and contains basically 
+changes in the trap format.
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'ELTEK_DISTRIBUTED-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/ELTEK_DISTRIBUTED-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Harald Johnsen
+Postal: Eltek Valere AS
+P.O. Box 3043
+N-3003 Drammen
+Norway
+Tel: +47-32 20 32 00
+Fax: +47-32 20 31 20
+E-mail: harald.johnsen@eltekvalere.com
+web:  www.eltekvalere.com
+      
+</property>
+<property type="string" id="description" mode="w" >
+An ongoing effort toward a generic MIB for all ELTEK products.
+Branch overview:
+Aeongold branch will be 1
+AL175 branch will be 2
+AL6000 branch will be 3
+Internal used branch will be 4
+Internal used branch will be 5
+OEM Smartpack branch will be 6
+ELTEK Common branch will be 7 (SmartPack, MCU, AEON w/WebPower sw V2.x)
+ELTEK Distributed branch will be 8 (SmartPack w/WebPower sw V3.x)
+ELTEK Distributed V2 branch will be 9 (SmartPack w/WebPower sw V4.0)
+ELTEK Distributed V3 branch will be 9 (SmartPack w/WebPower sw V4.1)
+</property>
+<tomanycont id='nodes'>
+<object id='acDistribution' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6
+</property>
+</object>
+<object id='acVoltage1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The AC Voltage of phase 1
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='acVoltage2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The AC Voltage of phase 2
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='acVoltage3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.6.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The AC Voltage of phase 3
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmACmains' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The AC voltage has dropped below critical level, or one or more AC input phases was lost.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmBatteryBoostmodeEntered' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system has increased the battery charge voltage in order to boost the 
+battery. When the criteria for stopping the battery boost is reached, 
+the charge voltage is lowered to commence normal charging.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmBatteryBreakerOpen' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A battery breaker/fuse alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmBatteryDisconnectOpen' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Battery Disconnect Contactor alarm
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmBatteryLifeEnded' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The battery quality has dropped below critical level. 
+A battery test has measured the fully charged capacity to be too low, 
+and thus probably the battery lifecycle to be near expired.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmBatteryTestmodeEntered' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system has lowered the battery charge voltage in order to discharge the batteries 
+to a predefined level. When the criteria for stopping the battery testing is reached, the 
+charge voltage is increased to commence normal charging.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmDistributionBreakerOpen' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A Load Distribution breaker/fuse alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmGroup' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7
+</property>
+</object>
+<object id='alarmLVD1open' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 1 alarm. The contactor disconnect voltage has been
+reached and the contactor has disconnected.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmLVD2open' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 2 alarm. The contactor disconnect voltage has been
+reached and the contactor has disconnected.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmLVD3open' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 3 alarm. The contactor disconnect voltage has been
+reached and the contactor has disconnected.
+      
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMajorBatteryHighTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major High Battery Temperature alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMajorBatterySymmetry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Battery Symmetry Delta Voltage Major alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMajorHighBattVolt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major High Battery Voltage Alarm
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMajorLowBattVolt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major Low Battery Voltage Alarm
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMajorRectifier' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is a Major Rectifier alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMinorBatteryHighTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor High Battery Temperature alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMinorBatterySymmetry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Battery Symmetry Delta Voltage Minor alarm
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMinorHighBattVolt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor High Battery Voltage alarm
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMinorLowBattVolt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor Low Battery Voltage Alarm
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmMinorRectifier' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is a Minor Rectifier alarm.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='alarmWellknownAlarms' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.7.1
+</property>
+</object>
+<object id='battery' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3
+</property>
+</object>
+<object id='batteryBankID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the selected row in the table. i.e. the battery bank.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanks' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19
+</property>
+</object>
+<object id='batteryBanksEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='batteryBanksExtensionEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='batteryBanksExtensionID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the selected row in the table. i.e. the battery bank.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index used for navigating the rows 1..8  of batteryBanksExtensionTable 
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue4' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue5' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue6' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue7' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionSymmetryInputValue8' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksExtensionTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This table shows the measured value on the symmetry inputs.
+</property>
+</object>
+<object id='batteryBanksIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index used for navigating the rows 1..8  of batteryBanksTable 
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='batteryBanksNumberOfStrings' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of strings in the power system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksNumofBanks' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of Smartpacks that is used to measure battery parameters. 
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry1deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry1enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry1status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry2deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry2enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry2status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry3deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry3enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry3status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry4deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry4enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry4status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry5deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry5enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry5status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry6deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry6enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry6status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry7deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry7enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry7status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry8deltaVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The difference between the measured value and the expected value.
+The expected value is calculated by taking the measured total batteryvoltage and divide
+it with the number of battery blocks. You'll then have the theoretical correct value for 
+each battery block.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksSymmetry8enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/Disable the individual symmetry input. If disabled this will read 0 volts and 
+the alarm flag will be turned off.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBanksSymmetry8status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3.1.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryBanksTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of up to 8 battery banks. Each banks may have up to 8 symmetry measuments.
+</property>
+</object>
+<object id='batteryBoostVoltConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Voltage at which the DC System boost charges the batteries.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryBreakerStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The state of the battery fuses/breakers can be either normal(0) or alarm(1).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryCapacityData' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20
+</property>
+</object>
+<object id='batteryCapacityLeft' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Ampere hours left in the battery.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryCapacityTotal' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is the total Ampere hours of the battery. This value is the installed capacity 
+compensated with the last battery tests quality level
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryCapacityUsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Ampere hours consumed.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryChargeCurrentLimitCtrl' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable/disable of the battery charge current limitation feature; 0=disable, 1=enable.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryChargeCurrentLimitValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Battery charging current limit value. Used only when AC source is mains feed. 
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryCurrent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured total battery current.
+This is the sum of all the enabled shunt measurements in the system.
+Negative battery current indicates discharging of the batteries.
+Positive battery current indicates charging of the batteries.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryFloatVoltConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Voltage at which the DC System float charges.
+Acts as reference voltage when running temperature compensated charging.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryHighMajorAlarmVoltageConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major High Battery Voltage alarm limit set voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryHighMajorTempAlarmLevel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is the Major High Temperature Alarm level.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryHighMinorAlarmVoltageConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor High Battery Voltage alarm limit set voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryHighMinorTempAlarmLevel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is the Minor High Temperature Alarm level.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryLVD' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.17
+</property>
+</object>
+<object id='batteryLVDConnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.17.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Battery Contactors Reconnect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryLVDDisconnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.17.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Battery Contactors Disconnect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryLVDStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.17.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Battery Contactor is connected(0), disconnected(1) or disabled(2)
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryLowMajorAlarmVoltageConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major Low Battery Voltage Alarm limit set voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryLowMinorAlarmVoltageConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor Low Battery Voltage Alarm limit set voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryMonitorCurrentValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured current to/from the battery.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorFuseStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The state of the battery fuse/breaker can be either normal(0) or alarm(1).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the selected row
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry1InputValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry1status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry2InputValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry2status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry3InputValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry3status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry4InputValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured voltage on the symmetry input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorSymmetry4status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contains the status of this battery symmetry input.
+Possible States:
+0=Normal
+1=MinorAlarm
+2=MajorAlarm
+3=Disabled
+4=Error
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorTemperature' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The battery temperature.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryMonitorUnits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21
+</property>
+</object>
+<object id='batteryName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A descriptive name of the battery installed in the system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryQuality' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is the battery quality (%) of the latest battery test.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryStartManualBoost' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This pushbutton will start or stop a manual battery boost if the system allows it.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryStartManualTest' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This pushbutton will start or stop a manual battery test if the system allows it.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batterySymmetryDeltaLimitVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.19.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The allowable deviation of the symmetry voltage from the theoretical.
+Exceeding this value in either direction (+/-) causes an alarm state.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The highest value of the enabled battery temperature measurements.
+Depending on the global setting in the SmartPack, this value will be presented in Celsius
+or Fahrenheit.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryTempCompEnable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable (0) or Disable (1)  of Battery Temperature Compensated output regulation mode
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='batteryTimeToDisconnect' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.20.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Remaining time to low voltage battery disconnect.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='batteryVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The measured battery voltage.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='battmonNumberOfUnits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of battery monitor units in the power system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='battmonUnitsEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='battmonUnitsIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index used for navigating the rows 1..14  of battmonUnitsTable 
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='battmonUnitsTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.3.21.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of up to 14 battery monitor control units.  
+</property>
+</object>
+<object id='controlSystem' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1
+</property>
+</object>
+<object id='dcPlant' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1
+</property>
+</object>
+<object id='dcSystem' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2
+</property>
+</object>
+<object id='eltek' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='eltekDistributedPlantV3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9
+</property>
+</object>
+<object id='inputControlUnitID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of which SmartPack to be read.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUnitID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of which SmartPack to be read.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable10' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable4' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable5' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable6' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable7' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable8' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurable9' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input status. 
+The description of the input is found in the systemControlUnitInputTable
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.1.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText10' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.10.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.2.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.3.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText4' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.4.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText5' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.5.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText6' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.6.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText7' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.7.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText8' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.8.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='inputUserConfigurableText9' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.9.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadDistribution' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4
+</property>
+</object>
+<object id='loadDistributionBreakerStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The state of the load fuses/breakers can be either normal(0) or alarm(1) 
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadDistributionCurrent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total load current
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadDistributionLVDStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3
+</property>
+</object>
+<object id='loadLVD1ConnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+LVLD1 Connect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='loadLVD1DisconnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+LVLD1 Disconnect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='loadLVD1Enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of contactors configuration. 
+'enabled' means that the contactor is in use.
+'disabled' means that the contactor is disconfigured and not in use.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadLVD1Status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 1 is connected(0), disconnected(1) or disabled(2)
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadLVD2ConnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+LVLD2 Connect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='loadLVD2DisconnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+LVLD2 Disconnect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='loadLVD2Enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of contactors configuration. 
+'enabled' means that the contactor is in use.
+'disabled' means that the contactor is disconfigured and not in use.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadLVD2Status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 2 is connected(0), disconnected(1) or disabled(2)
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadLVD3ConnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+LVLD3 Connect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='loadLVD3DisconnectVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+LVLD3 Disconnect Voltage
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='loadLVD3Enable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of contactors configuration. 
+'enabled' means that the contactor is in use.
+'disabled' means that the contactor is disconfigured and not in use.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='loadLVD3Status' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.4.3.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 3 is connected(0), disconnected(1) or disabled(2)
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifier' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5
+</property>
+</object>
+<object id='rectifierInstalledRectifiers' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of installed rectifiers for this DC Power System.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierRectifiersActive' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Not Used!
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5
+</property>
+</object>
+<object id='rectifierStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A row of rectifier status data corresponding to the rectifierStatusNoIndex value
+</property>
+</object>
+<object id='rectifierStatusID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The rectifier ID number of the rectifier.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusNoIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An offset for the rectifierStatusTable array. The rectifier status table has 
+a fixed number of 20 rows. This OID sets the offset for the rectifier in the first row
+i.e. setting the index to 11 will give a range from rectifier ID12 to ID31.
+Setting the index to 0 will give a range from rectifier ID1 to ID20.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rectifierStatusOutputCurrent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The output current of the rectifier
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusOutputVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The rectifier voltage of the rectifier record.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusRevisionLevel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The rectifier HW revision number string of the rectifier record.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusSKU' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The rectifier part number.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusSerialNo' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The rectifier serial number string of the rectifier record.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operational status of the rectifier record.
+Not Present (0),
+normal (1),
+alarm (2),
+notUsed (3),
+disabled (4)
+      
+      
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table listing up to 20 recifiers, starting from the rectifier number specified by rectifierStatusNoIndex
+</property>
+</object>
+<object id='rectifierStatusTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The input air temperature of the rectifier.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierStatusType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.5.2.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The rectifier article number string of the rectifier record.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierTotalCurrent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The DC system's total delivered rectifier current
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rectifierUtilization' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.5.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Utilization in % of available rectifier capacity
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemControlUnitEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='systemControlUnitIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index used for navigating in the table for configurable inputs.
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='systemControlUnitInputEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='systemControlUnitInputIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index used for navigating in the table for configurable inputs.
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='systemControlUnitInputTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This table contains the description of the programmable inputs.
+There is one row for each SmartPack.
+Programmable input alarms will have description attached to the traps that
+explains the alarm. Default description is: ProgInput &lt;Smartpack ID&gt;.x
+</property>
+</object>
+<object id='systemControlUnitTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This table contains the status of the programmable inputs.
+There is one row for each SmartPack.
+</property>
+</object>
+<object id='systemHeartBeatTrapRepeatRate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The repeat rate for the systemHeartBeatTrap.
+Setting this value to zero will disable the HeartBeatTrap.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemInfoRefresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is a push button function that will rebuild all the dynamic SNMP tables. 
+When control units are removed or added this function must be executed to make sure
+the tables are updated.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemInitiateEEPROM' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.9
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+Pushbutton function that initiates a forced write of default data to the SB70/SB72 eeprom. This function is used for 
+productiontest only. The 3rd party OS used in this application are not able to write  
+default data to EEPROM at boot time. A minimum set of configuration is thus created 
+in RAM. A production test facility must therefore run this command as a part of the 
+production test for the unit to function properly.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemLastDigInput' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The last Prog.Input that generated a trap. Used by Traps only.
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='systemLinkStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A flag showing the status of the serial port used between the HEIDI Webpower adapter 
+or embedded WEB/SNMP card and the Smartpack Control system.
+If this flag shows status linkdown, the propable cause is that the wrong baudrate is set,
+which again is likely to happen when booting a brand new board.
+Execute a 'systemInitiateEEPROM' command to fix.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemNominalVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The nominal voltage rating. 24V/48V/60V systems.
+0=48V
+1=24V
+2=Not used
+3=Not used
+4=60V
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemNumOfControlUnits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of SmartPacks in a distributed system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemOperationalStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A summary status showing if the system is testing, boosting, floating etc.
+0=Float, voltage regulated
+1=Float, temperature comp. regulated;
+2=boost
+3=battery test
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemResetCtrlSystem' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.16
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+A pushbutton function that resets the control system.
+Configuration data will be kept.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemResetManualAlarms' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A pushutton that resets all manually resettable alarms in the controlsystem. Alarms that 
+is not manually resettable will not be affected by this.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemSendOffTrap' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A separate off-trap will be issued when an alarm condition goes off, if this flag is set to 1.
+Entering 0 (zero) will prevent OFF traps from being transmitted.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemSiteInfo' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3
+</property>
+</object>
+<object id='systemSiteInfoControllerSeriaNum' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The serial number for the SmartPack 1.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoControllerType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system Controller Module currently connected. Smartpack=3
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoCustomer' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Customer name (as stored in the Smartpack Control Unit).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoInstalledDate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system's Installed Date text string (as stored in the Smartpack Control Unit) 16bytes.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoLocation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system/site Location details (as stored in the Smartpack Control Unit).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoMessage1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system/site Info Message record #1 (as stored in the Smartpack Control Unit). 31 Bytes.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoMessage2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system/site Info Message record #2 (as stored in the Smartpack Control Unit). 31 Bytes.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemSiteInfoSystemSeriaNum' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.2.1.3.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The serial number for the complete system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.1
+</property>
+</object>
+<object id='systemTimeTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system date and time. Used for event timestamps and logging
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemTrapCounter' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of times a trap has been repeated.. Only acessible for Traps.
+</property>
+<property type="string" id="access" mode="w" >
+notifyonly
+</property>
+</object>
+<object id='systemTrapRepeatRate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object sets the repeat rate of any active traps, in minutes.
+Entering 0 (zero) will prevent repeating traps - one trap only will be sent per alarm event.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='alarmACmainsTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The AC voltage has dropped below critical level, or one or more AC input phases was lost.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmACmains': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmBatteryBoostmodeEnteredTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system has increased the battery charge voltage in order to boost the 
+battery. When the criteria for stopping the battery boost is reached, 
+the charge voltage is lowered to commence normal charging.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmBatteryBoostmodeEntered': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmBatteryBreakerOpenTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A battery breaker/fuse alarm.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmBatteryBreakerOpen': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmBatteryDisconnectOpenTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Battery Disconnect Contactor alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmBatteryDisconnectOpen': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmBatteryLifeEndedTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The battery quality has dropped below critical level. 
+A battery test has measured the fully charged capacity to be too low, 
+and thus probably the battery lifecycle to be near expired.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmBatteryLifeEnded': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmBatteryTestmodeEnteredTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system has lowered the battery charge voltage in order to discharge the batteries 
+to a predefined level. When the criteria for stopping the battery testing is reached, the 
+charge voltage is increased to commence normal charging.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmBatteryTestmodeEntered': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController1proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 1.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText1': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurable1': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController2proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 2.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurable2': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText2': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController3proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 3.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'inputUserConfigurableText3': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurable3': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController4proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 4.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'inputUserConfigurable4': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText4': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController5proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 5.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'inputUserConfigurable5': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText5': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController6proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.26
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 6.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurable6': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText6': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController7proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.27
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 7.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurable7': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText7': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmController8proginputTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.28
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Programmable input alarm for Smartpack 8.
+Programmable input alarms will have description attached that explains the alarm.
+Default description is: ProgInput &lt;Smartpack ID&gt;.x.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLastDigInput': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurableText8': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'inputUserConfigurable8': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmDistributionBreakerOpenTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A Load Distribution breaker/fuse alarm.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmDistributionBreakerOpen': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmLVD1openTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 1 alarm. The contactor disconnect voltage has been
+reached and the contactor has disconnected.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmLVD1open': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmLVD2openTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 2 alarm. The contactor disconnect voltage has been
+reached and the contactor has disconnected.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmLVD2open': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmLVD3openTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load Contactor 3 alarm. The contactor disconnect voltage has been
+reached and the contactor has disconnected.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmLVD3open': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMajorBatteryHighTempTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major High Battery Temperature alarm.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmMajorBatteryHighTemp': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMajorBatterySymmetryTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Battery Symmetry Delta Voltage Major alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmMajorBatterySymmetry': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMajorHighBattVoltTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major High Battery Voltage alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmMajorHighBattVolt': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMajorLowBattVoltTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Major Low Battery Voltage Alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmMajorLowBattVolt': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMajorRectifierTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is a Major Rectifier alarm.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmMajorRectifier': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMinorBatteryHighTempTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor High Battery Temperature alarm.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmMinorBatteryHighTemp': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMinorBatterySymmetryTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Battery Symmetry Delta Voltage Minor alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmMinorBatterySymmetry': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMinorHighBattVoltTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor High Battery Voltage alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmMinorHighBattVolt': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMinorLowBattVoltTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The Minor Low Battery Voltage Alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'alarmMinorLowBattVolt': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='alarmMinorRectifierTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This is a Minor Rectifier alarm.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'alarmMinorRectifier': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}, 'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+<object id='infoHeartBeatTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+ELTEK_DISTRIBUTED-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.12148.9.8.29
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+When enabled, this trap will be transmitted at regular inervals. This trap is not 
+intended to be an alarm but more like some information that the system is alive and 
+the link is up.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemTrapCounter': {'nodetype': 'object', 'module': 'ELTEK_DISTRIBUTED-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

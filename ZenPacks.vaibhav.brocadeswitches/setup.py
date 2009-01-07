@@ -62,6 +62,7 @@ setup(
     # with the binary egg.
     package_data = {
          '': ['*.txt'],
+         '':['../COPYRIGHT.txt','../LICENSE.txt'],
          NAME: ['objects/*','skins/*/*','services/*', 'reports/*/*',
                 'modeler/*/*', 'daemons/*', 'lib/*', 'libexec/*'],
          },

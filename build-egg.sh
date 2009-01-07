@@ -24,9 +24,11 @@ echo OS: $OS
 echo ZVERSION: $ZVERSION
 echo
 rm -rf $PACK/dist
+cp COPYRIGHT.txt LICENSE.txt $PACK
 cd $PACK
 echo In $PACK
 $PYTHON setup.py bdist_egg
+rm COPYRIGHT.txt LICENSE.txt
 cd dist
 for f in `ls -1 | grep py2.3.egg` ; do
     mv $f `echo $f | sed 's/2.3/2.4/'`

@@ -7,8 +7,11 @@
 <property type="text" id="description" mode="w" >
 Performance Template for Ironport Mail Relay Devices, based on the AnsycOS and Ironport MIBs.
 </property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
 <tomanycont id='datasources'>
-<object id='fanRPMs ' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<object id='fanRPMs' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 SNMP
 </property>
@@ -30,6 +33,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='fanRPMs' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -37,12 +43,6 @@ GAUGE
 </property>
 <property type="boolean" id="isrow" mode="w" >
 True
-</property>
-<property type="string" id="rrdmin" mode="w" >
-1000
-</property>
-<property type="string" id="rrdmax" mode="w" >
-6000
 </property>
 </object>
 </tomanycont>
@@ -68,6 +68,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='fanRPMsFan2' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -102,41 +105,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='mailTransferThreads' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='memoryAvailabilityStatus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.15497.1.1.1.7.0
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='memoryAvailabilityStatus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -167,6 +140,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='openFilesOrSockets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -201,6 +177,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='perCentCPUUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -233,6 +212,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='perCentDiskIOUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -267,6 +249,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='perCentMemoryUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -300,6 +285,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='perCentQueueUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -332,6 +320,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='temperatureEntry' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -399,12 +390,6 @@ True
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-0
-</property>
-<property type="string" id="maxval" mode="w" >
-90
-</property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Snmp
 </property>
@@ -449,7 +434,7 @@ True
 10
 </property>
 <property type="string" id="maxval" mode="w" >
-42
+45
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Snmp
@@ -458,12 +443,12 @@ True
 4
 </property>
 <property type="int" id="escalateCount" mode="w" >
-3
+0
 </property>
 </object>
 <object id='fanRPMs_fan1' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['fanRPMs _fanRPMs']
+['fanRPMs_fanRPMs']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
@@ -472,7 +457,7 @@ True
 1000
 </property>
 <property type="string" id="maxval" mode="w" >
-4000
+4500
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Snmp
@@ -495,7 +480,7 @@ True
 1000
 </property>
 <property type="string" id="maxval" mode="w" >
-4000
+4500
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Snmp
@@ -509,6 +494,127 @@ True
 </object>
 </tomanycont>
 <tomanycont id='graphDefs'>
+<object id='CPU vs Disk IO vs Mem Util' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='perCentCPUUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+3333FF
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+perCentCPUUtilization_perCentCPUUtilization
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='perCentDiskIOUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="color" mode="w" >
+003F87
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+perCentDiskIOUtilization_perCentDiskIOUtilization
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='perCentMemoryUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property type="string" id="color" mode="w" >
+EE7621
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+perCentMemoryUtilization_perCentMemoryUtilization
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
 <object id='Device Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
@@ -554,7 +660,7 @@ ${graphPoint/id}
 EE0000
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -610,6 +716,9 @@ True
 </property>
 <tomanycont id='graphPoints'>
 <object id='fanRPMs' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -629,7 +738,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-fanRPMs _fanRPMs
+fanRPMs_fanRPMs
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -637,7 +746,7 @@ AVERAGE
 </object>
 <object id='fanRPMsFan2' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -662,6 +771,25 @@ fanRPMsFan2_fanRPMsFan2
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
+</property>
+</object>
+<object id='fanRPMs_fan1' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+fanRPMs_fan1
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='fanRPMs_fan2' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+fanRPMs_fan2
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
 </property>
 </object>
 </tomanycont>
@@ -689,7 +817,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <tomanycont id='graphPoints'>
 <object id='mailTransferThreads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -720,60 +848,6 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='Memory Availability Status' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-<property type="long" id="sequence" mode="w" >
-6
-</property>
-<tomanycont id='graphPoints'>
-<object id='perCentMemoryUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-perCentMemoryUtilization_perCentMemoryUtilization
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-</tomanycont>
-</object>
 <object id='Open Files Or Sockets' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
@@ -796,8 +870,14 @@ False
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <tomanycont id='graphPoints'>
 <object id='openFilesOrSockets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+3333FF
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -832,6 +912,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+%CPU
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -848,10 +931,21 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <tomanycont id='graphPoints'>
+<object id='CPU_Utilization' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+CPU_Utilization
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
 <object id='perCentCPUUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -886,6 +980,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+%DiskIO
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -902,10 +999,21 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-3
+4
 </property>
 <tomanycont id='graphPoints'>
+<object id='DiskIO_Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+DiskIO_Threshold
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
 <object id='perCentDiskIOUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property type="string" id="color" mode="w" >
 0000CC
 </property>
@@ -943,6 +1051,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+%MemUse
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -959,10 +1070,21 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-4
+5
 </property>
 <tomanycont id='graphPoints'>
+<object id='Memory_Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Memory_Threshold
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
 <object id='perCentMemoryUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -997,6 +1119,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+%Queue
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -1013,10 +1138,21 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-5
+6
 </property>
 <tomanycont id='graphPoints'>
+<object id='Que_Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Que_Threshold
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
 <object id='perCentQueueUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1045,6 +1181,178 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Async OS') -->
+<object id='/zport/dmd/Manufacturers/Async OS' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
+<property type="string" id="url" mode="w" >
+http://www.ironport.com/technology/ironport_asyncos_operating_system.html
+</property>
+<tomanycont id='products'>
+<object id='AsyncOS 3.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 3.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 4.0.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 4.0.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 4.5.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 4.5.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 4.6.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 4.6.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 4.7.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 4.7.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 5.0.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 5.0.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 5.1.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 5.1.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 5.5.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 5.5.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 6.0.x ' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 6.0.x 
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 6.1.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 6.1.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+<object id='AsyncOS 6.3.x' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+AsyncOS 6.3.x
+</property>
+<property type="boolean" id="isOS" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Ironport') -->
+<object id='/zport/dmd/Manufacturers/Ironport' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
+<property type="string" id="url" mode="w" >
+http://www.ironport.com
+</property>
+<property type="string" id="supportNumber" mode="w" >
+1-877-641-4766
+</property>
+<property type="string" id="address1" mode="w" >
+U.S. &amp; Canada (877) 641-IRON (4766) 
+</property>
+<tomanycont id='products'>
+<object id='Ironport C150' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport C150
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['']
+</property>
+<property type="string" id="partNumber" mode="w" >
+Ironport C150
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ironport C360' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport C360
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ironport C360D' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport C360D
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ironport C650' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport C650
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ironport C660' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport C660
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ironport X1050' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport X1050
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ironport X1060' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Ironport X1060
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
 </object>
 </tomanycont>
 </object>

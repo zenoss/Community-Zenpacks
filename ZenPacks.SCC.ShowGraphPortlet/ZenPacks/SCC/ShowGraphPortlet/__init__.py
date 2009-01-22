@@ -2,11 +2,11 @@ from Products.ZenModel.ZenossSecurity import ZEN_COMMON
 from Products.ZenUtils.Utils import zenPath
 from Products.CMFCore.DirectoryView import registerDirectory
 from time import localtime,strftime
-
+import re
 import Globals
 import os
 
-registerDirectory("skins", globals())
+#registerDirectory("skins", globals())
 
 from Products.ZenModel.ZenPack import ZenPackBase
 
@@ -14,6 +14,10 @@ class ZenPack(ZenPackBase):
 		def _registerShowGraphPortlet(self, app):
                     zpm = app.zport.ZenPortletManager
 		    portletsrc=os.path.join(os.path.dirname(__file__),'lib','ShowGraphPortlet.js')
+		    #Its a dirty hack - register_portlet will add ZenPath one more time
+		    #and we don't want to hardcode path explicitly here
+		    p=re.compile(zenPath(''))
+		    portletsrc=p.sub('',portletsrc)
                     zpm.register_portlet(
                         sourcepath=portletsrc,
                         id='ShowGraphPortlet',

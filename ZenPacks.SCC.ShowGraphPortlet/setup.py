@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.SCC.ShowGraphPortlet'
-VERSION = '1.0'
+VERSION = '1.01'
 AUTHOR = 'Anton Menshutin'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.SCC']

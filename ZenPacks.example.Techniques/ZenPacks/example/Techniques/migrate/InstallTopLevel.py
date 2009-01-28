@@ -7,7 +7,7 @@ log = logging.getLogger("zen.migrate")
 
 
 class InstallTopLevel:
-    version = Version(1, 0, 0)
+    version = Version(1, 1, 0)
 
     def migrate(self, pack):
         if not getattr(pack.dmd, 'TopLevel', None):

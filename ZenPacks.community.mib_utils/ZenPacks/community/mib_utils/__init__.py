@@ -5,18 +5,19 @@ import sys
 import urllib
 import tarfile
 import zipfile
+import os.path
+import tempfile
 from urllib import quote, unquote
 from urllib2 import urlopen
 from urlparse import urljoin, urlsplit
-import Globals
-import os.path
-import tempfile
-from Products.ZenModel.ZenossSecurity import ZEN_COMMON
-from Products.ZenUtils.Utils import zenPath
-from Products.CMFCore.DirectoryView import registerDirectory
 from subprocess import *
 from xml.dom.minidom import parseString
 from StringIO import StringIO
+
+import Globals
+from Products.ZenModel.ZenossSecurity import ZEN_COMMON
+from Products.ZenUtils.Utils import zenPath
+from Products.CMFCore.DirectoryView import registerDirectory
 
 skinsDir = os.path.join(os.path.dirname(__file__), 'skins')
 if os.path.isdir(skinsDir):
@@ -31,8 +32,8 @@ class ZenPack(ZenPackBase):
     def upgrade( self, app):
         ZenPackBase.upgrade( self, app )
 
-    def remove( self, app):
-        ZenPackBase.remove( self, app )
+    def remove( self, app, leaveObjects=False):
+        ZenPackBase.remove( self, app, leaveObjects=False )
 
 
 
@@ -383,12 +384,15 @@ def cleanup_extract_dir( mib_dir ):
 #
 # NB: zenmib will process all of the files, generate a 
 #     dependency graph, and then import the MIBs in the 
-#     correct order to zenmib.
+#     correct order. Okay, if the glossy is to be believed... :)
 #
 def process_mib_dir( mib_context, out, base_dir ):
     """Load all of the MIBs in a directory."""
     for mib_file in os.listdir( base_dir ):
-        add_mib_to_site_mibs( mib_context, out, mib_file )
+        if os.path.isdir(mib_file):
+            process_mib_dir( mib_context, out, mib_file)
+        else:
+            add_mib_to_site_mibs( mib_context, out, mib_file )
 
 
 

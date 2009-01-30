@@ -14,7 +14,7 @@ if os.path.isdir(skinsDir):
 def setCustomerInfo(self, customerInfo):
     if hasattr(self, 'customerInfo'):
         self.customerInfo = customerInfo
-    else
+    else:
         setattr(self, 'customerInfo', customerInfo)
 
 @monkeypatch('Products.ZenModel.IpInterface.IpInterface')

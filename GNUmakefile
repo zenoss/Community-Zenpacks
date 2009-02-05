@@ -40,6 +40,7 @@ install-normal: build
 clean:
 	for f in $(wildcard *.egg) ; do rm -f $$f ; done
 	for f in $(wildcard *.zip) ; do rm -f $$f ; done
+	for d in $(EGG_PACKS) ; do rm -rf $$d/dist $$d/build $$d/$$d.egg-info; done
 	for pat in "build dist temp *.egg-info" ; do \
 		for d in $(wildcard */$$pat) ; do rm -rf $$d ; done ; \
 	done

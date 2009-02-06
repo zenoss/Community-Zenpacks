@@ -28,7 +28,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/Products/VMwareEsx/libexec/vmware-esx.sh ${dev/manageIp} ${dev/zSnmpCommunity} ${here/mount}
+${here/zZenPackCommunityVMwareESXlibexec}/vmware-esx.sh  ${dev/manageIp} ${dev/zSnmpCommunity} ${here/mount}
 </property>
 <property type="int" id="cycletime" mode="w" >
 60
@@ -1246,7 +1246,7 @@ notification
 current
 </property>
 <property type="string" id="description" mode="w" >
-This trap is sent when a virtual machine is powered ON from a suspended 
+This trap is sent when a virtual machine is powered ON from a suspended
 or a powered off state.
 </property>
 <property type="lines" id="objects" mode="w" >
@@ -2022,7 +2022,7 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
-A table containing information on virtual machines that have been 
+A table containing information on virtual machines that have been
 configured on the system.
 </property>
 </object>
@@ -2040,7 +2040,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-If a VM is active, an ID is assigned to it (like a pid). Some VMs may 
+If a VM is active, an ID is assigned to it (like a pid). Some VMs may
 have been configured but not running. Information about these VMs without
 VM IDs is also displayed, so we can't use VM ID as the table's index.
 </property>

@@ -21,7 +21,7 @@ LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.VMwareEsx']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.1'
+COMPAT_ZENOSS_VERS = '>=2.2'
 PREV_ZENPACK_NAME = 'VMwareEsx'
 # STOP_REPLACEMENTS
 ################################

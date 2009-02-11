@@ -21,7 +21,7 @@ LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Nagios']
 PACKAGES = ['ZenPacks', 'ZenPacks.Nagios', 'ZenPacks.Nagios.CheckPing']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.1'
+COMPAT_ZENOSS_VERS = '>=2.2'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################

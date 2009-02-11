@@ -21,7 +21,7 @@ LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori']
 PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori', 'ZenPacks.AndreaConsadori.Netasq']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.1'
+COMPAT_ZENOSS_VERS = '>=2.2'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################

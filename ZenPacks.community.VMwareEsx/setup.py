@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.community.VMwareEsx'
-VERSION = '2.1'
+VERSION = '2.2'
 AUTHOR = 'Wouter D\'Haeseleer'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

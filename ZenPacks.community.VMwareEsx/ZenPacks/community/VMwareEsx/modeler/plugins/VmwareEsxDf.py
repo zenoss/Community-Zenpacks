@@ -17,7 +17,8 @@
 
 import re
 
-from CollectorPlugin import CommandPlugin
+from Products.DataCollector.plugins.CollectorPlugin import CommandPlugin
+from DataMaps import ObjectMap
 
 class VmwareEsxDf(CommandPlugin):
     """

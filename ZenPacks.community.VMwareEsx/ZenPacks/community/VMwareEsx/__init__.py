@@ -13,5 +13,5 @@ class ZenPack(ZenPackBase):
    """
 
    packZProperties = [
-       ('zZenPackscommunityVMwareEsxlibexec', libexec, 'string'),
+       ('zZenPackCommunityVMwareESXlibexec', libexec, 'string'),
        ]

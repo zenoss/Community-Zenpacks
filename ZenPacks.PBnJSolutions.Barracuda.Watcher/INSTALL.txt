@@ -1,0 +1,16 @@
+Background information on this ZenPack is available in the README.txt, here I
+focus on installation requirements only:
+
+- The datasource is a PERL script called check_cuda.  It uses generic PERL
+  code but does rely on XML::Simple which you may have to install
+- The PERL script in turn uses wget to retrieve the Barracuda's basic
+  statistics page; you may need to install it
+- The rrd Template assumes your Zenoss installation is at /usr/local/zenoss;
+  you may need to change that assumption
+
+Finally note that the template associated with this ZenPack defines it self
+under /Devices/Network so your Barracuda device should be located somewhere at
+or below this point.
+
+If you have any questions, please feel free to contact me at
+pwinkeler@pbnj-solutions.com

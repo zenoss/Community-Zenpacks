@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = 'ZenPacks.community.HPUXMonitor'
-VERSION = '2.1'
+VERSION = '2.1.1'
 AUTHOR = 'Mike Albon'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.PBnJSolutions.Barracuda.Watcher'
-VERSION = '1.0'
+VERSION = '1.1'
 AUTHOR = 'Paul Winkeler'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.PBnJSolutions', 'ZenPacks.PBnJSolutions.Barracuda']

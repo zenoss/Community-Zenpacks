@@ -9,6 +9,7 @@ use utils qw($TIMEOUT %ERRORS &print_revision &support);
 use XML::Simple;
 use Data::Dumper;
 use Getopt::Long;
+use FileHandle;
 
 my $opt_H;
 Getopt::Long::Configure('bundling');
@@ -21,12 +22,11 @@ my $target = $1 if ($opt_H =~ /([-.A-Za-z0-9]+)/);
 
 my $xmlStatus = new XML::Simple;
 
-my $pipe = 'PIPE0';
+my $pipe = new FileHandle;
 no strict 'refs';
-open ($pipe, "wget -o /dev/null -O - --no-check-certificate https://$target/cgi-bin/stats.cgi |");
-my $barracuda = $xmlStatus->XMLin(*$pipe{IO});
-
-#print Dumper($barracuda);
+$pipe->open("wget -o /dev/null -O - --no-check-certificate https://$target/cgi-bin/stats.cgi |");
+#print Dumper($pipe);
+my $barracuda = $xmlStatus->XMLin($pipe);
 
 # Decide whether the cuda is OK and then follow that judgement with a bunch of variables
 print "CUDA-$target OK: | ";

@@ -1,0 +1,88 @@
+<tal:block tal:define="
+    tableName string:clusterRequestsReport;
+    graphUrl python:here.ReportServer.plugin('clusterRequests', here.REQUEST);">
+
+<tal:block metal:use-macro="here/templates/macros/page1">
+<tal:block metal:fill-slot="breadCrumbPane">
+    <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>    
+</tal:block>
+<tal:block metal:fill-slot="contentPane">
+    
+<tal:block tal:define="
+        sts python:here.ZenTableManager.setReqTableState;
+        zem python:here.dmd.ZenEventManager;
+        startDate python:sts(tableName, 'startDate', zem.defaultAvailabilityStart());
+        endDate python:sts(tableName, 'endDate', zem.defaultAvailabilityEnd());
+        how python:sts(tableName, 'how', 'AVERAGE');
+        summaryOptions python:('AVERAGE', 'MAX');">
+
+    <script type="text/javascript"
+            src="/zport/portal_skins/zenmodel/datePicker.js">
+    </script>
+
+    <form id="clusterRequestsReportForm" method="post">
+        <tal:block tal:define="tabletitle string:Report Parameters">
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <tal:block metal:fill-slot="zentablecontents">
+            <td class="tableheader">Start Date:</td>
+            <td class="tablevalues">
+                <input class="tablevalues" name="startDate" readonly="true" 
+                    tal:attributes="value startDate"/>
+                <input class="tablevalues" type="button" value="select"
+                    onclick="displayDatePicker('startDate');"/>
+            </td>
+            <td class="tableheader">Summary Type:</td>
+            <td class="tablevalues">
+                <select class="tablevalues" name='how'>
+                    <tal:block tal:repeat="summary summaryOptions">
+                        <option tal:attributes="value summary; selected python:how==summary;"
+                            tal:content="python:summary.capitalize()"/>
+                    </tal:block>
+                </select>
+            </td>
+            <tr>
+            </tr><tr>
+                <td class="tableheader">End Date:</td>
+                <td class="tablevalues">
+                    <input class="tablevalues" name="endDate" readonly="true" 
+                        tal:attributes="value endDate"/>
+                    <input class="tablevalues" type="button" value="select"
+                        onclick="displayDatePicker('endDate');"/>
+                </td>
+                <td class="tableheader" colspan="2">
+                    <input class="tablevalues" type="Submit" value="Update"/>
+                </td>
+            </tr>
+        </tal:block>
+        </tal:block>
+        </tal:block>
+    </form>
+</tal:block>
+
+<script language="javascript" type="text/javascript">
+var ZenGraphs = new Array();
+</script>
+
+
+<tal:block tal:define="tabletitle string:Aggregate Cluster Requests"
+    tal:condition="graphUrl">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+        <td class="tablevalues">
+            <img tal:attributes="src graphUrl" title="Cluster Requests"
+                id="graph_0">
+            <script language="javascript" type="text/javascript">
+                ZenGraphs[ZenGraphs.length]='graph_0';</script>
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+
+</tal:block>
+

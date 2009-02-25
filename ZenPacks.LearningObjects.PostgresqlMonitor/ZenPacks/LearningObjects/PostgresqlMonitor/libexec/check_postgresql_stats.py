@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 ###########################################################################
 #
-# 
+#
 # Copyright (C) 2008, Learning Objects Inc, http://www.learningobjects.com
 #
 # This program is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@ class ZenossPostgresqlStatsPlugin:
         self.port = port
         self.user = user
         self.passwd = passwd
-	self.database = database
+        self.database = database
 
 
     def run_query(self,cursor,stats,query):
@@ -48,40 +48,46 @@ class ZenossPostgresqlStatsPlugin:
             stats=stats + "%s=%s " % (k,v)
 
 
-	return(stats)
+        return(stats)
 
     def run(self):
         try:
             self.conn = pgsql.connect(database=self.database,user=self.user, password=self.passwd,
                         host=self.host,port=self.port)
-                   
+
             cursor = self.conn.cursor()
         except Exception, e:
             print "Postgresql Error: %s" % (e,)
             sys.exit(1)
-    
 
-	stats = ""
-        
-	query = "SELECT pg_database_size(pg_database.datname) AS db_size FROM pg_database WHERE pg_database.datname='%s'" % self.database
-    
-	stats = self.run_query(cursor,stats,query)
+        sVersion = ""
+        query = "SELECT setting AS version from pg_settings WHERE name = 'server_version'"
+        sVersion = self.run_query(cursor, sVersion, query)
+        version = sVersion.split('=')[1]
 
-	query = "select numbackends, xact_commit, xact_rollback, blks_read, blks_hit, tup_returned, " \
-                "tup_fetched, tup_inserted, tup_updated, tup_deleted from pg_stat_database where datname='%s'" % self.database
-        
+        stats = ""
+
+        query = "SELECT pg_database_size(pg_database.datname) AS db_size FROM pg_database WHERE pg_database.datname='%s'" % self.database
 
         stats = self.run_query(cursor,stats,query)
-	
+
+        query = "select numbackends, xact_commit, xact_rollback, blks_read, blks_hit"
+        if version.startswith('8.3'):
+            query +=  ", tup_returned, tup_fetched, tup_inserted, tup_updated, tup_deleted"
+        query +=  " from pg_stat_database where datname='%s'" % self.database
+
+
+        stats = self.run_query(cursor,stats,query)
+
 
         fields = "seq_scan seq_tup_read idx_scan idx_tup_fetch n_tup_ins n_tup_upd n_tup_del".split(" ")
-	query = "SELECT"
-	for field in fields:
-      		query = query + " SUM(%s) AS %s, " % (field, field)
+        query = "SELECT"
+        for field in fields:
+                query = query + " SUM(%s) AS %s, " % (field, field)
         query = query.rstrip(', ') + " FROM pg_stat_user_tables"
-	
+
         stats = self.run_query(cursor,stats,query)
-	
+
 
 
         fields = "heap_blks_read heap_blks_hit idx_blks_read idx_blks_hit " \

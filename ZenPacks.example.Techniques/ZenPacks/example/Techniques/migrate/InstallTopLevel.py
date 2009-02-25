@@ -12,9 +12,9 @@ class InstallTopLevel:
     def migrate(self, pack):
         if not getattr(pack.dmd, 'TopLevel', None):
             log.info("Installing TopLevel object.")
-            manage_addServiceNow(pack.dmd)
+            manage_addTopLevel(pack.dmd)
         else:
             log.info("TopLevel object already exists.")
 
 
-InstallServiceNow()
+InstallTopLevel()

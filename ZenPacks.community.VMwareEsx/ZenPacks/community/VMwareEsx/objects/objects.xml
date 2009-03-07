@@ -10,9 +10,6 @@
 <property type="text" id="description" mode="w" >
 Filesystem template that uses a plugin for VMware ESX server
 </property>
-<property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
-</property>
 <tomanycont id='datasources'>
 <object id='Disk_VDF' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -35,9 +32,6 @@ ${here/zZenPackCommunityVMwareESXlibexec}/vmware-esx.sh  ${dev/manageIp} ${dev/z
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='availBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

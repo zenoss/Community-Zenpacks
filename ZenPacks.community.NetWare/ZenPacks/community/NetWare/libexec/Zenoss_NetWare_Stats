@@ -1,0 +1,188 @@
+#!/usr/bin/perl
+
+#########################################################
+#              Netware Server Stat Extension            #
+#                to Zenoss Client Access                #
+#                                                       #
+# This is the "client" portion of the Netware Server    #
+# stats extension for Zenoss. This will open up a       #
+# connection to the specified server and get the        #
+# information that you specify.                         #
+#                                                       #
+#########################################################
+#Zenoss version by Eric Feldman (eafeldman at gmail.com)#
+#                                                       #
+#                                                       #
+#Adapted from nwstat.pl by James Drews                  #
+#                         (drews@engr.wisc.edu) on      #
+#                         Version 1.46                  #
+# URL:                                                  #
+#http://forge.novell.com/modules/xfmod/project/?mrtgext #
+#########################################################
+# This program is freeware.  *NO* warranty is expressed,#
+# implied, nor granted to you in any way.  Use of this  #
+# program is at your own risk.  Your mileage may vary.  #
+# This program was packed by weight, not by volume.     #
+# Some settling may have occurred during shipment.      #
+#########################################################
+
+#########################################################
+# Command Line Usage                                    #
+#   nwstat.pl host option1 option2 option3...option5   #
+#  where host is the DNS name of the server to query    #
+#  and option1 and option2 are any combination of the   #
+#  following (case is not important):                   #
+#    UTIL1      :  1 minute average CPU utilization     #
+#    UTIL5      :  5 minute average CPU utilization     #
+#    UTIL15     : 15 minute average CPU Utilization     #
+#    LICENSE    : Connection License Count              #
+#    CONNECT    : number currently licensed connections #
+#    CONNMAX    : Max number licensed connections used  #
+#    CONNPEAK   : Peak Connections                      #
+#               : (netware 3 = error (-1) )             #
+#               : (netware 4 = number connections       #
+#               :  allocated)                           #
+#    NAME       : Server's name                         #
+#    UPTIME     : Time that the server is operational   #
+#    VS<vol>    : size of the volume <vol> in bytes     #
+#    VF<vol>    : bytes free on <vol>                   #
+#    VU<vol>    : bytes used on <vol>                   #
+#    VKS<vol>   : size of the volume <vol> in kbytes    #
+#    VKF<vol>   : kbytes free on <vol>                  #
+#    VKU<vol>   : kbytes used on <vol>                  #
+#    VP<vol>    : bytes of purgable files on <vol>      #
+#    VKP<vol>   : kbytes of purgable files on <vol>     #
+#    VNP<vol>   : bytes of not-yet-purgable files       #
+#    VKNP<vol>  : kbytes of not-yet-purgable files      #
+#    ZERO       : Returns the value 0                   #
+#    VOLUMES    : Returns the list of mounted volumes   #
+#               : each volume name is on a seperate     #
+#               : line. Used by the nlmcfg.pl script    #
+#    S1         : Long Term Cache Hit Percentage        #
+#    S2         : Current number cache buffers          #
+#    S3         : Number of dirty cache buffers         #
+#    S4         : Cache LRU in seconds                  #
+#    S5         : Cache LRU in minutes                  #
+#    S6         : Dirty cache buffers as percent of tot #
+#    S7         : Total cache buffers as percent of     #
+#                 original                              #
+#    S8         : Original number of cache buffers      #
+#    S9         : SAP object Count                      #
+#    S9.x       : SAP Object count for service x        #
+#    S10        : CPU Count                             #
+#    S11        : IS DS Database Open? 1=yes 0=no       #
+#    S12        : Logins enabled? 1=yes 0=no            #
+#    S13        : DS.NLM Version string                 #
+#    S14        : MRTGEXT.NLM Version string            #
+#    S15        : Packet receive buffer count           #
+#    S16        : Get Maximum packet receive buffer cnt #
+#    S17        : Abended thread count (5.x only)       #
+#    S18        : Open file count                       #
+#    S19        : OS Version String                     #
+#    S20        : Max service processes                 #
+#    S21        : Current service processes (5.x only)  #
+#    S22        : Time In Sync To the Network (0=No,    #
+#                 1 = yes)                              #
+#    S23:<nlm>  : Is <nlm> loaded? (0=no,1=yes)         #
+#    S24:<nlm>  : Get <nlm>'s version                   #
+#    S25        : Minimum Directory Cache Buffers       #
+#    S26        : Maximum Directory Cache Buffers       #
+#    S27        : Current Directory Cache Buffers       #
+#                                                       #
+# Example: To get the server utilization for 5 and 15   #
+#          minutes on the myserv.mydomain.com.          #
+#                                                       #
+#   nwstat.pl myserv.mydomain.com UTIL5 UTIL15          #
+#                                                       #
+# Example: To graph the disk space usage on the SYS     #
+#          volume on myserv.mydomain.com.               #
+#                                                       #
+#   nwstat.pl myserv.mydomain.com VFsys VUsys           #
+#########################################################
+#                                                       #
+# Other notes:                                          #
+#   The server side NLM can take ALL the options on the #
+#   command line at once. However, MRTG is written to   #
+#   only graph two variables at a time. Should some     #
+#   ambitious person modify the program to graph more   #
+#   than two items at once, this program can easily be  #
+#   expanded to output more items.                      #
+#                                                       #
+#   The server will stop accepting input at 1023 chars  #
+#   or when it gets the first \n character              #
+#                                                       #
+# Thanks to Kevin Keyser <kevin-keyser@uiowa.edu>       #
+# for fixing the problem of loosing the 'W' char from   #
+# the server name                                       #
+#########################################################
+
+# Required for perl5.
+use Socket;
+($_,  $opt1, $opt2, $opt3, $opt4, $opt5, $opt6, $opt7, $opt8, $opt9, $opt10) = @ARGV;
+
+if (!$_) {
+  print "Usage:  $0 HOST OPTION1 OPTION2 OPTION3 .... OPTION10\n";
+  print "  where host is the DNS name of the server to query\n";
+  print "  and option1 and option2 are any combination of the\n";
+  print "  following (case is not important):\n";
+  print "  UTIL1      :  1 minute average CPU utilization\n";
+  print "  UTIL5      :  5 minute average CPU utilization\n";
+  print "  UTIL15     : 15 minute average CPU Utilization\n";
+  print "  LICENSE    : Connection License count\n";
+  print "  CONNECT    : number currently licensed connections\n";
+  print "  CONNMAX    : max licensed connections used\n";
+  print "  CONNPEAK   : Peak Connections\n";
+  print "             : (netware 3 = error (-1) )\n";
+  print "             : (netware 4 = number connections\n";
+  print "             :  allocated)\n";   
+  print "  VF<vol>    : bytes free on <vol>\n";
+  print "  VS<vol>    : size in bytes of <vol>\n";
+  print "  VU<vol>    : bytes used on <vol>\n";
+  print "  VKF<vol>   : kbytes free on <vol>\n";
+  print "  VKS<vol>   : size in kbytes of <vol>\n";
+  print "  VKU<vol>   : kbytes used on <vol>\n";
+  print "  ZERO       : returns a zero (0)\n";
+  print "  S1         : Long Term Cache Hit Percentage\n";
+  print "  S2         : Number of Cache Buffers\n";
+  print "  S3         : Number of Dirty Cache Buffers\n";
+  print "  S4         : Cache LRU in seconds\n";
+  print "  S5         : Cahce LRU in minutes\n";
+  print "\n Example: To graph the disk space usage on the SYS\n";
+  print "          volume on myserv.mydomain.com.\n\n";
+  die " $0 myserv.mydomain.com VFsys VUsys\n";
+}
+
+$hostname = $_;
+
+# if you load the NLM with a different port
+# from the default, here is where you change it
+$port = 9999;
+
+# Open a socket and get the data
+  ($sockaddr,$there,$response,$tries) = ("Snc4x8");
+# On Win95, passing a numeric IP address to inet_aton() is slow, so
+# detect this case and use a simple conversion.  
+  if ($hostname =~  /^\d+\.\d+\.\d+\.\d+(.*)/ )
+  {
+     $remote_addr = pack("C4",split /\./, $hostname);
+  } else {
+     $remote_addr = (gethostbyname($hostname))[4]
+       || die (host_not_found_error ($hostname, $?));
+  }
+  
+  my $sockaddr_in = 'S n a4 x8';
+  $there = pack($sockaddr_in, AF_INET, $port, $remote_addr);
+  $proto = (getprotobyname ('tcp'))[2];
+
+  if (!socket(S,AF_INET,SOCK_STREAM,$proto)) { printf "-1\n-1\n\n\n"; die "$0:  Fatal Error.  $!\n"; }
+  if (!connect(S,$there)) { printf "-2\n-2\n\n\n"; die "$0:  Fatal Error.  $!\n"; }
+  select(S);$|=1;
+  select(STDOUT);
+  print S "$opt1 $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 $opt8 $opt9 $opt10\r\n";
+  @replies=<S> ; 
+  chomp(@replies); 
+  close(S);
+    $a=shift@replies;  $b=shift@replies;  $c=shift@replies; $d=shift@replies; $e=shift@replies;
+    $f=shift@replies;  $g=shift@replies;  $h=shift@replies; $i=shift@replies; $j=shift@replies;
+  print "OK |$opt1=$a\ $opt2=$b\ $opt3=$c\ $opt4=$d\ $opt5=$e\ $opt6=$f\ $opt7=$g\ $opt8=$h\ $opt9=$i\ $opt10=$j\n";
+

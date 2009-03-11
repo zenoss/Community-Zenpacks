@@ -1,0 +1,5027 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Juniper J-Series') -->
+<object id='/zport/dmd/Devices/Network/Router/Juniper J-Series' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['Device', 'juniper']
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'rrdTemplates', 'juniper') -->
+<object id='/zport/dmd/Devices/Network/Router/rrdTemplates/juniper' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Juniper J-Series Router Perfs
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='Memory' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.11.9.1.0.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='memory' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='jnxFruTemp' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.9.9.1.0.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='temp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='jnxFwddHeapUsage' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.34.1.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='jnxFwddHeapUsage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='jnxFwddRtThreadsCPUUsage' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.34.1.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='jnxFwddRtThreadsCPUUsage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='jnxHrStoragePercentUsed' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.31.1.1.1.1.1
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='storage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='jnxOperatingCPU' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.8.9.1.0.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='CPU' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='jnxOperatingHeap' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.12.1.1.0.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+</object>
+<object id='jnxOperatingTemp' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.7.9.1.0.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='jnxOperatingTemp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='CPU' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Fwdd Realtime Threads CPU' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+jnxFwddRtThreadsCPUUsage_jnxFwddRtThreadsCPUUsage
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Operating CPU' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+0000CD
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+jnxOperatingCPU_CPU
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Memory' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='Fwdd Heap Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+jnxFwddHeapUsage_jnxFwddHeapUsage
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Memory' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+DAA520
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Memory_memory
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Storage' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='storage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+A0522D
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+jnxHrStoragePercentUsed_storage
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+C
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='FRU Temp' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+jnxFruTemp_temp
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Operating Temp' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+jnxOperatingTemp_jnxOperatingTemp
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-ALARM-MIB') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-ALARM-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+        Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+This is Juniper Networks' implementation of enterprise
+specific MIB for alarms from the router chassis box.
+</property>
+<tomanycont id='nodes'>
+<object id='jnxAlarmRelayMode' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alarm relay mode of the craft interface
+panel for both yellow and red alarms.
+
+Both yellow and red alarms could be cut off 
+by a front panel Alarm Cutoff / Lamp Test 
+(ACO/LT) button.
+
+In the pass-on mode, the alarm relay will be 
+activated to pass on the yellow or red alarms.
+In the cut-off mode, both yellow and red alarms
+will be cut off from the alarm relays which are 
+normally connected to audible sirens or visual 
+flashing devices.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxAlarms' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='jnxCraftAlarms' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2
+</property>
+</object>
+<object id='jnxRedAlarmCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of currently active and non-silent 
+red alarms.
+
+This object is independent of the ACO/LT (Alarm
+Cut Off / Lamp Test) button.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedAlarmLastChange' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the red alarm
+last changed - either from off to on or vice
+versa. 	Zero if unknown or never changed since
+the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedAlarmState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The red alarm indication on the craft interface 
+panel.
+
+The red alarm is on when there is some system 
+failure or power supply failure or the system 
+is experiencing a hardware malfunction or some 
+threshold is being exceeded.
+
+This red alarm state could be turned off by the
+ACO/LT (Alarm Cut Off / Lamp Test) button on the
+front panel module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedAlarms' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.3
+</property>
+</object>
+<object id='jnxYellowAlarmCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of currently active and non-silent 
+yellow alarms.
+
+This object is independent of the ACO/LT (Alarm
+Cut Off / Lamp Test) button.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxYellowAlarmLastChange' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.2.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the yellow alarm
+last changed - either from off to on or vice
+versa. 	Zero if unknown or never changed since
+the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxYellowAlarmState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The yellow alarm state on the craft interface 
+panel.
+
+The yellow alarm is on when there is some 
+system warning such as maintenance alert or 
+significant temperature increase.
+
+This yellow alarm state could be turned off 
+by the ACO/LT (Alarm Cut Off / Lamp Test) button
+on the front panel module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxYellowAlarms' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-ALARM-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.4.2.2
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-EXPERIMENT-MIB') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-EXPERIMENT-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+The object identifiers for experimental MIBs for the Juniper Networks,
+Inc. products.  This is the top-level object identifier registry for 
+SNMP modules containing experimental MIB definitions.  Experimental 
+MIBs are defined as:
+
+1) IETF work-in-process MIBs which have not been assigned a permanent
+   object identifier by the IANA.
+
+2) Juniper work-in-process MIBs that have not achieved final
+   production quality or field experience.
+
+NOTE: Support for MIBs under the this OID subtree is temporary and
+      changes to objects may occur without notice.
+</property>
+<tomanycont id='nodes'>
+<object id='jnxBgpM2Experiment' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-EXPERIMENT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The object identifier used to anchor the experimental IETF draft
+for the BGPv2 MIB.
+</property>
+</object>
+<object id='jnxExperiment' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-EXPERIMENT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-HOSTRESOURCES-MIB') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-HOSTRESOURCES-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+        Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+Extends the HOST-RESOURCES-MIB (rfc2790).
+</property>
+<tomanycont id='nodes'>
+<object id='jnxHostResourcesMIB' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-HOSTRESOURCES-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.31
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='jnxHrStorage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-HOSTRESOURCES-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.31.1
+</property>
+</object>
+<object id='jnxHrStorageEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-HOSTRESOURCES-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.31.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Each entry provides additional file system data beyond that
+available in the hrStorageTable.
+</property>
+</object>
+<object id='jnxHrStoragePercentUsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-HOSTRESOURCES-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.31.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The amount of the storage represented by this entry
+that is allocated, as a percentage of the total amount
+available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxHrStorageTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-HOSTRESOURCES-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.31.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Augments the hrStorageTable with additional data.
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-IF-MIB') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-IF-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+        Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+The MIB modules extends the ifTable as
+defined in IF-MIB.
+</property>
+<tomanycont id='nodes'>
+<object id='ifChassisChannel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The channel identifier for the specified interface
+if and only if it is part of a channelized interface.
+
+Although the channel is numbered from 0 and up in the 
+interface naming, the return value for this object 
+always starts from 1 according to Network Management 
+convention.  For the interface which could not be 
+channelized, this object returns zero.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifChassisEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry containing additional management information
+applicable to a particular interface.
+</property>
+</object>
+<object id='ifChassisFpc' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of the FPC card on which the interface
+is located in the chassis.  It is the chassis slot 
+in which the FPC card is installed for the specified 
+interface.  
+
+Although the number is labeled from 0 and up in the 
+chassis, the return value for this object always starts
+from 1 according to Network Management convention.
+Therefore, a value of zero means there is no real or
+physical FPC associated with the specified interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifChassisLogicalUnit' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The logical unit number of the specified interface.
+It is the logical part of the interface that is 
+configured on the physical or channel part if any.
+
+Although the logical unit number is numbered from 0 and
+up in the interface naming, the return value for this 
+object always starts from 1 according to Network 
+Management convention.  For the interface which is 
+really a physical device, this value returns zero.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifChassisPic' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of the PIC card on which the interface
+is located in the chassis.  It is the PIC location 
+on the FPC card for the specified interface.
+
+Although the number is labeled from 0 and up in the 
+chassis, the return value for this object always starts
+from 1 according to Network Management convention.
+Therefore, a value of zero means there is no real or
+physical PIC associated with the specified interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifChassisPicIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The index or indices for the Chassis MIB tables.
+This is the instance index which keys into the 
+jnxContentsTable in Chassis MIB.
+
+For example, it could return an octet string of
+'8.1.2.0' - meaning a PIC ('8', first digit) 
+at FPC slot 0 ('1-1', second digit minus one if nonzero)
+PIC number 1 ('2-1', third digit minus one if nonzero)
+port number whatever (fourth digit currently unused)
+- which in turn could be plugged in by NMS directly
+after any MIB objects in the jnxContentsTable, say
+'jnxContentsDescr.8.1.2.0', so NMS could get that
+PIC object for the specified interface.
+
+This object is valid only for those interfaces having 
+real and physical PIC cards.  Otherwise, it returns 
+an octet string	of four zeros '0.0.0.0.'
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifChassisPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of the port on the PIC card on which the 
+interface is located in the chassis.  It is the port 
+number on the PIC card for the specified interface.
+
+Although the number is labeled from 0 and up in the 
+chassis, the return value for this object always starts
+from 1 according to Network Management convention.
+Therefore, a value of zero means there is no real or
+physical port associated with the specified interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifChassisTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of Juniper's extension to the interface entries.
+The number of entries is given by the value of ifNumber.
+This table contains additional objects for the interface
+table to facilitate the identification of interfaces and
+its mapping into the Chassis MIB tables.
+</property>
+</object>
+<object id='ifHCIn1SecRate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of bits per second (bps), delivered by 
+this (sub-)layer to its next higher (sub-)layer.
+This object is a 64 bit version of ifIn1SecRate.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifHCOut1SecRate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of bits per second (bps), delivered by
+this (sub-)layer to its next lower (sub-)layer.
+This object is a 64 bit version of ifOut1SecRate.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifIn1SecOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of octets per second (Bps, Bytes per 
+second), delivered by this (sub-)layer to its next
+higher (sub-)layer.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifIn1SecPkts' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of packets per second (pps), delivered
+by this (sub-)layer to its next higher (sub-)layer.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifIn1SecRate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of bits per second (bps), delivered by 
+this (sub-)layer to its next higher (sub-)layer.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnx' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ifJnxBucketDrops' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Bucket drops: Drops due to traffic load exceeding the
+interface transmit/receive leaky bucket configuration.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxCarrierTrans' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.26
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Carrier transitions: The number of times the interface saw
+the carrier signal transition.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxCollisions' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Collisions: The number of output collisions detected on this
+interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry containing additional management information
+applicable to a particular interface.
+</property>
+</object>
+<object id='ifJnxInDiscards' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Policed Discards: Frames that the incoming packet match code 
+discarded because they were not recognized or of interest.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Errors: The sum of the incoming frame aborts and FCS errors.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInFifoErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+FIFO errors: The number of FIFO errors in the receive
+direction as reported by the ASIC on the PIC.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInFrameErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Framing Errors: The number of input packets which were 
+misaligned.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInGiants' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Giants: Frames received that are larger than the giant 
+threshold.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInHslCrcErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+HS Link CRC Errors: The number of CRC errors on the 
+high-speed links between the ASICs responsible for handling 
+the router interfaces while receiving packets.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInHslFifoOverFlows' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+HS link FIFO overflows: The number of FIFO overflows on the
+high-speed links between the ASICs responsible for handling
+the router interfaces.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInInvalidVCs' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Invalid VCs: Number of cells that arrived for a nonexistent
+virtual circuit.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInL2ChanErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+L2 channel errors: the number of incoming packets for which 
+the sofware could not find a valid logical interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInL2MismatchTimeouts' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+L2 mismatch timeouts: The count of malformed or short packets
+that cause the incoming packet handler to discard the frame
+as unreadable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInL3Incompletes' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+L3 incompletes: The number of incoming packets that fail
+Layer 3 sanity checks of the header.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInQDrops' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drops: The number of packets dropped by the input queue of 
+the I/O Manager ASIC.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxInRunts' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Runts: Frames received that are smaller than the runt 
+threshold.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxOutAgedErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.28
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Aged packets: The number of packets that remained in shared
+packet SDRAM for so long that the system automatically purged
+them.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxOutErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Errors: The sum of the outgoing frame aborts and FCS errors.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxOutFifoErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.29
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+FIFO errors: The number of FIFO errors in the transmit
+direction as reported by the ASIC on the PIC.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxOutHslCrcErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.31
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+HS Link CRC Errors: The number of CRC errors on the 
+high-speed links between the ASICs responsible for handling 
+the router interfaces while transmitting packets.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxOutHslFifoUnderFlows' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.30
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+HS link FIFO underflows: The number of FIFO underflows on the
+high-speed links between the ASICs responsible for handling
+the router interfaces.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxOutQDrops' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.27
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drops: The number of packets dropped by the output queue of
+the I/O Manager ASIC.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxSramErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SRAM errors: This counter increments when a hardware error
+has occurred in the SRAM on the PIC.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifJnxTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of Juniper's extension to the interface entries.
+The number of entries is given by the value of ifNumber.
+This table contains additional objects for the interface
+table.
+</property>
+</object>
+<object id='ifOut1SecOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of octets per second (Bps, Bytes per
+second), delivered by this (sub-)layer to its next
+lower (sub-)layer.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifOut1SecPkts' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of packets per second (pps), delivered
+by this (sub-)layer to its next lower (sub-)layer.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ifOut1SecRate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IF-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.3.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of bits per second (bps), delivered by
+this (sub-)layer to its next lower (sub-)layer.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-IPv4-MIB') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-IPv4-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+        Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+The MIB modules extends the ifTable as
+defined in IF-MIB.
+</property>
+<tomanycont id='nodes'>
+<object id='jnxIpv4' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='jnxIpv4AdEntAddr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The IP address to which this entry's addressing information
+pertains.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='jnxIpv4AdEntBcastAddr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of the least-significant bit in the IP broadcast
+address used for sending datagrams on the (logical)
+interface associated with the IP address of this entry.  For
+example, when the Internet standard all-ones broadcast
+address is used, the value will be 1.  This value applies to
+both the subnet and network broadcasts addresses used by the
+entity on this (logical) interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxIpv4AdEntIfIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The index value which uniquely identifies the interface to
+which this entry is applicable.  The interface identified by
+a particular value of this index is the same interface as
+identified by the same value of RFC 1573's ifIndex.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='jnxIpv4AdEntNetMask' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The subnet mask associated with the IP address of this
+entry.  The value of the mask is an IP address with all the
+network bits set to 1 and all the hosts bits set to 0.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxIpv4AdEntReasmMaxSize' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The size of the largest IP datagram which this entity can
+re-assemble from incoming IP fragmented datagrams received
+on this interface.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxIpv4AddrEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The addressing information for one of this entity's IP
+addresses.
+</property>
+</object>
+<object id='jnxIpv4AddrTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of addressing information relevant to this
+entity's IP addresses.
+</property>
+</object>
+<object id='jnxIpv4Config' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-IPv4-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.12.1
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-MIB') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+        Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+The MIB modules representing Juniper Networks'
+implementation of enterprise specific MIBs 
+supported by a single SNMP agent.
+</property>
+<tomanycont id='nodes'>
+<object id='jnxBoxAnatomy' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='jnxBoxClass' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The class of the box, indicating which product line
+the box is about, for example, 'Internet Router'.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxBoxDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name, model, or detailed description of the box,
+indicating which product the box is about, for example
+'M40'.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxBoxInstalled' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the subject was last
+installed, up-and-running.  Zero if unknown or 
+already up-and-running when the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxBoxRevision' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The revision of this subject, blank if unknown or
+unavailable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxBoxSerialNo' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The serial number of this subject, blank if unknown 
+or unavailable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The maximum number of containers of this level
+per container of the next higher level.  
+e.g. if there are six level 2 containers in 
+level 1 container, then jnxContainersCount for
+level 2 is six.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this
+subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry of containers table.
+</property>
+</object>
+<object id='jnxContainersIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The index for this entry.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersLevel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The abstraction level of the box or chassis.
+It is enumerated from the outside to the inside, 
+from the outer layer to the inner layer.
+For example, top level (i.e. level 0) refers to 
+chassis frame, level 1 FPC slot within chassis 
+frame, level 2 PIC space within FPC slot.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of containers entries.
+</property>
+</object>
+<object id='jnxContainersType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of this container.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersView' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The view(s) from which the specific container
+appears.
+
+This variable indicates that the specific container
+is embedded and accessible from the corresponding
+view(s).
+
+The value is a bit map represented as a sum.
+If multiple bits are set, the specified
+container(s) are located and accessible from 
+that set of views.
+
+The various values representing the bit positions
+and its corresponding views are:
+    1   front
+    2   rear
+    4   top
+    8   bottom
+   16   leftHandSide
+   32   rightHandSide
+
+Note 1: 
+LefHandSide and rightHandSide are referred
+to based on the view from the front.
+
+Note 2: 
+If the specified containers are scattered 
+around various views, the numbering is according
+to the following sequence:
+    front -&gt; rear -&gt; top -&gt; bottom
+	  -&gt; leftHandSide -&gt; rightHandSide
+For each view plane, the numbering sequence is
+first from left to right, and then from up to down.
+
+Note 3: 
+Even though the value in chassis hardware (e.g. 
+slot number) may be labelled from 0, 1, 2, and up,
+all the indices in MIB start with 1 (not 0) 
+according to network management convention.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContainersWithin' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.6.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The index of its next higher level container 
+housing	this entry.  The associated 
+jnxContainersIndex in the jnxContainersTable 
+represents its next higher level container.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsChassisDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A textual description of the chassis on which the
+contents of this row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsChassisId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Identifies the chassis on which the contents of this
+row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsContainerIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The associated jnxContainersIndex in the 
+jnxContainersTable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this
+subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry of contents table.
+</property>
+</object>
+<object id='jnxContentsInstalled' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the subject was last 
+installed, up-and-running.  Zero if unknown
+or already up-and-running when the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsL1Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level one index of the container
+housing this subject.  Zero if unavailable
+or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsL2Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level two index of the container
+housing this subject.  Zero if unavailable
+or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsL3Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level three index of the container
+housing this subject.  Zero if unavailable
+or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsLastChange' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the box contents 
+table last changed.  Zero if unknown or already 
+existing when the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsPartNo' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The part number of this subject, blank if unknown 
+or unavailable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsRevision' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The revision of this subject, blank if unknown 
+or unavailable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsSerialNo' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The serial number of this subject, blank if 
+unknown or unavailable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxContentsTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of contents entries.
+</property>
+</object>
+<object id='jnxContentsType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.8.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of this subject.  zeroDotZero
+if unknown.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledChassisDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A textual description of the chassis on which the
+contents of this row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledChassisId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Identifies the chassis on which the contents of this
+row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledContainerIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The associated jnxContainersIndex in the 
+jnxContainersTable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this
+subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry of filled status table.
+</property>
+</object>
+<object id='jnxFilledL1Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level one index of the container
+housing this subject.  Zero if unavailable
+or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledL2Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level two index of the container
+housing this subject.  Zero if unavailable
+or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledL3Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level three index of the container
+housing this subject.  Zero if unavailable
+or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledLastChange' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the box filled 
+status table last changed.  Zero if unknown or
+already at that state when the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The filled state of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFilledTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of filled status entries.
+</property>
+</object>
+<object id='jnxFruChassisDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A textual description of the chassis on which the
+contents of this row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruChassisId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Identifies the chassis on which the contents of this
+row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruContentsIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The associated jnxContentsContainerIndex in the 
+jnxContentsTable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry in the FRU status table.
+</property>
+</object>
+<object id='jnxFruL1Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level one index associated with this
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruL2Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level two index associated with this 
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruL3Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level three index associated with this
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruLastPowerOff' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when this subject was last 
+powered off.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruLastPowerOn' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when this subject was last 
+powered on.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruOfflineReason' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The offline reason of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruPowerUpTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The time interval in 10-millisecond period
+that this subject has been up and running
+since the last power on time.  Zero if 
+unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruSlot' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The slot number of this subject.  This is equivalent
+to jnxFruL1Index in meaning.  Zero if unavailable or 
+inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current state for this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of FRU status entries.
+</property>
+</object>
+<object id='jnxFruTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The temperature in Celsius (degrees C) of this 
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxFruType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.15.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The FRU type for this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDAssociateIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.2
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The index of the associated table that this
+entry is related.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDAssociateTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The associated table that this entry is 
+related.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.7
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+An entry of status table.
+</property>
+</object>
+<object id='jnxLEDL1Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.3
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The level one index of the associated
+table that this entry is related.  Zero 
+if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDL2Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.4
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The level two index of the associated
+table that this entry is related.  Zero 
+if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDL3Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.5
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The level three index of the associated
+table that this entry is related.  Zero
+if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDLastChange' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.9
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the box LED table 
+last changed.  Zero if unknown or already at 
+that state when the agent was up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDOriginator' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.6
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The originator of the this entry.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.8
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The state of the LED indicator.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDStateOrdered' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10.1.9
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The state of the LED indicator.  Identical to jnxLEDState, but
+with enums ordered from 'most operational' to 'least
+operational' states.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxLEDTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.10
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+A list of status entries.
+</property>
+</object>
+<object id='jnxOperatingBuffer' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The buffer pool utilization in percentage
+of this subject.  Zero if unavailable or 
+inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingCPU' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The CPU utilization in percentage of this 
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingChassisDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A textual description of the chassis on which the
+contents of this row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingChassisId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Identifies the chassis on which the contents of this
+row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingContentsIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The associated jnxContentsContainerIndex in the 
+jnxContentsTable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingDRAMSize' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.10
+</property>
+<property type="string" id="status" mode="w" >
+deprecated
+</property>
+<property type="string" id="description" mode="w" >
+The DRAM size in bytes of this subject.
+Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry of operating status table.
+</property>
+</object>
+<object id='jnxOperatingHeap' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The heap utilization in percentage of 
+this subject.  Zero if unavailable or 
+inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingISR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The CPU utilization in percentage of this subject
+spending in interrupt service routine (ISR).
+Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingL1Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level one index associated with this
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingL2Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level two index associated with this 
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingL3Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level three index associated with this
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingLastRestart' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when this subject 
+last restarted.  Zero if unavailable or 
+inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingMemory' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The installed memory size in Megabytes 
+of this subject.  Zero if unavailable or
+inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operating state of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingStateOrdered' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operating state of this subject.  Identical to
+jnxOperatingState, but with enums ordered from 'most
+operational' to 'least operational' states.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of operating status entries.
+</property>
+</object>
+<object id='jnxOperatingTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The temperature in Celsius (degrees C) of this 
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxOperatingUpTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.13.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The time interval in 10-millisecond period
+that this subject has been up and running.  
+Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyChassisDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A textual description of the chassis on which the
+contents of this row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyChassisId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Identifies the chassis on which the contents of this
+row exists.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The election priority of redundancy configuration for
+this subject.  The value 'notApplicable' means no
+specific instance is configured to be master or
+backup; whichever component boots up first becomes a
+master.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyContentsIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The associated jnxContentsContainerIndex in the 
+jnxContentsTable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name or detailed description of this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry in the redundancy information table.
+</property>
+</object>
+<object id='jnxRedundancyKeepaliveElapsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The elapsed time in seconds by this subject since 
+receiving the last keepalive message from the other
+subsystems.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyKeepaliveHeartbeat' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The period of sending keepalive messages between
+the master and backup subsystems.  It is a system-wide
+preset value in seconds used by internal mastership
+resolution.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyKeepaliveLoss' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of losses on keepalive messages 
+between the master and backup subsystems as perceived
+by this subject since the system is up and running.  
+Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyKeepaliveTimeout' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The timeout period in seconds, by the keepalive 
+watchdog timer, before initiating a switch over to 
+the backup subsystem.  Zero if unavailable or 
+inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyL1Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level one index associated with this
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyL2Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level two index associated with this 
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyL3Index' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The level three index associated with this
+subject.  Zero if unavailable or inapplicable.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current running state for this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancySwitchoverCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of switchover as perceived by
+this subject since routing engine is up and running.
+The switchover is defined as a change in state of
+jnxRedundancyState from master to backup or vice
+versa.	Its value is reset when the routing engine
+is reset or rebooted.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancySwitchoverReason' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The reason of the last switchover for this subject.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancySwitchoverTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of sysUpTime when the jnxRedundancyState
+of this subject was last switched over from master
+to backup or vice versa.  Zero if unknown or never
+switched over since the routing engine is up and
+running.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='jnxRedundancyTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A list of redundancy information entries.
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='jnxFanFailure' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFanFailure trap signifies that the SNMP
+entity, acting in an agent role, has detected
+that the specified cooling fan or impeller in 
+the chassis has been in the failure (not spinning) 
+condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxContentsL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxOperatingState': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsContainerIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFanOK' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFanOK trap signifies that the SNMP
+entity, acting in an agent role, has detected that
+the specified cooling fan or impeller in the chassis
+has recovered from the failure (not spinning) condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxContentsL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxOperatingState': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsContainerIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruCheck' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruCheck trap signifies that the SNMP
+entity, acting in an agent role, has detected that
+the specified FRU (Field Replaceable Unit) has
+encountered some operational errors and gone into
+check state in the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruFailed' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This indicates the specified FRU (Field Replaceable Unit)
+has failed in the chassis. Most probably this is due toi
+some hard error such as fru is not powering up or not
+able to load ukernel. In these cases, fru is replaced.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruInsertion' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruInsertion trap signifies that the SNMP 
+entity,	acting in an agent role, has detected that
+the specified FRU (Field Replaceable Unit) has been 
+inserted into the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruOffline' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruOffline trap signifies that the SNMP
+entity, acting in an agent role, has detected
+that the specified FRU (Field Replaceable Unit)
+has gone offline in the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruOfflineReason': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruLastPowerOn': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruLastPowerOff': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruOnline' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruOnline trap signifies that the SNMP
+entity, acting in an agent role, has detected that
+the specified FRU (Field Replaceable Unit) has
+gone online in the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruPowerOff' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruPowerOff trap signifies that the SNMP 
+entity, acting in an agent role, has detected 
+that the specified FRU (Field Replaceable Unit)
+has been powered off in the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruOfflineReason': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruLastPowerOn': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruLastPowerOff': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruPowerOn' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruPowerOn trap signifies that the SNMP 
+entity,	acting in an agent role, has detected that
+the specified FRU (Field Replaceable Unit) has been 
+powered on in the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruOfflineReason': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruLastPowerOn': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruLastPowerOff': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxFruRemoval' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxFruRemoval trap signifies that the SNMP 
+entity, acting in an agent role, has detected 
+that the specified FRU (Field Replaceable Unit)
+has been removed from the chassis.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxFruSlot': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruName': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxFruType': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxOverTemperature' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxOverTemperature trap signifies that the 
+SNMP entity, acting in an agent role, has 
+detected that the specified hardware component
+in the chassis has experienced over temperature
+condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxContentsL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxOperatingTemp': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsContainerIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxPowerSupplyFailure' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxPowerSupplyFailure trap signifies that
+the SNMP entity, acting in an agent role, has
+detected that the specified power supply in the
+chassis has been in the failure (bad DC output) 
+condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxContentsL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxOperatingState': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsContainerIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxPowerSupplyOK' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxPowerSupplyOK trap signifies that the 
+SNMP entity, acting in an agent role, has
+detected that the specified power supply in the
+chassis has recovered from the failure (bad DC output) 
+condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxContentsL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxOperatingState': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsContainerIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxRedundancySwitchover' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxRedundancySwitchover trap signifies that 
+the SNMP entity, acting in an agent role, has 
+detected that the specified hardware component
+in the chassis has experienced a redundancy 
+switchover event defined as a change in state
+of jnxRedundancyState from master to backup or
+vice versa.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxRedundancyDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancySwitchoverCount': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancyState': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancySwitchoverTime': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancySwitchoverReason': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancyContentsIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancyL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancyL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancyConfig': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxRedundancyL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+<object id='jnxTemperatureOK' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.2.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A jnxTemperatureOK trap signifies that the 
+SNMP entity, acting in an agent role, has 
+detected that the specified hardware component
+in the chassis has recovered from over temperature
+condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'jnxContentsL3Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL1Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsDescr': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxOperatingTemp': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsL2Index': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}, 'jnxContentsContainerIndex': {'nodetype': 'object', 'module': 'JUNIPER-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'Juniper', 'mibs', 'JUNIPER-SMI') -->
+<object id='/zport/dmd/Mibs/Juniper/mibs/JUNIPER-SMI' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+        Juniper Technical Assistance Center
+Juniper Networks, Inc.
+1194 N. Mathilda Avenue
+Sunnyvale, CA 94089
+E-mail: support@juniper.net
+</property>
+<property type="string" id="description" mode="w" >
+The Structure of Management Information for Juniper Networks.
+</property>
+<tomanycont id='nodes'>
+<object id='jnxChassisOKTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.2
+</property>
+</object>
+<object id='jnxChassisTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.1
+</property>
+</object>
+<object id='jnxCmNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.5
+</property>
+</object>
+<object id='jnxCollectorNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.8
+</property>
+</object>
+<object id='jnxLdpTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.4
+</property>
+</object>
+<object id='jnxMibs' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The root of Juniper's MIB objects.
+</property>
+</object>
+<object id='jnxPMonNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.7
+</property>
+</object>
+<object id='jnxPingNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.9
+</property>
+</object>
+<object id='jnxProducts' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The root of Juniper's Product OIDs.
+</property>
+</object>
+<object id='jnxRmonTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.3
+</property>
+</object>
+<object id='jnxServices' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The root of Juniper's Services OIDs.
+</property>
+</object>
+<object id='jnxSonetNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4.6
+</property>
+</object>
+<object id='jnxTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The root of Juniper's Trap OIDs.
+</property>
+</object>
+<object id='juniperMIB' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+JUNIPER-SMI
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2636
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

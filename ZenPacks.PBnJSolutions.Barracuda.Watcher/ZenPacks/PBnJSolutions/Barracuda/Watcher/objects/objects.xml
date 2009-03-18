@@ -29,7 +29,7 @@ Barracuda
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/usr/bin/perl /usr/local/zenoss/ZenPacks/ZenPacks.PBnJSolutions.Barracuda.Watcher/ZenPacks/PBnJSolutions/Barracuda/Watcher/datasources/check_cuda -H $devname
+/usr/bin/perl $$ZENHOME/ZenPacks/ZenPacks.PBnJSolutions.Barracuda.Watcher/ZenPacks/PBnJSolutions/Barracuda/Watcher/datasources/check_cuda -H $devname
 </property>
 <property type="int" id="cycletime" mode="w" >
 5

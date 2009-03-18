@@ -2,7 +2,7 @@
 
 use POSIX;
 use strict;
-use lib "/usr/local/zenoss/libexec"  ;
+use lib $ENV{ZENHOME}."/libexec"  ;
 
 use utils qw($TIMEOUT %ERRORS &print_revision &support);
 

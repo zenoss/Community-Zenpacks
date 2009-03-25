@@ -54,14 +54,3 @@ class VmwareEsxDf(CommandPlugin):
             rm.append(om)
         return rm
 
-#[root@esx1 root]# vdf -P
-#Filesystem         1024-blocks      Used Available Capacity Mounted on
-#/dev/sda2              5036316   3384756   1395728      71% /
-#/dev/sda1               101089     26275     69595      28% /boot
-#none                    134284         0    134284       0% /dev/shm
-#/dev/sda6              2008108    153748   1752352       9% /var/log
-#/vmfs/devices       8458327184         08458327184   0% /vmfs/devices
-#/vmfs/volumes/476c3cd3-328506b3-5297-001e4f11aa50      576716800 435473408 141243392  75% /vmfs/volumes/esx1store
-#/vmfs/volumes/48906e44-348d58e0-3279-0015177d607c     19815464961753621504 227924992  88% /vmfs/volumes/FAS2020-DEV
-#/vmfs/volumes/48906e9d-71729353-bfb1-0015177d607c      232783872 159772672  73011200  68% /vmfs/volumes/FAS2020-AUX
-

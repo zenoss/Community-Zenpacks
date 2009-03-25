@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'ZenEventManager', 'commands', 'SendAck') -->
+<object id='/zport/dmd/ZenEventManager/commands/SendAck' module='Products.ZenEvents.EventCommand' class='EventCommand'>
+<property type="string" id="command" mode="w" >
+${dev/dmd/ZenPackManager/packs/ZenPacks.Imas.SmsFunctions/path}/libexec/send-sms.php --action=ACKNOWLEDGE --sendsms="${dev/zSmsSend0}" --sendsms1="${dev/zSmsSend1}" --sendto="${dev/zSmsNumber0}" --sendto1="${dev/zSmsNumber1}" --monitortime="${dev/zSmsBetween0}" --monitortime1="${dev/zSmsBetween1}" --manageip="${dev/manageIp}" --id="${dev/id}" --evid="${evt/evid}" --summary="${evt/summary}" --component="${evt/component}"
+</property>
+<property type="string" id="where" mode="w" >
+(prodState = 1000) and (eventState = 1) and (severity = 5)
+</property>
+<property type="int" id="defaultTimeout" mode="w" >
+60
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="int" id="delay" mode="w" >
+0
+</property>
+<property type="int" id="repeatTime" mode="w" >
+0
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'ZenEventManager', 'commands', 'SendSMS') -->
+<object id='/zport/dmd/ZenEventManager/commands/SendSMS' module='Products.ZenEvents.EventCommand' class='EventCommand'>
+<property type="string" id="command" mode="w" >
+${dev/dmd/ZenPackManager/packs/ZenPacks.Imas.SmsFunctions/path}/libexec/send-sms.php --action=CRITICAL --sendsms="${dev/zSmsSend0}" --sendsms1="${dev/zSmsSend1}" --sendto="${dev/zSmsNumber0}" --sendto1="${dev/zSmsNumber1}" --monitortime="${dev/zSmsBetween0}" --monitortime1="${dev/zSmsBetween1}" --manageip="${dev/manageIp}" --id="${dev/id}" --evid="${evt/evid}" --summary="${evt/summary}" --component="${evt/component}"
+</property>
+<property type="string" id="clearCommand" mode="w" >
+${dev/dmd/ZenPackManager/packs/ZenPacks.Imas.SmsFunctions/path}/libexec/send-sms.php --action=RECOVERY --sendsms="${dev/zSmsSend0}" --sendsms1="${dev/zSmsSend1}" --sendto="${dev/zSmsNumber0}" --sendto1="${dev/zSmsNumber1}" --monitortime="${dev/zSmsBetween0}" --monitortime1="${dev/zSmsBetween1}" --manageip="${dev/manageIp}" --id="${dev/id}" --evid="${evt/evid}" --summary="${evt/summary}" --component="${evt/component}"
+</property>
+<property type="string" id="where" mode="w" >
+(prodState = 1000) and (eventState = 0) and (count &gt;= 2) and (severity = 5)
+</property>
+<property type="int" id="defaultTimeout" mode="w" >
+60
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="int" id="delay" mode="w" >
+0
+</property>
+<property type="int" id="repeatTime" mode="w" >
+1800
+</property>
+</object>
+</objects>

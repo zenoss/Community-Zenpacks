@@ -14,15 +14,15 @@
 ################################
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
-NAME = 'ZenPacks.community.VMwareEsx'
-VERSION = '2.2.3'
+NAME = 'ZenPacks.Imas.SmsFunctions'
+VERSION = '1.0'
 AUTHOR = 'Wouter D\'Haeseleer'
 LICENSE = ''
-NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
-PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.VMwareEsx']
+NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Imas']
+PACKAGES = ['ZenPacks', 'ZenPacks.Imas', 'ZenPacks.Imas.SmsFunctions']
 INSTALL_REQUIRES = []
 COMPAT_ZENOSS_VERS = '>=2.2'
-PREV_ZENPACK_NAME = 'VMwareEsx'
+PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################
 # Zenoss will not overwrite any changes you make below here.
@@ -63,8 +63,8 @@ setup(
     package_data = {
          '': ['*.txt'],
          '':['../COPYRIGHT.txt','../LICENSE.txt'],
-         NAME: ['objects/*','skins/*','services/*', 'reports/*/*',
-                'modeler/*/*', 'daemons/*', 'lib/*', 'libexec/*'],
+         NAME: ['objects/*','skins/*/*','services/*', 'reports/*/*',
+                'modeler/*/*', 'daemons/*', 'lib/*', 'libexec/*', 'php/*'],
          },
 
     # Indicate dependencies on other python modules or ZenPacks.  This line

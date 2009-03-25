@@ -25,7 +25,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-${here/zZenPackCommunityVMwareESXlibexec}/vmware-esx.sh  ${dev/manageIp} ${dev/zSnmpCommunity} ${here/mount}
+${here/ZenPackManager/packs/ZenPacks.community.VMwareEsx/path}/libexec/vmware-esx.sh  ${dev/manageIp} ${dev/zSnmpCommunity} ${here/mount}
 </property>
 <property type="int" id="cycletime" mode="w" >
 60

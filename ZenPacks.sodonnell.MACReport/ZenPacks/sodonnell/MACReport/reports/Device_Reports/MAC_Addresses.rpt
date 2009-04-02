@@ -1,0 +1,48 @@
+<tal:block tal:define="
+	objectsTemp python:here.ZenLinkManager.layer2_catalog.searchResults();
+	objects python:[ d for d in objectsTemp if d.macaddress != '' and d.macaddress.split(':').count('00') != len(d.macaddress.split(':')) ];
+    objects python: (hasattr(request, 'doExport') and list(objects)) or objects;
+	tableName string: macsreport;
+	batch python:here.ZenTableManager.getBatch(tableName,objects,
+				sortedHeader='macaddress');
+">
+	<tal:block metal:use-macro="here/templates/macros/page1">
+	<tal:block metal:fill-slot="breadCrumbPane">
+	  <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>    
+	</tal:block>
+	<tal:block metal:fill-slot="contentPane">
+		<form method="POST" tal:attributes="action request/URL;"
+			tal:define="tabletitle string: MAC Address List;
+			showfilterbox python:True;">
+<!--			tblcolspan string:3"> //-->
+		<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+		<tal:block metal:fill-slot="zentablecontents">
+<tr>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'macaddress','MAC Address','cmp')"/>
+    <th class="tableheader">Device</th>
+    <th class="tableheader">Interface</th>
+</tr>
+    <tal:block tal:repeat="r batch">
+        <tr tal:define="odd repeat/r/odd"
+            tal:attributes="class python:test(odd,'odd','even')">
+           <td><a tal:content="r/macaddress"/></td>
+           <td><a tal:attributes="href r/deviceId"
+                  tal:content="python: r.getObject().getDeviceName()"/></td>
+           <td><a tal:attributes="href r/interfaceId"
+                  tal:content="python: r.getObject().id"/>
+        </tr>
+    </tal:block>
+    <tr>
+        <td colspan="0" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"/>
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</form>
+
+</tal:block>
+
+</tal:block>
+</tal:block>

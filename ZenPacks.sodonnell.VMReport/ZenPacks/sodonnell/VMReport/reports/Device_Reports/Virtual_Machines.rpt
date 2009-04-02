@@ -1,0 +1,69 @@
+<tal:block tal:define="
+        objectsTemp1 python:[ d.virtualmachines() for d in here.dmd.Devices.Server.ESX.getSubDevices() if d.hasObject('virtualmachines') and len(d.virtualmachines()) != 0 ];
+        objects python:[];
+        objectsTemp2 python:[ objects.extend(v) for v in objectsTemp1 ];
+    objects python: (hasattr(request, 'doExport') and list(objects)) or objects;
+        tableName string: vmList;
+        batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                sortedHeader='vmDisplayName');
+        exportFields python:[('vmDisplayName','Name'),('vmVMID','VMID'),('vmGuestOS','Guest OS'),('vmState','VM State'),('vmGuestState','Guest State'),('getParentDeviceName','ESX Host')]
+">
+<tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
+<tal:block metal:fill-slot="report">
+        <tal:block metal:use-macro="here/templates/macros/page1">
+        <tal:block metal:fill-slot="breadCrumbPane">
+          <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>
+        </tal:block>
+        <tal:block metal:fill-slot="contentPane">
+                <form method="POST" tal:attributes="action request/URL;"
+                        tal:define="tabletitle string: Virtual Machine List;
+                        showfilterbox python:True;
+                        tblcolspan string:3">
+                <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+                <tal:block metal:fill-slot="zentablecontents">
+<tr>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'vmDisplayName','Name','cmp')"/>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'vmVMID','VMID','cmp')"/>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'vmGuestOS','Guest OS','cmp')"/>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'vmState','VM State','cmp')"/>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'vmGuestState','Guest State','cmp')"/>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getParentDeviceName','ESX Host','cmp')"/>
+</tr>
+    <tal:block tal:repeat="r batch">
+        <tr tal:define="odd repeat/r/odd; link r/managedDeviceLink; hostLink r/getParentDeviceUrl"
+            tal:attributes="class python:test(odd,'odd','even')">
+           <td class="tablevalues">
+               <span tal:content="structure r/urlLink"/>
+               <span tal:condition="link" tal:omit-tag>
+                   (<span tal:replace="structure r/managedDeviceLink"/>)
+               </span>
+           </td>
+           <td class="tablevalues" tal:content="r/vmVMID"/>
+           <td class="tablevalues" tal:content="r/vmGuestOS"/>
+           <td class="tablevalues" tal:content="r/vmState"/>
+           <td class="tablevalues" tal:content="r/vmGuestState"/>
+           <td><a tal:attributes="href r/getParentDeviceUrl"
+                  tal:content="r/getParentDeviceName"/>
+        </tr>
+    </tal:block>
+    <tr>
+        <td colspan="0" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"/>
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</form>
+
+</tal:block>
+
+</tal:block>
+</tal:block>
+</tal:block>
+</tal:block>

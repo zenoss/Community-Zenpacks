@@ -1,0 +1,7 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+The contents of your custom tab go here.
+
+</tal:block>
+</tal:block>

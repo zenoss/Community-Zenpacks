@@ -22,9 +22,9 @@ class ZenPack(ZenPackBase):
         ZenPackBase.upgrade(self, app)
         self.installMenuItems(app.zport.dmd)
     
-    def remote(self, app, leaveObjects=False):
+    def remove(self, app, leaveObjects=False):
         self.removeMenuItems(app.zport.dmd)
-        ZenPackBase.remove(self, app, leaveObjects)
+        ZenPackBase.remove(self.app, leaveObjects)
     
     def installMenuItems(self, dmd):
         self.removeMenuItems(dmd)

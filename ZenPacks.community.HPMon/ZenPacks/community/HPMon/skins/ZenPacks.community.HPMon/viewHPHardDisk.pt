@@ -1,0 +1,60 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" tal:attributes="action string:${here/absolute_url_path}"
+    tal:define="manager python:here.has_permission('Change Device')">
+
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:Hard Disk;
+                menu_id string:Lockable">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+      <td class="tableheader" align=left>Model</td>
+      <td class="tablevalues" tal:content="here/description">sd0</td>
+      <td class="tableheader">Monitor</td>
+      <td class="tablevalues">
+        <select class="tablevalues"  name="monitor:boolean">
+          <option tal:repeat="e python:(True,False)" tal:content="e"
+          tal:attributes="value e; selected python:e==here.monitored()"/>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Snmp Index</td>
+      <td class="tablevalues" tal:content="here/snmpindex">1</td>
+      <td class="tableheader" align=left>Status</td>
+      <td class="tablevalues" tal:content="here/statusString">1</td>
+    </tr>      
+    <tr>
+      <td class="tableheader" align=left>Firmware</td>
+      <td class="tablevalues" tal:content="here/FWRev">1</td>
+      <td class="tableheader" align=left>Interface</td>
+      <td class="tablevalues" tal:content="here/diskType">1</td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Size</td>
+      <td class="tablevalues" tal:content="here/sizeString">1</td>
+      <td class="tableheader" align=left>Rotational Speed</td>
+      <td class="tablevalues" tal:content="here/rpmString">1</td>
+    </tr>
+    <tr tal:condition="manager">
+        <td align="left" class="tableheader" colspan="4">
+            <input class="tableheader" type="submit" value=" Save "
+                name="zmanage_editProperties:method" />
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+<tal:block tal:condition="here/monitored" >
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+</tal:block>
+</tal:block>
+</tal:block>

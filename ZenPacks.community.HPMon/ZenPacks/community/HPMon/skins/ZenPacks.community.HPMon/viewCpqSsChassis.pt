@@ -1,0 +1,213 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" tal:attributes="action string:${here/absolute_url_path}"
+    tal:define="manager python:here.has_permission('Change Device')">
+
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:Storage System Chassis;
+                menu_id string:Lockable">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+      <td class="tableheader" align=left>Model</td>
+      <td class="tablevalues" tal:content="here/model">sd0</td>
+      <td class="tableheader">Monitor</td>
+      <td class="tablevalues">
+        <select class="tablevalues"  name="monitor:boolean">
+          <option tal:repeat="e python:(True,False)" tal:content="e"
+          tal:attributes="value e; selected python:e==here.monitored()"/>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Name</td>
+      <td class="tablevalues" tal:content="here/name">1</td>
+      <td class="tableheader" align=left>Status</td>
+      <td class="tablevalues" tal:content="here/statusString">1</td>
+    </tr>      
+    <tr>
+      <td class="tableheader" align=left>Serial Number</td>
+      <td class="tablevalues" tal:content="here/serialNumber">1</td>
+      <td class="tableheader" align=left>Connection Type</td>
+      <td class="tablevalues" tal:content="here/connectionTypeString">1</td>
+    </tr>
+    <tr tal:condition="manager">
+        <td align="left" class="tableheader" colspan="4">
+            <input class="tableheader" type="submit" value=" Save "
+                name="zmanage_editProperties:method" />
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block
+    metal:define-macro="fcaCntlrList"
+    tal:define="tableName string:fcaCntlrList;
+    objects here/getCntlr;
+    tabletitle string:Controllers;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='slot');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'boxIoSlot','Slot')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'roleString','Current Role')"/>
+        <th class="tableheader" align="center" width="60">Status</th>
+    </tr>
+    <tal:block tal:repeat="card batch">
+    <tr tal:define="odd repeat/card/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues">
+            <tal:block 
+             tal:content="structure python:card.urlLink(text=str(card.boxIoSlot()))"/>
+        </td>
+        <td class="tablevalues" tal:content="structure card/getProductLink"/>
+        <td class="tablevalues" tal:content="structure card/roleString"/>
+        <td tal:define="status card/statusDot; 
+                    color python:here.convertStatusToDot(status)"
+                    class="tablevalues" style="text-align:center;">
+            <img tal:attributes="src string:img/${color}_dot.png"/>
+        </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block metal:define-macro="hardSsDiskList"
+    tal:define="tableName string:hardSsDiskList;
+    objects here/getPhyDrv;
+    tabletitle string:Hard Disks;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='Name');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'description','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'bay','Bay')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'diskType','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'rpm','Speed')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'size','Size')"/>
+        <th class="tableheader" align="center" width="60">Status</th>
+    </tr>
+    <tal:block tal:repeat="disk batch">
+    <tr tal:define="odd repeat/disk/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues">
+          <tal:block 
+           tal:content="structure python:disk.urlLink(text=disk.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="disk/bay"/>
+      <td class="tablevalues" tal:content="structure disk/getProductLink"/>
+      <td class="tablevalues" tal:content="disk/diskType"/>
+      <td class="tablevalues" tal:content="disk/rpmString"/>
+      <td class="tablevalues" tal:content="disk/sizeString"/>
+      <td tal:define="status disk/statusDot; 
+                    color python:here.convertStatusToDot(status)"
+        class="tablevalues" style="text-align:center;">
+        <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block metal:define-macro="logicalSsDiskList"
+    tal:define="tableName string:logicalSsDiskList;
+    objects here/getLogDrv;
+    tabletitle string:Logical Disks;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='Name');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'description','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProductName','OS Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'diskType','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'stripesize','Stripe Size')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'size','Size')"/>
+        <th class="tableheader" align="center" width="60">Status</th>
+    </tr>
+    <tal:block tal:repeat="disk batch">
+    <tr tal:define="odd repeat/disk/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues">
+          <tal:block 
+           tal:content="structure python:disk.urlLink(text=disk.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="disk/description"/>
+      <td class="tablevalues" tal:content="disk/diskType"/>
+      <td class="tablevalues" tal:content="disk/stripesizeString"/>
+      <td class="tablevalues" tal:content="disk/sizeString"/>
+      <td tal:define="status disk/statusDot; 
+                    color python:here.convertStatusToDot(status)"
+        class="tablevalues" style="text-align:center;">
+        <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+
+</form>
+<br/>
+<tal:block tal:condition="here/monitored" >
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+</tal:block>
+</tal:block>
+</tal:block>

@@ -1,0 +1,50 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+
+<!-- BEGIN -->
+<tal:block metal:define-macro="PrinterTonerList"
+    tal:define="tableName string:PrinterTonerList;
+    objects here/printertoners/objectValuesAll;
+    tabletitle string:Printer Toner Details ;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'Max','maxToner')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'Current','currentToner')"/>
+    </tr>
+    <tal:block tal:repeat="printertoners batch">
+    <tr tal:define="odd repeat/printertoners/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" width="50%">
+          <tal:block tal:content="structure python:printertoners.urlLink(text=printertoners.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="printertoners/maxToner"/>
+      <td class="tablevalues" tal:content="printertoners/currentToner"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END -->
+
+</tal:block>
+</tal:block>
+

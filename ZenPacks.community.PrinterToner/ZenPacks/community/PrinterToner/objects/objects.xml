@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Printer', 'Laser') -->
+<object id='/zport/dmd/Devices/Printer/Laser' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'community.snmp.PrinterTonerMap']
+</property>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.community.PrinterToner.PrinterTonerDevice
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'PrinterToner') -->
+<object id='/zport/dmd/Devices/rrdTemplates/PrinterToner' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Performance template for Printer Toner
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.PrinterToner.PrinterTonerDevice
+</property>
+<tomanycont id='datasources'>
+<object id='toner' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.43.11.1.1.9.1
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='toner' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='Toner_error' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['toner_toner']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+300
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/Snmp
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Toner_low' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['toner_toner']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+1000
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/Snmp
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='toner' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='toner' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+${here/maxToner},EXC,-,${here/maxToner},/,100,*
+</property>
+<property type="string" id="dpName" mode="w" >
+toner_toner
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</objects>

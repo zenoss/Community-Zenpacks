@@ -1,0 +1,41 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method=post
+    tal:define="manager here/isManager;"
+    tal:attributes="action string:${here/absolute_url_path}">
+    <input type="hidden" name="zenScreenName"
+        tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:Printer Toner;
+                menu_id string:Lockable;">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<tr>
+    <td class="tableheader" align=left>Cartridge Name</td>
+    <td class="tablevalues" tal:content="here/viewName"/>
+</tr>
+<tr>
+    <td class="tableheader" align=left>Current</td>
+    <td class="tablevalues" colspan="3" tal:content="here/currentToner"/>
+</tr>
+<tr>
+    <td class="tableheader" align=left>SNMPIndex</td>
+    <td class="tablevalues" colspan="3" tal:content="here/snmpindex"/>
+</tr>
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+<tal:block tal:condition="here/monitored" >
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+</tal:block>
+</tal:block>
+</tal:block>
+

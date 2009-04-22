@@ -1,14 +1,5 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Printer', 'Laser') -->
-<object id='/zport/dmd/Devices/Printer/Laser' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
-<property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'community.snmp.PrinterTonerMap']
-</property>
-<property visible="True" type="string" id="zPythonClass" >
-ZenPacks.community.PrinterToner.PrinterTonerDevice
-</property>
-</object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'PrinterToner') -->
 <object id='/zport/dmd/Devices/rrdTemplates/PrinterToner' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >
@@ -67,7 +58,7 @@ True
 300
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Perf/Snmp
+/Perf/PrinterToner
 </property>
 <property type="int" id="severity" mode="w" >
 4
@@ -87,7 +78,7 @@ True
 1000
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Perf/Snmp
+/Perf/PrinterToner
 </property>
 <property type="int" id="severity" mode="w" >
 3

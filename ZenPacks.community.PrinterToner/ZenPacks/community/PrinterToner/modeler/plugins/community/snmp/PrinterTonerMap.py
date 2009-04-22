@@ -7,15 +7,11 @@
 # You can find full information here: http://www.zenoss.com/oss
 #
 ################################################################################
-
 __doc__="""PrinterTonerMap
 
 PrinterTonerMap maps the toner snmp mib for all details
 
 """
-
-#from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap, GetMap
-
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 from Products.DataCollector.plugins.DataMaps import ObjectMap
 
@@ -24,7 +20,6 @@ class PrinterTonerMap(SnmpPlugin):
 
     relname = "printertoners"
     modname = "ZenPacks.community.PrinterToner.PrinterToner"
-    #compname = "hw"
 
     columns = {
          '.3': 'snmpindex',
@@ -82,7 +77,6 @@ class PrinterTonerMap(SnmpPlugin):
         getdata, tabledata = results
         snmptable = tabledata.get("fsTableOid")
 
-        #skipfsnames = getattr(device, 'zFileSystemMapIgnoreNames', None)
         maps = []
         rm = self.relMap()
         for idx,ct in snmptable.iteritems():
@@ -90,6 +84,8 @@ class PrinterTonerMap(SnmpPlugin):
             res = {}
             color = ct['color'].replace("[","(")
             color = color.replace("]",")")
+            color = color.replace("/","-")
+            color = color.replace("\\","-")
             res['id'] = color
             res['snmpindex'] = snmpindex
             res['tonerName'] = color

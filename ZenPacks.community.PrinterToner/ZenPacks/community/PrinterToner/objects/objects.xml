@@ -55,7 +55,7 @@ True
 True
 </property>
 <property type="string" id="minval" mode="w" >
-300
+here.maxToner * .05
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/PrinterToner
@@ -75,7 +75,7 @@ True
 True
 </property>
 <property type="string" id="minval" mode="w" >
-1000
+here.maxToner * .1
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/PrinterToner

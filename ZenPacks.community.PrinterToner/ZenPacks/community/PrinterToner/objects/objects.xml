@@ -114,7 +114,7 @@ True
 <tomanycont id='graphPoints'>
 <object id='toner' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1

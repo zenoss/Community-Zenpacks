@@ -1,0 +1,188 @@
+<tal:block metal:use-macro="here/templates/macros/pageClean">
+<tal:block metal:fill-slot="contentPane">
+<form name="eventviewsForm" method="post" tal:attributes="action here/absolute_url_path">
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+
+
+        <tal:block tal:define="
+		myuser here/dmd/ZenUsers/getUserSettings;
+                objects python:myuser.objectValues(spec='CustomEventView');
+                tableName string:eventactionrules;
+                zem here/ZenTableManager;
+                batch python:zem.getBatch(tableName,objects); 
+                tabletitle string:Event Views;
+                menu_id string:EventView_list">
+
+    <input type='hidden' name='tableName' tal:attributes="value tableName" />
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+        <tal:block metal:fill-slot="zentablecontents">
+        <!-- BEGIN TABLE CONTENTS -->
+            
+    <tr>
+    <th tal:replace="structure python:zem.getTableHeader(
+                            tableName,'primarySortKey','Name')"/>
+    <th tal:replace="structure python:zem.getTableHeader(
+                            tableName,'type','Type')"/>
+    <th class="tableheader">Events</th>
+    </tr>
+    <tal:block tal:repeat="view batch">
+    <tr tal:define="odd repeat/view/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues">
+          <tal:block tal:condition="python:here.checkRemotePerm('Change Event Views',
+             here)" >
+            <input type="checkbox" name="ids:list" 
+                tal:attributes="value view/getId"/>
+          </tal:block>
+            <a tal:attributes="href view/getPrimaryUrlPath" target="_top"
+                tal:content="view/getId">view</a>
+        </td>
+<!--
+        <td class="tablevalues" 
+        tal:condition="python:not here.checkRemotePerm('Change Event Views',
+                here)"
+            tal:content="view/getId"/>
+-->
+        <td class="tablevalues" tal:content="view/type"/>
+        <td class="tablevalues" width="300">
+<tal:block metal:define-macro="horizontal">
+<tal:block tal:define="
+    zem python:view.ZenEventManager;
+    colors python:'red orange yellow blue grey green'.split();
+    summaries python:view.getEventSummary();
+    totals python:[x[2] for x in summaries];
+    ackstatus python:[x[2]-x[1] for x in summaries];
+    ">
+    <div class="horizontal-rainbow"
+    >
+        <tal:block tal:repeat="evnum python:totals[:-1]">
+        <div tal:define="color python:colors[repeat['evnum'].index]"
+            tal:attributes="class string:evpill-${color}"
+            style="float:left">
+            <span tal:content="evnum">0</span>
+            <div tal:condition="python:ackstatus[repeat['evnum'].index]<=0">
+            </div>
+        </div>
+        </tal:block>
+        <div class="evpill-green" style="float:left">
+            <div tal:condition="python:filter(lambda x:x, 
+                                              map(int, totals[:-1]))">
+            </div>
+        </div>
+    </div>
+</tal:block>
+</tal:block>
+        
+       <!--
+       <table class=" zentable" border=0 cellpadding=0 cellspacing=1
+            metal:define-macro="eventrainbow"
+            tal:on-error="structure string:
+                <span class='errorvalues'>Events unavailable</span>">
+            <tr>
+                <td align=center width=16%
+                tal:repeat="evt view/getEventSummary"
+                tal:attributes="class python:evt[0]">
+                    <span tal:replace="python:'%d/%d' % (evt[1],evt[2])"/>
+                </td>
+          </tr>
+        </table>
+-->
+        </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="4" class="tableheader">
+            <span metal:use-macro="here/zenTableNavigation/macros/navbody"/>
+        </td>
+    </tr>
+
+        <!-- END TABLE CONTENTS -->
+
+        </tal:block>
+        </tal:block>
+        </tal:block>
+        
+
+</form>
+<!-- FD -->
+    <br /> 
+
+        <tal:block tal:define=" 
+                tableName string:eventactionrules; 
+                zem here/ZenTableManager; 
+                tabletitle string:Groups Event Views; 
+                allgroups here/zport/dmd/ZenUsers/getAllGroupSettings; 
+		myuser here/dmd/ZenUsers/getUserSettings;
+                currgroups myuser/getUserGroupSettingsNames 
+		"
+                tal:condition="python:here not in allgroups" > 
+    <tal:block metal:use-macro="here/zenuimacros/macros/zentable"> 
+    <tal:block metal:fill-slot="zentablecontents"> 
+    <tr> 
+    <th tal:replace="structure python:zem.getTableHeader( 
+                            tableName,'primarySortKey','Group Name')"/> 
+    <th tal:replace="structure python:zem.getTableHeader( 
+                            tableName,'View',' View')"/> 
+    <th class="tableheader">Events</th> 
+    </tr> 
+    <tal:block> 
+    <tal:block tal:repeat="r allgroups"> 
+        <tal:block tal:condition="python:r.id in currgroups" tal:define=" 
+                objects python:r.objectValues(spec='CustomEventView'); 
+                batch python:zem.getBatch(tableName,objects);"> 
+        <tal:block tal:repeat="view batch"> 
+        <tr tal:define="odd repeat/view/odd" 
+                tal:attributes="class python:test(odd, 'odd', 'even')"> 
+        <td class="tableValues"> <a tal:attributes="href r/getPrimaryUrlPath" target="_top" tal:content="r/getId">id</a></td> 
+        <td class="tablevalues"> <a tal:attributes="href view/getPrimaryUrlPath" target="_top" tal:content="view/getId">view</a> </td> 
+        <td class="tablevalues" width="300"> 
+<tal:block metal:define-macro="horizontal1"> 
+<tal:block tal:define=" 
+    zem python:view.ZenEventManager; 
+    colors python:'red orange yellow blue grey green'.split(); 
+    summaries python:view.getEventSummary(); 
+    totals python:[x[2] for x in summaries]; 
+    ackstatus python:[x[2]-x[1] for x in summaries]; 
+    "> 
+    <div class="horizontal-rainbow" 
+    > 
+        <tal:block tal:repeat="evnum python:totals[:-1]"> 
+        <div tal:define="color python:colors[repeat['evnum'].index]" 
+            tal:attributes="class string:evpill-${color}" 
+            style="float:left"> 
+            <span tal:content="evnum">0</span> 
+            <div tal:condition="python:ackstatus[repeat['evnum'].index]<=0"> 
+            </div> 
+        </div> 
+        </tal:block> 
+        <div class="evpill-green" style="float:left"> 
+            <div tal:condition="python:filter(lambda x:x, 
+                                              map(int, totals[:-1]))"> 
+            </div> 
+        </div> 
+    </div> 
+</tal:block> 
+</tal:block> 
+ 
+        </tr> 
+        </tal:block> 
+        </tal:block> 
+    </tal:block> 
+    </tal:block> 
+    </tal:block> 
+   </tal:block> 
+    </tal:block> 
+<!-- FD --> 
+</tal:block>
+</tal:block>

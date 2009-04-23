@@ -132,7 +132,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="rpn" mode="w" >
-${here/maxToner},EXC,-,${here/maxToner},/,100,*
+${here/maxToner},/,100,*
 </property>
 <property type="string" id="dpName" mode="w" >
 toner_toner

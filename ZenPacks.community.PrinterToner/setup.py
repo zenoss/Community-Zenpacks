@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.PrinterToner"
-VERSION = "1.40"
+VERSION = "1.40.1"
 AUTHOR = "Tonino Greco"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

@@ -20,7 +20,7 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'Max','maxToner')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'Current','currentToner')"/>
+                            tableName,'Current','currentvalue')"/>
     </tr>
     <tal:block tal:repeat="printertoners batch">
     <tr tal:define="odd repeat/printertoners/odd"
@@ -29,7 +29,7 @@
           <tal:block tal:content="structure python:printertoners.urlLink(text=printertoners.getId())"/>
       </td>
       <td class="tablevalues" tal:content="printertoners/maxToner"/>
-      <td class="tablevalues" tal:content="printertoners/currentToner"/>
+      <td class="tablevalues" tal:content="printertoners/currentvalue"/>
     </tr>
     </tal:block>
     <tr>

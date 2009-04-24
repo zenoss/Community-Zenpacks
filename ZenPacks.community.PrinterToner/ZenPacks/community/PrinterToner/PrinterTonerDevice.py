@@ -7,7 +7,6 @@
 # You can find full information here: http://www.zenoss.com/oss
 #
 ################################################################################
-
 from Globals import InitializeClass
 from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.Device import Device

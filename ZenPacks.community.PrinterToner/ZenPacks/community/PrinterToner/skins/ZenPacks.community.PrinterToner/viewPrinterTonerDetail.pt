@@ -20,7 +20,7 @@
 </tr>
 <tr>
     <td class="tableheader" align=left>Current</td>
-    <td class="tablevalues" colspan="3" tal:content="here/currentToner"/>
+    <td class="tablevalues" colspan="3" tal:content="here/currentvalue"/>
 </tr>
 <tr>
     <td class="tableheader" align=left>SNMPIndex</td>

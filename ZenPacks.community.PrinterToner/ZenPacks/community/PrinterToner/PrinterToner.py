@@ -7,7 +7,6 @@
 # You can find full information here: http://www.zenoss.com/oss
 #
 ################################################################################
-
 __doc__="""PrinterToner
 
 PrinterToner - new device class for Printer Toner on HP Printers
@@ -84,14 +83,17 @@ class PrinterToner(DeviceComponent, ManagedEntity):
     def getId(self):
         return self.id
 
-#    def urlLink(self, text=None, url=None, attrs={}):
-#        """
-#        Override urlLink to return a link with the full path of the organizer.
-#
-#        >>> dmd.Devices.Server.urlLink()
-#        '<a href="/zport/dmd/Devices/Server">/Server</a>'
-#        """
-#        if text is None: text = self.getOrganizerName()
-#        return ZenModelRM.urlLink(self, text=text, url=url, attrs=attrs)
+    def currentValue(self, default=None):
+        """
+        Return the current toner levels
+        """
+        currentVal = self.cacheRRDValue('toner_toner', default)
+        if currentVal is None:
+            return "no value"
+        if currentVal is not None:
+            return long(currentVal)
+        return None
+    currentvalue = currentValue
+
 
 InitializeClass(PrinterToner)

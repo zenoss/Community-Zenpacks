@@ -7,7 +7,6 @@
 # You can find full information here: http://www.zenoss.com/oss
 #
 ################################################################################
-
 import Globals
 import os
 from Products.CMFCore.DirectoryView import registerDirectory

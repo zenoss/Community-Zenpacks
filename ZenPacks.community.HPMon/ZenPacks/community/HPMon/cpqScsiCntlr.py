@@ -16,9 +16,7 @@ $Id: cpqScsiCntlr.py,v 1.0 2008/12/09 10:51:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqScsiCntlr(HPExpansionCard):
     """SCSI Cntrl object"""

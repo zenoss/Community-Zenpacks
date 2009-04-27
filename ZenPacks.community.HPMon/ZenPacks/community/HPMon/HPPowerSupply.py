@@ -18,7 +18,7 @@ __version__ = "$Revision: 1.0 $"[11:-2]
 
 from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.PowerSupply import *
-from HPComponent import HPComponent
+from HPComponent import *
 
 class HPPowerSupply(PowerSupply, HPComponent):
     """PowerSupply object"""
@@ -27,23 +27,22 @@ class HPPowerSupply(PowerSupply, HPComponent):
 
     status = 1
     
-    statusmap = [(4, 3, 'Other'),
-	        (0, 0, 'No Error'),
-		(3, 5, 'General Failure'),
-		(3, 5, 'Bist Failure'),
-		(2, 4, 'Fan Failure'),
-		(2, 4, 'Temperature Failure'),
-		(2, 4, 'Interlock Open'),
-		(2, 4, 'EPROM Failure'),
-		(2, 4, 'VREF Failed'),
-		(2, 4, 'DAC Failed'),
-		(2, 4, 'RAM Test Failed'),
-		(2, 4, 'Voltage Channel Failed'),
-		(3, 5, 'Brown Out'),
-		(2, 4, 'Giveup on Startup'),
-		(3, 5, 'NVRAM Invalid'),
-		(2, 4, 'Calibration Table Invalid'),
-		]
+    statusmap ={1: (DOT_GREEN, SEV_CLEAN, 'No Error'),
+		2: (DOT_RED, SEV_CRITICAL, 'General Failure'),
+		3: (DOT_RED, SEV_CRITICAL, 'Bist Failure'),
+		4: (DOT_ORANGE, SEV_ERROR, 'Fan Failure'),
+		5: (DOT_ORANGE, SEV_ERROR, 'Temperature Failure'),
+		6: (DOT_ORANGE, SEV_ERROR, 'Interlock Open'),
+		7: (DOT_ORANGE, SEV_ERROR, 'EPROM Failure'),
+		8: (DOT_ORANGE, SEV_ERROR, 'VREF Failed'),
+		9: (DOT_ORANGE, SEV_ERROR, 'DAC Failed'),
+		10:(DOT_ORANGE, SEV_ERROR, 'RAM Test Failed'),
+		11:(DOT_ORANGE, SEV_ERROR, 'Voltage Channel Failed'),
+		12:(DOT_RED, SEV_CRITICAL, 'Brown Out'),
+		13:(DOT_ORANGE, SEV_ERROR, 'Giveup on Startup'),
+		14:(DOT_RED, SEV_CRITICAL, 'NVRAM Invalid'),
+		15:(DOT_ORANGE, SEV_ERROR, 'Calibration Table Invalid'),
+		}
 
     _properties = HWComponent._properties + (
         {'id':'status', 'type':'int', 'mode':'w'},

@@ -181,6 +181,64 @@ True
 </object>
 </tomanycont>
 </object>
+<object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.9.3.1.5
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='status' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='PowerSupply Status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['status_status']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+2
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
 </tomanycont>
 <tomanycont id='graphDefs'>
 <object id='CapacityUsed' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
@@ -287,6 +345,42 @@ True
 </object>
 </tomanycont>
 </object>
+<object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.6.8.1.6
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='status' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Overheating' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
@@ -304,6 +398,29 @@ here.threshold
 </property>
 <property type="int" id="severity" mode="w" >
 5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='TemperatureSensor Status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['status_status']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+1
+</property>
+<property type="string" id="maxval" mode="w" >
+3
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Temperature
+</property>
+<property type="int" id="severity" mode="w" >
+4
 </property>
 <property type="int" id="escalateCount" mode="w" >
 0
@@ -15076,7 +15193,7 @@ User Action: If the controller status is failed, replace the
 controller.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqFcaHostCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWideName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrModel': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrIndex': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWidePortName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrStatus': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqFcaHostCntlrWorldWideName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrModel': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrIndex': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrStatus': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWidePortName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqFcaAccelBadDataTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -18270,7 +18387,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-This is the current Power Meter reading in Watts.
+ This is the current Power Meter reading in Watts.
 This value shows the most recent power reading if available. 
 On systems without Power Meter support, this value will be -1.
 </property>
@@ -18292,7 +18409,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-This is the previous Power Meter reading in Watts. 
+ This is the previous Power Meter reading in Watts. 
 This value shows previous power reading if available. 
 On systems without Power Meter support, this value will be -1.
 </property>
@@ -19605,7 +19722,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-The PCI bus number for this set of utilization numbers.
+The PCI bus number for this set of utilization numbers. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -19627,7 +19744,7 @@ current
 <property type="string" id="description" mode="w" >
 The PCI device number for this set of utilization numbers.
 If this value is -1, the utilization reported is for the
-aggregate of all devices on this PCI bus.
+aggregate of all devices on this PCI bus. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -19731,7 +19848,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-A unique index into each PCI utilization table entry.
+A unique index into each PCI utilization table entry. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -20941,7 +21058,7 @@ The fault tolerant power supply condition has been set
 to degraded for the specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyFailed' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -20962,7 +21079,7 @@ The fault tolerant power supply condition has been set
 to failed for the specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyInserted' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -20983,7 +21100,7 @@ A Fault Tolerant Power Supply has been inserted into the
 specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyRemoved' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -21004,7 +21121,7 @@ A Fault Tolerant Power Supply has been removed from the
 specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPwrSupplyDegraded' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -21046,7 +21163,7 @@ One or more POST errors occurred.
 
 Power On Self-Test (POST) errors occur during the server
 restart process. Details of the POST error messages can 
-be found in Integrated Management Log
+be found in Integrated Management Log 
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
@@ -21680,7 +21797,7 @@ current
 One or more POST errors occurred.
 
 Power On Self-Test (POST) errors occur during the server
-restart process.
+restart process.  
 </property>
 </object>
 <object id='cpqHeResMemBoardBusError' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -26488,7 +26605,7 @@ ErrorTypeOutOfRange(14)
   The Management Station should display the following string:
   'Error type =%xh' where %x is the value of the
   cpqDaPhyDrvErrType object.  This index will only be provided
-  if the specified object exceeds the valid range.
+  if the specified object exceeds the valid range. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26946,7 +27063,7 @@ times 2^32 plus the phyDrvWrites.
 This information may be useful for determining rates.
 For instance, if you wanted to calculate the average number
 of writes per hour of operation, divide this number by the
-reference hours.
+reference hours. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -29805,7 +29922,7 @@ times 2^32 plus the phyDrvWrites.
 This information may be useful for determining rates.
 For instance, if you wanted to calculate the average number of
 writes per hour of operation, divide this number by the reference
-hours.
+hours. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -32338,7 +32455,7 @@ cpqDaPhyDrvBusNumber indicates the SCSI bus number associated
 with the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaPhyDrvThreshPassed': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvThreshPassed': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
 </property>
 </object>
 <object id='cpqDa3SpareStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -32980,7 +33097,7 @@ User Action: If the physical drive status is failed(3) or
 predictiveFailure(4), replace the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFailureCode': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvType': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvSerialNum': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFailureCode': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvType': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvSerialNum': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqDa7SpareStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -35780,7 +35897,7 @@ enabled.
 cpqNicIfLogMapAdvancedTeaming AND 8 is 8, Dynamic dual channel is
 enabled.
        cpqNicIfLogMapAdvancedTeaming AND 16 is 16, Router Path Failover is
-enabled.
+enabled.	
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -39034,7 +39151,7 @@ SCSI CD Library Firmware Revision.
 This is used to differentiate the firmware versions
 which have the same CD library vendor and model (as specified in
 cpqCdLibraryVendor and cpqCdLibraryModel). This can be retrieved
-by the SCSI inquiry command.
+by the SCSI inquiry command. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -41306,7 +41423,7 @@ SCSI CD-ROM Firmware Revision.
 This is used to differentiate the firmware versions
 which have the same CD-ROM drive vendor and model (as specified by
 cpqScsiCdVendor and cpqScsiCdModel). This can be retrieved by the
-SCSI inquiry command.
+SCSI inquiry command. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -47079,7 +47196,7 @@ SAS tape drive.  The current tape drive status is
 indicated in the cpqSasTapeDrvStatus variable.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'cpqSasTapeDrvSasAddress': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvFWRev': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvName': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvLocationString': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvSerialNumber': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'cpqSasTapeDrvSasAddress': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvName': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvLocationString': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvSerialNumber': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasTapeDrvFWRev': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqSasLogDrvStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>

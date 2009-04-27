@@ -16,9 +16,7 @@ $Id: cpqSsChassis.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 from cpqFcaCntlr import cpqFcaCntlr
 from cpqFcaPhyDrv import cpqFcaPhyDrv
 from cpqFcaLogDrv import cpqFcaLogDrv
@@ -94,7 +92,7 @@ class cpqSsChassis(HPExpansionCard):
 
     def getLogDrv(self):
         disks = []
-        for disk in self.hw.harddisks():
+        for disk in self.hw.logicaldisks():
 	    if isinstance(disk, cpqFcaLogDrv) and disk.snmpindex.split('.')[0] == self.snmpindex:
 	        disks.append(disk)
         return disks

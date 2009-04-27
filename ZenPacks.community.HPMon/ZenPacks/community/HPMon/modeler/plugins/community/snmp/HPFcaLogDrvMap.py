@@ -17,9 +17,9 @@ $Id: HPFcaLogDrvMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
 __version__ = '$Revision: 1.0 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
-from HPHardDiskMap import HPHardDiskMap
+from HPLogicalDiskMap import HPLogicalDiskMap
 
-class HPFcaLogDrvMap(HPHardDiskMap):
+class HPFcaLogDrvMap(HPLogicalDiskMap):
     """Map HP/Compaq insight manager FCA Logical Disk tables to model."""
 
     maptype = "HPFcaLogDrvMap"
@@ -66,8 +66,8 @@ class HPFcaLogDrvMap(HPHardDiskMap):
 	for chassis in chassistable.values():
 	    chassismap[chassis['snmpindex']] = chassis['name']
 	external = 'community.snmp.HPSsChassisMap' in getattr(device, 'zCollectorPlugins', [])
-	if not device.id in HPHardDiskMap.oms:
-	    HPHardDiskMap.oms[device.id] = []
+	if not device.id in HPLogicalDiskMap.oms:
+	    HPLogicalDiskMap.oms[device.id] = []
         for disk in disktable.values():
             try:
                 om = self.objectMap(disk)
@@ -80,5 +80,5 @@ class HPFcaLogDrvMap(HPHardDiskMap):
 		om.external = external
             except AttributeError:
                 continue
-            HPHardDiskMap.oms[device.id].append(om)
+            HPLogicalDiskMap.oms[device.id].append(om)
 	return

@@ -19,7 +19,7 @@ __version__ = "$Revision: 1.0 $"[11:-2]
 from Products.ZenUtils.Utils import convToUnits
 from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.HardDisk import *
-from HPComponent import HPComponent
+from HPComponent import *
 
 class HPHardDisk(HardDisk, HPComponent):
     """HPHardDisk object"""
@@ -31,10 +31,6 @@ class HPHardDisk(HardDisk, HPComponent):
     bay = 0
     FWRev = ""
     status = 1
-    statusmap = [(4, 3,'other'),
-                (4, 3,'other'),
-                (0, 0,'Ok'),
-		]
     
     _properties = HWComponent._properties + (
                  {'id':'rpm', 'type':'int', 'mode':'w'},

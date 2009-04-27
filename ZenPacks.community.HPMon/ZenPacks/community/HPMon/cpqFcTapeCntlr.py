@@ -16,9 +16,7 @@ $Id: cpqFcTapeCntlr.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqFcTapeCntlr(HPExpansionCard):
     """HP Fibre Channel Tape Controller object"""
@@ -29,11 +27,10 @@ class cpqFcTapeCntlr(HPExpansionCard):
     FWRev = ""
     wwnn = ""
         
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-	        (0, 0, 'Ok'),
-		(3, 5, 'Offline'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+	        2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_RED, SEV_CRITICAL, 'Offline'),
+		}
 
     # we monitor RAID Controllers
     monitor = True

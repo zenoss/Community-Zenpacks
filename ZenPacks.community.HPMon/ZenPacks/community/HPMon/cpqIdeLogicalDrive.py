@@ -16,8 +16,7 @@ $Id: cpqIdeLogicalDrive.py,v 1.0 2009/03/10 12:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from ZenPacks.community.HPMon.HPLogicalDisk import HPLogicalDisk
+from HPLogicalDisk import *
 
 class cpqIdeLogicalDrive(HPLogicalDisk):
     """cpqIdeLogicalDrive object
@@ -28,12 +27,11 @@ class cpqIdeLogicalDrive(HPLogicalDisk):
 
     portal_type = meta_type = 'cpqIdeLogicalDrive'
 
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-		(0, 0, 'Ok'),
-		(2, 4, 'Degraded'),
-		(1, 3, 'Rebuilding'),
-		(3, 5, 'Failed'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+		2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_ORANGE, SEV_ERROR, 'Degraded'),
+		4: (DOT_YELLOW, SEV_WARNING, 'Rebuilding'),
+		5: (DOT_RED, SEV_CRITICAL, 'Failed'),
+		}
 
 InitializeClass(cpqIdeLogicalDrive)

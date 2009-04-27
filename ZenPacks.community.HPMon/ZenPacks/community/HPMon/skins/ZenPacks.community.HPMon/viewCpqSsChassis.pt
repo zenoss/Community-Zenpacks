@@ -75,8 +75,7 @@
         </td>
         <td class="tablevalues" tal:content="structure card/getProductLink"/>
         <td class="tablevalues" tal:content="structure card/roleString"/>
-        <td tal:define="status card/statusDot; 
-                    color python:here.convertStatusToDot(status)"
+        <td tal:define="color card/statusDot|string:grey" 
                     class="tablevalues" style="text-align:center;">
             <img tal:attributes="src string:img/${color}_dot.png"/>
         </td>
@@ -129,8 +128,7 @@
       <td class="tablevalues" tal:content="disk/diskType"/>
       <td class="tablevalues" tal:content="disk/rpmString"/>
       <td class="tablevalues" tal:content="disk/sizeString"/>
-      <td tal:define="status disk/statusDot; 
-                    color python:here.convertStatusToDot(status)"
+      <td tal:define="color disk/statusDot|string:grey" 
         class="tablevalues" style="text-align:center;">
         <img tal:attributes="src string:img/${color}_dot.png"/>
       </td>
@@ -183,8 +181,7 @@
       <td class="tablevalues" tal:content="disk/diskType"/>
       <td class="tablevalues" tal:content="disk/stripesizeString"/>
       <td class="tablevalues" tal:content="disk/sizeString"/>
-      <td tal:define="status disk/statusDot; 
-                    color python:here.convertStatusToDot(status)"
+      <td tal:define="color card/statusDot|string:grey" 
         class="tablevalues" style="text-align:center;">
         <img tal:attributes="src string:img/${color}_dot.png"/>
       </td>

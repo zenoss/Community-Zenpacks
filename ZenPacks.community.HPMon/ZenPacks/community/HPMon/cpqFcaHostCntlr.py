@@ -16,9 +16,7 @@ $Id: cpqFcaHostCntlr.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqFcaHostCntlr(HPExpansionCard):
     """FCA Host Bus Adapter object"""
@@ -31,15 +29,14 @@ class cpqFcaHostCntlr(HPExpansionCard):
     wwpn = ""
     wwnn = ""
     
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-	        (0, 0, 'Ok'),
-		(3, 5, 'Failed'),
-		(3, 5, 'Shutdown'),
-		(2, 4, 'Loop Degraded'),
-		(3, 5, 'Loop Failed'),
-		(2, 4, 'Not Connected'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+	        2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_RED, SEV_CRITICAL, 'Failed'),
+		4: (DOT_RED, SEV_CRITICAL, 'Shutdown'),
+		5: (DOT_ORANGE, SEV_ERROR, 'Loop Degraded'),
+		6: (DOT_RED, SEV_CRITICAL, 'Loop Failed'),
+		7: (DOT_ORANGE, SEV_ERROR, 'Not Connected'),
+		}
 
     # we monitor RAID Controllers
     monitor = True

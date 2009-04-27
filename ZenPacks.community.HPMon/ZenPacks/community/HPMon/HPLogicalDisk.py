@@ -16,25 +16,11 @@ $Id: HPLogicalDisk.py,v 1.0 2008/12/09 15:05:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Products.ZenUtils.Utils import convToUnits
-from Products.ZenModel.DeviceComponent import DeviceComponent
-from Products.ZenModel.HardDisk import *
-from HPComponent import HPComponent
+from ZenPacks.community.deviceAdvDetail.LogicalDisk import *
+from HPComponent import *
 
-class HPLogicalDisk(HardDisk, HPComponent):
+class HPLogicalDisk(LogicalDisk, HPComponent):
     """HPLogicalDisk object"""
-
-    size = 0
-    stripesize = 0
-    diskType = ""
-    status = 1
-
-    _properties = HWComponent._properties + (
-                 {'id':'diskType', 'type':'string', 'mode':'w'},
-                 {'id':'size', 'type':'int', 'mode':'w'},
-                 {'id':'stripesize', 'type':'int', 'mode':'w'},
-                 {'id':'status', 'type':'int', 'mode':'w'},
-                )    
 
     factory_type_information = ( 
         { 
@@ -65,18 +51,5 @@ class HPLogicalDisk(HardDisk, HPComponent):
             )
           },
         )
-
-
-    def sizeString(self):
-        """
-        Return the number of total bytes in human readable form ie 10MB
-        """
-        return convToUnits(self.size,divby=1000)
-
-    def stripesizeString(self):
-        """
-        Return the Stripes Size in human readable form ie 64Kb
-        """
-        return convToUnits(self.stripesize)
 
 InitializeClass(HPLogicalDisk)

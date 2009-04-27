@@ -16,9 +16,7 @@ $Id: cpqSm2Cntlr.py,v 1.0 2008/12/15 14:31:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqSm2Cntlr(HPExpansionCard):
     """iLO Board object"""
@@ -34,12 +32,11 @@ class cpqSm2Cntlr(HPExpansionCard):
     subnetmask = ""
     dnsName = ""
     
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-	        (2, 4, 'No Data'),
-	        (0, 0, 'Ok'),
-		(1, 3, 'Offline Data'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+	        2: (DOT_ORANGE, SEV_ERROR, 'No Data'),
+	        3: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		4: (DOT_YELLOW, SEV_WARNING, 'Offline Data'),
+		}
 
     # we monitor RAID Controllers
     monitor = True

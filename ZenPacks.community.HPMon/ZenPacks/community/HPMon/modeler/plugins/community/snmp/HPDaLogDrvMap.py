@@ -17,9 +17,9 @@ $Id: HPDaLogDrvMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
 __version__ = '$Revision: 1.0 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
-from HPHardDiskMap import HPHardDiskMap
+from HPLogicalDiskMap import HPLogicalDiskMap
 
-class HPDaLogDrvMap(HPHardDiskMap):
+class HPDaLogDrvMap(HPLogicalDiskMap):
     """Map HP/Compaq insight manager DA Logical Disk tables to model."""
 
     maptype = "HPDaLogDrvMap"
@@ -54,8 +54,8 @@ class HPDaLogDrvMap(HPHardDiskMap):
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
 	disktable = tabledata.get('cpqDaLogDrvTable')
-	if not device.id in HPHardDiskMap.oms:
-	    HPHardDiskMap.oms[device.id] = []
+	if not device.id in HPLogicalDiskMap.oms:
+	    HPLogicalDiskMap.oms[device.id] = []
         for disk in disktable.values():
             try:
                 om = self.objectMap(disk)
@@ -66,5 +66,5 @@ class HPDaLogDrvMap(HPHardDiskMap):
 		om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
             except AttributeError:
                 continue
-            HPHardDiskMap.oms[device.id].append(om)
+            HPLogicalDiskMap.oms[device.id].append(om)
 	return

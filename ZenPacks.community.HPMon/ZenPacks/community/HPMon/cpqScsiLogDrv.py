@@ -16,30 +16,25 @@ $Id: cpqScsiLogDrv.py,v 1.0 2009/03/10 12:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from ZenPacks.community.HPMon.HPLogicalDisk import HPLogicalDisk
+from HPLogicalDisk import *
 
 class cpqScsiLogDrv(HPLogicalDisk):
     """cpqScsiLogDrv object
-    statusmap(statusDot, statusSeveriry, statusString)
-    statusDot(0:'green', 1:'yellow', 2:'orange', 3:'red', 4:'grey')
-    statusSeverity(0:'Clean', 1:'Debug', 2:'Info', 3:'Warning', 4:'Error', 5:'Critical')
     """
 
     portal_type = meta_type = 'cpqScsiLogDrv'
 
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-		(0, 0, 'Ok'),
-		(3, 5, 'Failed'),
-		(1, 3, 'Unconfigured'),
-		(2, 4, 'Recovering'),
-		(1, 3, 'Ready Rebuild'),
-		(1, 3, 'Rebuilding'),
-		(2, 4, 'Wrong Drive'),
-		(2, 4, 'Bad Connect'),
-		(2, 4, 'Degraded'),
-		(1, 3, 'Disabled'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+		2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_RED, SEV_CRITICAL, 'Failed'),
+		4: (DOT_YELLOW, SEV_WARNING, 'Unconfigured'),
+		5: (DOT_ORANGE, SEV_ERROR, 'Recovering'),
+		6: (DOT_YELLOW, SEV_WARNING, 'Ready Rebuild'),
+		7: (DOT_YELLOW, SEV_WARNING, 'Rebuilding'),
+		8: (DOT_ORANGE, SEV_ERROR, 'Wrong Drive'),
+		9: (DOT_ORANGE, SEV_ERROR, 'Bad Connect'),
+		10:(DOT_ORANGE, SEV_ERROR, 'Degraded'),
+		11:(DOT_YELLOW, SEV_WARNING, 'Disabled'),
+		}
 
 InitializeClass(cpqScsiLogDrv)

@@ -17,14 +17,15 @@ $Id: HPMemoryModuleMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
 __version__ = '$Revision: 1.0 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
-from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
-from HPExpansionCardMap import HPExpansionCardMap
+from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
-class HPMemoryModuleMap(HPExpansionCardMap):
+class HPMemoryModuleMap(SnmpPlugin):
     """Map HP/Compaq insight manager cpqSiMemModuleTable table to model."""
 
     maptype = "cpqSiMemModule"
     modname = "ZenPacks.community.HPMon.cpqSiMemModule"
+    relname = "memorymodules"
+    compname = "hw"
 
     snmpGetTableMaps = (
         GetTableMap('cpqSiMemModuleTable',
@@ -71,8 +72,9 @@ class HPMemoryModuleMap(HPExpansionCardMap):
 	mmstatustable = tabledata.get('cpqHeResMemModuleTable')
 	cardtable = tabledata.get('cpqSiMemModuleTable')
 	statusmap ={}
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        rm = self.relMap()
+#	if not device.id in HPExpansionCardMap.oms:
+#	    HPExpansionCardMap.oms[device.id] = []
 	for card in mmstatustable.values():
 	    statusmap["%d.%d" % (int(card['_boardindex']), int(card['slot']))] = int(card['status'])
         for card in cardtable.values():
@@ -100,6 +102,7 @@ class HPMemoryModuleMap(HPExpansionCardMap):
 		    om.monitor = False
             except AttributeError:
                 continue
-            HPExpansionCardMap.oms[device.id].append(om)
-	return
+            rm.append(om)
+#            HPExpansionCardMap.oms[device.id].append(om)
+	return rm
 

@@ -16,9 +16,7 @@ $Id: cpqFcaCntlr.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqFcaCntlr(HPExpansionCard):
     """HP Disk Array Controller object"""
@@ -34,13 +32,12 @@ class cpqFcaCntlr(HPExpansionCard):
     chassis = ""
     external = False
         
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-	        (0, 0, 'Ok'),
-		(3, 5, 'Offline'),
-		(2, 4, 'Redundant Path Offline'),
-		(3, 5, 'Not Connected'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+	        2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_RED, SEV_CRITICAL, 'Offline'),
+		4: (DOT_ORANGE, SEV_ERROR, 'Redundant Path Offline'),
+		5: (DOT_RED, SEV_CRITICAL, 'Not Connected'),
+		}
 
     # we monitor RAID Controllers
     monitor = True

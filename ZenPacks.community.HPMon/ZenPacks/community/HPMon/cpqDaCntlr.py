@@ -16,9 +16,7 @@ $Id: cpqDaCntlr.py,v 1.0 2008/12/04 10:13:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqDaCntlr(HPExpansionCard):
     """Disk Aray Controller object"""
@@ -33,13 +31,12 @@ class cpqDaCntlr(HPExpansionCard):
     # we monitor RAID Controllers
     monitor = True
 
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-		(0, 0, 'Ok'),
-		(3, 5, 'General Failure'),
-		(2, 4, 'Cable Problem'),
-		(3, 5, 'Powered Off'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+		2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_RED, SEV_CRITICAL, 'General Failure'),
+		4: (DOT_ORANGE, SEV_ERROR, 'Cable Problem'),
+		5: (DOT_RED, SEV_CRITICAL, 'Powered Off'),
+		}
 		
     _properties = HPExpansionCard._properties + (
         {'id':'model', 'type':'string', 'mode':'w'},

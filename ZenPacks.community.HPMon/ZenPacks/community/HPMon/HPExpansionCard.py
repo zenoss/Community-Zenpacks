@@ -17,7 +17,7 @@ $Id: HPExpansionCard.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
 __version__ = "$Revision: 1.0 $"[11:-2]
 
 from Products.ZenModel.ExpansionCard import *
-from HPComponent import HPComponent
+from HPComponent import *
 
 class HPExpansionCard(ExpansionCard, HPComponent):
     """ExpansionCard object"""

@@ -16,9 +16,8 @@ $Id: cpqSiMemModule.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from MemoryModule import MemoryModule
-from HPComponent import HPComponent
+from ZenPacks.community.deviceAdvDetail.MemoryModule import *
+from HPComponent import *
 
 class cpqSiMemModule(MemoryModule, HPComponent):
     """MemoryModule object"""
@@ -30,19 +29,18 @@ class cpqSiMemModule(MemoryModule, HPComponent):
     # we monitor Memory modules
     monitor = True
 
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-	        (4, 3, 'Not Present'),
-		(1, 3, 'Present'),
-		(0, 0, 'Good'),
-		(1, 3, 'Add'),
-		(1, 3, 'Upgraded'),
-		(3, 5, 'Missing'),
-		(3, 5, 'Dos not Match'),
-		(3, 5, 'Not Supported'),
-		(3, 5, 'Bad Config'),
-		(2, 4, 'Degraded'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+	        2: (DOT_GREY, SEV_WARNING, 'Not Present'),
+		3: (DOT_YELLOW, SEV_WARNING, 'Present'),
+		4: (DOT_GREEN, SEV_CLEAN, 'Good'),
+		5: (DOT_YELLOW, SEV_WARNING, 'Add'),
+		6: (DOT_YELLOW, SEV_WARNING, 'Upgraded'),
+		7: (DOT_RED, SEV_CRITICAL, 'Missing'),
+		8: (DOT_RED, SEV_CRITICAL, 'Dos not Match'),
+		9: (DOT_RED, SEV_CRITICAL, 'Not Supported'),
+		10:(DOT_RED, SEV_CRITICAL, 'Bad Config'),
+		11:(DOT_ORANGE, SEV_ERROR, 'Degraded'),
+		}
     
     _properties = MemoryModule._properties + (
         {'id':'status', 'type':'int', 'mode':'w'},

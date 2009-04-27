@@ -17,9 +17,9 @@ $Id: HPIdeLogicalDriveMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
 __version__ = '$Revision: 1.0 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
-from HPHardDiskMap import HPHardDiskMap
+from HPLogicalDiskMap import HPLogicalDiskMap
 
-class HPIdeLogicalDriveMap(HPHardDiskMap):
+class HPIdeLogicalDriveMap(HPLogicalDiskMap):
     """Map HP/Compaq insight manager DA Logical Disk tables to model."""
 
     maptype = "HPIdeLogicalDriveMap"
@@ -29,7 +29,7 @@ class HPIdeLogicalDriveMap(HPHardDiskMap):
         GetTableMap('cpqIdeLogicalDriveTable',
 	            '.1.3.6.1.4.1.232.14.2.6.1.1',
 		    {
-		        '.1': '_cntrlindex',
+		        '.1': 'cntrlindex',
 			'.2': 'snmpindex',
 			'.3': 'diskType',
 			'.4': 'size',
@@ -54,17 +54,17 @@ class HPIdeLogicalDriveMap(HPHardDiskMap):
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
 	disktable = tabledata.get('cpqIdeLogicalDriveTable')
-	if not device.id in HPHardDiskMap.oms:
-	    HPHardDiskMap.oms[device.id] = []
+	if not device.id in HPLogicalDiskMap.oms:
+	    HPLogicalDiskMap.oms[device.id] = []
         for disk in disktable.values():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d" % (om._cntrlindex, om.snmpindex)
+		om.snmpindex =  "%d.%d" % (om.cntrlindex, om.snmpindex)
                 om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
 		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
 		om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
 		om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
             except AttributeError:
                 continue
-            HPHardDiskMap.oms[device.id].append(om)
+            HPLogicalDiskMap.oms[device.id].append(om)
 	return

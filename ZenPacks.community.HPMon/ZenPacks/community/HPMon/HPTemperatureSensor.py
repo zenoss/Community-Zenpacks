@@ -18,7 +18,7 @@ __version__ = "$Revision: 1.0 $"[11:-2]
 
 from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.TemperatureSensor import *
-from HPComponent import HPComponent
+from HPComponent import *
 
 class HPTemperatureSensor(TemperatureSensor, HPComponent):
     """TemperatureSensor object"""

@@ -16,9 +16,7 @@ $Id: cpqIdeController.py,v 1.0 2008/12/09 14:31:24 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
-from Globals import InitializeClass
-from Products.ZenModel.ZenossSecurity import *
-from HPExpansionCard import HPExpansionCard
+from HPExpansionCard import *
 
 class cpqIdeController(HPExpansionCard):
     """IDE Controller object"""
@@ -28,11 +26,10 @@ class cpqIdeController(HPExpansionCard):
     model = ""
     FWRev = ""
 
-    statusmap = [(4, 3, 'other'),
-	        (4, 3, 'other'),
-	        (0, 0, 'Ok'),
-		(3, 5, 'Failed'),
-		]
+    statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
+	        2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+		3: (DOT_RED, SEV_CRITICAL, 'Failed'),
+		}
     
     # we monitor RAID Controllers
     monitor = True

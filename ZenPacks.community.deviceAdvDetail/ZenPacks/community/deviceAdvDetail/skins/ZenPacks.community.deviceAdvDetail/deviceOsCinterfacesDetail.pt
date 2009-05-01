@@ -1,0 +1,130 @@
+<tal:block metal:define-macro="compList">
+<form method="post" tal:attributes="action here/os/absolute_url" 
+    name="ipInterfaceListForm">
+
+<tal:block 
+        tal:define="unused here/os/cacheComponents;
+        tableName string:interfacelist;
+        objects here/os/interfaces/objectValuesAll;
+        tabletitle string:Interfaces;
+        batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='Name',
+				            onlyMonitored=True);
+        ts python:here.ZenTableManager.getTableState(tableName);
+        menu_id string:IpInterface;
+        showfilterbox python:True;"
+        metal:define-macro="interfaceList">
+
+<input type="hidden" name="context" value="interfaces"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="filterslot">
+    <div style="position:absolute;right:200px;top:0px;">
+			Monitored
+			<input class="navcontrol" type="checkbox"
+				name="onlyMonitored"
+				onchange="this.form.submit()"
+				value="1"
+                style="margin-top:-2px;margin-bottom:2px;"
+				tal:attributes="checked ts/onlyMonitored"/>
+    </div>
+    <tal:block metal:use-macro="here/zenuimacros/macros/filterbox"/>
+</tal:block>
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+
+    <tr tal:condition="batch">
+        <th class="tableheader" width="20"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'primarySortKey','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getIpSortKey','IP Address','cmp')"/>
+        <th class="tableheader">Network</th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'macaddress','MAC')"/>
+        <th tal:condition="python: here.getZ('zIfDescription')"
+            tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'description','Descr')"/>
+        <th class="tableheader" align="center" width="30">O</th>
+        <th class="tableheader" align="center" width="30">A</th>
+       	<th class="tableheader" align="center" width="30">M</th>
+       	<th class="tableheader" align="center" width="60">Lock</th>
+    </tr>
+    <tr tal:condition="not:batch">
+        <th class="tableheader" align="left">
+            No Interfaces
+        </th>
+    </tr>
+    <tal:block tal:repeat="intf batch">
+    <tr tal:define="odd repeat/intf/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" align="center">
+         <input type="checkbox" name="componentNames:list" 
+                tal:attributes="value intf/getRelationshipManagerId"/>
+      </td>
+      <td class="tablevalues">
+      <tal:block 
+       tal:content="structure python:intf.urlLink(text=intf.viewName())"/>
+      </td>
+      <td class="tablevalues">
+          <span tal:repeat="ip intf/getIpAddressObjs" omit-tag="">
+            <tal:block 
+             tal:condition="python:hasattr(ip,'getIpAddress')"
+             tal:content="structure python:ip.urlLink(text=ip.getIpAddress(),
+              attrs={'class':'tablevalues'})"/>
+            <span tal:condition="python:not hasattr(ip,'getIpAddress')"
+                tal:replace="ip">1.1.1.1/24</span>
+            <br/>
+          </span>
+      </td>
+      <td class="tablevalues"
+        tal:content="structure python:intf.getNetworkLinks()">
+        10.2.1.0
+      </td>
+      <td class="tablevalues" tal:content="intf/macaddress">
+         00:11:AA:BB:CC:DD
+      </td>
+      <td tal:condition="python: here.os.getZ('zIfDescription')" 
+          class="tablevalues" tal:content="intf/description">
+        A really nice interface
+      </td>
+      <td class="tablevalues" align="center">
+      <img border="0"
+        tal:attributes="src python:test(intf.operStatus==1,
+                here.os.getStatusImgSrc(0),
+                here.os.getStatusImgSrc(3))" />
+      </td>
+      <td class="tablevalues" align="center">
+      <img border="0"
+        tal:attributes="src python:test(intf.adminStatus==1,
+                here.os.getStatusImgSrc(0),
+                here.os.getStatusImgSrc(3))" />
+      </td>
+      <td class="tablevalues" align="center">
+      <img border="0"
+       tal:attributes="src python:test(intf.monitor,
+               here.os.getStatusImgSrc(0),
+               here.os.getStatusImgSrc(3))" />
+      </td>
+      <td class="tablevalues" align="center">
+      <img tal:condition="intf/isLockedFromDeletion" 
+              border="0" src="locked-delete-icon.png">
+      <img tal:condition="intf/isLockedFromUpdates" 
+              border="0" src="locked-update-icon.png">
+      <img tal:condition="intf/sendEventWhenBlocked" 
+              border="0" src="locked-sendevent-icon.png">
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="9" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+</tal:block>

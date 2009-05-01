@@ -1,0 +1,18 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+
+<tal:block tal:define="exclude python:['dependencies', 'dependents', 'productClass', 'software', 'interfaces', 'routes', 'filesystems', 'os'];
+           components python:[comp for comp in here.os.getRelationshipNames() if not comp in exclude];
+           components python:(['interfaces'] + components + ['filesystems', 'routes']);
+           batch python:[path('here/deviceOsC%sDetail/macros/compList' % comp) for comp in components];">
+<tal:block tal:repeat="component batch">
+<tal:block metal:use-macro="component">
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+</tal:block>
+</tal:block>
+

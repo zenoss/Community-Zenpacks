@@ -1,0 +1,55 @@
+<tal:block metal:define-macro="compList"
+    tal:define="tableName string:cpusList;
+    objects here/hw/cpus/objectValuesAll;
+    tabletitle string:CPUs;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'socket','Socket')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'core','Cores')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'clockspeed','Speed')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'extspeed','Ext Speed')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'cacheSizeL1','L1')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'cacheSizeL2','L2')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'voltage','Volts')"/>
+    </tr>
+    <tal:block tal:repeat="cpu batch">
+    <tr tal:define="odd repeat/cpu/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" tal:content="cpu/socket"/>
+        <td class="tablevalues" 
+            tal:content="structure cpu/getManufacturerLink"/>
+        <td class="tablevalues" tal:content="structure cpu/getProductLink"/>
+        <td class="tablevalues" tal:content="structure python:getattr(cpu, 'core', 1)"/>
+        <td class="tablevalues" tal:content="string:${cpu/clockspeed} MHz"/>
+        <td class="tablevalues" tal:content="string:${cpu/extspeed} MHz"/>
+        <td class="tablevalues" tal:content="string:${cpu/cacheSizeL1} KB"/>
+        <td class="tablevalues" tal:content="string:${cpu/cacheSizeL2} KB"/>
+        <td class="tablevalues" tal:content="string:${cpu/voltage} mV"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>

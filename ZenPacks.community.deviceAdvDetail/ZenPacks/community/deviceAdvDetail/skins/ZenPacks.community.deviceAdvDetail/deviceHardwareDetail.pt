@@ -1,0 +1,35 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block tal:define=" tabletitle string:Memory; ">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <td class="tableheader">Memory</td>
+        <td class="tablevalues" tal:content="here/hw/totalMemoryString"/>
+        <td class="tableheader">Swap</td>
+        <td class="tablevalues" tal:content="here/os/totalSwapString"/>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block tal:define="exclude python:['dependencies', 'dependents', 'productClass', 'cpus', 'cards'];
+           components python:[comp for comp in here.hw.getRelationshipNames() if not comp in exclude];
+           components python:(['cpus'] + components + ['cards']);
+           batch python:[path('here/deviceHardwareC%sDetail/macros/compList' % comp) for comp in components];">
+<tal:block tal:repeat="component batch">
+<tal:block metal:use-macro="component">
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+

@@ -1,0 +1,13 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block tal:define="components python:[comp for comp in here.os.getRelationshipNames() if comp.startswith('software')];
+           batch python:[path('here/deviceOsC%sDetail/macros/compList' % comp) for comp in components];">
+<tal:block tal:repeat="component batch">
+<tal:block metal:use-macro="component">
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>

@@ -1,0 +1,133 @@
+<tal:block metal:define-macro="compList">
+<form method="post" tal:attributes="action here/os/absolute_url" 
+    name="ipServiceListForm">
+
+<script>
+
+function createIpServiceClassAutocompleter(divId) {
+var q = new YAHOO.zenoss.zenautocomplete.ZenAutoComplete(
+    'ipserviceclasses', // Name for the cache
+    '/zport/dmd/Services/IpService/getServiceLiveSearchList',
+    'Ip Service Class', // Label for the widget
+    divId, // DOM element into which to put the thing 
+    {itemSelectEvent:function(oSelf, elItem, oData){
+     $('dialog_submit').disabled = false;
+    }}
+);
+q.input.name = 'className'
+}
+
+var loader = YAHOO.zenoss.getLoader();
+loader.require(['zenautocomplete']);
+loader.insert({onSuccess:function(){
+    $('dialog').addLoadEvent('dialog_addIpService', function() { createIpServiceClassAutocompleter('ipServiceClassLiveSearch') ;} )
+}});
+// don't pass it a callback, calling it later manually
+</script>
+
+<tal:block metal:define-macro="ipserviceList"
+    tal:define="tableName string:ipservicelist;
+    objects here/os/ipservices/objectValuesAll;
+    tabletitle string:IP Services;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='getPort',
+                                            onlyMonitored=True);
+    ts python:here.ZenTableManager.getTableState(tableName);
+    menu_id string:IpService;
+    showfilterbox python:True;">
+<input type="hidden" name="context" value="ipservices"/>
+<input type='hidden' name='tableName'
+    tal:attributes="value tableName" />
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="filterslot">
+    <div style="position:absolute;right:200px;top:0px;">
+			Monitored
+			<input class="navcontrol" type="checkbox"
+				name="onlyMonitored"
+				onchange="this.form.submit()"
+				value="1"
+                style="margin-top:-2px;margin-bottom:2px;"
+				tal:attributes="checked ts/onlyMonitored" />
+</div>
+    <tal:block metal:use-macro="here/zenuimacros/macros/filterbox"/>
+</tal:block>
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th class="tableheader" width="20"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getKeyword','Name')">Name
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProtocol','Proto')">Proto
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getPort','Port')">Port
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'ipaddresses','Ips')">Ips
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getDescription','Description')">
+                            Description
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getStatus','Status','cmp')"
+                        width="60" />
+       	<th class="tableheader" align="center" width="30">M</th>
+        <th class="tableheader" align="center" width="60">Lock</th>
+    </tr>
+    <tal:block tal:repeat="srv batch">
+    <tr tal:define="odd repeat/srv/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" align="center">
+           <input type="checkbox" name="componentNames:list" 
+                  tal:attributes="value srv/getRelationshipManagerId"/>
+        </td>
+        <td class="tablevalues">
+           <tal:block 
+            tal:content="structure python:srv.urlLink(text=srv.name(),
+             attrs={'class':'tablevalues'})"/>
+        </td>
+        <td class="tablevalues" tal:content="srv/protocol"/>
+        <td class="tablevalues" tal:content="srv/port"/>
+        <td class="tablevalues">
+            <span tal:omit-tag="" tal:repeat="ip srv/ipaddresses"
+                tal:content="ip"/>
+        </td>
+        <td class="tablevalues" tal:content="srv/getDescription"/>
+        <td class="tablevalues" align="center" width="40">
+         <img border="0" 
+          tal:attributes="src python:here.os.getStatusImgSrc(srv.getStatus())"/>
+        </td>
+      <td class="tablevalues" align="center">
+      <img border="0"
+       tal:attributes="src python:test(srv.monitor,
+               here.os.getStatusImgSrc(0),
+               here.os.getStatusImgSrc(3))" />
+      </td>
+        <td class="tablevalues" align="center" width="60">
+        <img tal:condition="srv/isLockedFromDeletion" 
+              border="0" src="locked-delete-icon.png">
+        <img tal:condition="srv/isLockedFromUpdates" 
+              border="0" src="locked-update-icon.png">
+        <img tal:condition="srv/sendEventWhenBlocked" 
+              border="0" src="locked-sendevent-icon.png">
+        </td>
+    </tr>
+    </tal:block>
+    <tr>
+    <td colspan="8" class="tableheader" align='center'>
+    <form metal:use-macro="here/zenTableNavigation/macros/navtoolnoform"></form>
+    </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+</tal:block>

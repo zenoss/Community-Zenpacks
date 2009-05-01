@@ -1,0 +1,110 @@
+<tal:block metal:define-macro="compList">
+<form method="post" tal:attributes="action here/os/absolute_url" 
+    name="fileSystemListForm">
+
+<tal:block metal:define-macro="fileSysList"
+    tal:define="tableName string:fileSyslist;
+    objects here/os/filesystems/objectValuesAll;
+    tabletitle string:File Systems;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='mount');
+    ts python:here.ZenTableManager.getTableState(tableName);
+    menu_id string:FileSystem;
+    showfilterbox python:True;">
+<input type="hidden" name="context" value="filesystems"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="objects">
+        <th class="tableheader" width="20"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'mount','Mount')">Mount
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'totalBytes','Total bytes')">Total Bytes
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'usedBytes','Used bytes')">Used Bytes
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'freeBytes','Free bytes')">Free Bytes
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'capacity','% Util')">% Util
+        </th>
+        <!--
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'storageDevice','Storage Device')">Device
+        </th>
+        -->
+       	<th class="tableheader" align="center" width="30">M</th>
+        <th class="tableheader" align="center" width="60">Lock</th>
+    </tr>
+    <tr tal:condition="not:objects">
+        <th class="tableheader" align="left">
+            No File Systems
+        </th>
+    </tr>
+    <tal:block tal:repeat="fsys batch">
+    <tr tal:define="odd repeat/fsys/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        
+      <td class="tablevalues" align="center">
+           <input type="checkbox" name="componentNames:list" 
+                  tal:attributes="value fsys/getRelationshipManagerId"/>
+      </td>
+      <td class="tablevalues">
+          <tal:block 
+           tal:content="structure python:fsys.urlLink(text=fsys.mount,
+            attrs={'class':'tablevalues'})"/>
+      </td>
+      <td class="tablevalues"
+        tal:content="fsys/totalBytesString">vol
+      </td>
+      <td class="tablevalues"
+        tal:content="fsys/usedBytesString">vol
+      </td>
+      <td class="tablevalues"
+        tal:content="fsys/availBytesString">vol
+      </td>
+      <td class="tablevalues"
+        tal:content="fsys/capacity">vol
+      </td>
+      <!--
+      <td class="tablevalues"
+        tal:content="fsys/storageDevice">vol
+      </td>
+      -->
+      <td class="tablevalues" align="center">
+      <img border="0"
+       tal:attributes="src python:test(fsys.monitor,
+               here.os.getStatusImgSrc(0),
+               here.os.getStatusImgSrc(3))" />
+      </td>
+      <td class="tablevalues" align="center" width="60">
+      <img tal:condition="fsys/isLockedFromDeletion" 
+              border="0" src="locked-delete-icon.png">
+      <img tal:condition="fsys/isLockedFromUpdates" 
+              border="0" src="locked-update-icon.png">
+      <img tal:condition="fsys/sendEventWhenBlocked" 
+              border="0" src="locked-sendevent-icon.png">
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="7" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+</form>
+</tal:block>

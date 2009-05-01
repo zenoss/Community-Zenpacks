@@ -1,0 +1,35 @@
+<tal:block metal:define-macro="compList"
+    tal:define="tableName string:softwareList;
+    objects here/os/software/objectValuesAll;
+    tabletitle string:Installed Software;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'installDate','Install Date')"/>
+    </tr>
+    <tal:block tal:repeat="soft batch">
+    <tr tal:define="odd repeat/soft/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" tal:content="structure soft/getManufacturerLink"/>
+      <td class="tablevalues" tal:content="structure soft/getProductLink"/>
+      <td class="tablevalues" tal:content="soft/getInstallDate"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>

@@ -19,7 +19,7 @@
 
         <script type="text/javascript" src="/zport/dmd/yui/menu/menu-min.js"></script>
 
- <script type="text/javascript" src="mib_browser-min.js" ></script>
+ <script type="text/javascript" src="mib_browser.js" ></script>
  <script type="text/javascript" src="oid_lookup-min.js" ></script>
 
 <!--  Custom styling information  -->

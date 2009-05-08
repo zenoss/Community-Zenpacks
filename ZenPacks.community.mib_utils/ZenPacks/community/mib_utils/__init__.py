@@ -164,7 +164,7 @@ enumerations are not stored.
     xml_output.write( """<module name="%s" language="%s">
 """ % ( mib_class.id, mib_class.language ) )
 
-    xml_output.write( """<contact>%s</contact>\n""" % mib_class.contact )
+    xml_output.write( """<contact>%s</contact>\n""" % quote(mib_class.contact) )
     xml_output.write( """<description>%s</description>\n""" % quote( mib_class.description ) )
 
     xml_output.write( """</module>

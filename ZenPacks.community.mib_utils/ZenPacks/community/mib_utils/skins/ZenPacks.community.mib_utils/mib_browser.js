@@ -396,7 +396,7 @@ function display_MIB( doc ) {
  } catch(e) {}
 
  try {
-       document.getElementById("contact").value= trim( module.getElementsByTagName("contact")[0].firstChild.nodeValue );
+       document.getElementById("contact").value= trim( unescape(module.getElementsByTagName("contact")[0].firstChild.nodeValue ));
  } catch(e) {}
 
  try {

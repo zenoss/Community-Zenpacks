@@ -73,45 +73,21 @@ def oidcmp( node1, node2 ):
     """Compare two OIDs based on the numerical value,
        rather than lexical ordering."""
 
-    a= node1.oid
-    b= node2.oid
+    a= node1.oid.split('.')
+    b= node2.oid.split('.')
 
-    #
     # Find the point where the OIDs diverge
-    #
     i=0
-    last_dot= 0
-    try:
-        while( a[i] == b[i] ):
-            i += 1
-            if a[i] == '.':
-                last_dot= i + 1
-    except:
-        #
-        # This case occurs when one OID is the parent of another
-        #
-        return cmp( a, b )
+    min_len = min(len(a), len(b))
+    for i in range(min_len):
+        if a[i] == b[i]:
+            continue
 
-    #
-    # Find the end of the diverging OID number
-    # for both OIDs...
-    #
-    dot1= a.find( '.', last_dot )
-    if dot1 == -1:
-       oid1= int( a[last_dot:] )
-    else:
-       oid1= int( a[last_dot:dot1] )
+        # Compare the two oids at the branch, *numerically*
+        return cmp( int(a[i]), int(b[i]) )
 
-    dot2= b.find( '.', last_dot )
-    if dot2 == -1:
-       oid2= int( b[last_dot:] )
-    else:
-       oid2= int( b[last_dot:dot2] )
-
-    #
-    # Compare the two oids at the branch, *numerically*
-    #
-    return cmp( oid1, oid2 )
+    # This case occurs when one OID is the parent of another
+    return cmp(len(a), len(b))
 
 
 

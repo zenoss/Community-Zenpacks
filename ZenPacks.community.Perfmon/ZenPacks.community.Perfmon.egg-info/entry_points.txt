@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.Perfmon = ZenPacks.community.Perfmon
+

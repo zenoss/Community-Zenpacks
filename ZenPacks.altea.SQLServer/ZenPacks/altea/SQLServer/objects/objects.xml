@@ -17,7 +17,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/Products/Perfmon/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:Buffer Manager\Buffer cache hit ratio' "sqlServer_CacheHitRatio"
+${here/ZenPackManager/packs/ZenPacks.community.Perfmon/path}/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:Buffer Manager\Buffer cache hit ratio' "sqlServer_CacheHitRatio"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -50,7 +50,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/Products/Perfmon/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:General Statistics\User Connections' "SQLServer_UserConnections"
+${here/ZenPackManager/packs/ZenPacks.community.Perfmon/path}/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:General Statistics\User Connections' "SQLServer_UserConnections"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -83,7 +83,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/Products/Perfmon/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '\${dev/zSQLInstance}:Access Methods\Full Scans/sec' "SQLServer_FullTableScansSec"
+${here/ZenPackManager/packs/ZenPacks.community.Perfmon/path}/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '\${dev/zSQLInstance}:Access Methods\Full Scans/sec' "SQLServer_FullTableScansSec"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -116,7 +116,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/Products/Perfmon/libexec/perfmon.pl 5 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:Locks(*)\Lock Requests/sec' "SQLServer_LockRequestsSec" '${dev/zSQLInstance}:Locks(*)\Lock Timeouts/sec' "SQLServer_LockTimeoutsSec" '${dev/zSQLInstance}:Locks(*)\Number of Deadlocks/sec' "SQLServer_DeadlocksSec" '${dev/zSQLInstance}:Locks(*)\Lock Waits/sec' "SQLServer_LockWaitsSec" '${dev/zSQLInstance}:Locks(*)\Lock Wait Time (ms)' "SQLServer_LockWaitTime_ms"
+${here/ZenPackManager/packs/ZenPacks.community.Perfmon/path}/libexec/perfmon.pl 5 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:Locks(*)\Lock Requests/sec' "SQLServer_LockRequestsSec" '${dev/zSQLInstance}:Locks(*)\Lock Timeouts/sec' "SQLServer_LockTimeoutsSec" '${dev/zSQLInstance}:Locks(*)\Number of Deadlocks/sec' "SQLServer_DeadlocksSec" '${dev/zSQLInstance}:Locks(*)\Lock Waits/sec' "SQLServer_LockWaitsSec" '${dev/zSQLInstance}:Locks(*)\Lock Wait Time (ms)' "SQLServer_LockWaitTime_ms"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -181,7 +181,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/Products/Perfmon/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:Databases(_Total)\Transactions/sec' "sqlServer_TransactionsPerSec"
+${here/ZenPackManager/packs/ZenPacks.community.Perfmon/path}/libexec/perfmon.pl 1 "${dev/manageIp}" "${dev/zWinUser}" "${dev/zWinPassword}" '${dev/zSQLInstance}:Databases(_Total)\Transactions/sec' "sqlServer_TransactionsPerSec"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

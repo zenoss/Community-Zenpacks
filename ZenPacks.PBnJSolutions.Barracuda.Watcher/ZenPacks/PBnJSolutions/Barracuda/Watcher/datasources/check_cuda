@@ -1,215 +1,59 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use POSIX;
 use strict;
-use lib $ENV{ZENHOME}."/libexec"  ;
-
+use warnings;
+use lib $ENV{ZENHOME}."/libexec";
 use utils qw($TIMEOUT %ERRORS &print_revision &support);
-
 use XML::Simple;
-use Data::Dumper;
 use Getopt::Long;
 use FileHandle;
 
-my $opt_H;
 Getopt::Long::Configure('bundling');
-GetOptions
-        (
-         "H=s" => \$opt_H, "hostname=s" => \$opt_H);
+
+my $opt_H;
+GetOptions("hostname|H=s" => \$opt_H);
 ($opt_H) || usage("Host name/address not specified\n");
+
 my $target = $1 if ($opt_H =~ /([-.A-Za-z0-9]+)/);
 ($target) || usage("Invalid host: $opt_H\n");
 
-my $xmlStatus = new XML::Simple;
-
 my $pipe = new FileHandle;
-no strict 'refs';
+
 $pipe->open("wget -o /dev/null -O - --no-check-certificate https://$target/cgi-bin/stats.cgi |");
-#print Dumper($pipe);
-my $barracuda = $xmlStatus->XMLin($pipe);
+my $barracuda = new XML::Simple->XMLin($pipe);
 
 # Decide whether the cuda is OK and then follow that judgement with a bunch of variables
-print "CUDA-$target OK: | ";
+(defined $barracuda) || die("Unable to parse stats XML.");
 
-#print "Inbound Queue stands at ".$barracuda->{performance}->{inbound_queue_size}."\n";
-print " iqs=".$barracuda->{performance}->{inbound_queue_size};
-#print "Outbound Queue stands at ".$barracuda->{performance}->{outbound_queue_size}."\n";
-print ", oqs=".$barracuda->{performance}->{outbound_queue_size};
+my $spams = 0;
+my $bad_recipients = 0;
+my $viruses = 0;
+my $quarantined = 0;
+my $tagged = 0;
+my $allowed = 0;
+my $rate_control = 0;
 
-my $spams =
-  $barracuda->{hourly}->{hour_0000}->{spams} +
-  $barracuda->{hourly}->{hour_0100}->{spams} +
-  $barracuda->{hourly}->{hour_0200}->{spams} +
-  $barracuda->{hourly}->{hour_0300}->{spams} +
-  $barracuda->{hourly}->{hour_0400}->{spams} +
-  $barracuda->{hourly}->{hour_0500}->{spams} +
-  $barracuda->{hourly}->{hour_0600}->{spams} +
-  $barracuda->{hourly}->{hour_0700}->{spams} +
-  $barracuda->{hourly}->{hour_0800}->{spams} +
-  $barracuda->{hourly}->{hour_0900}->{spams} +
-  $barracuda->{hourly}->{hour_1000}->{spams} +
-  $barracuda->{hourly}->{hour_1100}->{spams} +
-  $barracuda->{hourly}->{hour_1200}->{spams} +
-  $barracuda->{hourly}->{hour_1300}->{spams} +
-  $barracuda->{hourly}->{hour_1400}->{spams} +
-  $barracuda->{hourly}->{hour_1500}->{spams} +
-  $barracuda->{hourly}->{hour_1600}->{spams} +
-  $barracuda->{hourly}->{hour_1700}->{spams} +
-  $barracuda->{hourly}->{hour_1800}->{spams} +
-  $barracuda->{hourly}->{hour_1900}->{spams} +
-  $barracuda->{hourly}->{hour_2000}->{spams} +
-  $barracuda->{hourly}->{hour_2100}->{spams} +
-  $barracuda->{hourly}->{hour_2200}->{spams} +
-  $barracuda->{hourly}->{hour_2300}->{spams};
+# Add up the numbers for each stat for the last 24 hours.
+foreach my $hour (keys(%{$barracuda->{hourly}})) {
+	$spams += $barracuda->{hourly}{$hour}{spams};
+	$bad_recipients += $barracuda->{hourly}->{$hour}->{bad_recipients};
+	$viruses += $barracuda->{hourly}->{$hour}->{viruses};
+	$quarantined += $barracuda->{hourly}->{$hour}->{quarantined};
+	$tagged += $barracuda->{hourly}->{$hour}->{tagged};
+	$allowed += $barracuda->{hourly}->{$hour}->{allowed};
+	$rate_control += $barracuda->{hourly}->{$hour}->{rate_control};
+}
 
-#print "Total Spams for trailing 24 is $spams\n";
-print ", spam=$spams";
+my $printStr = "CUDA-$target OK |";
+$printStr .= " iqs=$barracuda->{performance}->{inbound_queue_size};;0";
+$printStr .= " oqs=$barracuda->{performance}->{outbound_queue_size};;0";
+$printStr .= " spam=$spams;;0 bad=$bad_recipients;;0";
+$printStr .= " virus=$viruses;;0 quarantine=$quarantined;;0";
+$printStr .= " tag=$tagged;;0 allow=$allowed;;0";
+$printStr .= " rate_control=$rate_control;;0";
+$printStr .= "\n";
 
-my $bad_recipients =
-  $barracuda->{hourly}->{hour_0000}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0100}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0200}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0300}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0400}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0500}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0600}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0700}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0800}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_0900}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1000}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1100}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1200}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1300}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1400}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1500}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1600}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1700}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1800}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_1900}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_2000}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_2100}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_2200}->{bad_recipients} +
-  $barracuda->{hourly}->{hour_2300}->{bad_recipients};
-
-#print "Total Bad Recipients for trailing 24 is $bad_recipients\n";
-print ", bad=$bad_recipients";
-
-my $viruses =
-  $barracuda->{hourly}->{hour_0000}->{viruses} +
-  $barracuda->{hourly}->{hour_0100}->{viruses} +
-  $barracuda->{hourly}->{hour_0200}->{viruses} +
-  $barracuda->{hourly}->{hour_0300}->{viruses} +
-  $barracuda->{hourly}->{hour_0400}->{viruses} +
-  $barracuda->{hourly}->{hour_0500}->{viruses} +
-  $barracuda->{hourly}->{hour_0600}->{viruses} +
-  $barracuda->{hourly}->{hour_0700}->{viruses} +
-  $barracuda->{hourly}->{hour_0800}->{viruses} +
-  $barracuda->{hourly}->{hour_0900}->{viruses} +
-  $barracuda->{hourly}->{hour_1000}->{viruses} +
-  $barracuda->{hourly}->{hour_1100}->{viruses} +
-  $barracuda->{hourly}->{hour_1200}->{viruses} +
-  $barracuda->{hourly}->{hour_1300}->{viruses} +
-  $barracuda->{hourly}->{hour_1400}->{viruses} +
-  $barracuda->{hourly}->{hour_1500}->{viruses} +
-  $barracuda->{hourly}->{hour_1600}->{viruses} +
-  $barracuda->{hourly}->{hour_1700}->{viruses} +
-  $barracuda->{hourly}->{hour_1800}->{viruses} +
-  $barracuda->{hourly}->{hour_1900}->{viruses} +
-  $barracuda->{hourly}->{hour_2000}->{viruses} +
-  $barracuda->{hourly}->{hour_2100}->{viruses} +
-  $barracuda->{hourly}->{hour_2200}->{viruses} +
-  $barracuda->{hourly}->{hour_2300}->{viruses};
-
-#print "Total Viruses for trailing 24 is $viruses\n";
-print ", virus=$viruses";
-
-my $quarantined =
-  $barracuda->{hourly}->{hour_0000}->{quarantined} +
-  $barracuda->{hourly}->{hour_0100}->{quarantined} +
-  $barracuda->{hourly}->{hour_0200}->{quarantined} +
-  $barracuda->{hourly}->{hour_0300}->{quarantined} +
-  $barracuda->{hourly}->{hour_0400}->{quarantined} +
-  $barracuda->{hourly}->{hour_0500}->{quarantined} +
-  $barracuda->{hourly}->{hour_0600}->{quarantined} +
-  $barracuda->{hourly}->{hour_0700}->{quarantined} +
-  $barracuda->{hourly}->{hour_0800}->{quarantined} +
-  $barracuda->{hourly}->{hour_0900}->{quarantined} +
-  $barracuda->{hourly}->{hour_1000}->{quarantined} +
-  $barracuda->{hourly}->{hour_1100}->{quarantined} +
-  $barracuda->{hourly}->{hour_1200}->{quarantined} +
-  $barracuda->{hourly}->{hour_1300}->{quarantined} +
-  $barracuda->{hourly}->{hour_1400}->{quarantined} +
-  $barracuda->{hourly}->{hour_1500}->{quarantined} +
-  $barracuda->{hourly}->{hour_1600}->{quarantined} +
-  $barracuda->{hourly}->{hour_1700}->{quarantined} +
-  $barracuda->{hourly}->{hour_1800}->{quarantined} +
-  $barracuda->{hourly}->{hour_1900}->{quarantined} +
-  $barracuda->{hourly}->{hour_2000}->{quarantined} +
-  $barracuda->{hourly}->{hour_2100}->{quarantined} +
-  $barracuda->{hourly}->{hour_2200}->{quarantined} +
-  $barracuda->{hourly}->{hour_2300}->{quarantined};
-
-#print "Total Quarantined for trailing 24 is $quarantined\n";
-print ", quarantine=$quarantined";
-
-my $tagged =
-  $barracuda->{hourly}->{hour_0000}->{tagged} +
-  $barracuda->{hourly}->{hour_0100}->{tagged} +
-  $barracuda->{hourly}->{hour_0200}->{tagged} +
-  $barracuda->{hourly}->{hour_0300}->{tagged} +
-  $barracuda->{hourly}->{hour_0400}->{tagged} +
-  $barracuda->{hourly}->{hour_0500}->{tagged} +
-  $barracuda->{hourly}->{hour_0600}->{tagged} +
-  $barracuda->{hourly}->{hour_0700}->{tagged} +
-  $barracuda->{hourly}->{hour_0800}->{tagged} +
-  $barracuda->{hourly}->{hour_0900}->{tagged} +
-  $barracuda->{hourly}->{hour_1000}->{tagged} +
-  $barracuda->{hourly}->{hour_1100}->{tagged} +
-  $barracuda->{hourly}->{hour_1200}->{tagged} +
-  $barracuda->{hourly}->{hour_1300}->{tagged} +
-  $barracuda->{hourly}->{hour_1400}->{tagged} +
-  $barracuda->{hourly}->{hour_1500}->{tagged} +
-  $barracuda->{hourly}->{hour_1600}->{tagged} +
-  $barracuda->{hourly}->{hour_1700}->{tagged} +
-  $barracuda->{hourly}->{hour_1800}->{tagged} +
-  $barracuda->{hourly}->{hour_1900}->{tagged} +
-  $barracuda->{hourly}->{hour_2000}->{tagged} +
-  $barracuda->{hourly}->{hour_2100}->{tagged} +
-  $barracuda->{hourly}->{hour_2200}->{tagged} +
-  $barracuda->{hourly}->{hour_2300}->{tagged};
-
-#print "Total Tagged for trailing 24 is $tagged\n";
-print ", tag=$tagged";
-
-my $allowed =
-  $barracuda->{hourly}->{hour_0000}->{allowed} +
-  $barracuda->{hourly}->{hour_0100}->{allowed} +
-  $barracuda->{hourly}->{hour_0200}->{allowed} +
-  $barracuda->{hourly}->{hour_0300}->{allowed} +
-  $barracuda->{hourly}->{hour_0400}->{allowed} +
-  $barracuda->{hourly}->{hour_0500}->{allowed} +
-  $barracuda->{hourly}->{hour_0600}->{allowed} +
-  $barracuda->{hourly}->{hour_0700}->{allowed} +
-  $barracuda->{hourly}->{hour_0800}->{allowed} +
-  $barracuda->{hourly}->{hour_0900}->{allowed} +
-  $barracuda->{hourly}->{hour_1000}->{allowed} +
-  $barracuda->{hourly}->{hour_1100}->{allowed} +
-  $barracuda->{hourly}->{hour_1200}->{allowed} +
-  $barracuda->{hourly}->{hour_1300}->{allowed} +
-  $barracuda->{hourly}->{hour_1400}->{allowed} +
-  $barracuda->{hourly}->{hour_1500}->{allowed} +
-  $barracuda->{hourly}->{hour_1600}->{allowed} +
-  $barracuda->{hourly}->{hour_1700}->{allowed} +
-  $barracuda->{hourly}->{hour_1800}->{allowed} +
-  $barracuda->{hourly}->{hour_1900}->{allowed} +
-  $barracuda->{hourly}->{hour_2000}->{allowed} +
-  $barracuda->{hourly}->{hour_2100}->{allowed} +
-  $barracuda->{hourly}->{hour_2200}->{allowed} +
-  $barracuda->{hourly}->{hour_2300}->{allowed};
-
-#print "Total Allowed for trailing 24 is $allowed\n";
-print ", allow=$allowed";
-
-print "\n";
+print $printStr;
 
 exit $ERRORS{'OK'};

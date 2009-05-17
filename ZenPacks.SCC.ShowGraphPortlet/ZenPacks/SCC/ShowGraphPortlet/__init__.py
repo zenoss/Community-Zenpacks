@@ -15,7 +15,7 @@ class ZenPack(ZenPackBase):
                     zpm = app.zport.ZenPortletManager
 		    portletsrc=os.path.join(os.path.dirname(__file__),'lib','ShowGraphPortlet.js')
 		    #Its a dirty hack - register_portlet will add ZenPath one more time
-		    #and we don't want to hardcode path explicitly here
+		    #and we don't want to hardcode path explicitly here like in other ZenPacks
 		    p=re.compile(zenPath(''))
 		    portletsrc=p.sub('',portletsrc)
                     zpm.register_portlet(
@@ -125,6 +125,7 @@ def getJSONGraphList(self, path='/Device Reports',report='test'):
     graphs=[]
     multi=0
     numColumns=1
+    url=""
     for r in reports:
 	    if r.id==report:
 	 	try:
@@ -132,6 +133,7 @@ def getJSONGraphList(self, path='/Device Reports',report='test'):
             	 	graphs=r.getElements()
 			multi=0
 			ok=1
+			url=r.absolute_url_path()
 		except AttributeError:
 			ok=0
 		if ok==0:
@@ -140,6 +142,7 @@ def getJSONGraphList(self, path='/Device Reports',report='test'):
 				ok=1
 				multi=1
 				numColumns=r.numColumns
+				url=r.absolute_url_path()
 	 		except AttributeError:
 				ok=0
 	 
@@ -155,12 +158,12 @@ def getJSONGraphList(self, path='/Device Reports',report='test'):
 	    text="%s" % (g.getSummary())
     	    # row = { 'Report': text }
     	    # response['data'].append(row)
-            link = "%s<BR><img src='%s%s' title='%s'/>" % (text,g.getGraphUrl(), comment,'title')
+            link = "%s<BR><a href='%s'><img src='%s%s' title='%s'/></a>" % (text,url,g.getGraphUrl(), comment,'title')
 	if multi==1:
             #row = { 'Report': g['title'] }
 	    text=g['title']
             #response['data'].append(row)
-            link = "%s<BR><img src='%s%s' title='%s'/>" % (text,g['url'], comment,g['title'])
+            link = "%s<BR><a href='%s'><img src='%s%s' title='%s'/></a>" % (text,url,g['url'], comment,g['title'])
 	if (col==0):
 		result="%s<tr>" % (result)
 	result="%s<td>%s</td>" % (result,link)

@@ -22,10 +22,11 @@
 
 <tal:block tal:define="exclude python:['dependencies', 'dependents', 'productClass', 'cpus', 'cards'];
            components python:[comp for comp in here.hw.getRelationshipNames() if not comp in exclude];
-           components python:(['cpus'] + components + ['cards']);
-           batch python:[path('here/deviceHardwareC%sDetail/macros/compList' % comp) for comp in components];">
-<tal:block tal:repeat="component batch">
+           components python:(['cpus'] + components + ['cards']);">
+<tal:block tal:repeat="comp components">
+<tal:block tal:on-error="nothing" tal:define="component python:path('here/deviceHardwareC%sDetail/macros/compList' % comp);">
 <tal:block metal:use-macro="component">
+</tal:block>
 </tal:block>
 </tal:block>
 </tal:block>

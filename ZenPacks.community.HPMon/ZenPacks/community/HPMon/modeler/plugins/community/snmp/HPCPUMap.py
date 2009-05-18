@@ -12,9 +12,9 @@ __doc__="""HPCPUMap
 
 HPCPUMap maps the cpqSeCpuTable and cpqSeCpuCacheTable tables to cpu objects
 
-$Id: HPCPUMap.py,v 1.0 2008/12/01 13:54:53 egor Exp $"""
+$Id: HPCPUMap.py,v 1.1 2009/05/18 21:34:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -27,6 +27,12 @@ class HPCPUMap(SnmpPlugin):
     compname = "hw"
 
     snmpGetTableMaps = (
+        GetTableMap('hrProcessorTable',
+	            '.1.3.6.1.2.1.25.3.3.1',
+		    {
+		        '.1': '_cpuidx',
+		    }
+	),
         GetTableMap('cpuTable',
 	            '.1.3.6.1.4.1.232.1.2.2.1.1',
 		    {
@@ -59,6 +65,8 @@ class HPCPUMap(SnmpPlugin):
         cputable = tabledata.get("cpuTable")
         cachetable = tabledata.get("cacheTable")
         if not cputable: return
+        cores = len(tabledata.get("hrProcessorTable")) / len(cputable)
+        if cores == 0: cores = 1
         rm = self.relMap()
         cpumap = {}
 	cachemap = {}
@@ -74,8 +82,8 @@ class HPCPUMap(SnmpPlugin):
             om = self.objectMap(cpu)
             idx = getattr(om, 'socket', om._cpuidx)
             om.id = self.prepId("%s_%s" % (om.setProductKey,idx))
-	    om.core = getattr(om, 'core', 1)
-	    if om.core == 0: om.core = 1
+	    om.core = getattr(om, 'core', 0)
+	    if om.core == 0: om.core = cores
             try: 
                 om.cacheSizeL1 = cachemap[om._cpuidx][1]
 	    except:

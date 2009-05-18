@@ -12,9 +12,9 @@ __doc__="""ComponentsCleaner
 
 Components Cleaner remove hardware components from Device
 
-$Id: ComponentsCleaner.py,v 1.0 2009/04/24 16:30:53 egor Exp $"""
+$Id: ComponentsCleaner.py,v 1.1 2009/05/18 21:53:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import PythonPlugin
 
@@ -22,9 +22,11 @@ class ComponentsCleaner(PythonPlugin):
     """Remove hardware components from device."""
     
     compname = "hw"
+    deviceProperties = \
+                PythonPlugin.deviceProperties + ('zClearComponentsInclude',)
 
     def collect(self, device, log):
-        return ('cards', 'cpus', 'fans', 'harddisks', 'powersupplies', 'temperaturesensors')
+        return getattr(device, 'zClearComponentsInclude', 'cards cpus fans harddisks powersupplies temperaturesensors').split()
 
     def process(self, device, results, log):
         """remove hardware components from this device"""

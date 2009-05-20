@@ -12,9 +12,9 @@ __doc__="""HWStatus
 
 HWStatus is an abstraction of Hardware status indication.
 
-$Id: HWStatus.py,v 1.0 2009/04/24 10:11:24 egor Exp $"""
+$Id: HWStatus.py,v 1.1 2009/05/21 00:26:24 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 DOT_GREEN    = 'green'
 DOT_YELLOW   = 'yellow'
@@ -43,10 +43,14 @@ class HWStatus:
 
     def statusDot(self, status=None):
         """
-        Return the Dot Color based on status
+        Return the Dot Color based on maximal severity
         """
-	if not status: status = int(self.status)
-	return self.statusmap.get(status, (DOT_GREY, SEV_WARNING, 'other'))[0]
+        colors = ['green', 'purple', 'blue', 'yellow', 'orange', 'red']
+	if status: return self.statusmap.get(status, (DOT_GREY, SEV_WARNING, 'other'))[0]
+	try:
+	    return colors[self.ZenEventManager.getMaxSeverity(self)]
+	except:
+	    return 'grey' 
 
     def statusSeverity(self, status=None):
         """
@@ -55,10 +59,6 @@ class HWStatus:
         """
 	if not status: status = int(self.status)
 	return self.statusmap.get(status, (DOT_GREY, SEV_WARNING, 'other'))[1]
-	try:
-	    return self.statusmap[status][1]
-	except:
-	    return SEV_WARNING
 
     def statusString(self, status=None):
         """
@@ -66,7 +66,3 @@ class HWStatus:
         """
 	if not status: status = int(self.status)
 	return self.statusmap.get(status, (DOT_GREY, SEV_WARNING, 'other'))[2]
-	try:
-	    return self.statusmap[status][2]
-	except:
-	    return 'other'

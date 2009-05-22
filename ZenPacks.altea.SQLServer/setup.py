@@ -15,12 +15,12 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.altea.SQLServer'
-VERSION = '1.1'
+VERSION = '1.2'
 AUTHOR = 'Fabio Paracchini'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.altea']
 PACKAGES = ['ZenPacks', 'ZenPacks.altea', 'ZenPacks.altea.SQLServer']
-INSTALL_REQUIRES = []
+INSTALL_REQUIRES = ['ZenPacks.community.Perfmon>=1.2']
 COMPAT_ZENOSS_VERS = '>=2.2'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS

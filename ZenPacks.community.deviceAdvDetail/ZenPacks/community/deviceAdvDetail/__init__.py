@@ -15,14 +15,16 @@ DeviceHW._relations += (("logicaldisks", ToManyCont(ToOne, "ZenPacks.community.d
 from Products.ZenModel.ZenPack import ZenPackBase
 from Products.ZenUtils.ZenScriptBase import ZenScriptBase
 class ZenPack(ZenPackBase):
-    """ Database loader
+    """ ZenPack loader
     """
     def install(self, app):
+        self.dmd.Events.createOrganizer("/Change/Set/Status")
         ZenPackBase.install(self, app)
         for d in self.dmd.Devices.getSubDevices():
             d.hw.buildRelations()
 
     def upgrade(self, app):
+        self.dmd.Events.createOrganizer("/Change/Set/Status")
         ZenPackBase.upgrade(self, app)
         for d in self.dmd.Devices.getSubDevices():
             d.hw.buildRelations()

@@ -13,5 +13,16 @@ if evt.message.startswith("threshold") and evt.firstTime == evt.lastTime:
         commit()
         break
 </property>
+<property type="text" id="transform" mode="w" >
+if evt.message.startswith("threshold") and evt.firstTime == evt.lastTime:
+    words = evt.message.split()
+    for comp in device.getMonitoredComponents(type=words[2]):
+        if comp.id != evt.component: continue
+        comp.status = int(words[-1][:-3])
+        evt.severity = comp.statusSeverity(comp.status)
+        from transaction import commit
+        commit()
+        break
+</property>
 </object>
 </objects>

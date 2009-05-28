@@ -1,0 +1,957 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Switch', 'Nortel') -->
+<object id='/zport/dmd/Devices/Network/Switch/Nortel' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<object id='Passport' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['Nortel Device ']
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='Nortel Device ' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+CPU, Memory MIB
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='BufferUtil' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2272.1.1.13.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='BufferUtil' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Swith_fabric' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2272.1.1.21.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='Swith_fabric' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2272.1.100.1.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='memoryPagesPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='cpuPercentProcessorTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2272.1.1.20.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='cpuPercentProcessorTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<tomanycont id='aliases'>
+<object id='cpu__pct' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='memoryUtilKBytes' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2272.1.1.47.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='memoryUtilKBytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphs'>
+<object id='CPU' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
+<property type="lines" id="dsnames" mode="w" >
+['cpuPercentProcessorTime_cpuPercentProcessorTime']
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+percentage
+</property>
+<property type="int" id="linewidth" mode="w" >
+1
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="boolean" id="summary" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="lines" id="colors" mode="w" >
+['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+</object>
+<object id='Free Memory' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
+<property type="lines" id="dsnames" mode="w" >
+['memoryAvailableKBytes_memoryAvailableKBytes']
+</property>
+<property type="int" id="sequence" mode="w" >
+1
+</property>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="int" id="linewidth" mode="w" >
+1
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+True
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="boolean" id="summary" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="lines" id="colors" mode="w" >
+['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+</object>
+<object id='Paging' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
+<property type="lines" id="dsnames" mode="w" >
+['memoryPagesPerSec_memoryPagesPerSec']
+</property>
+<property type="int" id="sequence" mode="w" >
+2
+</property>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+page/sec
+</property>
+<property type="int" id="linewidth" mode="w" >
+1
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="boolean" id="summary" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="lines" id="colors" mode="w" >
+('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='CPU Utilization over 90' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['cpuPercentProcessorTime_cpuPercentProcessorTime']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+90
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/CPU
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+5
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Buffer Util' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='BufferUtil' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+E0741C
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Utilization
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BufferUtil_BufferUtil
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='CPU' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+percentage
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='CPU Utilization over 90' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+CPU Utilization over 90
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='cpuPercentProcessorTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+CPU Utilization
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+cpuPercentProcessorTime_cpuPercentProcessorTime
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Switching Fabric' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='fabric_Swith_fabric' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+E87426
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Swith_fabric_Swith_fabric
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Celcius
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='PerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+F10A0A
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+True
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Temperature
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Temperature_memoryPagesPerSec
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Used Memory' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Mbytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='memoryUtilKBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+6478C3
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Memory Utilization
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+1000024,*
+</property>
+<property type="string" id="dpName" mode="w" >
+memoryUtilKBytes_memoryUtilKBytes
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='Baystack' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+</object>
+<object id='BPS2000' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+</object>
+</object>
+<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Nortel Networks') -->
+<object id='/zport/dmd/Manufacturers/Nortel Networks' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
+<property type="string" id="url" mode="w" >
+www.nortel.com
+</property>
+<tomanycont id='products'>
+<object id='BayStack 420-24T' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 420-24T
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.43.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 450' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 450
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.35.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 460-24T-PWR' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 460-24T-PWR
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.49.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 470-24T' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 470-24T
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.54.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 470-24T-PWR' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 470-24T-PWR
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.63.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 470-48T' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 470-48T
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.46.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 470-48T-PWR' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 470-48T-PWR
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.64.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 5510' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 5510
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.53.1', '1.3.6.1.4.1.45.3.52.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack 5520' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack 5520
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.59.2']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack HW_RevB' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack HW:RevB
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['BayStack HW:RevB']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack HW_RevD' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack HW:RevD
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['BayStack HW:RevD']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='BayStack HW_RevL' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+BayStack HW:RevL
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['BayStack HW:RevL']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Business Policy Switch 2000' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Business Policy Switch 2000
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.3.40.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Business Switch' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+Business Switch
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['Business Switch']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ethernet 470-24T' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+Ethernet 470-24T
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['Ethernet 470-24T']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ethernet 470-24T-PWR' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+Ethernet 470-24T-PWR
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['Ethernet 470-24T-PWR']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Ethernet 470-48T' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+Ethernet 470-48T
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['Ethernet 470-48T']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='NORTEL' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+NORTEL
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.45', '1.3.6.1.4.1.45.3.65', '1.3.6.1.4.1.45.3.59.1']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 1612G' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Passport 1612G
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.44']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 2380' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Passport 2380
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.45.6.1.3.1.3']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 8106' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Passport 8106
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.33']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 8110' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Passport 8110
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.32']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 8603' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Passport 8603
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.34']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 8606' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+.1.3.6.1.4.1.2272.31
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.31']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Passport 8610' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+Passport 8610
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.2272.30']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

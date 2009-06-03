@@ -44,11 +44,14 @@ myEventViewsPortlet.prototype = {
         this.locsearch.input.value = '';
         this.superclass.submitSettings(e, {'baseLoc':baseLoc});
     },
+/*
     startRefresh: function(firsttime) {
         if (!firsttime) this.mapobject.refresh();
+	this.fill();
         if (this.refreshTime>0)
             this.calllater = callLater(this.refreshTime, this.startRefresh);
     }
+*/
 
 }
 YAHOO.zenoss.portlet.myEventViewsPortlet = myEventViewsPortlet;

@@ -89,6 +89,7 @@ class PointThreshold(ThresholdClass):
                                       pointval=self.getPointval(context),
                                       eventClass=self.eventClass,
                                       severity=self.severity,
+                                      SeverityString=self.getSeverityString(),
                                       escalateCount=self.escalateCount)
         return mmt
 
@@ -119,13 +120,14 @@ class PointThresholdInstance(ThresholdInstance):
     count = {}
 
     def __init__(self, id, context, dpNames,
-                 pointval, eventClass, severity, escalateCount):
+                 pointval, eventClass, severity,  SeverityString, escalateCount):
         self.count = {}
         self._context = context
         self.id = id
-        self.point = pointval
+        self.pointval = pointval
         self.eventClass = eventClass
         self.severity = severity
+        self.SeverityString = SeverityString
         self.escalateCount = escalateCount
         self.dataPointNames = dpNames
         self._rrdInfoCache = {}
@@ -203,7 +205,7 @@ class PointThresholdInstance(ThresholdInstance):
         if value is None: return result
         try:
             cycleTime, rrdType = self.rrdInfoCache(dataPoint)
-        except Exception:                                          
+        except Exception:
             log.exception('Unable to read RRD file for %s' % dataPoint)
             return result
         if rrdType != 'GAUGE' and value is None:
@@ -214,14 +216,14 @@ class PointThresholdInstance(ThresholdInstance):
     def checkPoint(self, dp, value):
         'Check the value for point thresholds'
         log.debug("Checking %s %s against point %s",
-                  dp, value, self.point)
+                  dp, value, self.pointval)
         if value is None:
             return []
         if type(value) in types.StringTypes:
-            value = float(value)
+            value = int(value)
         thresh = None
-        if self.point is not None and value == self.point:
-            thresh = self.point
+        if self.pointval is not None and value == self.pointval:
+            thresh = self.pointval
             how = 'met'
         if thresh is not None:
             severity = self.severity
@@ -267,7 +269,7 @@ class PointThresholdInstance(ThresholdInstance):
         unused(template, namespace)
         if not color.startswith('#'):
             color = '#%s' % color
-        pointval = self.point
+        pointval = self.pointval
         if not self.dataPointNames:
             return gopts
         gp = relatedGps[self.dataPointNames[0]]
@@ -289,9 +291,7 @@ class PointThresholdInstance(ThresholdInstance):
 
         result = []
         if pointval:
-            result += [
-                "HRULE:%s%s:%s\\j" % (pointval, color,
-                          legend or self.getPointLabel(pointval, relatedGps)),
+            result += [ "COMMENT:%s(%s)\\j" % (self.SeverityString , pointval),
                 ]
         log.warn(gopts + result)
         return gopts + result

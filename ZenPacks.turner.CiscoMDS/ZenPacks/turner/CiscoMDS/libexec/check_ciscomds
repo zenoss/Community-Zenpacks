@@ -1,0 +1,154 @@
+#!/usr/bin/perl
+# Fetch temperature and power data from Cisco MDS switches
+# David Nicklay [Wed May  6 12:12:56 EDT 2009]
+
+use Net::SNMP;
+use Data::Dumper;
+
+my $community = shift || 'public';
+my $hostname = shift;
+if (!length($hostname)) {
+    print("ERROR: No hostname given.\n");
+    exit 1;
+}
+my ($session, $error) = Net::SNMP->session(
+    -hostname  => $hostname,
+    -community => $community
+);
+
+if (!defined($session)) {
+    printf("ERROR: %s.\n", $error);
+    exit 1;
+}
+
+
+my $ciscoentTables = {
+# sensor information
+    '1.3.6.1.2.1.47.1.1.1.1.2' => 'ciscoentPhysicalDescr',
+    '1.3.6.1.2.1.47.1.1.1.1.5' => 'ciscoentPhysicalClass',
+    '1.3.6.1.4.1.9.9.91.1.1.1.1.1' => 'ciscoentSensorType',
+    '1.3.6.1.4.1.9.9.91.1.1.1.1.4' => 'ciscoentSensorValue',
+    '1.3.6.1.4.1.9.9.91.1.2.1.1.4' => 'ciscoentSensorThresholdValue',
+# power information
+    '1.3.6.1.4.1.9.9.117.1.1.1.1.2' => 'cefcPowerUnits', # STRING: Amps @ 42V
+    '1.3.6.1.4.1.9.9.117.1.1.1.1.3' => 'cefcTotalAvailableCurrent', # INTEGER: 2775
+    '1.3.6.1.4.1.9.9.117.1.1.1.1.4' => 'cefcTotalDrawnCurrent' # INTEGER: 1713
+};
+
+my $result = $session->get_entries(
+    -columns => [(keys %{ $ciscoentTables })]
+);
+
+if (!defined($result)) {
+        printf("ERROR: %s.\n", $session->error);
+        $session->close;
+        exit 1;
+}
+
+print "|";
+
+my($data,$oid);
+my $ents = {};
+foreach $data (keys %{ $result }) {
+    foreach $oid (keys %{ $ciscoentTables }) {
+	if($data =~ /^$oid\.(\d+)\.(\d+)$/) {
+	    $ents->{$1}->{$ciscoentTables->{$oid}}->{$2} = $result->{$data};
+	} elsif($data =~ /^$oid\.(.*)$/) {
+	    $ents->{$1}->{$ciscoentTables->{$oid}} = $result->{$data};
+	}
+    }
+}
+
+my $ent;
+my $threshold_inlet_max,$threshold_outlet_max;
+my $outlet_max, $inlet_max;
+my $noutlets = 0,$ninlets = 0;
+my $outlet_total = 0, $inlet_total = 0;
+my $watts_total = 0;
+my $watts_used = 0;
+foreach $ent (map(($ents->{$_}),keys %{ $ents })) {
+    if(
+	($ent->{'ciscoentSensorType'} == 8) and
+	($ent->{'ciscoentSensorValue'} != 0) and
+	($ent->{'ciscoentSensorValue'} != -128)
+    ) {
+	if($ent->{'ciscoentPhysicalDescr'} =~ /Outlet/) {
+	    $outlet_max = $ent->{'ciscoentSensorValue'} if($ent->{'ciscoentSensorValue'} > $outlet_max);
+	    foreach (values %{ $ent->{'ciscoentSensorThresholdValue'} }) {
+		$threshold_outlet_max = $_ if($_ > $threshold_outlet_max);
+	    }
+	    $noutlets++;
+	    $outlet_total += $ent->{'ciscoentSensorValue'};
+	} elsif($ent->{'ciscoentPhysicalDescr'} =~ /Intake/) {
+	    $inlet_max = $ent->{'ciscoentSensorValue'} if($ent->{'ciscoentSensorValue'} > $inlet_max);
+	    foreach (values %{ $ent->{'ciscoentSensorThresholdValue'} }) {
+		$threshold_inlet_max = $_ if($_ > $threshold_inlet_max);
+	    }
+	    $ninlets++;
+	    $inlet_total += $ent->{'ciscoentSensorValue'};
+	}
+	#print Dumper($ent);
+    } elsif($ent->{'ciscoentPhysicalClass'} == 6) {
+	#print Dumper($ent);
+	$ent->{'cefcPowerUnits'} =~ tr/0-9//cd; # just want the raw voltage number....
+	$watts_total += ($ent->{'cefcTotalAvailableCurrent'} / 100) * $ent->{'cefcPowerUnits'};
+	$watts_used += ($ent->{'cefcTotalDrawnCurrent'} / 100) * $ent->{'cefcPowerUnits'};
+    }
+}
+my $outlet_avg = ($outlet_total / $noutlets);
+my $inlet_avg = ($inlet_total / $ninlets);
+printf("TempIntakeAvg=%d TempIntakeMax=%d TempIntakeThreshold=%d TempOutletAvg=%d TempOutletMax=%d TempOutletThreshold=%d TotalCurPwrOutput=%d TotalMaxPwrOutput=%d\n",
+    $inlet_avg,$inlet_max,$threshold_outlet_max,
+    $outlet_avg,$outlet_max,$threshold_inlet_max,
+    $watts_used,$watts_total);
+
+
+$session->close();
+
+exit 0;
+
+__DATA__
+
+          'cefcTotalDrawnCurrent' => 1713,
+          'cefcPowerUnits' => 'Amps @ 42V',
+          'ciscoentPhysicalDescr' => '2331.00W 220v AC',
+          'cefcTotalAvailableCurrent' => 2775,
+          'ciscoentPhysicalClass' => 6
+
+
+ENTITY-MIB::entPhysicalDescr.21590 = STRING: module-1 Outlet1
+ENTITY-MIB::entPhysicalVendorType.21590 = OID: CISCO-ENTITY-VENDORTYPE-OID-MIB::cevSensor15302701Temp
+ENTITY-MIB::entPhysicalContainedIn.21590 = INTEGER: 22
+ENTITY-MIB::entPhysicalClass.21590 = INTEGER: sensor(8)
+ENTITY-MIB::entPhysicalParentRelPos.21590 = INTEGER: 1
+ENTITY-MIB::entPhysicalName.21590 = STRING: module-1 Outlet1
+ENTITY-MIB::entPhysicalHardwareRev.21590 = STRING: 
+ENTITY-MIB::entPhysicalFirmwareRev.21590 = STRING: 
+ENTITY-MIB::entPhysicalSoftwareRev.21590 = STRING: 
+ENTITY-MIB::entPhysicalSerialNum.21590 = STRING: 
+ENTITY-MIB::entPhysicalMfgName.21590 = STRING: Cisco Systems
+ENTITY-MIB::entPhysicalModelName.21590 = STRING: 
+ENTITY-MIB::entPhysicalAlias.21590 = STRING: 
+ENTITY-MIB::entPhysicalAssetID.21590 = STRING: 
+ENTITY-MIB::entPhysicalIsFRU.21590 = INTEGER: false(2)
+CISCO-ENTITY-SENSOR-MIB::entSensorType.21590 = INTEGER: celsius(8)
+CISCO-ENTITY-SENSOR-MIB::entSensorScale.21590 = INTEGER: units(9)
+CISCO-ENTITY-SENSOR-MIB::entSensorPrecision.21590 = INTEGER: 0
+CISCO-ENTITY-SENSOR-MIB::entSensorValue.21590 = INTEGER: 48
+CISCO-ENTITY-SENSOR-MIB::entSensorStatus.21590 = INTEGER: ok(1)
+CISCO-ENTITY-SENSOR-MIB::entSensorValueTimeStamp.21590 = Timeticks: (756952801) 87 days, 14:38:48.01
+CISCO-ENTITY-SENSOR-MIB::entSensorValueUpdateRate.21590 = INTEGER: 60 seconds
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdSeverity.21590.1 = INTEGER: minor(10)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdSeverity.21590.2 = INTEGER: major(20)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdRelation.21590.1 = INTEGER: greaterOrEqual(4)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdRelation.21590.2 = INTEGER: greaterOrEqual(4)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdValue.21590.1 = INTEGER: 60
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdValue.21590.2 = INTEGER: 75
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdEvaluation.21590.1 = INTEGER: false(2)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdEvaluation.21590.2 = INTEGER: false(2)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdNotificationEnable.21590.1 = INTEGER: true(1)
+CISCO-ENTITY-SENSOR-MIB::entSensorThresholdNotificationEnable.21590.2 = INTEGER: true(1)
+CISCO-ENTITY-ASSET-MIB::ceAssetCLEI.21590 = STRING: 
+CISCO-ENTITY-FRU-CONTROL-MIB::cefcPhysicalStatus.21590 = INTEGER: supported(2)
+CISCO-ENTITY-EXT-MIB::ceEntPhysicalSecondSerialNum.21590 = STRING: 
+

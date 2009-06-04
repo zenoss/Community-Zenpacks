@@ -1,0 +1,577 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Storage', 'CiscoMDS') -->
+<object id='/zport/dmd/Devices/Storage/CiscoMDS' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+Cisco 9509 Multilayer Director Switches
+</property>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['CiscoMDS', 'Device']
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='CiscoMDS' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Cisco MDS  (Power, Temperature, CPU, Memory, etc.)
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='check_ciscomds' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+check_ciscomds ${here/zSnmpCommunity} ${device/manageIp}
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='TempIntakeAvg' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TempIntakeMax' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TempIntakeThreshold' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TempOutletAvg' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TempOutletMax' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TempOutletThreshold' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TotalCurPwrOutput' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TotalMaxPwrOutput' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='cseSysCPUUtilization' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.9.9.305.1.1.1.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='cseSysCPUUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmax" mode="w" >
+100
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='cseSysMemoryUtilization' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.9.9.305.1.1.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='cseSysMemoryUtilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmax" mode="w" >
+100
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='MaxIntakeTemperatureExceeded' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['check_ciscomds_TempOutletAvg', 'check_ciscomds_TempOutletMax']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+here.cacheRRDValue('TempOutletThreshold')
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Temperature
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='CPUUtilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+100
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='cseSysCPUUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+cseSysCPUUtilization_cseSysCPUUtilization
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='MemUtilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+%
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+100
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='cseSysMemoryUtilization' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+cseSysMemoryUtilization_cseSysMemoryUtilization
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='PowerOutput' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Watts
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='ciscomds_TotalCurPwrOutput' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+00FF00
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ciscomds_TotalCurPwrOutput
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='ciscomds_TotalMaxPwrOutput' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="color" mode="w" >
+FF0000
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ciscomds_TotalMaxPwrOutput
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+C
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='ciscomds_TempIntakeAvg' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+8888FF
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ciscomds_TempIntakeAvg
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='ciscomds_TempIntakeMax' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="color" mode="w" >
+0000FF
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ciscomds_TempIntakeMax
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='ciscomds_TempOutletAvg' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property type="string" id="color" mode="w" >
+FF8F00
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ciscomds_TempOutletAvg
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='ciscomds_TempOutletMax' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property type="string" id="color" mode="w" >
+FF4F00
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ciscomds_TempOutletMax
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</objects>

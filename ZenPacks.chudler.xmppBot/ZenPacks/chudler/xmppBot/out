@@ -1,0 +1,706 @@
+No handlers could be found for logger "root"
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.BotDaemon:started
+INFO:zen.xmppBot:Starting to connect
+INFO:zen.xmppBot:connecting to server localhost:5222 using id zenbot10...
+INFO:zen.BotDaemon:processed 2 rules in 0.02 secs
+INFO:zen.xmppBot:connected
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client' to='bottest@conference.im.uchicago.edu/zenbot10' from='zenbot10@im.uchicago.edu/bot'/>
+INFO:zen.xmppBot:-< received <presence xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' from='bottest@conference.im.uchicago.edu/zenbot10'><x xmlns='http://jabber.org/protocol/muc#user'><item affiliation='owner' jid='zenbot10@im.uchicago.edu/bot' role='moderator'/><status code='201'/></x></presence>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for bottest@conference.im.uchicago.edu/zenbot10
+INFO:zen.xmppBot:Zenoss Admin user plugin running with bottest@conference.im.uchicago.edu/zenbot10
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Unable to find a Zenoss user with jabberId!  This sender is NOT authorized: bottest@conference.im.uchicago.edu
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user bottest@conference.im.uchicago.edu/zenbot10 authorization result is False
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' from='bottest@conference.im.uchicago.edu' type='groupchat' to='zenbot10@im.uchicago.edu/bot'><body>This room is locked from entry until configuration is confirmed.</body></message>
+INFO:zen.xmppBot:*** dropping message from bottest@conference.im.uchicago.edu (no resource set)
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' from='bottest@conference.im.uchicago.edu' type='groupchat' to='zenbot10@im.uchicago.edu/bot'><body>This room is now unlocked.</body></message>
+INFO:zen.xmppBot:*** dropping message from bottest@conference.im.uchicago.edu (no resource set)
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu' type='chat' id='purple4cf9deef' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><active xmlns='http://jabber.org/protocol/chatstates'/><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099365
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def0' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099392
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def1' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099404
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def2' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099409
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def3' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099436
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def4' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099440
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def5' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099454
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def8' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint memAvailReal
+INFO:zen.xmppBot:Have 1 devices to check for memAvailReal
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint memAvailReal
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint memAvailReal
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:memAvailReal_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/memAvailReal_memAvailReal.rrd:ds0:AVERAGE CDEF:memAvailReal_c=memAvailReal_r VDEF:memAvailReal=memAvailReal_c,LAST PRINT:memAvailReal:%.2lf --start=1244099534
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9def9' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p memAvailReal -l</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p memAvailReal</span> -l</body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p memAvailReal -l</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p memAvailReal -l
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p memAvailReal -l
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal', u'-l']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p memAvailReal -l
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'memAvailReal', u'-l']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'memAvailReal', 'list': True, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>Valid datapoints:
+ssCpuRawIdle (Devices_Server_Templates_Device_ssCpuRawIdle_ssCpuRawIdle)
+loss (Devices_Templates_b_fping_fping_loss)
+memBuffer (Devices_Server_Templates_Device_memBuffer_memBuffer)
+min (Devices_Templates_b_fping_fping_min)
+max (Devices_Templates_b_fping_fping_max)
+rcv (Devices_Templates_b_fping_fping_rcv)
+laLoadInt5 (Devices_Server_Templates_Device_laLoadInt5_laLoadInt5)
+LOSS (Devices_Templates_NagiosCheckPing_ipcheck_LOSS)
+memCached (Devices_Server_Templates_Device_memCached_memCached)
+RTA (Devices_Templates_NagiosCheckPing_ipcheck_RTA)
+ssCpuRawSystem (Devices_Server_Templates_Device_ssCpuRawSystem_ssCpuRawSystem)
+ssCpuRawWait (Devices_Server_Templates_Device_ssCpuRawWait_ssCpuRawWait)
+sysUpTime (Devices_Server_Templates_Device_sysUpTime_sysUpTime)
+xmt (Devices_Templates_b_fping_fping_xmt)
+memAvailSwap (Devices_Server_Templates_Device_memAvailSwap_memAvailSwap)
+avg (Devices_Templates_b_fping_fping_avg)
+memAvailReal (Devices_Server_Templates_Device_memAvailReal_memAvailReal)
+ssCpuRawUser (Devices_Server_Templates_Device_ssCpuRawUser_ssCpuRawUser)
+</body></message>
+INFO:zen.BotDaemon:Sending message to chudler@im.uchicago.edu: CLEAR: vi05.uchicago.edu Value restored to predicted range
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu' from='zenbot10@im.uchicago.edu/bot'><body>CLEAR: vi05.uchicago.edu Value restored to predicted range</body></message>
+INFO:zen.BotDaemon:Sending message to chudler@im.uchicago.edu: CLEAR: vi06.uchicago.edu Value restored to predicted range
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu' from='zenbot10@im.uchicago.edu/bot'><body>CLEAR: vi06.uchicago.edu Value restored to predicted range</body></message>
+INFO:zen.BotDaemon:Sending message to bottest@conference.im.uchicago.edu/groupchat: [group] CLEAR: vi05.uchicago.edu Value restored to predicted range
+INFO:zen.xmppBot:We are in a forum and this message should go back to bottest
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' from='bottest@conference.im.uchicago.edu/zenbot10' type='groupchat' to='bottest@conference.im.uchicago.edu'><body>[group] CLEAR: vi05.uchicago.edu Value restored to predicted range</body></message>
+INFO:zen.BotDaemon:Sending message to bottest@conference.im.uchicago.edu/groupchat: [group] CLEAR: vi06.uchicago.edu Value restored to predicted range
+INFO:zen.xmppBot:We are in a forum and this message should go back to bottest
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' from='bottest@conference.im.uchicago.edu/zenbot10' type='groupchat' to='bottest@conference.im.uchicago.edu'><body>[group] CLEAR: vi06.uchicago.edu Value restored to predicted range</body></message>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' type='groupchat' from='bottest@conference.im.uchicago.edu/zenbot10' to='zenbot10@im.uchicago.edu/bot'><body>[group] CLEAR: vi05.uchicago.edu Value restored to predicted range</body></message>
+INFO:zen.xmppBot:*** dropping request from bottest@conference.im.uchicago.edu/zenbot10, is self
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' type='groupchat' from='bottest@conference.im.uchicago.edu/zenbot10' to='zenbot10@im.uchicago.edu/bot'><body>[group] CLEAR: vi06.uchicago.edu Value restored to predicted range</body></message>
+INFO:zen.xmppBot:*** dropping request from bottest@conference.im.uchicago.edu/zenbot10, is self
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple4cf9defb' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p sysUpTime</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p sysUpTime</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p sysUpTime</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'sysUpTime', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint sysUpTime
+INFO:zen.xmppBot:Have 1 devices to check for sysUpTime
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint sysUpTime
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint sysUpTime
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:sysUpTime_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/sysUpTime_sysUpTime.rrd:ds0:AVERAGE CDEF:sysUpTime_c=sysUpTime_r VDEF:sysUpTime=sysUpTime_c,LAST PRINT:sysUpTime:%.2lf --start=1244099549
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    values = rrdtool.graph(*gopts)[2]
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.09 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple882ead63' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><active xmlns='http://jabber.org/protocol/chatstates'/><body>data -d vi09.uchicago.edu -p sysUpTime</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p sysUpTime</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p sysUpTime</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'sysUpTime', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint sysUpTime
+INFO:zen.xmppBot:Have 1 devices to check for sysUpTime
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint sysUpTime
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint sysUpTime
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:sysUpTime_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/sysUpTime_sysUpTime.rrd:ds0:AVERAGE CDEF:sysUpTime_c=sysUpTime_r VDEF:sysUpTime=sysUpTime_c,LAST PRINT:sysUpTime:%.2lf --start=1244100173
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple882ead64' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p sysUpTime</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p sysUpTime</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p sysUpTime</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'sysUpTime', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint sysUpTime
+INFO:zen.xmppBot:Have 1 devices to check for sysUpTime
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint sysUpTime
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint sysUpTime
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:sysUpTime_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/sysUpTime_sysUpTime.rrd:ds0:AVERAGE CDEF:sysUpTime_c=sysUpTime_r VDEF:sysUpTime=sysUpTime_c,LAST PRINT:sysUpTime:%.2lf --start=1244100210
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple882ead65' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p sysUpTime</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p sysUpTime</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p sysUpTime</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'sysUpTime', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint sysUpTime
+INFO:zen.xmppBot:Have 1 devices to check for sysUpTime
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint sysUpTime
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint sysUpTime
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:sysUpTime_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/sysUpTime_sysUpTime.rrd:ds0:AVERAGE CDEF:sysUpTime_c=sysUpTime_r VDEF:sysUpTime=sysUpTime_c,LAST PRINT:sysUpTime:%.2lf --start=1244100222
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' to='zenbot10@im.uchicago.edu/bot' type='chat' id='purple882ead67' from='chudler@im.uchicago.edu/Mah Desk'><x xmlns='jabber:x:event'><composing/></x><body>data -d vi09.uchicago.edu -p sysUpTime</body><html xmlns='http://jabber.org/protocol/xhtml-im'><body xmlns='http://www.w3.org/1999/xhtml'><span style='font-size: medium;'>data -d vi09.uchicago.edu -p sysUpTime</span></body></html></message>
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Calling access control plugin <AAZenossAdminPlugin ['access_control']> for chudler@im.uchicago.edu/Mah Desk
+INFO:zen.xmppBot:Zenoss Admin user plugin running with chudler@im.uchicago.edu/Mah Desk
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:JabberID chudler@im.uchicago.edu maps to the sender: chudler@im.uchicago.edu.  This user is authorized.
+INFO:zen.xmppBot:Done looking for access control plugin.
+INFO:zen.xmppBot:The user chudler@im.uchicago.edu/Mah Desk authorization result is True
+INFO:zen.xmppBot:Processing chat body <body xmlns='jabber:client'>data -d vi09.uchicago.edu -p sysUpTime</body>
+INFO:zen.xmppBot:Checking message data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Found command data -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Dispatching command {'to': 'zenbot10', 'parts': [u'data', u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']}
+INFO:zen.xmppBot:This is our command
+INFO:zen.xmppBot:Calling plugin data with  -d vi09.uchicago.edu -p sysUpTime
+INFO:zen.xmppBot:Data extraction plugin running with arguments [u'-d', u'vi09.uchicago.edu', u'-p', u'sysUpTime']
+WARN: config file /opt/zenoss/etc/JabberBot.conf not found skipping
+INFO:zen.xmppBot:Done parsing arguments.  Options are '{'deviceName': u'vi09.uchicago.edu', 'dataPointName': u'sysUpTime', 'list': None, 'subComponent': None}', arguments expanded to []
+INFO:zen.xmppBot:Found 1 devices matching [<VirtualMachineHost at /zport/dmd/Devices/Server/Virtual Machine Host/ESX/devices/vi09.uchicago.edu>]
+INFO:zen.xmppBot:Going to look for datapoint sysUpTime
+INFO:zen.xmppBot:Have 1 devices to check for sysUpTime
+INFO:zen.xmppBot:Checking vi09.uchicago.edu. For the dataPoint sysUpTime
+INFO:zen.xmppBot:The device <VirtualMachineHost at vi09.uchicago.edu> does have the dataPoint sysUpTime
+ERROR:RenderServer:failed generating summary
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+WARNING:RenderServer:/dev/null DEF:sysUpTime_r=/opt/zenoss/perf/Devices/vi09.uchicago.edu/sysUpTime_sysUpTime.rrd:ds0:AVERAGE CDEF:sysUpTime_c=sysUpTime_r VDEF:sysUpTime=sysUpTime_c,LAST PRINT:sysUpTime:%.2lf --start=1244100243
+ERROR:zen.RRDView:argument 1 must be string
+Traceback (most recent call last):
+  File "/opt/zenoss/Products/ZenModel/RRDView.py", line 143, in getRRDValues
+    vals = perfServer.performanceCustomSummary(gopts)
+  File "/opt/zenoss/Products/ZenModel/PerformanceConf.py", line 272, in performanceCustomSummary
+    return server.summary(gopts)
+  File "/opt/zenoss/Products/ZenRRD/RenderServer.py", line 304, in summary
+    try:
+TypeError: argument 1 must be string
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu/Mah Desk' from='zenbot10@im.uchicago.edu/bot'><body>vi09.uchicago.edu: None
+</body></message>
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:Sending message to chudler@im.uchicago.edu: vi08.uchicago.edu laLoadInt5 out of predicted range
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' to='chudler@im.uchicago.edu' from='zenbot10@im.uchicago.edu/bot'><body>vi08.uchicago.edu laLoadInt5 out of predicted range</body></message>
+INFO:zen.BotDaemon:Sending message to bottest@conference.im.uchicago.edu/groupchat: [group] vi08.uchicago.edu laLoadInt5 out of predicted range
+INFO:zen.xmppBot:We are in a forum and this message should go back to bottest
+INFO:zen.xmppBot:-> sending <message xmlns='jabber:client' from='bottest@conference.im.uchicago.edu/zenbot10' type='groupchat' to='bottest@conference.im.uchicago.edu'><body>[group] vi08.uchicago.edu laLoadInt5 out of predicted range</body></message>
+INFO:zen.BotDaemon:processed 2 rules in 0.08 secs
+INFO:zen.xmppBot:-< received <message xmlns='jabber:client' type='groupchat' from='bottest@conference.im.uchicago.edu/zenbot10' to='zenbot10@im.uchicago.edu/bot'><body>[group] vi08.uchicago.edu laLoadInt5 out of predicted range</body></message>
+INFO:zen.xmppBot:*** dropping request from bottest@conference.im.uchicago.edu/zenbot10, is self
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.xmppBot:-> sending <presence xmlns='jabber:client'><status>Online</status></presence>
+INFO:zen.BotDaemon:processed 2 rules in 0.01 secs
+INFO:zen.BotDaemon:Daemon BotDaemon shutting down
+INFO:zen.BotDaemon:Daemon BotDaemon shutting down
+['aazenossadmin', 'events', 'users', 'setjid', 'model', 'data', 'ack']

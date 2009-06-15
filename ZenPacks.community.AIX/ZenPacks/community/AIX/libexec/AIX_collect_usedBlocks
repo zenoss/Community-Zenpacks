@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+"""Gather used disk space statistics for AIX"""
+
+import sys
+import re
+from subprocess import *
+
+base_fs_table_oid= "1.3.6.1.4.1.2.6.191.6.2.1"
+
+def process_disk_stats( device, community, totalBlocks_oid, freeBlocks_oid ):
+    """Gather OID info and sanitize it"""
+
+    cmd= "snmpget -v1 -c %s %s %s %s" % ( community, device, totalBlocks_oid, freeBlocks_oid )
+    #print "cmd= %s" % cmd
+    proc= Popen( cmd, shell=True, stdout=PIPE, stderr=PIPE )
+
+    #
+    # Check to make sure that we don't have any hangups in
+    # executing snmpget
+    #
+    if not proc.stdout:
+        print "Couldn't open pipe to stdout for %s" % cmd
+        return
+
+    if not proc.stderr:
+        print "Couldn't open pipe to stderr for %s" % cmd
+        return
+
+    ( line1, line2 )= proc.stdout.readlines()
+    totalBlocks= line1.split()[-1]
+    freeBlocks= line2.split()[-1]
+    usedBlocks= int( totalBlocks ) - int( freeBlocks )
+
+    return totalBlocks, freeBlocks, usedBlocks
+
+if __name__ == "__main__":
+    if len(sys.argv) < 4:
+        print "Need device, community and fs_index arguments!"
+        sys.exit(1)
+
+    (device, community, fs_index )= sys.argv[1:]
+
+    totalBlocks_oid= ".".join( ( base_fs_table_oid, "5", fs_index ) )
+    freeBlocks_oid= ".".join( ( base_fs_table_oid, "6", fs_index ) )
+
+    try:
+        totalBlocks, freeBlocks, usedBlocks= process_disk_stats( device, community, totalBlocks_oid, freeBlocks_oid )
+        print "totalBlocks:%s freeBlocks:%s usedBlocks:%s" % ( totalBlocks, freeBlocks, usedBlocks )
+    except:
+        print "totalBlocks:-1 freeBlocks:-1 usedBlocks:-1"
+
+    sys.exit(0)
+

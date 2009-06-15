@@ -1,0 +1,244 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method=post 
+    tal:define="manager python:here.has_permission('Change Device');
+                userCreated here/isUserCreated"
+    tal:attributes="action string:${here/absolute_url_path}">
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:Volume Group;
+                menu_id string:Lockable;
+                editable python:manager and userCreated">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+    <tr>
+      <td class="tableheader" align=left>Volume Group</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/title">/usr</td>
+      <td class="tablevalues" tal:condition="editable">
+        <input tal:condition="editable"
+               tal:attributes="class string:tablevalues;
+                               name string:title;
+                               value here/title">
+      </td>
+      <td class="tableheader">Monitor</td>
+      <td class="tablevalues" tal:condition="manager">
+            <select class="tablevalues"  name="monitor:boolean">
+            <option tal:repeat="e python:(True,False)" tal:content="e"
+                tal:attributes="value e; selected python:e==here.monitored()"/>
+            </select>
+      </td>
+      <td class="tablevalues" tal:condition="not:manager"
+            tal:content="here/monitored"/>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Volume Group Identifier</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/aixVgIdentifier">1</td>
+      <td class="tableheader" align=left>Size</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/aixVgSize">/usr</td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>State</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/aixVgState">1</td>
+      <td class="tableheader" align=left>Free</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/aixVgFree">/usr</td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Open Logical Volumes</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/aixVgOpenLVs">1</td>
+      <td class="tableheader" align=left>Current Logical Volumes</td>
+      <td class="tablevalues" tal:condition="not:editable"
+                              tal:content="here/aixVgCurNumLVs">/usr</td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Locks</td>
+      <td class="tablevalues" colspan=3>
+          <img tal:condition="here/isLockedFromDeletion" border="0" src="locked-delete-icon.png">
+          <img tal:condition="here/isLockedFromUpdates" border="0" src="locked-update-icon.png">
+          <img tal:condition="here/sendEventWhenBlocked" 
+              border="0" src="locked-sendevent-icon.png">
+      </td>
+    </tr>
+    <tr tal:condition="manager">
+        <td align="left"  class="tableheader" colspan="4">
+            <input class="tableheader" type="submit" value=" Save "
+                name="manage_editVolumeGroup:method" />
+        </td>
+    </tr>
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+<tal:block metal:define-macro="LogicalVolList"
+tal:define="tableName string:LogicalVollist;
+objects here/logicalvolume/objectValuesAll;
+tabletitle string:Logical Volumes;
+batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                        sortedHeader='title');
+ts python:here.ZenTableManager.getTableState(tableName);
+menu_id string:AixLogicalVolumes;
+showfilterbox python:False;">
+<input type="hidden" name="context" value="logicalvolume"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+<!-- BEGIN TABLE CONTENTS -->
+<tr tal:condition="objects">
+    <th class="tableheader" width="20"></th>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'title','Name')">lv5
+    </th>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'aixLvMountPoint','Mount Point')" />
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'aixLvSize','Size')" />
+    <th class="tableheader" align="left" width="10">M</th>
+    <th class="tableheader" align="center" width="60">Lock</th>
+</tr>
+<tr tal:condition="not:objects">
+    <th class="tableheader" align="left">
+        No Logical Volumes
+    </th>
+</tr>
+<tal:block tal:repeat="lvol batch">
+
+<tr tal:define="odd repeat/lvol/odd"
+    tal:attributes="class python:test(odd, 'odd', 'even')">
+    <td class="tablevalues" align="center">
+       <input type="checkbox" name="componentNames:list"
+              tal:attributes="value lvol/getRelationshipManagerId"/>
+    </td>
+  <td class="tablevalues">
+      <tal:block tal:content="structure python:lvol.urlLink(text=lvol.title,
+        attrs={'class':'tablevalues'})"/>
+  </td>
+  <td class="tablevalues"
+      tal:content="lvol/aixLvMountPoint">vol
+  </td>
+  <td class="tablevalues"
+      tal:content="lvol/aixLvSize">vol
+  </td>
+  <td class="tablevalues" align="left">
+      <img border="0" tal:attributes="src python:test(lvol.monitored(),
+           here.os.getStatusImgSrc(0),
+           here.os.getStatusImgSrc(-1))" />
+  </td>
+  <td class="tablevalues" align="center">
+      <img tal:condition="lvol/isLockedFromDeletion"
+           border="0" src="locked-delete-icon.png">
+      <img tal:condition="lvol/isLockedFromUpdates"
+           border="0" src="locked-update-icon.png">
+      <img tal:condition="lvol/sendEventWhenBlocked"
+           border="0" src="locked-sendevent-icon.png">
+  </td>
+
+</tr>
+    </tal:block>
+    <tr>
+        <td colspan="7" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block metal:define-macro="PhysicalVolList"
+tal:define="tableName string:PhysicalVollist;
+objects here/physicalvolume/objectValuesAll;
+tabletitle string:Physical Volumes;
+batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                        sortedHeader='title');
+                                        ts python:here.ZenTableManager.getTableState(tableName);
+menu_id string:AixPhysicalVolumes;
+showfilterbox python:False;">
+<input type="hidden" name="context" value="physicalvolume"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+<!-- BEGIN TABLE CONTENTS -->
+<tr tal:condition="objects">
+    <th class="tableheader" width="20"></th>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'title','Name')">lv5
+    </th>
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'aixPvSize','Size')" />
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                    tableName,'aixPvFree','Free Space')" />
+    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+        tableName,'aixPvNumLVs','# of LVs')" />
+    <th class="tableheader" align="left" width="10">M</th>
+    <th class="tableheader" align="center" width="60">Lock</th>
+
+</tr>
+<tr tal:condition="not:objects">
+    <th class="tableheader" align="left">
+        No physical Volumes
+    </th>
+</tr>
+<tal:block tal:repeat="pvol batch">
+<tr tal:define="odd repeat/pvol/odd"
+    tal:attributes="class python:test(odd, 'odd', 'even')">
+    <td class="tablevalues" align="center">
+       <input type="checkbox" name="componentNames:list"
+              tal:attributes="value pvol/getRelationshipManagerId"/>
+    </td>
+  <td class="tablevalues">
+      <tal:block tal:content="structure python:pvol.urlLink(text=pvol.title,
+        attrs={'class':'tablevalues'})"/>
+  </td>
+  <td class="tablevalues"
+      tal:content="pvol/aixPvSize">vol
+  </td>
+  <td class="tablevalues"
+      tal:content="pvol/aixPvFree">vol
+  </td>
+  <td class="tablevalues"
+      tal:content="pvol/aixPvNumLVs">vol
+  </td>
+  <td class="tablevalues" align="left">
+      <img border="0" tal:attributes="src python:test(pvol.monitored(),
+           here.os.getStatusImgSrc(0),
+           here.os.getStatusImgSrc(-1))" />
+  </td>
+  <td class="tablevalues" align="center">
+      <img tal:condition="pvol/isLockedFromDeletion"
+           border="0" src="locked-delete-icon.png">
+      <img tal:condition="pvol/isLockedFromUpdates"
+           border="0" src="locked-update-icon.png">
+      <img tal:condition="pvol/sendEventWhenBlocked"
+           border="0" src="locked-sendevent-icon.png">
+  </td>
+</tr>
+    </tal:block>
+    <tr>
+        <td colspan="7" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+<tal:block tal:condition="here/monitored" >
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+</tal:block>
+</tal:block>
+</tal:block>

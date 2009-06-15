@@ -1,0 +1,77 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method=post
+    tal:define="manager python:here.has_permission('Change Device');
+                userCreated here/isUserCreated"
+    tal:attributes="action string:${here/absolute_url_path}">
+    <input type="hidden" name="zenScreenName"
+        tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:Physical Volume;
+                menu_id string:Lockable;
+                editable python:manager and userCreated">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<tr>
+<td class="tableheader" align=left>Physical Volume</td>
+    <td class="tablevalues" tal:condition="not:editable"
+                      tal:content="here/title">/usr</td>
+<td class="tablevalues" tal:condition="editable">
+<input tal:condition="editable"
+       tal:attributes="class string:tablevalues;
+                       name string:title;
+                       value here/title">
+</td>
+<td class="tableheader">Monitor</td>
+<td class="tablevalues" tal:condition="manager">
+    <select class="tablevalues"  name="monitor:boolean">
+    <option tal:repeat="e python:(True,False)" tal:content="e"
+        tal:attributes="value e; selected python:e==here.monitored()"/>
+    </select>
+</td>
+<td class="tablevalues" tal:condition="not:manager"
+    tal:content="here/monitored"/>
+</tr>
+<tr>
+<td class="tableheader" align=left>Size</td>
+<td class="tablevalues" tal:content="here/aixPvSize">1</td>
+<td class="tableheader" align=left>Free</td>
+<td class="tablevalues" colspan="3" tal:content="here/aixPvFree"/>
+</tr>
+<tr>
+<td class="tableheader" align=left># of LVs</td>
+<td class="tablevalues" tal:content="here/aixPvNumLVs">1</td>
+<td class="tableheader" align=left>State</td>
+<td class="tablevalues" colspan="3" tal:content="here/aixPvState"/>
+</tr>
+<tr>
+<td class="tableheader" align=left>Locks</td>
+<td class="tablevalues" colspan=3>
+  <img tal:condition="here/isLockedFromDeletion" border="0" src="locked-delete-icon.png">
+  <img tal:condition="here/isLockedFromUpdates" border="0" src="locked-update-icon.png">
+  <img tal:condition="here/sendEventWhenBlocked" 
+      border="0" src="locked-sendevent-icon.png">
+</td>
+</tr>
+<tr tal:condition="manager">
+<td align="left"  class="tableheader" colspan="4">
+    <input class="tableheader" type="submit" value=" Save "
+        name="manage_editphysicalVolume:method" />
+</td>
+</tr>
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+<tal:block tal:condition="here/monitored" >
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+</tal:block>
+</tal:block>
+</tal:block>

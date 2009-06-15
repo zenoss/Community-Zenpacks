@@ -1,0 +1,43 @@
+<h2>Edit Lock</h2>
+<p style="text-align:right;">
+<input tal:attributes="name string:sendEventWhenBlocked;
+    type string:checkbox;
+    checked here/sendEventWhenBlocked"
+    />Send event when actions are blocked by a lock
+<br/><br/>
+<input type="submit" name="lockVolumeGroupsFromUpdates:method"
+    value="Lock from deletion and updates"
+    tal:condition="python:getattr(here, 'setVGMonitored', None)"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/absolute_url_path}')" />
+<input type="submit" name="lockVolumeGroupsFromUpdates:method"
+    value="Lock from deletion and updates"
+    tal:condition="python:not getattr(here, 'setVGMonitored', None)"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/os/absolute_url_path}')" />
+<br/><br/>
+<input type="submit" name="lockVolumeGroupsFromDeletion:method"
+    value="Lock from deletion"
+    tal:condition="python:getattr(here, 'setVGMonitored', None)"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/absolute_url_path}')" />
+<input type="submit" name="lockVolumeGroupsFromDeletion:method"
+    value="Lock from deletion"
+    tal:condition="python:not getattr(here, 'setVGMonitored', None)"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/os/absolute_url_path}')" />
+<br/><br/>
+<input type="submit" name="unlockVolumeGroups:method"
+    value="Unlock"
+    tal:condition="python:getattr(here, 'setVGMonitored', None)"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/absolute_url_path}')" />
+<input type="submit" name="unlockVolumeGroups:method"
+    value="Unlock"
+    tal:condition="python:not getattr(here, 'setVGMonitored', None)"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/os/absolute_url_path}')" />
+<br/><br/>
+<input id="dialog_cancel" type="button" value="Cancel"
+        onclick="$('dialog').hide()"/>
+</p>

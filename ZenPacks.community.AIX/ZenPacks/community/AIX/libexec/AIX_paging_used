@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+"""Gather used disk space statistics for AIX"""
+
+import sys
+import re
+from subprocess import *
+
+base_table_oid= "1.3.6.1.4.1.2.6.191.6.2.1"
+
+def process_paging_stats( device, community, PageSize_oid, PagePercentUsed_oid ):
+    """Gather OID info and sanitize it"""
+
+    cmd= "snmpget -v1 -c %s %s %s %s" % ( community, device, PageSize_oid, PagePercentUsed_oid)
+    #print "cmd= %s" % cmd
+    proc= Popen( cmd, shell=True, stdout=PIPE, stderr=PIPE )
+
+    #
+    # Check to make sure that we don't have any hangups in
+    # executing snmpget
+    #
+    if not proc.stdout:
+        print "Couldn't open pipe to stdout for %s" % cmd
+        return
+
+    if not proc.stderr:
+        print "Couldn't open pipe to stderr for %s" % cmd
+        return
+
+    ( line1, line2 )= proc.stdout.readlines()
+    page_percentused= line1.split()[-1]
+    page_size= line2.split()[-1]
+    page_used=  float(page_size)  * float(page_percentused)/100
+
+    return page_size, page_used, page_percentused
+
+
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 4:
+        print "Need device, community and index arguments!"
+        sys.exit(1)
+
+    (device, community, index )= sys.argv[1:]
+
+    PageSize_oid= ".".join( ( base_table_oid, "4", index ) )
+    PagePercentUsed_oid= ".".join( ( base_table_oid, "5", index ) )
+
+    page_size, page_used, page_percentused= process_paging_stats( device, community, PageSize_oid, PagePercentUsed_oid )
+    try:
+        page_size, page_used, page_percentused= process_paging_stats( device, community, PageSize_oid, PagePercentUsed_oid )
+        print "pagesize:%s pageused:%s pagepercentused:%s" % ( page_size, page_used, page_percentused)
+    except:
+        print "pagesize:-1 pageused:-1 pagepercentused:-1"
+
+    sys.exit(0)
+

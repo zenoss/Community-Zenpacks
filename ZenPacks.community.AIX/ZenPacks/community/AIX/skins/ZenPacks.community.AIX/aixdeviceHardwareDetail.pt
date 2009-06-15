@@ -1,0 +1,543 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+
+<tal:block metal:define-macro="lparList"
+    tal:define="tableName string:lparList;
+    objects here/hw/lparinfo/objectValuesAll;
+    tabletitle string:Lpar Info;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <td class="tableheader">Min Memory</td>
+        <td class="tableheader">OnLine Memory</td>
+        <td class="tableheader">Max Memory</td>
+    </tr>
+    <tal:block tal:repeat="lparinfo batch">
+        <tr tal:define="odd repeat/lparinfo/odd">
+            <td class="tablevalues" tal:content="lparinfo/minmem"/>
+            <td class="tablevalues" tal:content="lparinfo/onlinemem"/>
+            <td class="tablevalues" tal:content="lparinfo/maxmem"/>
+        </tr>
+    </tal:block>
+    <tr>
+        <td class="tableheader">Min Entitlement</td>
+        <td class="tableheader">OnLine Entitlement</td>
+        <td class="tableheader">Max Entitlement</td>
+    </tr>
+    <tal:block tal:repeat="lparinfo batch">
+        <tr tal:define="odd repeat/lparinfo/odd">
+            <td class="tablevalues" tal:content="lparinfo/mincap"/>
+            <td class="tablevalues" tal:content="lparinfo/entitledcap"/>
+            <td class="tablevalues" tal:content="lparinfo/maxcap"/>
+        </tr>
+    </tal:block>
+    <tr>
+        <td class="tableheader">Min Virt Cpu</td>
+        <td class="tableheader">OnLine Virt Cpu</td>
+        <td class="tableheader">Max Virt Cpu</td>
+    </tr>
+    <tal:block tal:repeat="lparinfo batch">
+        <tr tal:define="odd repeat/lparinfo/odd">
+            <td class="tablevalues" tal:content="lparinfo/minvcpu"/>
+            <td class="tablevalues" tal:content="lparinfo/vcpu"/>
+            <td class="tablevalues" tal:content="lparinfo/maxvcpu"/>
+        </tr>
+        </tal:block>
+    <tr><td>&nbsp;&nbsp;</td></tr>
+    <tr>
+        <td class="tableheader">Entitled Percentage</td>
+        <td class="tableheader">Weight</td>
+    </tr>
+    <tal:block tal:repeat="lparinfo batch">
+        <tr tal:define="odd repeat/lparinfo/odd">
+            <td class="tablevalues" tal:content="lparinfo/entitledpct"/>
+            <td class="tablevalues" tal:content="lparinfo/weight"/>
+        </tr>
+    </tal:block>
+    <tr><td>&nbsp;&nbsp;</td></tr>
+    <tr>
+        <td class="tableheader">Sharing Status</td>
+        <td class="tableheader">Capped Status</td>
+        <td class="tableheader">SMT Status</td>
+    </tr>
+    <tal:block tal:repeat="lparinfo batch">
+        <tr tal:define="odd repeat/lparinfo/odd">
+            <td class="tablevalues" tal:content="lparinfo/sharedstr"/>
+            <td class="tablevalues" tal:content="lparinfo/cappedstr"/>
+            <td class="tablevalues" tal:content="lparinfo/smtstr"/>
+        </tr>
+    </tal:block>
+
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block tal:define=" tabletitle string:Memory; ">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <td class="tableheader">Memory</td>
+        <td class="tablevalues" tal:content="here/hw/totalMemoryString"/>
+        <td class="tableheader">Swap</td>
+        <td class="tablevalues" tal:content="here/os/totalSwapString"/>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block metal:define-macro="cpuList"
+    tal:define="tableName string:cpuList;
+    objects here/hw/cpus/objectValuesAll;
+    tabletitle string:CPUs;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'socket','Socket')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'clockspeed','Speed')"/>
+    </tr>
+    <tal:block tal:repeat="cpu batch">
+    <tr tal:define="odd repeat/cpu/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" tal:content="cpu/socket"/>
+        <td class="tablevalues" 
+            tal:content="structure cpu/getManufacturerLink"/>
+        <td class="tablevalues" tal:content="structure cpu/getProductLink"/>
+        <td class="tablevalues" tal:content="string:${cpu/clockspeed} MHz"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+<tal:block metal:define-macro="hardDiskList"
+    tal:define="tableName string:hardDiskList;
+    objects here/hw/harddisks/objectValuesAll;
+    tabletitle string:Hard Disks;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='description');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'description','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixhdlocation','Location')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixhdtype','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixhdinterface','Interface')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixhddescription','Description')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixhdidentifier','Identifier')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixhdFRU','FRU')"/>
+    </tr>
+    <tal:block tal:repeat="disk batch">
+    <tr tal:define="odd repeat/disk/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues">
+          <tal:block 
+           tal:content="structure python:disk.urlLink(text=disk.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="structure disk/aixhdlocation"/>
+      <td class="tablevalues" tal:content="structure disk/getManufacturerLink"/>
+      <td class="tablevalues" tal:content="structure disk/getProductLink"/>
+      <td class="tablevalues" tal:content="structure disk/aixhdtype"/>
+      <td class="tablevalues" tal:content="structure disk/aixhdinterface"/>
+      <td class="tablevalues" tal:content="structure disk/aixhddescription"/>
+      <td class="tablevalues" tal:content="structure disk/aixhdidentifier"/>
+      <td class="tablevalues" tal:content="structure disk/aixhdFRU"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block metal:define-macro="powersupplyList"
+    tal:define="tableName string:powersupplyList;
+    objects here/hw/powersupplies/objectValuesAll;
+    tabletitle string:Power Supplies;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'type','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'watts','Watts')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'state','State')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'millivolts','Voltage')"/>
+    </tr>
+    <tal:block tal:repeat="powersupply batch">
+    <tr tal:define="odd repeat/powersupply/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" width="50%">
+          <tal:block 
+           tal:content="structure python:powersupply.urlLink(text=powersupply.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="powersupply/type"/>
+      <td class="tablevalues" tal:content="powersupply/wattsString"/>
+      <td class="tablevalues" tal:content="powersupply/state"/>
+      <td class="tablevalues" tal:content="powersupply/millivoltsString"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block metal:define-macro="fanList"
+    tal:define="tableName string:fanList;
+    objects here/hw/fans/objectValuesAll;
+    tabletitle string:Fans;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'type','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'state','State')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'rpm','Speed')"/>
+    </tr>
+    <tal:block tal:repeat="fan batch">
+    <tr tal:define="odd repeat/fan/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" width="50%">
+          <tal:block 
+           tal:content="structure python:fan.urlLink(text=fan.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="fan/type"/>
+      <td class="tablevalues" tal:content="fan/state"/>
+      <td class="tablevalues" tal:content="fan/rpmString"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<!-- BEGIN -->
+<tal:block metal:define-macro="temperaturesensorList"
+    tal:define="tableName string:temperaturesensorList;
+    objects here/hw/temperaturesensors/objectValuesAll;
+    tabletitle string:Temperature Sensors;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'state','State')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'temperatureFahrenheit','Temperature')"/>
+    </tr>
+    <tal:block tal:repeat="temperaturesensor batch">
+    <tr tal:define="odd repeat/temperaturesensor/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" width="50%">
+          <tal:block 
+           tal:content="structure python:temperaturesensor.urlLink(text=temperaturesensor.getId())"/>
+      </td>
+      <td class="tablevalues" tal:content="temperaturesensor/state"/>
+      <td class="tablevalues" tal:content="temperaturesensor/temperatureFahrenheitString"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="2" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END -->
+
+<tal:block
+    metal:define-macro="cardList"
+    tal:define="tableName string:hardDiskList;
+    objects here/hw/cards/objectValuesAll;
+    tabletitle string:Expansion Cards;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='slot');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'slot','Slot')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Model')"/>
+    </tr>
+    <tal:block tal:repeat="card batch">
+    <tr tal:define="odd repeat/card/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" tal:content="card/slot"/>
+        <td class="tablevalues" 
+            tal:content="structure card/getManufacturerLink"/>
+        <td class="tablevalues" tal:content="structure card/getProductLink"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+<tal:block
+    metal:define-macro="cdList"
+    tal:define="tableName string:cdList;
+    objects here/hw/cdrom/objectValuesAll;
+    tabletitle string:Cdrom Drives;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixcdromlocation','Location')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixcdromDescription','Description')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixcdromFRU','FRU')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixcdromEC','EC')"/>
+
+    </tr>
+    <tal:block tal:repeat="cdrom batch">
+    <tr tal:define="odd repeat/cdrom/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" width="10%">
+            <tal:block tal:content="structure cdrom/getId"/>
+
+        <td class="tablevalues" tal:content="cdrom/aixcdromlocation"/>
+        <td class="tablevalues" tal:content="structure cdrom/getManufacturerLink"/>
+        <td class="tablevalues" tal:content="structure cdrom/getProductLink"/>
+        <td class="tablevalues" tal:content="structure cdrom/aixcdromdescription"/>
+        <td class="tablevalues" tal:content="structure cdrom/aixcdromFRU"/>
+        <td class="tablevalues" tal:content="structure cdrom/aixcdromEC"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+<tal:block
+    metal:define-macro="tapeList"
+    tal:define="tableName string:tapeList;
+    objects here/hw/tape/objectValuesAll;
+    tabletitle string:Tape Drives;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixtapedrivelocation','Location')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixtapedrivedescription','Description')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixtapedriveSerialNumber','Serial')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixtapedrivePartNumber','Part')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixtapedriveFRU','FRU')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixtapedriveEC','EC')"/>
+
+    </tr>
+    <tal:block tal:repeat="tape batch">
+    <tr tal:define="odd repeat/tape/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" width="10%">
+            <tal:block tal:content="structure python:tape.urlLink(text=tape.getId())"/>
+
+        <td class="tablevalues" tal:content="tape/aixtapedrivelocation"/>
+        <td class="tablevalues" tal:content="structure tape/getManufacturerLink"/>
+        <td class="tablevalues" tal:content="structure tape/getProductLink"/>
+        <td class="tablevalues" tal:content="tape/aixtapedrivedescription"/>
+        <td class="tablevalues" tal:content="tape/aixtapedriveSerialNumber"/>
+        <td class="tablevalues" tal:content="tape/aixtapedrivePartNumber"/>
+        <td class="tablevalues" tal:content="tape/aixtapedriveFRU"/>
+        <td class="tablevalues" tal:content="tape/aixtapedriveEC"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<tal:block
+    metal:define-macro="printerList"
+    tal:define="tableName string:printerList;
+    objects here/hw/printer/objectValuesAll;
+    tabletitle string:Printers;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='id');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'id','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixprintertype','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixprinterlocation','Location')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'aixprinterdescription','Description')"/>
+
+    </tr>
+    <tal:block tal:repeat="printer batch">
+    <tr tal:define="odd repeat/printer/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" width="10%">
+            <tal:block tal:content="structure printer/getId"/>
+
+        <td class="tablevalues" tal:content="printer/aixprintertype"/>
+        <td class="tablevalues" tal:content="printer/aixprinterlocation"/>
+        <td class="tablevalues" tal:content="printer/aixprinterdescription"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="3" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+

@@ -1,0 +1,4 @@
+rpm -qa --qf "%{NAME}-%{VERSION}-%{RELEASE}|%{INSTALLTIME}|%{SUMMARY}\n" && echo __COMMAND__ && cat /etc/SuSE-brand |head -1
+perl-5.10.0-62.17.1|1244573329|The Perl interpreter
+__COMMAND__
+openSUSE

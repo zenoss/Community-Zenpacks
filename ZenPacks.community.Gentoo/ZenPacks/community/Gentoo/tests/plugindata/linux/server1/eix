@@ -1,0 +1,10 @@
+/usr/bin/eix -c -I -n
+[I] app-admin/sudo (1.7.0@03/30/09): Allows users or groups to run commands as other users
+[I] app-admin/syslog-ng (2.1.4@06/06/09): syslog replacement with advanced filtering features
+[I] app-arch/bzip2 (1.0.5-r1@03/31/09): A high-quality data compressor used extensively by Gentoo Linux
+[I] app-arch/cpio (2.9-r2@03/31/09): A file archival tool which can also read and write tar files
+[I] app-arch/gzip (1.3.12-r1@03/31/09): Standard GNU compressor
+[I] app-arch/lzma-utils (4.32.7@03/30/09): LZMA interface made easy
+[I] app-arch/tar (1.20@03/31/09): Use this to make tarballs :)
+[I] app-editors/mousepad (0.2.14@03/30/09): Text editor
+Found 9 matches

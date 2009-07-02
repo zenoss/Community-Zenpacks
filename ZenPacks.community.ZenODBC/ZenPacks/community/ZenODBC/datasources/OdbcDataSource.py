@@ -37,7 +37,7 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
     sourcetypes = ('ODBC',)
     sourcetype = 'ODBC'
     eventClass = Cmd_Fail
-    parser = 'ZenPacks.community.ZenODBC.isql'
+    parser = 'ZenPacks.community.ZenODBC.parsers.isql'
     cs = ''
     sql = ''
     uid = ''

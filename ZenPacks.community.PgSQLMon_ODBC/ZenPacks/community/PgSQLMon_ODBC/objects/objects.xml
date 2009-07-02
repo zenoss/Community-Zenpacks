@@ -29,7 +29,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
@@ -74,7 +74,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
@@ -151,7 +151,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
@@ -244,7 +244,7 @@ postgres
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}

@@ -29,7 +29,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
@@ -82,7 +82,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
@@ -369,7 +369,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
@@ -422,7 +422,7 @@ ${here/dbname}
 300
 </property>
 <property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.isql
+ZenPacks.community.ZenODBC.parsers.isql
 </property>
 <property type="string" id="cs" mode="w" >
 ${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}

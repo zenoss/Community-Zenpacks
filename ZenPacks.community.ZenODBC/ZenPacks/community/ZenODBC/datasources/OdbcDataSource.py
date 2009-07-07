@@ -13,9 +13,9 @@ __doc__="""OdbcDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: OdbcDataSource.py,v 1.1 2009/07/02 20:16:23 egor Exp $"""
+$Id: OdbcDataSource.py,v 1.2 2009/07/08 00:04:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence

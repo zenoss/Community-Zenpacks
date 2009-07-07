@@ -12,7 +12,7 @@ __doc__="""OdbcPlugin
 
 wrapper for PythonPlugin
 
-$Id: OdbcPlugin.py,v 1.0 2009/05/15 16:29:23 egor Exp $"""
+$Id: OdbcPlugin.py,v 1.1 2009/07/08 00:05:23 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 

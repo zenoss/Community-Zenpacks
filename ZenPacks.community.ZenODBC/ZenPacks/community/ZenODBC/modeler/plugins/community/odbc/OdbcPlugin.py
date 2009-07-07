@@ -21,7 +21,7 @@ from Products.DataCollector.plugins.CollectorPlugin import PythonPlugin
 
 from twisted.internet import defer, reactor, protocol
 
-from ZenPacks.community.ZenODBC.isql import parseResults, connectionString 
+from ZenPacks.community.ZenODBC.parsers.isql import parseResults, connectionString 
 
 
 class isqlPP(protocol.ProcessProtocol):

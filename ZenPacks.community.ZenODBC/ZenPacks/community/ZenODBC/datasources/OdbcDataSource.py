@@ -24,7 +24,7 @@ from AccessControl import ClassSecurityInfo, Permissions
 from Products.ZenEvents.ZenEventClasses import Cmd_Fail
 from Products.ZenUtils.Utils import executeStreamCommand
 
-from ZenPacks.community.ZenODBC.isql import connectionString
+from ZenPacks.community.ZenODBC.parsers.isql import connectionString
 
 import cgi, time
 

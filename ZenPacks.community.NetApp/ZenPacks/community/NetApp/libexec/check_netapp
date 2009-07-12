@@ -1,0 +1,329 @@
+#!/usr/bin/perl
+#
+# Thu Jul  2 10:43:38 EDT 2009
+#
+# David Nicklay - get Netapp data (completely rewritten to make it more flexible)
+#
+
+use Net::SNMP;
+use Getopt::Std;
+
+use vars qw($opt_C $opt_H $opt_h $opt_t $opt_d $opt_l $opt_f);
+
+my($Timeout) = 15;
+my($Hostname) = '';
+my($Community) = 'public'; # Default community string
+my($Debug) = 0;
+my($Datatype) = 'cpu'; # default datatype to fetch
+my(@Datatypes) = ('power','cpu','fan','temp','filesystemlist','filesystem','nfscache','enclosure','product');
+
+sub usage {
+    my($exittype)=@_;
+    print STDERR "Usage: check_netapp [-d][-h] -H host [-C community] [-l datatype] [-t timeout] [ -f fsindex ]\n";
+    print STDERR "-l [".join(',',@Datatypes)."] - What data to fetch (default is cpu)\n";
+    print STDERR "-f filesystemindex            - index to the snmp data (used in combination with -l FS)\n";
+    print STDERR "-t timeout                    - timeout in seconds for SNMP data request\n";
+    print STDERR "-d                            - debug\n";
+    print STDERR "-h                            - help\n";
+    exit($exittype);
+}
+
+getopts('hdH:t:C:l:f:');
+$Hostname = $opt_H if($opt_H);
+$Community = $opt_C if($opt_C);
+$Datatype = $opt_l if($opt_l);
+$Timeout = $opt_t if($opt_t);
+$Debug = 1 if($opt_d);
+$FSIndex = $opt_f if($opt_f);
+&usage(0) if($opt_h);
+if(!length($Hostname)) {
+    print STDERR ("ERROR: No hostname given.\n");
+    &usage(1);
+}
+
+# -----------------------------------------------------------------------
+
+# convert a pair of 32 bit integers to a 64 bit integer
+# --TODO-- Need a cleaner way to do this (maybe using pack/unpack?)
+sub convert32to64 {
+    my($high32,$low32) = @_;
+    $high32 += 1 if($low32 < 0);
+    return ($high32 * (2 ** 32)) + $low32;
+}
+
+# --TODO probably needs to be a little more complete than simply wrapping it in quotes....
+sub quoteString {
+    my($string) = @_;
+    $string =~ s/^(.*)$/"$1"/;
+    return $string;
+}
+
+sub fetchData {
+    my($mibs,$type)=@_;
+    my ($session, $error) = Net::SNMP->session(
+	-hostname  => $Hostname,
+	-community => $Community,
+	-timeout => $Timeout
+    );
+    if (!defined($session)) {
+	printf STDERR ("ERROR: %s.\n", $error);
+	exit 1;
+    }
+    my $result;
+    if(!defined $type) {
+	$result = $session->get_request( -varbindlist => [keys %{ $mibs }]);
+    } elsif($type eq "column") {
+	$result = $session->get_table( -baseoid => $mibs );
+    }
+
+    if (!defined($result)) {
+	printf STDERR ("ERROR: %s.\n", $session->error);
+	$session->close;
+	exit 1;
+    }
+    my $data = {};
+    if($type eq "column") {
+	foreach (keys %{ $result }) {
+	    my $v = $result->{$_};
+	    s/^$mibs\.//;
+	    $data->{$_} = $v;
+	}
+    } else {
+	foreach (keys %{ $result }) {
+	    $data->{$mibs->{$_}} = $result->{$_};
+	}
+    }
+    $session->close;
+    return $data;
+}
+
+sub printData {
+    my($data) = @_;
+    print "|",join(' ',map($_.'='.$data->{$_},keys %{ $data })),"\n";
+}
+
+sub getPower {
+    print STDERR "Not yet implemented datatype=(",$Datatype,")\n";
+    # --TODO-- Does not seem to be enabled on the netapps as of ONTAP release 7.3:
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.21.1";
+    # enclPowerSuppliesMaximum             column       1.3.6.1.4.1.789.1.21.1.2.1.12
+    # enclPowerSuppliesPresent             column       1.3.6.1.4.1.789.1.21.1.2.1.13
+    # enclPowerSuppliesSerialNos           column       1.3.6.1.4.1.789.1.21.1.2.1.14
+    # enclPowerSuppliesFailed              column       1.3.6.1.4.1.789.1.21.1.2.1.15
+    # enclVoltSensorsMaximum               column       1.3.6.1.4.1.789.1.21.1.2.1.34
+    # enclVoltSensorsPresent               column       1.3.6.1.4.1.789.1.21.1.2.1.35
+    # enclVoltSensorsOverVoltFail          column       1.3.6.1.4.1.789.1.21.1.2.1.36
+    # enclVoltSensorsOverVoltWarn          column       1.3.6.1.4.1.789.1.21.1.2.1.37
+    # enclVoltSensorsUnderVoltFail         column       1.3.6.1.4.1.789.1.21.1.2.1.38
+    # enclVoltSensorsUnderVoltWarn         column       1.3.6.1.4.1.789.1.21.1.2.1.39
+    # enclVoltSensorsCurrentVolt           column       1.3.6.1.4.1.789.1.21.1.2.1.40
+    # enclVoltSensorsOverVoltFailThr       column       1.3.6.1.4.1.789.1.21.1.2.1.41
+    # enclVoltSensorsOverVoltWarnThr       column       1.3.6.1.4.1.789.1.21.1.2.1.42
+    # enclVoltSensorsUnderVoltFailThr      column       1.3.6.1.4.1.789.1.21.1.2.1.43
+    # enclVoltSensorsUnderVoltWarnThr      column       1.3.6.1.4.1.789.1.21.1.2.1.44
+    #print "TotalCurPwrOutput=",$totalCurPwrOutput;
+    #print " TotalMaxPwrOutput=",$totalMaxPwrOutput;
+}
+
+sub getEnclosure {
+    # --TODO-- A lot of the information in the MIB is not available as of ONTAP release 7.3:
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.21.1";
+    my $NAMIBs = {
+	$NAMIBsbase.'.1.0' => 'enclNumber'
+    };
+    my $data = &fetchData($NAMIBs);
+    &printData($data);
+}
+
+sub getCPU {
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.2.1";
+    my $NAMIBs = {
+	$NAMIBsbase.'.3.0' => 'cpuBusyTimePerCent',
+	$NAMIBsbase.'.5.0' => 'cpuIdleTimePerCent',
+	$NAMIBsbase.'.6.0' => 'cpuCount',
+	$NAMIBsbase.'.7.0' => 'cpuSwitchInvocations',
+	$NAMIBsbase.'.8.0' => 'cpuContextSwitches',
+	$NAMIBsbase.'.9.0' => 'cpuInterrupts',
+	$NAMIBsbase.'.10.0' => 'cpuNonCPInterrupts',
+	$NAMIBsbase.'.11.0' => 'cpuCPInterruptPercent',
+	$NAMIBsbase.'.12.0' => 'cpuNonCPInterruptPercent',
+	$NAMIBsbase.'.13.0' => 'cpuTotalDomainSwitches'
+    };
+    my $data = &fetchData($NAMIBs);
+    &printData($data);
+}
+
+sub getFan {
+    print "Not yet implemented datatype=(",$Datatype,")\n";
+    # --TODO-- A lot of the information in the MIB is not available as of ONTAP release 7.3:
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.2.1";
+    # enclFansMaximum                      column       1.3.6.1.4.1.789.1.21.1.2.1.16
+    # enclFansPresent                      column       1.3.6.1.4.1.789.1.21.1.2.1.17
+    # enclFansFailed                       column       1.3.6.1.4.1.789.1.21.1.2.1.18
+}
+
+sub getTemp {
+    print "Not yet implemented datatype=(",$Datatype,")\n";
+    # --TODO-- A lot of the information in the MIB is not available as of ONTAP release 7.3:
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.2.1";
+    # enclTempSensorsMaximum               column       1.3.6.1.4.1.789.1.21.1.2.1.19
+    # enclTempSensorsPresent               column       1.3.6.1.4.1.789.1.21.1.2.1.20
+    # enclTempSensorsOverTempFail          column       1.3.6.1.4.1.789.1.21.1.2.1.21
+    # enclTempSensorsOverTempWarn          column       1.3.6.1.4.1.789.1.21.1.2.1.22
+    # enclTempSensorsUnderTempFail         column       1.3.6.1.4.1.789.1.21.1.2.1.23
+    # enclTempSensorsUnderTempWarn         column       1.3.6.1.4.1.789.1.21.1.2.1.24
+    # enclTempSensorsCurrentTemp           column       1.3.6.1.4.1.789.1.21.1.2.1.25
+    # enclTempSensorsOverTempFailThr       column       1.3.6.1.4.1.789.1.21.1.2.1.26
+    # enclTempSensorsOverTempWarnThr       column       1.3.6.1.4.1.789.1.21.1.2.1.27
+    # enclTempSensorsUnderTempFailThr      column       1.3.6.1.4.1.789.1.21.1.2.1.28
+    # enclTempSensorsUnderTempWarnThr      column       1.3.6.1.4.1.789.1.21.1.2.1.29
+}
+
+sub getFilesystemList {
+    my $NAMIBscolumn = "1.3.6.1.4.1.789.1.5.4.1.2";
+    my $data = &fetchData($NAMIBscolumn,'column');
+    foreach (keys %{ $data }) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+sub getFilesystem {
+    if(not ($FSIndex >= 0)) {
+	print STDERR "Missing filesystem index\n";
+	&usage(1);
+    }
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.5.4.1";
+    my $data = &fetchData($NAMIBs);
+    my $NAMIBs = {
+	$NAMIBsbase.'.1.'.$FSIndex => 'dfIndex',
+	$NAMIBsbase.'.2.'.$FSIndex => 'dfFileSys',
+	$NAMIBsbase.'.6.'.$FSIndex => 'dfPerCentKBytesCapacity',
+	$NAMIBsbase.'.7.'.$FSIndex => 'dfInodesUsed',
+	$NAMIBsbase.'.8.'.$FSIndex => 'dfInodesFree',
+	$NAMIBsbase.'.9.'.$FSIndex => 'dfPerCentInodeCapacity',
+	$NAMIBsbase.'.10.'.$FSIndex => 'dfMountedOn',
+	$NAMIBsbase.'.11.'.$FSIndex => 'dfMaxFilesAvail',
+	$NAMIBsbase.'.12.'.$FSIndex => 'dfMaxFilesUsed',
+	$NAMIBsbase.'.13.'.$FSIndex => 'dfMaxFilesPossible',
+	$NAMIBsbase.'.14.'.$FSIndex => 'dfHighTotalKBytes',
+	$NAMIBsbase.'.15.'.$FSIndex => 'dfLowTotalKBytes',
+	$NAMIBsbase.'.16.'.$FSIndex => 'dfHighUsedKBytes',
+	$NAMIBsbase.'.17.'.$FSIndex => 'dfLowUsedKBytes',
+	$NAMIBsbase.'.18.'.$FSIndex => 'dfHighAvailKBytes',
+	$NAMIBsbase.'.19.'.$FSIndex => 'dfLowAvailKBytes',
+	$NAMIBsbase.'.20.'.$FSIndex => 'dfStatus',
+	$NAMIBsbase.'.21.'.$FSIndex => 'dfMirrorStatus',
+	$NAMIBsbase.'.22.'.$FSIndex => 'dfPlexCount',
+	$NAMIBsbase.'.23.'.$FSIndex => 'dfType',
+	$NAMIBsbase.'.24.'.$FSIndex => 'dfHighSisSharedKBytes',
+	$NAMIBsbase.'.25.'.$FSIndex => 'dfLowSisSharedKBytes',
+	$NAMIBsbase.'.26.'.$FSIndex => 'dfHighSisSavedKBytes',
+	$NAMIBsbase.'.27.'.$FSIndex => 'dfLowSisSavedKBytes',
+	$NAMIBsbase.'.28.'.$FSIndex => 'dfPerCentSaved'
+    };
+
+    my $data = &fetchData($NAMIBs);
+    foreach ('TotalKBytes','UsedKBytes','AvailKBytes','SisSharedKBytes','SisSavedKBytes') {
+	$data->{'df'.$_} = &convert32to64($data->{'dfHigh'.$_},$data->{'dfLow'.$_});
+	delete $data->{'dfHigh'.$_};
+	delete $data->{'dfLow'.$_};
+    }
+    # These are to mimic the filesystem modeler ...:
+    $data->{'usedBlocks'} = $data->{'dfUsedKBytes'};
+    $data->{'totalBlocks'} = $data->{'dfTotalKBytes'};
+    $data->{'availBlocks'} = $data->{'dfAvailKBytes'};
+    $data->{'usedFiles'} = $data->{'dfMaxFilesUsed'};
+    $data->{'availFiles'} = $data->{'dfMaxFilesAvail'} - $data->{'dfMaxFilesUsed'};
+    $data->{'totalFiles'} = $data->{'dfMaxFilesAvail'};
+    &printData($data);
+}
+
+sub getNFSCache {
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.18.2";
+    my $NAMIBs = {
+	$NAMIBsbase.'.1.0' => 'nfsCacheBytesFromClients',
+	$NAMIBsbase.'.2.0' => 'nfsCacheBytesToClients',
+	$NAMIBsbase.'.3.0' => 'nfsCacheBytesFromServers',
+	$NAMIBsbase.'.4.0' => 'nfsCacheBytesToServers',
+	$NAMIBsbase.'.5.0' => 'nfsCacheTotalRequests',
+	$NAMIBsbase.'.6.0' => 'nfsCacheHitRequests',
+	$NAMIBsbase.'.7.0' => 'nfsCacheMissRequests',
+	$NAMIBsbase.'.8.0' => 'nfsCacheMissCacheableRequests',
+	$NAMIBsbase.'.9.0' => 'nfsCacheMissUnCacheableRequests',
+	$NAMIBsbase.'.10.0' => 'nfsCacheEjectRequests',
+	$NAMIBsbase.'.11.0' => 'nfsCacheVerifyRequests',
+	$NAMIBsbase.'.12.0' => 'nfsCacheRpcRecords',
+	$NAMIBsbase.'.13.0' => 'nfsCacheBWSavings',
+	$NAMIBsbase.'.14.0' => 'nfsCacheHighBytesFromClients',
+	$NAMIBsbase.'.15.0' => 'nfsCacheLowBytesFromClients',
+	$NAMIBsbase.'.16.0' => 'nfsCacheHighBytesToClients',
+	$NAMIBsbase.'.17.0' => 'nfsCacheLowBytesToClients',
+	$NAMIBsbase.'.18.0' => 'nfsCacheHighBytesFromServers',
+	$NAMIBsbase.'.19.0' => 'nfsCacheLowBytesFromServers',
+	$NAMIBsbase.'.20.0' => 'nfsCacheHighBytesToServers',
+	$NAMIBsbase.'.21.0' => 'nfsCacheLowBytesToServers',
+	$NAMIBsbase.'.22.0' => 'nfsCacheHighTotalRequests',
+	$NAMIBsbase.'.23.0' => 'nfsCacheLowTotalRequests',
+	$NAMIBsbase.'.24.0' => 'nfsCacheHighHitRequests',
+	$NAMIBsbase.'.25.0' => 'nfsCacheLowHitRequests',
+	$NAMIBsbase.'.26.0' => 'nfsCacheHighMissRequests',
+	$NAMIBsbase.'.27.0' => 'nfsCacheLowMissRequests'
+    };
+    my $data = &fetchData($NAMIBs);
+    foreach ('BytesFromClients','BytesToClients','BytesFromServers','BytesToServers','TotalRequests','HitRequests','MissRequests') {
+	$data->{'nfsCache'.$_} = &convert32to64($data->{'nfsCacheHigh'.$_},$data->{'nfsCacheLow'.$_});
+	delete $data->{'nfsCacheHigh'.$_};
+	delete $data->{'nfsCacheLow'.$_};
+    }
+    &printData($data);
+}
+
+sub getProduct {
+    my $NAMIBsbase = "1.3.6.1.4.1.789.1.1";
+    my $NAMIBs = {
+	$NAMIBsbase.'.1.0' => 'productType',
+	$NAMIBsbase.'.2.0' => 'productVersion',
+	$NAMIBsbase.'.3.0' => 'productId',
+	$NAMIBsbase.'.4.0' => 'productVendor',
+	$NAMIBsbase.'.5.0' => 'productModel',
+	$NAMIBsbase.'.6.0' => 'productFirmwareVersion',
+	$NAMIBsbase.'.9.0' => 'productSerialNum',
+	$NAMIBsbase.'.11.0' => 'productCPUArch',
+	$NAMIBsbase.'.13.0' => 'productMachineType'
+    };
+    my $data = &fetchData($NAMIBs);
+    foreach('productModel','productId','productMachineType','productSerialNum','productVersion') {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+
+if($Datatype eq "power") {
+    &getPower();
+} elsif($Datatype eq "enclosure") {
+    &getEnclosure();
+} elsif($Datatype eq "cpu") {
+    &getCPU();
+} elsif($Datatype eq "fan") {
+    &getFan();
+} elsif($Datatype eq "temp") {
+    &getTemp();
+} elsif($Datatype eq "filesystemlist") {
+    &getFilesystemList();
+} elsif($Datatype eq "filesystem") {
+    &getFilesystem();
+} elsif($Datatype eq "nfscache") {
+    &getNFSCache();
+} elsif($Datatype eq "product") {
+    &getProduct();
+} else {
+    print STDERR "Unrecognized datatype=(",$Datatype,")\n";
+    &usage(1);
+}
+
+exit 0;
+
+
+

@@ -1,0 +1,11 @@
+pkginfo -l
+   PKGINST:  BRCMbnx
+      NAME:  Broadcom NetXtreme II Gigabit Ethernet Adapter Driver
+  CATEGORY:  system
+      ARCH:  i386
+   VERSION:  11.11,REV=2008.10.30.20.37
+    VENDOR:  Broadcom Corporation, Inc.
+      DESC:  Broadcom NetXtreme II Gigabit Ethernet PCI-X/PCIE Adapter Driver
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+

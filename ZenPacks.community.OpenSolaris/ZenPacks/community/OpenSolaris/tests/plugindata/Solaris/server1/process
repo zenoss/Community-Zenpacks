@@ -1,0 +1,4 @@
+ps -eo args
+COMMAND
+/usr/lib/dbus-daemon --system
+ps -eo args

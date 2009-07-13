@@ -1,0 +1,3 @@
+/usr/bin/mpstat -a
+SET minf mjf xcal  intr ithr  csw icsw migr smtx  srw syscl  usr sys  wt idl sze
+  0    9   0    0   329  102   88    0    3    1    0   229    4   0   0 96   2

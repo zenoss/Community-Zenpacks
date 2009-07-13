@@ -1,0 +1,101 @@
+/bin/df -ag
+/                  (rpool/ROOT/opensolaris-1):   131072 block size           512 frag size
+20514816 total blocks    8146535 free blocks  8146535 available        8327314 total files
+ 8146535 free files     47775746 filesys id
+     zfs fstype       0x00000004 flag             255 filename length
+
+/devices           (/devices          ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available            476 total files
+       0 free files     78118912 filesys id  devices
+   devfs fstype         00000000 flag             255 filename length
+
+/dev               (/dev              ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available           2681 total files
+       0 free files     78381056 filesys id  dev
+     dev fstype         00000000 flag             255 filename length
+
+/system/contract   (ctfs              ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available             36 total files
+2147483611 free files     78905345 filesys id  contract
+    ctfs fstype         00000000 flag              32 filename length
+
+/proc              (proc              ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available          16252 total files
+   16198 free files     79167488 filesys id  /proc
+    proc fstype         00000000 flag              64 filename length
+
+/etc/mnttab        (mnttab            ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available              1 total files
+       0 free files     79429633 filesys id  /mnttab
+   mntfs fstype         00000000 flag              64 filename length
+
+/etc/svc/volatile  (swap              ):         4096 block size          4096 frag size
+ 1629240 total blocks    1628624 free blocks  1628624 available         142124 total files
+  141947 free files     79691777 filesys id  /etc/svc/volatile
+   tmpfs fstype       0x00000004 flag             255 filename length
+
+/system/object     (objfs             ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available            164 total files
+2147483483 free files     79953921 filesys id  object
+   objfs fstype         00000000 flag             256 filename length
+
+/etc/dfs/sharetab  (sharefs           ):          512 block size           512 frag size
+       0 total blocks          0 free blocks        0 available              1 total files
+2147483646 free files     80216065 filesys id  sharefs
+ sharefs fstype         00000000 flag             256 filename length
+
+/lib/libc.so.1     (/usr/lib/libc/libc_hwcap1.so.1):   131072 block size           512 frag size
+14785184 total blocks    8146535 free blocks  8146535 available        8327314 total files
+ 8146535 free files     47775746 filesys id
+     zfs fstype       0x00000004 flag             255 filename length
+
+/dev/fd            (fd                ):         1024 block size          1024 frag size
+       0 total blocks          0 free blocks        0 available            258 total files
+       0 free files     81264641 filesys id  /dev/fd
+      fd fstype         00000000 flag              10 filename length
+
+/tmp               (swap              ):         4096 block size          4096 frag size
+ 1628640 total blocks    1628624 free blocks  1628624 available         142124 total files
+  141947 free files     79691778 filesys id  /tmp
+   tmpfs fstype       0x00000004 flag             255 filename length
+
+/var/run           (swap              ):         4096 block size          4096 frag size
+ 1628728 total blocks    1628624 free blocks  1628624 available         142124 total files
+  141947 free files     79691779 filesys id  /var/run
+   tmpfs fstype       0x00000004 flag             255 filename length
+
+/export            (rpool/export      ):       131072 block size           512 frag size
+20514816 total blocks    8146535 free blocks  8146535 available        8146540 total files
+ 8146535 free files     47775750 filesys id
+     zfs fstype       0x00000004 flag             255 filename length
+
+/export/home       (rpool/export/home ):       131072 block size           512 frag size
+20514816 total blocks    8146535 free blocks  8146535 available        8146543 total files
+ 8146535 free files     47775751 filesys id
+     zfs fstype       0x00000004 flag             255 filename length
+
+/export/home/edgarej(rpool/export/home/edgarej):   131072 block size           512 frag size
+20514816 total blocks    8146535 free blocks  8146535 available        8146711 total files
+ 8146535 free files     47775752 filesys id
+     zfs fstype       0x00000004 flag             255 filename length
+
+/rpool             (rpool             ):       131072 block size           512 frag size
+20514816 total blocks    8146535 free blocks  8146535 available        8146548 total files
+ 8146535 free files     47775753 filesys id
+     zfs fstype       0x00000004 flag             255 filename length
+
+/net               (-hosts            ):         1024 block size          1024 frag size
+       0 total blocks          0 free blocks        0 available              0 total files
+       0 free files     81788929 filesys id  autofs
+  autofs fstype       0x00000002 flag             256 filename length
+
+/home              (auto_home         ):         1024 block size          1024 frag size
+       0 total blocks          0 free blocks        0 available              0 total files
+       0 free files     81788930 filesys id  autofs
+  autofs fstype         00000000 flag             256 filename length
+
+/hgfs              (/hgfs             ):         1024 block size          1024 frag size
+33554430 total blocks   33546238 free blocks 33545728 available       16777215 total files
+16773119 free files          313 filesys id  vmhgfs
+  vmhgfs fstype         00000000 flag             256 filename length
+

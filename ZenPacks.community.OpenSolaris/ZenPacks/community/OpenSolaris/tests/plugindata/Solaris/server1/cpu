@@ -1,0 +1,4 @@
+/usr/sbin/psrinfo -pv
+The physical processor has 1 virtual processor (0)
+  x86 (GenuineIntel 10676 family 6 model 23 step 6 clock 2393 MHz)
+        Intel(r) Core(tm)2 Duo CPU     P8600  @ 2.40GHz

@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'EMC') -->
+<object id='/zport/dmd/Devices/Server/EMC' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<tomanycont id='rrdTemplates'>
+<object id='FileSystem' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Filesystem template that uses a plugin for Celerra NAS
+</property>
+<tomanycont id='datasources'>
+<object id='Disk_DF' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/Filesystem
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+$$ZENHOME/libexec/CelerraDf.sh ${dev/manageIp} ${dev/zSnmpCommunity} ${here/mount}
+</property>
+<property type="int" id="cycletime" mode="w" >
+60
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='availBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='totalBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='usedBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='90 Percent' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['Disk_DF_usedBlocks']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+here.totalBlocks * .9
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/Filesystem
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+10
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Utilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Percent
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+100
+</property>
+<property type="text" id="custom" mode="w" >
+CDEF:percent=DF_usedBlocks,${here/totalBlocks},/,100,*
+AREA:percent#00cc00:utilization
+GPRINT:percent:LAST:cur\:%5.2lf%%
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='DF_usedBlocks' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+DONTDRAW
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Disk_DF_usedBlocks
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'EMC-CELERRA') -->
+<object id='/zport/dmd/Mibs/mibs/EMC-CELERRA' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv1
+</property>
+<tomanycont id='nodes'>
+<object id='celEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Information about an particular event.
+</property>
+</object>
+<object id='celEventDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+text description of the event.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='celEventFacility' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number representing the facility which generates
+the event. For now, the value could be:
+first 128 - default Dart facility
+129 - master control 
+130 - event log
+131 - box monitor
+132 - video service
+133 - callhome application
+134 - AAF backup control station.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='celEventID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The event id which identifies the particular event
+within a facility.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='celEventSeverity' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Severity of the event.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='celEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table containing information
+about an particular event.
+</property>
+</object>
+<object id='emc' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139
+</property>
+</object>
+<object id='emcCelerra' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='celAAF' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of AAF.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celCSStart' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of Control Station started.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celHWFailure' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of celerra hardware
+failure.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celIntfFailure' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of both interfaces
+failure.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celJServer' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of a JServer alert.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celMasterCtlFault' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of Master Control
+serious fault. 
+unexpected daemon exit or control station heartbeat 
+missing.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celReboot' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of a Data Mover
+Reboots. The trap message includes the facility, event id,
+serverity and a text description of the event.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celSlotPanicked' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of panicked 
+slot.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celSlotStale' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of celerra stale
+reason code.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+<object id='celWebGUI' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+EMC-CELERRA
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1139.2.0.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap message will be sent in the event of a Web GUI notification request.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'celEvent': {'nodetype': 'object', 'module': 'EMC-CELERRA'}}
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

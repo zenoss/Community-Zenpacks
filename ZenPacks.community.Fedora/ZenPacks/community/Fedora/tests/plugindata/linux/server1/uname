@@ -1,0 +1,4 @@
+uname -a && echo __COMMAND__ && cat /etc/fedora-release |head -1
+Linux kubuntu 2.6.29.5-191.fc11.x86_64 #1 SMP Tue Jun 16 23:23:21 EDT 2009 x86_64 x86_64 x86_64 GNU/Linux
+__COMMAND__
+Fedora release 11 (Leonidas)

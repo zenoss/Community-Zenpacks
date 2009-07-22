@@ -11,13 +11,9 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                        tableName,'snmpindex','Board.Slot')"/>
+                        tableName,'snmpindex','Slot')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'moduletype','Type')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                        tableName,'frequency','Frequency')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                        tableName,'speed','Speed')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'size','Size')"/>
         <th class="tableheader" align="center" width="60">Status</th>
@@ -27,11 +23,9 @@
         tal:attributes="class python:test(odd, 'odd', 'even')">
         <td class="tablevalues">
             <tal:block 
-             tal:content="structure python:card.urlLink(text=str(card.snmpindex))"/>
+             tal:content="structure python:card.urlLink(text=str(card.id))"/>
         </td>
         <td class="tablevalues" tal:content="structure card/moduletype"/>
-        <td class="tablevalues" tal:content="structure card/frequencyString"/>
-        <td class="tablevalues" tal:content="structure card/speedString"/>
         <td class="tablevalues" tal:content="structure card/sizeString"/>
         <td tal:define="color card/statusDot|string:grey" 
           class="tablevalues" style="text-align:center;">

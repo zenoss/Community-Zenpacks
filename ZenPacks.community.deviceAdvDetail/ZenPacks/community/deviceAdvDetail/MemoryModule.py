@@ -34,15 +34,13 @@ class MemoryModule(HWComponent):
     slot = 0
     size = 0
     moduletype = ""
-    speed = 0
-    frequency = 0
+    status = 1
     
     _properties = HWComponent._properties + (
         {'id':'slot', 'type':'int', 'mode':'w'},
         {'id':'size', 'type':'int', 'mode':'w'},
         {'id':'moduletype', 'type':'string', 'mode':'w'},
-        {'id':'speed', 'type':'int', 'mode':'w'},
-        {'id':'frequency', 'type':'int', 'mode':'w'},
+        {'id':'status', 'type':'int', 'mode':'w'},
     )
 
     _relations = HWComponent._relations + (
@@ -85,24 +83,6 @@ class MemoryModule(HWComponent):
         """
 	if self.size > 0:
             return convToUnits(self.size)
-	else:
-	    return ''
-
-    def speedString(self):
-        """
-        Return the speed in human readable form
-        """
-	if self.size > 0:
-            return "%dns" % self.speed
-	else:
-	    return ''
-
-    def frequencyString(self):
-        """
-        Return the memory module frequency in MHz
-        """
-	if self.size > 0:
-            return "%dMHz" % self.frequency
 	else:
 	    return ''
 

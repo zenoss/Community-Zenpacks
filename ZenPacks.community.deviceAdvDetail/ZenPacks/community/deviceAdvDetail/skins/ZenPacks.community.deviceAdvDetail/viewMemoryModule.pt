@@ -26,22 +26,16 @@
     </td>
 </tr>  
 <tr>
-     <td class="tableheader" align=left>Snmp Index</td>
-     <td class="tablevalues" tal:content="here/snmpindex">1</td>
+     <td class="tableheader" align=left>Slot</td>
+     <td class="tablevalues" tal:content="here/slot">1</td>
     <td class="tableheader" align=left>Status</td>
     <td class="tablevalues" tal:content="here/statusString"/>
 </tr>  
 <tr>
     <td class="tableheader" align=left>Type</td>
     <td class="tablevalues" tal:content="here/moduletype"/>
-    <td class="tableheader" align=left>Frequency</td>
-    <td class="tablevalues" tal:content="here/frequencyString"/>
-</tr>
-<tr>
     <td class="tableheader" align=left>Size</td>
     <td class="tablevalues" tal:content="here/sizeString"/>
-    <td class="tableheader" align=left>Speed</td>
-    <td class="tablevalues" tal:content="here/speedString"/>
 </tr>
 <tr>
     <td align="left"  class="tableheader" colspan="4">

@@ -154,12 +154,23 @@ var FavoriteReportsPortlet = YAHOO.zenoss.Subclass.create(
 	}
 */
 
-        forEach(this.dataTable.getRecordSet().getRecords(), bind(function(x){
-            var row = this.dataTable.getTrEl(x);
-            var link = getElementsByTagAndClassName('a','removerowlink',row)[0];
-            connect(link, "onclick", method(this,
-                function(){this.deleteRow(x);}));
-        }, this));
+        forEach(this.dataTable.getRecordSet().getRecords(), 
+		bind(function(x){
+			var row;
+			if (x._nCount == 0)
+				row = this.dataTable.getTrEl(0);
+			else
+				row = this.dataTable.getTrEl(x);
+
+			if (row != null) {
+				var link = getElementsByTagAndClassName('a','removerowlink',row)[0];
+				connect(link, "onclick", method(this,
+					function(){ this.deleteRow(x); })
+					);
+			}
+        		}, this
+		)
+	);
 
         }
     },  

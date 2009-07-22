@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.NetApp"
-VERSION = "1.12"
+VERSION = "1.13"
 AUTHOR = "Sonny Stormes / Wouter D'Haeseleer / David Nicklay"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

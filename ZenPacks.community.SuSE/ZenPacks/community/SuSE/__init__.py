@@ -50,7 +50,7 @@ class ZenPack(ZenPackBase):
         if not leaveObjects:
             newlist=[]
             for plugin in suse.zCollectorPlugins:
-                if plugin == "zenoss.cmd.linux.eix":
+                if plugin == "zenoss.cmd.linux.suse_rpm":
                     pass
                 elif plugin == "zenoss.cmd.linux.suse_uname_a":
                     newlist.append("zenoss.cmd.uname_a")

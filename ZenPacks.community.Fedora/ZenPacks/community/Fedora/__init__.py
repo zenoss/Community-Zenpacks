@@ -50,7 +50,7 @@ class ZenPack(ZenPackBase):
         if not leaveObjects:
             newlist=[]
             for plugin in fedora.zCollectorPlugins:
-                if plugin == "zenoss.cmd.linux.eix":
+                if plugin == "zenoss.cmd.linux.fedora_rpm":
                     pass
                 elif plugin == "zenoss.cmd.linux.fedora_uname_a":
                     newlist.append("zenoss.cmd.uname_a")

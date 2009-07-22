@@ -1,0 +1,14 @@
+aptitude -v search ~i -F "%40p %40v" && echo __COMMAND__ && cat /etc/lsb-release
+server-xorg-video-voodoo                              1:1.2.0-1ubuntu1
+xsltproc                                               1.1.24-2ubuntu2
+xulrunner-1.9                1.9.0.11+build2+nobinonly-0ubuntu0.9.04.1
+xulrunner-1.9-gnome-support  1.9.0.11+build2+nobinonly-0ubuntu0.9.04.1
+yelp                                                   2.25.1-0ubuntu5
+zenity                                                 2.26.0-0ubuntu2
+zip                                                    2.32-1
+zlib1g                                        1:1.2.3.3.dfsg-12ubuntu2
+__COMMAND__
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=9.04
+DISTRIB_CODENAME=jaunty
+DISTRIB_DESCRIPTION="Ubuntu 9.04"

@@ -1,0 +1,7 @@
+uname -a && echo __COMMAND__ && cat /etc/lsb-release
+Linux Kubuntu 2.6.28-11-generic #42-Ubuntu SMP Fri Apr 17 01:57:59 UTC 2009 i686 GNU/Linux
+__COMMAND__
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=9.04
+DISTRIB_CODENAME=jaunty
+DISTRIB_DESCRIPTION="Ubuntu 9.04"

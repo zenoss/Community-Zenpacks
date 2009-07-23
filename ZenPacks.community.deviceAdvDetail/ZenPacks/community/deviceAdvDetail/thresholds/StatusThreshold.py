@@ -86,7 +86,7 @@ class StatusThresholdInstance(ThresholdInstance):
     count = {}
     statusmap = ''
 
-    def __init__(self, id, context, dpNames,eventClasse,scalateCount,statusmap):
+    def __init__(self, id, context, dpNames,eventClass,escalateCount,statusmap):
         self.count = {}
         self._context = context
         self.id = id

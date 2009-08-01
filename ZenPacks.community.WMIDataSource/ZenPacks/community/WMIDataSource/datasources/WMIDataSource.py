@@ -13,7 +13,7 @@ __doc__="""WMIDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WMIDataSource.py,v 1.1 2009/06/12 12:52:23 egor Exp $"""
+$Id: WMIDataSource.py,v 1.1 2009/08/01 02:00:23 egor Exp $"""
 
 __version__ = "$Revision: 1.1 $"[11:-2]
 
@@ -76,6 +76,9 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             self.wql = REQUEST.get('wql', '')
         return RRDDataSource.RRDDataSource.zmanage_editProperties(
                                                                 self, REQUEST)
+
+    def getWql(self, context):
+        return RRDDataSource.RRDDataSource.getCommand(self, context, self.wql)
 
     def getCommand(self, context, password='${dev/zWinPassword}'):
         if self.namespace.startswith("\\\\"):

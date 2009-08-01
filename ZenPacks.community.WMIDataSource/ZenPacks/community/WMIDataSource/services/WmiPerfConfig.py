@@ -12,7 +12,7 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 1.1 2008/08/12 13:54:23 egor Exp $"""
+$Id: WmiPerfConfig.py,v 1.1 2009/08/01 02:00:23 egor Exp $"""
 
 __version__ = "$Revision: 1.1 $"[11:-2]
 
@@ -31,7 +31,7 @@ def getWmiComponentConfig(comp, queries, datapoints):
         names = []
         for ds in templ.getRRDDataSources("WMI"):
             if not ds.enabled: continue
-            wql = ds.wql
+            wql = ds.getWql(comp)
             if not wql: continue
 	    namespace = ds.namespace
 	    if not queries.get(namespace, False):

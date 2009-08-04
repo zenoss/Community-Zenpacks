@@ -44,15 +44,15 @@ class ibmStatus(CommandParser):
 		     'Power Mode': 18,
                     }
         output = cmd.result.output
-        output = output.split(' ')[-1].strip('"\n')
-        value = statusmap.get(output, 2)
+        output = output.splitlines()[-1].strip('"')
+        value = statusmap.get(output, 0)
         exitCode = cmd.result.exitCode
         severity = cmd.severity
         if exitCode == 0:
             severity = 0
         elif exitCode == 2:
             severity = min(severity + 1, 5)
-        msg = 'Status: %s' % output
+        msg = 'Status: %s' % value
         result.events.append(dict(device=cmd.deviceConfig.device,
                                   summary=msg,
                                   severity=severity,

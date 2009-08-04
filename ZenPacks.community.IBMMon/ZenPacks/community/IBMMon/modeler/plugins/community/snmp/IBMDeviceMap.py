@@ -12,7 +12,7 @@ __doc__="""IBMDeviceMap
 
 IBMDeviceMap maps mib elements from IBM Director mib to get hw and os products.
 
-$Id: IBMCPUMap.py,v 1.0 2009/07/12 23:08:53 egor Exp $"""
+$Id: IBMDeviceMap.py,v 1.0 2009/07/12 23:08:53 egor Exp $"""
 
 __version__ = '$Revision: 1.0 $'[11:-2]
 

@@ -41,11 +41,9 @@ class StatusThreshold(ThresholdClass):
     """
 
     escalateCount = 0
-    eventClass='/Change/Set/Status'
 
     _properties = ThresholdClass._properties + (
         {'id':'escalateCount', 'type':'int',     'mode':'w'},
-        {'id':'eventClass', 'type':'string',     'mode':'w'},
         )
 
     factory_type_information = (
@@ -69,7 +67,6 @@ class StatusThreshold(ThresholdClass):
         mmt = StatusThresholdInstance(self.id,
                                       ThresholdContext(context),
                                       self.dsnames,
-                                      self.eventClass,
                                       self.escalateCount,
                                       context.statusmap,)
         return mmt
@@ -86,11 +83,10 @@ class StatusThresholdInstance(ThresholdInstance):
     count = {}
     statusmap = ''
 
-    def __init__(self, id, context, dpNames,eventClass,escalateCount,statusmap):
+    def __init__(self, id, context, dpNames, escalateCount, statusmap):
         self.count = {}
         self._context = context
         self.id = id
-        self.eventClass = eventClass
         self.escalateCount = escalateCount
         self.dataPointNames = dpNames
         self._rrdInfoCache = {}
@@ -192,7 +188,7 @@ class StatusThresholdInstance(ThresholdInstance):
         return [dict(device=self.context().deviceName,
                     summary=msg,
                     eventKey=self.id,
-                    eventClass=self.eventClass,
+                    eventClass='/Change/Set/Status',
                     component=self.context().componentName,
                     severity=status[1])]
         

@@ -46,18 +46,19 @@ def show_xml(self, path="/zport" ):
     try:
         zport_class= self.dmd.unrestrictedTraverse( path )    
     except:
+        # Above blows up on spaces in the path name.  Doh!
+        name = path.split('/')[-1]
+        zport_class= self.dmd.Devices.findDevice( name )
+
+    if zport_class is None:
         return "It blew up!"
 
     #
     # Export the objects into a string
     #
     xml_output= StringIO()
-
     xml_output.write( "<objects>" )
-
-    for object in zport_class.objectValues():
-        object.exportXml( xml_output )
-
+    zport_class.exportXml(xml_output)
     xml_output.write( "</objects>" )
 
     #

@@ -9,7 +9,7 @@ MySQL Server Instance Statistics
 Products.ZenModel.Device
 </property>
 <tomanycont id='datasources'>
-<object id='mysql' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
+<object id='server MySQL' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 ODBC
 </property>
@@ -25,19 +25,20 @@ True
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zMySqlConnectionString};Database=information_schema;SERVER=${here/manageIp}
+${here/zMySqlConnectionString};SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SHOW GLOBAL STATUS
+USE information_schema;
+SHOW GLOBAL STATUS;
 </property>
-<property type="string" id="uid" mode="w" >
+<property visible="True" type="string" id="parser" >
+Auto
+</property>
+<property visible="True" type="string" id="uid" >
 ${here/zMySqlUsername}
 </property>
-<property type="string" id="pwd" mode="w" >
+<property visible="True" type="string" id="pwd" >
 ${here/zMySqlPassword}
 </property>
 <tomanycont id='datapoints'>
@@ -371,7 +372,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_delete
+server MySQL_Com_delete
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -403,7 +404,7 @@ DELETE
 Com_delete,+
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_delete_multi
+server MySQL_Com_delete_multi
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -432,7 +433,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_insert
+server MySQL_Com_insert
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -464,7 +465,7 @@ INSERT
 Com_insert,+
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_insert_select
+server MySQL_Com_insert_select
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -490,7 +491,7 @@ SELECT
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_select
+server MySQL_Com_select
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -519,7 +520,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_update
+server MySQL_Com_update
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -551,7 +552,7 @@ UPDATE
 Com_update,+
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Com_update_multi
+server MySQL_Com_update_multi
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -611,7 +612,7 @@ Delete
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_delete
+server MySQL_Handler_delete
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -637,7 +638,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_read_first
+server MySQL_Handler_read_first
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -666,7 +667,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_read_key
+server MySQL_Handler_read_key
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -695,7 +696,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_read_next
+server MySQL_Handler_read_next
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -727,7 +728,7 @@ Read (Keyed)
 Handler_read_first,Handler_read_key,Handler_read_next,+,+,+
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_read_prev
+server MySQL_Handler_read_prev
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -756,7 +757,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_read_rnd
+server MySQL_Handler_read_rnd
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -788,7 +789,7 @@ Read (Unkeyed)
 Handler_read_rnd,+
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_read_rnd_next
+server MySQL_Handler_read_rnd_next
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -817,7 +818,7 @@ Update
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_update
+server MySQL_Handler_update
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -846,7 +847,7 @@ Write
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Handler_write
+server MySQL_Handler_write
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -903,7 +904,7 @@ Received
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Bytes_received
+server MySQL_Bytes_received
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -932,7 +933,7 @@ Sent
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Bytes_sent
+server MySQL_Bytes_sent
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -992,7 +993,7 @@ Full Join
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Select_full_join
+server MySQL_Select_full_join
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1021,7 +1022,7 @@ Full Range Join
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Select_full_range_join
+server MySQL_Select_full_range_join
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1050,7 +1051,7 @@ Range
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Select_range
+server MySQL_Select_range
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1079,7 +1080,7 @@ Range Check
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Select_range_check
+server MySQL_Select_range_check
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1105,7 +1106,7 @@ Scan
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-mysql_Select_scan
+server MySQL_Select_scan
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1143,19 +1144,20 @@ ${here/dbname}
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zMySqlConnectionString};Database=information_schema;SERVER=${here/manageIp}
+${here/zMySqlConnectionString};SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT sum(data_length), sum(index_length), sum( data_length + index_length ) FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema
+USE information_schema;
+SELECT sum(data_length), sum(index_length), sum( data_length + index_length ) FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema;
 </property>
-<property type="string" id="uid" mode="w" >
+<property visible="True" type="string" id="parser" >
+Auto
+</property>
+<property visible="True" type="string" id="uid" >
 ${here/zMySqlUsername}
 </property>
-<property type="string" id="pwd" mode="w" >
+<property visible="True" type="string" id="pwd" >
 ${here/zMySqlPassword}
 </property>
 <tomanycont id='datapoints'>

@@ -12,17 +12,17 @@ __doc__="""MySqlDatabaseMap.py
 
 MySqlDatabaseMap maps the MySQL Databases table to Database objects
 
-$Id: MySqlDatabaseMap.py,v 1.0 2009/05/15 16:59:23 egor Exp $"""
+$Id: MySqlDatabaseMap.py,v 1.1 2009/08/09 21:28:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
-from ZenPacks.community.ZenODBC.modeler.plugins.community.odbc.OdbcPlugin import OdbcPlugin
+from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 
 class MySqlDatabaseMap(OdbcPlugin):
     
 
-    ZENPACKID = 'ZenPacks.community.ZenODBC'
+    ZENPACKID = 'ZenPacks.community.MySQLMon_ODBC'
 
     maptype = "MySqlDatabaseMap"
     compname = "os"
@@ -34,21 +34,23 @@ class MySqlDatabaseMap(OdbcPlugin):
 					       'zMySqlConnectionString',
 					       )
 
-    cs = ''
-    tables = {'databases':
-                ('SELECT table_schema, engine FROM TABLES GROUP BY table_schema',
-		['dbname', 'type']),
-	    }
-    uid = None
-    pwd = None
 
-    def prepare(self, device, log):
-	self.cs = getattr(device, 'zMySqlConnectionString', None)
-        self.cs = "%s;Database=information_schema;SERVER=%s" %(self.cs, str(device.manageIp))
-        self.uid = getattr(device, 'zMySqlUsername', None)
-        self.pwd = getattr(device, 'zMySqlPassword', None)
-	return (self.cs, self.tables, self.uid, self.pwd)
-	
+    def queries(self, device):
+        cs =  ';'.join((getattr(device, 'zMySqlConnectionString', None),
+                        'SERVER=%s'%str(device.manageIp),
+                        'UID=%s'%getattr(device, 'zMySqlUsername', None),
+                        'PWD=%s'%getattr(device, 'zMySqlPassword', None)))
+        return {
+            "databases":
+                (
+                cs,
+                """USE information_schema;
+                SELECT table_schema, engine FROM TABLES GROUP BY table_schema;""",
+                ['dbname', 'type'],
+                ),
+            }
+
+
     def process(self, device, results, log):
         log.info('processing %s for device %s', self.name(), device.id)
 	databases = results.get('databases')
@@ -58,6 +60,7 @@ class MySqlDatabaseMap(OdbcPlugin):
 	    try:
                 om = self.objectMap(database)
                 om.id = self.prepId(om.dbname)
+                om.status = 2
             except AttributeError:
                 continue
             rm.append(om)

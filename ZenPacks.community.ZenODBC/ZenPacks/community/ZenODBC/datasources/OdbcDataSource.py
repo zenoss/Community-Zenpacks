@@ -13,22 +13,19 @@ __doc__="""OdbcDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: OdbcDataSource.py,v 1.2 2009/07/08 00:04:23 egor Exp $"""
+$Id: OdbcDataSource.py,v 1.0 2009/05/15 16:33:23 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.0 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from AccessControl import ClassSecurityInfo, Permissions
 
-from Products.ZenEvents.ZenEventClasses import Cmd_Fail
 from Products.ZenUtils.Utils import executeStreamCommand
-
-from ZenPacks.community.ZenODBC.parsers.isql import connectionString
+import pyodbc
 
 import cgi, time
 
-odbctemplate = ("echo \"%s\" | isql -b -v -x0x7C \"%s\"")
 
 class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
 
@@ -36,19 +33,12 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
 
     sourcetypes = ('ODBC',)
     sourcetype = 'ODBC'
-    eventClass = Cmd_Fail
-    parser = 'ZenPacks.community.ZenODBC.parsers.isql'
     cs = ''
     sql = ''
-    uid = ''
-    pwd = ''
 
     _properties = RRDDataSource.RRDDataSource._properties + (
-        {'id':'parser', 'type':'string', 'mode':'w'},
         {'id':'cs', 'type':'string', 'mode':'w'},
         {'id':'sql', 'type':'string', 'mode':'w'},
-        {'id':'uid', 'type':'string', 'mode':'w'},
-        {'id':'pwd', 'type':'string', 'mode':'w'},
         )
 
     _relations = RRDDataSource.RRDDataSource._relations + (
@@ -76,23 +66,22 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
         return self.sql
 
     def useZenCommand(self):
-        return True
+        return False
 
     def zmanage_editProperties(self, REQUEST=None):
         'add some validation'
         if REQUEST:
             self.cs = REQUEST.get('cs', '')
             self.sql = REQUEST.get('sql', '')
-            self.uid = REQUEST.get('uid', '')
-            self.pwd = REQUEST.get('pwd', '')
         return RRDDataSource.RRDDataSource.zmanage_editProperties(
                                                                 self, REQUEST)
 
-    def getCommand(self, context):
-        cs = connectionString(self.cs,uid=self.uid,pwd=self.pwd,context=context)
-        cmd = odbctemplate % (self.sql, '" "'.join(cs.isqlArgs()))
-        cmd = RRDDataSource.RRDDataSource.getCommand(self, context, cmd)
-        return cmd
+    def getQuery(self, context):
+        cs = RRDDataSource.RRDDataSource.getCommand(self, context, self.cs)
+        sql = RRDDataSource.RRDDataSource.getCommand(self, context, self.sql)
+        fields = [dp.id for dp in self.getRRDDataPoints()]
+        return (cs, sql, fields)
+
 
     security.declareProtected('Change Device', 'manage_testDataSource')
     def manage_testDataSource(self, testDevice, REQUEST):
@@ -141,28 +130,38 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
             REQUEST['message'] = 'Cannot determine a device to test against.'
             return self.callZenScreen(REQUEST)
 
-        # Get the command to run
-        command = None
-        if self.sourcetype=='ODBC':
-            command = self.getCommand(device)
-        else:
-            REQUEST['message']='Unable to test %s datasources' % self.sourcetype
-            return self.callZenScreen(REQUEST)
-        if not command:
-            REQUEST['message'] = 'Unable to create test command.'
-            return self.callZenScreen(REQUEST)
         # Render
         header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
         out.write(str(header))
-        
-        write('Executing command %s against %s' %(command, device.id))
+        cs, query, fields = self.getQuery(device)
+        csa = dict([prop.split('=') for prop in cs.split(';')])
+        if csa.has_key('PWD'):
+            csa['PWD'] = '*****'
+            csa = ';'.join([var + '=' + val for var, val in csa.iteritems()])
+        else:
+            csa = cs
+        write('Executing query %s against %s' %(query, csa))
         write('')
         start = time.time()
         try:
-            executeStreamCommand(command, write)
+            cnxn = pyodbc.connect(cs)
+            cursor = cnxn.cursor()
+            for q in query.split(';'):
+                if not q.strip('\n '): continue
+                cursor.execute(q.strip('\n '))
+            output = cursor.fetchall()
+            try:
+                r = dict(output)
+                values = {}
+                for field in fields:
+                    values[field] = r[field]
+                write('%s' %values)
+            except:
+                for r in output:
+                    write('%s' %dict(zip(fields, r)))
         except:
             import sys
-            write('exception while executing command')
+            write('exception while executing query')
             write('type: %s  value: %s' % tuple(sys.exc_info()[:2]))
         write('')
         write('')

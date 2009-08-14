@@ -22,7 +22,7 @@ from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 class PgSqlDatabaseMap(OdbcPlugin):
     
 
-    ZENPACKID = 'ZenPacks.community.ZenODBC'
+    ZENPACKID = 'ZenPacks.community.PgSQLMon_ODBC'
 
     maptype = "PgSqlDatabaseMap"
     compname = "os"

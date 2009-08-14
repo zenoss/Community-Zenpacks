@@ -16,32 +16,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/PostgreSQL
-</property>
 <property type="int" id="severity" mode="w" >
-4
+3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
+${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=template1;UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT pg_database_size(datname) FROM pg_database WHERE datname='${here/dbname}'
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zPgSqlUsername}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zPgSqlPassword}
+SELECT pg_database_size(datname) FROM pg_database WHERE datname='${here/dbname}';
 </property>
 <tomanycont id='datapoints'>
 <object id='sizeUsed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -61,32 +46,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/PostgreSQL
-</property>
 <property type="int" id="severity" mode="w" >
-4
+3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
+${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=template1;UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT blks_hit, blks_read, numbackends, xact_commit, xact_rollback FROM pg_stat_database where datname='${here/dbname}'
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zPgSqlUsername}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zPgSqlPassword}
+SELECT blks_hit, blks_read, numbackends, xact_commit, xact_rollback FROM pg_stat_database where datname='${here/dbname}';
 </property>
 <tomanycont id='datapoints'>
 <object id='blks_hit' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -138,32 +108,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/PostgreSQL
-</property>
 <property type="int" id="severity" mode="w" >
-4
+3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
+${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=${here/dbname};UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT SUM(idx_scan), SUM(idx_tup_fetch), SUM(n_tup_ins), SUM(n_tup_upd), SUM(n_tup_del), SUM(seq_scan), SUM(seq_tup_read) FROM pg_stat_user_tables
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zPgSqlUsername}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zPgSqlPassword}
+SELECT SUM(idx_scan), SUM(idx_tup_fetch), SUM(n_tup_ins), SUM(n_tup_upd), SUM(n_tup_del), SUM(seq_scan), SUM(seq_tup_read) FROM pg_stat_user_tables;
 </property>
 <tomanycont id='datapoints'>
 <object id='idx_scan' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -229,13 +184,7 @@ True
 ODBC
 </property>
 <property type="boolean" id="enabled" mode="w" >
-False
-</property>
-<property type="string" id="component" mode="w" >
-postgres
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/PostgreSQL
+True
 </property>
 <property type="int" id="severity" mode="w" >
 3
@@ -243,20 +192,11 @@ postgres
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zPgSqlConnectionString};Database=${here/dbname};Servername=${here/getParentDeviceName}
+${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=${here/dbname};UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT SUM(heap_blks_hit), SUM(heap_blks_read), SUM(idx_blks_hit), SUM(idx_blks_read), SUM(tidx_blks_hit), SUM(tidx_blks_read), SUM(toast_blks_hit), SUM(toast_blks_read) FROM pg_statio_user_tables
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zPgSqlUsername}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zPgSqlPassword}
+SELECT SUM(heap_blks_hit), SUM(heap_blks_read), SUM(idx_blks_hit), SUM(idx_blks_read), SUM(tidx_blks_hit), SUM(tidx_blks_read), SUM(toast_blks_hit), SUM(toast_blks_read) FROM pg_statio_user_tables;
 </property>
 <tomanycont id='datapoints'>
 <object id='heap_blks_hit' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -867,36 +807,5 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
-</object>
-<!-- ('', 'zport', 'dmd', 'Events', 'DB', 'PostgreSQL') -->
-<object id='/zport/dmd/Events/DB/PostgreSQL' module='Products.ZenEvents.EventClass' class='EventClass'>
-<property type="text" id="transform" mode="w" >
-if evt.firstTime == evt.lastTime:
-    for comp in device.getMonitoredComponents(type="PgSqlDatabase"):
-        if comp.dbname != evt.component: continue
-        if evt.severity &gt; 2:
-            comp.status = 5
-        else:
-            comp.status = 2
-        evt.severity = comp.statusSeverity(comp.status)
-        evt.summary = "Database %s is %s."  %(evt.component, comp.statusString(comp.status))
-        from transaction import commit
-        commit()
-        break
-</property>
-<property type="text" id="transform" mode="w" >
-if evt.firstTime == evt.lastTime:
-    for comp in device.getMonitoredComponents(type="PgSqlDatabase"):
-        if comp.dbname != evt.component: continue
-        if evt.severity &gt; 2:
-            comp.status = 5
-        else:
-            comp.status = 2
-        evt.severity = comp.statusSeverity(comp.status)
-        evt.summary = "Database %s is %s."  %(evt.component, comp.statusString(comp.status))
-        from transaction import commit
-        commit()
-        break
-</property>
 </object>
 </objects>

@@ -14,7 +14,7 @@ class ZenPack(ZenPackBase):
     """
     
     packZProperties = [
-            ('zPgSqlConnectionString', 'DRIVER={PostgreSQL};Protocol=6.4;Port=5432', 'string'),
+            ('zPgSqlConnectionString', 'DRIVER={PostgreSQL};Port=5432', 'string'),
             ('zPgSqlUsername', 'zenoss', 'string'),
             ('zPgSqlPassword', '', 'string'),
 	    ]

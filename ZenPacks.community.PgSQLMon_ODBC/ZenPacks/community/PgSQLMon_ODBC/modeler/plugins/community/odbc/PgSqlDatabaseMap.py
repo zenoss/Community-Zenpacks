@@ -12,12 +12,12 @@ __doc__="""PgSqlDatabaseMap.py
 
 PgSqlDatabaseMap maps the PostgreSQL Databases table to Database objects
 
-$Id: PgSqlDatabaseMap.py,v 1.0 2009/05/15 16:59:23 egor Exp $"""
+$Id: PgSqlDatabaseMap.py,v 1.1 2009/08/13 20:59:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
-from ZenPacks.community.ZenODBC.modeler.plugins.community.odbc.OdbcPlugin import OdbcPlugin
+from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 
 class PgSqlDatabaseMap(OdbcPlugin):
     
@@ -34,27 +34,25 @@ class PgSqlDatabaseMap(OdbcPlugin):
 					       'zPgSqlConnectionString',
 					       )
 
-    cs = ''
-    tables = {"version":
-                ("SELECT setting FROM pg_settings WHERE name = 'server_version'",
-		['version',]),
-            "databases":
-                ("SELECT datname, pg_database_size(datname) FROM pg_database",
-		['dbname', 'totalBlocks']),
-	    }
-    uid = None
-    pwd = None
 
-    def prepare(self, device, log):
-	self.cs = getattr(device, 'zPgSqlConnectionString', None)
-        self.cs = "%s;Database=template1;Servername=%s" %(self.cs, str(device.id))
-        self.uid = getattr(device, 'zPgSqlUsername', None)
-        self.pwd = getattr(device, 'zPgSqlPassword', None)
-	return (self.cs, self.tables, self.uid, self.pwd)
+    def queries(self, device):
+        cs =  ';'.join((getattr(device, 'zPgSqlConnectionString', None),
+                        'Database=template1',
+                        'Servername=%s'%str(device.manageIp),
+                        'UID=%s'%getattr(device, 'zPgSqlUsername', None),
+                        'PWD=%s'%getattr(device, 'zPgSqlPassword', None)))
+        return {
+            "version": (cs,
+                """SELECT setting FROM pg_settings WHERE name = 'server_version';""",
+                ['version']),
+            "databases": (cs,
+                """SELECT datname, pg_database_size(datname) FROM pg_database;""",
+                ['dbname', 'totalBlocks']),
+            }
+
 	
     def process(self, device, results, log):
         log.info('processing %s for device %s', self.name(), device.id)
-        log.info('results %s', results)
 	databases = results.get('version')
 	if type(databases) is list:
 	    version = getattr(databases[0], 'version', '')

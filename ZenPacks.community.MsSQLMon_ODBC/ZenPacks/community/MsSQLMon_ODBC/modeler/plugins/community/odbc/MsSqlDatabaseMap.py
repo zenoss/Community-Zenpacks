@@ -12,12 +12,12 @@ __doc__="""MsSqlDatabaseMap.py
 
 MsSqlDatabaseMap maps the MSSQL Databases table to Database objects
 
-$Id: MsSqlDatabaseMap.py,v 1.0 2009/05/20 09:35:23 egor Exp $"""
+$Id: MsSqlDatabaseMap.py,v 1.1 2009/08/13 19:35:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
-from ZenPacks.community.ZenODBC.modeler.plugins.community.odbc.OdbcPlugin import OdbcPlugin
+from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 
 class MsSqlDatabaseMap(OdbcPlugin):
     
@@ -34,27 +34,27 @@ class MsSqlDatabaseMap(OdbcPlugin):
 					       'zMsSqlConnectionString',
 					       )
 
-    tables =   {'dbsize': (
-                'sp_databases',
-		['dbname', 'size', 'remarks']
-		),
-                'dbtypes90': (
-                'SELECT name, compatibility_level, state FROM sys.databases',
-		['dbname', 'type', 'status']
-		),
-                'dbtypes80': (
-                'SELECT name, cmptlevel, status FROM sysdatabases',
-		['dbname', 'type', 'status']
-		),
-	    }
 
-    def prepare(self, device, log):
-	self.cs = getattr(device, 'zMsSqlConnectionString', None)
-        self.cs = "%s;Database=master;Server=%s" %(self.cs, str(device.manageIp))
-        self.uid = getattr(device, 'zWinUser', None)
-        self.pwd = getattr(device, 'zWinPassword', None)
-	return (self.cs, self.tables, self.uid, self.pwd)
-	
+    def queries(self, device):
+        cs =  ';'.join((getattr(device, 'zMsSqlConnectionString', None),
+                        'SERVER=%s'%str(device.manageIp),
+                        'UID=%s'%getattr(device, 'zWinUser', None),
+                        'PWD=%s'%getattr(device, 'zWinPassword', None)))
+        return {
+            "dbsize": (cs,
+                """USE master;
+                sp_databases;""",
+		['dbname', 'size', 'remarks']),
+            "dbtypes90": (cs,
+                """USE master;
+                SELECT name, compatibility_level, state FROM sys.databases;""",
+		['dbname', 'type', 'status']),
+            "dbtypes80":(cs,
+                """USE master;
+                SELECT name, cmptlevel, status FROM sysdatabases;""",
+		['dbname', 'type', 'status']),
+            }
+
     def process(self, device, results, log):
         log.info('processing %s for device %s', self.name(), device.id)
         types = {1: 'SQL Server',

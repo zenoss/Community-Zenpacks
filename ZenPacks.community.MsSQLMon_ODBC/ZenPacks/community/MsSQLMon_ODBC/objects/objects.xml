@@ -16,32 +16,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/MSSQL
-</property>
 <property type="int" id="severity" mode="w" >
 3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
+${here/zMsSqlConnectionString};Server=${here/manageIp}
 </property>
 <property type="string" id="sql" mode="w" >
-select sum(convert(dec(15),case when status &amp; 64 = 0 then size else 0 end)), sum(convert(dec(15),case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zWinUser}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zWinPassword}
+use ${here/dbname}; select sum(convert(dec(15),case when status &amp; 64 = 0 then size else 0 end)), sum(convert(dec(15),case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles;
 </property>
 <tomanycont id='datapoints'>
 <object id='dbSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -69,32 +54,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/MSSQL
-</property>
 <property type="int" id="severity" mode="w" >
 3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
+${here/zMsSqlConnectionString};Server=${here/manageIp}
 </property>
 <property type="string" id="sql" mode="w" >
-select sum(convert(dec(15),case when indid &lt; 2 then dpages when indid = 255 then used else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then reserved else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then used else 0 end)) from sysindexes
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zWinUser}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zWinPassword}
+use ${here/dbname}; select sum(convert(dec(15),case when indid &lt; 2 then dpages when indid = 255 then used else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then reserved else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then used else 0 end)) from sysindexes;
 </property>
 <tomanycont id='datapoints'>
 <object id='dataPages' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -356,32 +326,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/MSSQL
-</property>
 <property type="int" id="severity" mode="w" >
 3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
+${here/zMsSqlConnectionString};Server=${here/manageIp}
 </property>
 <property type="string" id="sql" mode="w" >
-select sum(convert(bigint,case when status &amp; 64 = 0 then size else 0 end)), sum(convert(bigint,case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zWinUser}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zWinPassword}
+use ${here/dbname}; select sum(convert(bigint,case when status &amp; 64 = 0 then size else 0 end)), sum(convert(bigint,case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles;
 </property>
 <tomanycont id='datapoints'>
 <object id='dbSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -409,32 +364,17 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/MSSQL
-</property>
 <property type="int" id="severity" mode="w" >
 3
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="parser" mode="w" >
-ZenPacks.community.ZenODBC.parsers.isql
-</property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp};Database=${here/dbname}
+${here/zMsSqlConnectionString};Server=${here/manageIp}
 </property>
 <property type="string" id="sql" mode="w" >
-select sum(CASE When it.internal_type IN (202,204) Then 0 When a.type &lt;&gt; 1 Then a.used_pages When p.index_id &lt; 2 Then a.data_pages Else 0 END), sum(a.total_pages), sum(a.used_pages) from sys.partitions p join sys.allocation_units a on p.partition_id = a.container_id left join sys.internal_tables it on p.object_id = it.object_id
-</property>
-<property type="string" id="uid" mode="w" >
-${here/zWinUser}
-</property>
-<property type="string" id="pwd" mode="w" >
-${here/zWinPassword}
+use ${here/dbname}; select sum(CASE When it.internal_type IN (202,204) Then 0 When a.type &lt;&gt; 1 Then a.used_pages When p.index_id &lt; 2 Then a.data_pages Else 0 END), sum(a.total_pages), sum(a.used_pages) from sys.partitions p join sys.allocation_units a on p.partition_id = a.container_id left join sys.internal_tables it on p.object_id = it.object_id;
 </property>
 <tomanycont id='datapoints'>
 <object id='dataPages' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

@@ -12,16 +12,16 @@ __doc__="""OdbcClient
 
 Gets ODBC performance data and stores it in RRD files.
 
-$Id: OdbcClient.py,v 1.0 2009/08/06 13:42:23 egor Exp $"""
+$Id: OdbcClient.py,v 1.0 2009/08/14 23:42:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenUtils.Utils import zenPath
 from Products.ZenUtils.Driver import drive
 from Products.DataCollector.BaseClient import BaseClient
 
 from twisted.enterprise import adbapi
-from pyodbc import OperationalError
+from pyodbc import OperationalError, Error
 from twisted.internet import threads, defer
 
 import os
@@ -32,6 +32,16 @@ log = logging.getLogger("zen.OdbcClient")
 
 
 class BadCredentials(Exception): pass
+
+class CError:
+
+    errormsg = ''
+    
+    def __init__(self, errormsg):
+        self.errormsg = errormsg
+        
+    def getErrorMessage(self):
+        return self.errormsg
 
 class OdbcClient(BaseClient):
 
@@ -71,9 +81,13 @@ class OdbcClient(BaseClient):
                     dbpool = adbapi.ConnectionPool("pyodbc", cs)
                     for table, query, fields in qs:
                         queryResult[table] = []
-                        yield dbpool.runInteraction(_getQueries, query)
-                        output = driver.next()
-                        if not output: continue
+                        try:
+                            yield dbpool.runInteraction(_getQueries, query)
+                            output = driver.next()
+                            if not output: continue
+                        except Error, ex:
+                            queryResult[table] = CError(str(ex))
+                            continue
                         try:
                             r = dict(output)
                             values = {}
@@ -86,10 +100,6 @@ class OdbcClient(BaseClient):
                     dbpool.close()
                 yield defer.succeed(queryResult)
                 driver.next()
-            except OperationalError, ex:
-                log.debug("Exception collecting query: %s", str(ex))
-                dbpool.close()
-                pass
             except Exception, ex:
                 log.debug("Exception collecting query: %s", str(ex))
                 raise

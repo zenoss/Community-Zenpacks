@@ -134,13 +134,13 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
         header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
         out.write(str(header))
         cs, query, fields = self.getQuery(device)
-        csa = dict([prop.split('=') for prop in cs.split(';')])
-        if csa.has_key('PWD'):
-            csa['PWD'] = '*****'
-            csa = ';'.join([var + '=' + val for var, val in csa.iteritems()])
+        cst = dict([prop.split('=') for prop in cs.split(';')])
+        if cst.has_key('PWD'):
+            cst['PWD'] = '*****'
+            cst = ';'.join([var + '=' + val for var, val in cst.iteritems()])
         else:
             csa = cs
-        write('Executing query %s against %s' %(query, csa))
+        write('Executing query: "%s" against "%s"' %(query, cst))
         write('')
         start = time.time()
         try:

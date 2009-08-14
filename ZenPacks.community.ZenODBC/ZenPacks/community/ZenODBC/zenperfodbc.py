@@ -12,9 +12,9 @@ __doc__="""OdbcCollector
 
 PB daemon-izable base class for creating Odbc collectors
 
-$Id: OdbcPlugin.py,v 1.0 2009/08/06 13:14:23 egor Exp $"""
+$Id: OdbcPlugin.py,v 1.0 2009/08/14 23:43:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 import logging
 import time
@@ -25,14 +25,13 @@ from Products.ZenEvents.ZenEventClasses import App_Start, Clear
 from Products.ZenEvents.Event import Error
 from Products.ZenUtils.Driver import drive, driveLater
 from Products.ZenUtils.Utils import unused
-from OdbcClient import OdbcClient
+from OdbcClient import OdbcClient, CError
 
 # needed by pb
 from Products.DataCollector import DeviceProxy
 from Products.DataCollector.Plugins import PluginLoader
 unused(DeviceProxy, PluginLoader)
 
-from pyodbc import OperationalError
 from twisted.internet import reactor, defer
 from twisted.python.failure import Failure
 from Products.ZenUtils.Timeout import timeout
@@ -172,20 +171,22 @@ class zenperfodbc(PBDaemon):
                 yield odbcc.query(device.queries)
                 q = driver.next()
 		for tableName, data in q.iteritems():
+		    if isinstance(data, CError):
+		        component = device.datapoints[tableName][0][1]
+		        error = data.getErrorMessage()
+		        self.componentDown(device, error, component=component)
+		        continue
 		    if not data:
 		        component = device.datapoints[tableName][0][1]
 		        self.componentDown(device, None, component=component)
 		        continue
 		    for dp in device.datapoints[tableName]:
-		        value = long(data[0].get(dp[0], None))
-		        self.storeRRD(dp, value)
+		        value = data[0].get(dp[0], None)
+		        if value:
+		            self.storeRRD(dp, long(value))
 		    self.componentUp(device, component=dp[1])
 		self.componentUp(device, component=None)
                 self.log.info("Finished processing %s", device.id)
-            except OperationalError, ex:
-                self.log.info("%s: Ignoring event %s "
-                              "and restarting connection", device.id, ex)
-                cleanup()
             except Exception, ex:
                 self.log.exception(ex)
                 raise
@@ -345,12 +346,13 @@ class zenperfodbc(PBDaemon):
         @type error: string
         """
         if not component:
+            component = self.agent
+        if not error:
+            summary = 'Database %s is Unavailable.'%component
+        else:
             summary = \
             'Could not %s (%s). Check your username/password settings and verify network connectivity.'\
              % (self.whatIDo, error)
-            component = self.agent
-        else:
-            summary = 'Database %s is Unavailable.'%component
         self.sendEvent(dict(
             summary=summary,
             component=component,
@@ -370,8 +372,8 @@ class zenperfodbc(PBDaemon):
         @type comp: component object
         """
         if not component:
-            summary = 'Odbc connection to %s up.' % device.id
             component = self.agent
+            summary = 'Odbc connection to %s up.' % device.id
         else:
             summary = 'Database %s is Active.'%component
         self.sendEvent(dict(

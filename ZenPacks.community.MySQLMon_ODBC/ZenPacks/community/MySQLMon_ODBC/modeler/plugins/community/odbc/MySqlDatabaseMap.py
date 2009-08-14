@@ -41,13 +41,10 @@ class MySqlDatabaseMap(OdbcPlugin):
                         'UID=%s'%getattr(device, 'zMySqlUsername', None),
                         'PWD=%s'%getattr(device, 'zMySqlPassword', None)))
         return {
-            "databases":
-                (
-                cs,
+            "databases": (cs,
                 """USE information_schema;
                 SELECT table_schema, engine FROM TABLES GROUP BY table_schema;""",
-                ['dbname', 'type'],
-                ),
+                ['dbname', 'type']),
             }
 
 

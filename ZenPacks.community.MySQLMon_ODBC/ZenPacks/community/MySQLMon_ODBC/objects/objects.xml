@@ -29,17 +29,7 @@ True
 ${here/zMySqlConnectionString};SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-USE information_schema;
-SHOW GLOBAL STATUS;
-</property>
-<property visible="True" type="string" id="parser" >
-Auto
-</property>
-<property visible="True" type="string" id="uid" >
-${here/zMySqlUsername}
-</property>
-<property visible="True" type="string" id="pwd" >
-${here/zMySqlPassword}
+USE information_schema; SHOW GLOBAL STATUS;
 </property>
 <tomanycont id='datapoints'>
 <object id='Bytes_received' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1132,12 +1122,6 @@ ODBC
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="component" mode="w" >
-${here/dbname}
-</property>
-<property type="string" id="eventClass" mode="w" >
-/DB/MySQL
-</property>
 <property type="int" id="severity" mode="w" >
 3
 </property>
@@ -1148,17 +1132,7 @@ ${here/dbname}
 ${here/zMySqlConnectionString};SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-USE information_schema;
-SELECT sum(data_length), sum(index_length), sum( data_length + index_length ) FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema;
-</property>
-<property visible="True" type="string" id="parser" >
-Auto
-</property>
-<property visible="True" type="string" id="uid" >
-${here/zMySqlUsername}
-</property>
-<property visible="True" type="string" id="pwd" >
-${here/zMySqlPassword}
+USE information_schema; SELECT sum(data_length), sum(index_length), sum( data_length + index_length ) FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema;
 </property>
 <tomanycont id='datapoints'>
 <object id='dataSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1379,36 +1353,6 @@ if evt.firstTime == evt.lastTime:
 <property type="text" id="transform" mode="w" >
 if evt.firstTime == evt.lastTime:
     for comp in device.getMonitoredComponents(type="MySqlDatabase"):
-        if comp.dbname != evt.component: continue
-        if evt.severity &gt; 2:
-            comp.status = 5
-        else:
-            comp.status = 2
-        evt.severity = comp.statusSeverity(comp.status)
-        evt.summary = "Database %s is %s."  %(evt.component, comp.statusString(comp.status))
-        from transaction import commit
-        commit()
-        break
-</property>
-</object>
-<object id='PostgreSQL' module='Products.ZenEvents.EventClass' class='EventClass'>
-<property type="text" id="transform" mode="w" >
-if evt.firstTime == evt.lastTime:
-    for comp in device.getMonitoredComponents(type="PgSqlDatabase"):
-        if comp.dbname != evt.component: continue
-        if evt.severity &gt; 2:
-            comp.status = 5
-        else:
-            comp.status = 2
-        evt.severity = comp.statusSeverity(comp.status)
-        evt.summary = "Database %s is %s."  %(evt.component, comp.statusString(comp.status))
-        from transaction import commit
-        commit()
-        break
-</property>
-<property type="text" id="transform" mode="w" >
-if evt.firstTime == evt.lastTime:
-    for comp in device.getMonitoredComponents(type="PgSqlDatabase"):
         if comp.dbname != evt.component: continue
         if evt.severity &gt; 2:
             comp.status = 5

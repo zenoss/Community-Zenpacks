@@ -86,14 +86,14 @@ class OdbcClient(BaseClient):
                             output = driver.next()
                             if not output: continue
                         except Error, ex:
-                            queryResult[table] = CError(str(ex))
+                            queryResult[table] = [CError(str(ex))]
                             continue
                         try:
                             r = dict(output)
                             values = {}
                             for field in fields:
                                 values[field] = r[field]
-                            queryResult[table] = [values, ]
+                            queryResult[table] = [values]
                         except:
                             for r in output:
                                 queryResult[table].append(dict(zip(fields, r)))

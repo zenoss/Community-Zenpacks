@@ -171,7 +171,7 @@ class zenperfodbc(PBDaemon):
                 yield odbcc.query(device.queries)
                 q = driver.next()
 		for tableName, data in q.iteritems():
-		    if isinstance(data, CError):
+		    if isinstance(data[0], CError):
 		        component = device.datapoints[tableName][0][1]
 		        error = data.getErrorMessage()
 		        self.componentDown(device, error, component=component)

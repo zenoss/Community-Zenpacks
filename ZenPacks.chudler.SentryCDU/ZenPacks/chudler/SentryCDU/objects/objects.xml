@@ -1,0 +1,3814 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Power', 'SentryCDU') -->
+<object id='/zport/dmd/Devices/Power/SentryCDU' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'SentryCDUTowerMap', 'SentryCDUSensorMap']
+</property>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.chudler.SentryCDU.SentryDevice
+</property>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['b_fping', 'Device', 'SentryCDU']
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='SentryCDU' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Server Technology Sentry3-compatible devices for distributing power to a Rack or Cabinet (CDU/PDU).
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='aggregate' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+python:here.aggregateLoad()
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='load' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmax" mode="w" >
+500
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='CDUOverLoad' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['aggregate_load']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+300
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Aggregate Load' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+amps
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+500
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='load' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+aggregate_load
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'InFeed') -->
+<object id='/zport/dmd/Devices/rrdTemplates/InFeed' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Component template for SentryCDU power feeds.
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPack.chudler.SentryCDU.InFeed
+</property>
+<tomanycont id='datasources'>
+<object id='load' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+python:here.cmdLoad()
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='amps' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='FeedOverLoad' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['load_amps']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+1000
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Feed Load' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+amps
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='FeedOverLoad' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+FeedOverLoad
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='amps' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+amps
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+load_amps
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'SentrySensor') -->
+<object id='/zport/dmd/Devices/rrdTemplates/SentrySensor' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Component template for Sentry CDU environmental sensors that can detect temperature and humidity
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.chudler.SentryCDU.SentrySensor
+</property>
+<tomanycont id='datasources'>
+<object id='humidity' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+python:here.cmdHumidity()
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='relative' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='temperature' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ/Temp
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+python:here.cmdTemperature()
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='temp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='OverHumidity' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['humidity_relative']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+70
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+<object id='OverTemperature' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['temperature_temp']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+88
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+<object id='UnderHumidity' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['humidity_relative']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+22
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+<object id='UnderTemperature' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['temperature_temp']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+66
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Humidity' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='OverHumidity' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+OverHumidity
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='UnderHumidity' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+UnderHumidity
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='relative' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+relative
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+humidity_relative
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+250
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+degF
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='OverTemperature' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+OverTemperature
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='UnderTemperature' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+UnderTemperature
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='temp' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+temp
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+temperature_temp
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Tower') -->
+<object id='/zport/dmd/Devices/rrdTemplates/Tower' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Component template for Power input device from Sentry CDU devices.
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.chudler.SentryCDU.Tower
+</property>
+<tomanycont id='datasources'>
+<object id='aggregate' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+python:here.aggregateLoad()
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='load' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='TowerOverLoad' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+20
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW/Power
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+2
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Aggregate Load' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='load' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+aggregate_load
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'SentryCDU') -->
+<object id='/zport/dmd/Mibs/SentryCDU' module='Products.ZenModel.MibOrganizer' class='MibOrganizer'>
+<tomanycont id='mibs'>
+<object id='Sentry2-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Server Technology, Inc.
+1040 Sandhill Drive
+Reno, NV 89511
+Tel: (775) 284-2000
+Fax: (775) 284-2065
+Email: mibmaster@servertech.com
+</property>
+<property type="string" id="description" mode="w" >
+This is the MIB module for the second generation of the
+Sentry Remote Power Manager product family, which includes
+'Temperature-Sense', 'On-Sense', and 'Load-Sense' support.
+
+All products in the Sentry product family provide remote
+power control.  The basic element of control is a power
+module 'port'.  Up to four ports (1-4) are present on each
+power control circuit 'board'.  Up to twenty-six boards
+(A-Z) can be linked together in a 'chain'.
+
+Different community strings are used in the SNMP protocol
+to provide access to two mutually exclusive subsets of
+objects defined in this MIB.  Two community strings, one
+for read-only access and one for read-write access, allow
+access to the sentry2ChainGroup objects.  A third community
+string allows read-only access to the sentry2ErrorGroup
+objects.  Notifications (traps) are sent with a fourth
+community string.
+
+All Sentry network options, including enabling SNMP support,
+configuring the community strings, and defining the trap
+destination, are configurable through a telnet session to
+port 23.
+
+All Sentry power control options, including the naming of
+devices, the setting of trap threshold levels, and the
+enabling or disabling of specific traps, are configurable
+through a telnet session to port 2001.  A telnet session to
+port 2001 is an alternate method of accessing, configuring,
+and controlling the Sentry.
+</property>
+<tomanycont id='nodes'>
+<object id='sentry2BoardCodeVersion' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The version of the application code that the board is
+running.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2BoardEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A set of attributes for a conceptual row of
+sentry2BoardTable.
+</property>
+</object>
+<object id='sentry2BoardIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The unique identifier of the board.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='sentry2BoardInputLoad' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current load (amperage) measured at the single
+power input to one or more power modules controlled
+by the board.  This value represents the load of all
+devices powered by the single power input.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2BoardPageName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the board.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2BoardTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of Sentry board entries.
+</property>
+</object>
+<object id='sentry2BoardTemperature' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value from the temperature sensor attached to the
+board.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2ChainGroup' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1
+</property>
+</object>
+<object id='sentry2ChainLastBoard' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An upper-case letter identifying the last board in
+a Sentry chain.  The value of Sentry2BoardId and the
+first octet of Sentry2PortId have a valid range of
+'A' to the value returned for this object.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2ChainLocation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The location or name of the chain.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2ErrorCode' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object contains a value identifying a particular
+error which occurred when processing the SNMP operation
+identified by sentry2ErrorReqId:
+
+   Value   Error
+     100   Port not available
+     200   Link command timeout
+     210   Link command negative response
+     220   Link command invalid response
+     240   Last Board Query command failure
+     300   Query command failure
+     400   Operation command timeout
+     410   Operation command negative response
+     420   Operation command invalid response
+    1000   Session unexpectedly lost
+
+An expanded definition of these error codes may be
+obtained from Server Technology, Inc.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2ErrorGroup' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.2
+</property>
+</object>
+<object id='sentry2ErrorReqId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object contains the request-id of the most recent
+SNMP operation which returned an error-status of genErr.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2Events' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0
+</property>
+</object>
+<object id='sentry2NotificationGroup' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100
+</property>
+</object>
+<object id='sentry2PortControlStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current status of the power control signal to the
+power module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2PortDeviceLoad' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current load (amperage) of the device attached to
+the power module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2PortDeviceName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the device attached to the power module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2PortEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A set of attributes for a conceptual row of
+sentry2PortTable.
+</property>
+</object>
+<object id='sentry2PortIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The unique identifier of the port.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='sentry2PortModuleStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current operational status of the power module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sentry2PortPowerAction' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is used to change sentry2PortControlStatus.
+Setting this object to 'powerOff' causes the port to
+turn power off to the attached device.  Setting this
+object to 'powerOn' causes the port to turn power on to
+the attached device.  Setting this object to 'reboot'
+causes the port to turn power off to the attached device,
+delay for the configured minimum-off time or 15 seconds,
+whichever is greater, and then turn power back on to the
+attached device.
+
+The actual operational effect may be delayed as a result
+of the pre-configured minimum-off time, minimum-on time,
+or shutdown delay.
+
+A snmp get of this object returns 'noop'.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sentry2PortTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of Sentry port entries.
+</property>
+</object>
+<object id='sentry2RemotePowerManager' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='sentry2BoardInputLoadHighError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from the input load
+sensor of a Sentry board is above a pre-configured
+high threshold level.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2BoardIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardPageName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardInputLoad': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2BoardInputLoadLowError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from the input load
+sensor of a Sentry board is below a pre-configured
+low threshold level.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2BoardIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardPageName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardInputLoad': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2BoardInputLoadNormal' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from the input load
+sensor of a Sentry board returns to the normal range
+within the pre-configured high and low threshold
+levels, after having been above or below the
+threshold levels.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2BoardIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardPageName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardInputLoad': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2BoardTemperatureHighError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from a temperature
+sensor attached to a Sentry board is above a pre-
+configured high threshold level.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2BoardIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardTemperature': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardPageName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2BoardTemperatureLowError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from a temperature
+sensor attached to a Sentry board is below a pre-
+configured low threshold level.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2BoardIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardTemperature': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardPageName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2BoardTemperatureNormal' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from a temperature
+sensor attached to a Sentry board returns to the normal
+range within the pre-configured high and low threshold
+levels, after having been above or below the threshold
+levels.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2BoardIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardTemperature': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2BoardPageName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2ChainStart' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the Sentry has completed the
+application-code boot process.  This can occur from
+either a power up or a resynchronization of the Sentry
+chain.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2PortControlStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent if the control status of a Sentry
+port has changed one-or-more times since the last
+notification period.  For example, a Sentry port has
+been turned on, off, shutdown, or rebooted.  The
+current control status at the time of the notification
+is included.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2PortIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortDeviceName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortControlStatus': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2PortDeviceLoadHighError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from the load
+sensor of a Sentry port is above a pre-configured
+high threshold level.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2PortDeviceLoad': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortDeviceName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2PortDeviceLoadLowError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from the load
+sensor of a Sentry port is below a pre-configured
+low threshold level.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2PortDeviceLoad': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortDeviceName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2PortDeviceLoadNormal' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the value from the load
+sensor of a Sentry port returns to the normal range
+within the pre-configured high and low threshold
+levels, after having been above or below the
+threshold levels.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2PortDeviceLoad': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortDeviceName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2PortModuleStatusError' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the module status of a
+Sentry port indicates an error condition.
+
+This trap is repeated periodically while the error
+condition exists.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2PortModuleStatus': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortDeviceName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+<object id='sentry2PortModuleStatusNormal' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.2.100.0.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This event is sent when the module status of a
+Sentry port returns to normal after being in an
+error condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sentry2PortModuleStatus': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortIndex': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2ChainLocation': {'nodetype': 'object', 'module': 'Sentry2-MIB'}, 'sentry2PortDeviceName': {'nodetype': 'object', 'module': 'Sentry2-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Sentry3-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Server Technology, Inc.
+1040 Sandhill Drive
+Reno, NV 89521
+Tel: (775) 284-2000
+Fax: (775) 284-2065
+Email: mibmaster@servertech.com
+</property>
+<property type="string" id="description" mode="w" >
+This is the MIB module for the third generation of the
+Sentry product family.  This includes the Sentry Remote
+Power Manager (RPM), Sentry Power Distribution Unit (PDU),
+Sentry Environmental Monitor (EM), and Sentry Smart and
+Switched Cabinet Distribution Unit (CDU).
+</property>
+<tomanycont id='nodes'>
+<object id='contactClosureEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Row definition for the contact closure table.
+</property>
+</object>
+<object id='contactClosureID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.6.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the contact closure.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='contactClosureIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index for the contact closure table.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='contactClosureName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.6.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the contact closure.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='contactClosureStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.6.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the contact closure.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='contactClosureTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of contact closures.
+</property>
+</object>
+<object id='envMonADCCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The 8-bit count value from the analog-to-digital converter.
+A non-negative value indicates the digital value retrieved
+from the ADC.  A negative value indicates that a digital
+value was not able to be retrieved.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='envMonADCHighThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The 8-bit count high threshold value of the analog-to-digital
+converter.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='envMonADCLowThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The 8-bit count low threshold value of the analog-to-digital
+converter.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='envMonADCName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the analog-to-digital converter.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='envMonADCStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the analog-to-digital converter.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='envMonContactClosureCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of contact closures on the environmental
+monitor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='envMonEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Row definition for the environmental monitor table.
+</property>
+</object>
+<object id='envMonID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the environmental monitor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='envMonIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index for the environmental monitor table.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='envMonName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the environmental monitor.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='envMonStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operational status of the environmental monitor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='envMonTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of environmental monitors.
+</property>
+</object>
+<object id='envMonTempHumidSensorCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of temperature/humidity sensors on the
+environmental monitor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='envMonWaterSensorName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the water sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='envMonWaterSensorStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.4.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the water sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='events' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0
+</property>
+</object>
+<object id='infeedCapabilities' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The capabilities of the input feed.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedCapacity' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load capacity of the input feed.  A non-negative
+value indicates the maximum load in Amps.  A negative
+value indicates that the capacity was not available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Row definition for the input feed table.
+</property>
+</object>
+<object id='infeedID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the input feed.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index for the input feed table.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='infeedLoadHighThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load high threshold value of the input feed in Amps.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='infeedLoadStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the load measured on the input feed.  If the
+infeedCapabilities 'loadSense' bit is TRUE, then all of the
+states are supported.  If the infeedCapabilities 'loadSense'
+bit is FALSE, then only the 'normal' and 'noComm' states are
+supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedLoadValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load measured on the input feed.  A non-negative value
+indicates the measured load in hundredths of Amps.  A
+negative value indicates that a load value was not able to
+be measured.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the input feed.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='infeedOutletCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of outlets on the input feed.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedPower' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The power consumption of the input feed.  A non-negative
+value indicates the power consumption in Watts.  A negative
+value indicates that the power consumption was not
+available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the input feed.  If the infeedCapabilities
+'onSense' bit is TRUE, then all of the states are supported
+and indicate the sensed state of the input feed.  If the
+infeedCapabilities 'onSense' bit is FALSE, then only the
+'on' and 'noComm' states are supported, and 'on' indicates
+a derived state, not a sensed state.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='infeedTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of input feeds.
+</property>
+</object>
+<object id='infeedVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.2.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The voltage of the input feed.  A non-negative value
+indicates the voltage in tenths of Volts.  A negative
+value indicates that the voltage was not available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletCapabilities' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The capabilities of the outlet.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletControlAction' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An action to change the control state of the outlet.  If
+the outletCapabilities 'powerControl' bit is TRUE, then the
+'on', 'off', and 'reboot' actions can be used to change the
+control state of the outlet.  If the outletCapabilities
+'powerControl' bit is FALSE, then the actions have no
+effect.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='outletControlState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The control state of the outlet.  The supported states are
+dependent upon the outletCapabilities 'powerControl' and
+'shutdown' bits, as well as the supported features of the
+firmware version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Row definition for the outlet table.
+</property>
+</object>
+<object id='outletID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the outlet.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index for the outlet table.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='outletLoadHighThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load high threshold value of the outlet in Amps.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='outletLoadLowThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load low threshold value of the outlet in Amps.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='outletLoadStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the load measured on the outlet.  If the 
+outletCapabilities 'loadSense' bit is TRUE, then all of the
+states are supported.  If the outletCapabilities 'loadSense'
+bit is FALSE, then only the 'normal' and 'noComm' states are
+supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletLoadValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The load measured on the outlet.  A non-negative value
+indicates the measured load in hundredths of Amps.  A
+negative value indicates that a load value was not able to
+be measured.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the outlet.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='outletStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the outlet.  If the outletCapabilities
+'onSense' bit is TRUE, then the state indicates the sensed
+state of the outlet, not a derived state, and 'offError'
+and 'onError' are supported to indicate a mismatch between
+the control and sensed state.  If the outletCapabilities
+'fusedBranch' bit is TRUE, then the outlet is on a fused
+branch circuit that can detect the fuse state, and 'offFuse'
+and 'onFuse' are supported to indicate a fuse error.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='outletTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of outlets.
+</property>
+</object>
+<object id='sentry3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='sentry3Traps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100
+</property>
+</object>
+<object id='serverTech' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718
+</property>
+</object>
+<object id='systemArea' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The area that the footprint of the system occupies.  A
+non-zero non-negative value indicates the area in tenths of
+area units as selected by the systemAreaUnit object.  A zero
+or negative value indicates that the area was not available.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemAreaUnit' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The unit of area for the systemArea and systemWattsPerAreaUnit
+objects.  If the agent does not support this object, then the
+unit of area is a square foot.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemEnvMonCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of environmental monitors in the system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemGroup' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1
+</property>
+</object>
+<object id='systemLocation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The location of the system.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemNICSerialNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The serial number of the network interface card in the
+system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemPowerFactor' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The power factor used in power calculations performed by the
+system.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='systemTables' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2
+</property>
+</object>
+<object id='systemTotalPower' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total power consumption of all of the input feeds in the
+system.  A non-negative value indicates the total power
+consumption in Watts.  A negative value indicates that the
+total power consumption was not available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemTowerCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of towers in the system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemVersion' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The firmware version of the system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='systemWattsPerAreaUnit' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The system Watts per area unit.  A non-negative value
+indicates the power consumption per area unit as selected by
+the systemAreaUnit object.  A negative value indicates that
+the power consumption per area unit was not available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='tempHumidSensorEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Row definition for the temperature/humidity sensor table.
+</property>
+</object>
+<object id='tempHumidSensorHumidHighThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The humidity low threshold value of the sensor in percentage
+relative humidity.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHumidSensorHumidLowThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The humidity low threshold value of the sensor in percentage
+relative humidity.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHumidSensorHumidStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the humidity sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='tempHumidSensorHumidValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The humidity measured by the sensor.  A non-negative value
+indicates the measured humidity in percentage relative
+humidity.  A negative value indicates that a humidity value
+was not able to be measured.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='tempHumidSensorID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the temperature/humidity sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='tempHumidSensorIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index for the temperature/humidity sensor table.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='tempHumidSensorName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the temperature/humidity sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHumidSensorStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operational status of the temperature/humidity sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='tempHumidSensorTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of temperature/humidity sensors.
+</property>
+</object>
+<object id='tempHumidSensorTempHighThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The temperature high threshold value of the sensor in degrees,
+using the scale selected by tempHumidSensorTempScale.  If the
+agent does not support the tempHumidSensorTempScale object,
+then the temperature scale used is Celsius.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHumidSensorTempLowThresh' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The temperature low threshold value of the sensor in degrees,
+using the scale selected by tempHumidSensorTempScale.  If the
+agent does not support the tempHumidSensorTempScale object,
+then the temperature scale used is Celsius.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHumidSensorTempScale' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The scale used for temperature values.  This is a global
+setting for all temperature values in the system.  If the
+agent does not support this object, then the temperature
+scale used is Celsius.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHumidSensorTempStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the temperature sensor.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='tempHumidSensorTempValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.5.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The temperature measured by the sensor.  A non-negative value
+indicates the measured temperature in tenths of degrees, using
+the scale selected by tempHumidSensorTempScale.  If the agent
+does not support the tempHumidSensorTempScale object, then the
+temperature scale used is Celsius.  A negative value indicates
+that a temperature value was not able to be measured.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerCapabilities' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The capabilities of the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Row definition for the tower table.
+</property>
+</object>
+<object id='towerID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index for the tower table.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='towerInfeedCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of input feeds on the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerModelNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The model number of the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='towerProductSN' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The product serial number of the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operational status of the tower.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='towerTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of towers.
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='contactClosureEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contact closure event.  If enabled, this trap is sent when
+the contactClosureStatus indicates an error state ('alarm').
+This trap is repeated periodically while the
+contactClosureStatus remains in an error state.  If the
+contactClosureStatus returns to a non-error state ('normal'),
+this trap is sent once more with the non-error
+contactClosureStatus, and then stops being repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'contactClosureID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'contactClosureName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'contactClosureStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='envMonADCEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Environmental monitor analog-to-digital converter event.
+If enabled, this trap is sent when the envMonADCStatus
+indicates an error state ('countLow' or 'countHigh').  This
+trap is repeated periodically while the envMonADCStatus
+remains in an error state.  If the envMonADCStatus returns
+to a non-error state ('normal'), this trap is sent once more
+with the non-error envMonADCStatus, and then stops being
+repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonADCStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonADCName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonADCCount': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonADCLowThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonADCHighThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='envMonStatusEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Environmental monitor status event.  If enabled, this trap
+is sent when the envMonStatus indicates an error state
+('noComm').  This trap is repeated periodically while the
+envMonStatus remains in an error state.  If the envMonStatus
+returns to a non-error state ('normal'), this trap is sent
+once more with the non-error envMonStatus, and then stops
+being repeated.
+
+While the envMonStatus indicates an error state, all status
+traps are suppressed for the water sensor, ADC, temperature/
+humudity sensors, and contact closures on the environmental
+monitor.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='envMonWaterSensorEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Environmental monitor water sensor event.  If enabled, this
+trap is sent when the envMonWaterSensorStatus indicates an
+error state ('alarm').  This trap is repeated periodically
+while the envMonWaterSensorStatus remains in an error state.
+If the envMonWaterSensorStatus returns to a non-error state
+('normal'), this trap is sent once more with the non-error
+envMonWaterSensorStatus, and then stops being repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonWaterSensorStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonWaterSensorName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'envMonID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='infeedLoadEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Input feed load event.  If enabled, this trap is sent when
+the infeedLoadStatus indicates an error state ('loadLow',
+'loadHigh', 'overLoad', 'readError', or 'noComm').  This
+trap is repeated periodically while the infeedLoadStatus
+remains in an error state.  If the infeedLoadStatus returns
+to a non-error state ('normal' or 'notOn'), this trap is
+sent once more with the non-error infeedLoadStatus, and then
+stops being repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedLoadHighThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedLoadValue': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedLoadStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='infeedStatusEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Input feed status event.  If enabled, this trap is sent when
+the infeedStatus indicates an error state ('offError',
+'onError', or 'noComm').  This trap is repeated periodically
+while the infeedStatus remains in an error state.  If the
+infeedStatus returns to a non-error state ('off' or 'on'),
+this trap is sent once more with the non-error infeedStatus,
+and then stops being repeated.
+
+While the infeedStatus indicates an error state, load
+traps are suppressed for the input feed, and, if the
+infeedCapabilities 'failSafe' bit is FALSE, all status and
+load traps are suppressed for outlets on the input feed.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'infeedName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='outletChangeEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Outlet on/off change event.  If enabled, this trap is sent
+when the outletStatus changes from any 'on' state ('on',
+'onWait', 'onError', or 'onFuse') to any 'off' state ('off',
+'offWait', 'offError', or 'offFuse'), and vice-versa.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletControlState': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='outletLoadEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Outlet load event.  If enabled, this trap is sent when the
+outletLoadStatus indicates an error state ('loadLow',
+'loadHigh', 'overLoad', 'readError', or 'noComm').  This
+trap is repeated periodically while the outletLoadStatus
+remains in an error state.  If the outletLoadStatus returns
+to a non-error state ('normal' or 'notOn'), this trap is
+sent once more with the non-error outletLoadStatus, and then
+stops being repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletLoadValue': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletLoadLowThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletLoadStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletLoadHighThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='outletStatusEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Outlet status event.  If enabled, this trap is sent when the
+outletStatus indicates an error state ('offError', 'onError',
+'noComm', 'offFuse', or 'onFuse').  This trap is repeated
+periodically while the outletStatus remains in an error state.
+If the outletStatus returns to a non-error state ('off' or
+'on'), this trap is sent once more with the non-error
+outletStatus, and then stops being repeated.
+
+While the outletStatus indicates an error state, load traps
+are suppressed for the outlet.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'outletStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='tempHumidSensorHumidEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Temperature/humidity sensor humidity event.  If enabled,
+this trap is sent when the tempHumidSensorHumidStatus
+indicates an error state ('humidLow' or 'humidHigh').
+This trap is repeated periodically while the
+tempHumidSensorHumidStatus remains in an error state.  If
+the tempHumidSensorHumidStatus returns to a non-error state
+('normal'), this trap is sent once more with the non-error
+tempHumidSensorHumidStatus, and then stops being repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorHumidHighThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorHumidStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorHumidLowThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorHumidValue': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='tempHumidSensorStatusEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Temperature/humidity sensor status event.  If enabled, this
+trap is sent when the tempHumidSensorStatus indicates an
+error state ('lost').  This trap is repeated periodically
+while the tempHumidSensorStatus remains in an error state.
+If the tempHumidSensorStatus returns to a non-error state
+('found'), this trap is sent once more with the non-error
+tempHumidSensorStatus, and then stops being repeated.
+
+While the tempHumidSensorStatus indicates an error state, all
+temperature and humidity status traps are suppressed for the
+temperature/humudity sensor.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='tempHumidSensorTempEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Temperature/humidity sensor temperature event.  If enabled,
+this trap is sent when the tempHumidSensorTempStatus
+indicates an error state ('tempLow' or 'tempHigh').
+This trap is repeated periodically while the
+tempHumidSensorTempStatus remains in an error state.  If
+the tempHumidSensorTempStatus returns to a non-error state
+('normal'), this trap is sent once more with the non-error
+tempHumidSensorTempStatus, and then stops being repeated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorTempScale': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorTempStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorTempLowThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorTempValue': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorTempHighThresh': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'tempHumidSensorName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+<object id='towerStatusEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+Sentry3-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.1718.3.100.0.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Tower status event.  If enabled, this trap is sent when the
+towerStatus indicates an error state ('noComm', 'fanFail',
+or 'overTemp').  This trap is repeated periodically while the
+towerStatus remains in an error state.  If the towerStatus
+returns to a non-error state ('normal'), this trap is sent
+once more with the non-error towerStatus, and then stops
+being repeated.
+
+While the towerStatus indicates a 'noComm' error state, all
+status and load traps are suppressed for input feeds and
+outlets on the tower.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'systemLocation': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'towerName': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'towerStatus': {'nodetype': 'object', 'module': 'Sentry3-MIB'}, 'towerID': {'nodetype': 'object', 'module': 'Sentry3-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'SentryCDU Reports') -->
+<object id='/zport/dmd/Reports/SentryCDU Reports' module='Products.ZenModel.ReportClass' class='ReportClass'>
+<object id='All CDU Loads' module='Products.ZenModel.MultiGraphReport' class='MultiGraphReport'>
+<property type="string" id="title" mode="wd" >
+All CDU Loads
+</property>
+<property type="int" id="numColumns" mode="w" >
+1
+</property>
+<tomanycont id='collections'>
+<object id='CDUs' module='Products.ZenModel.Collection' class='Collection'>
+<tomanycont id='items'>
+<object id='CDUs' module='Products.ZenModel.CollectionItem' class='CollectionItem'>
+<property type="string" id="deviceOrganizer" mode="w" >
+/Devices/Power/SentryCDU
+</property>
+<property type="boolean" id="recurse" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphGroups'>
+<object id='CDU Load' module='Products.ZenModel.GraphGroup' class='GraphGroup'>
+<property type="string" id="collectionId" mode="w" >
+CDUs
+</property>
+<property type="string" id="graphDefId" mode="w" >
+Load
+</property>
+<property type="boolean" id="combineDevices" mode="w" >
+False
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Load' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+amps
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='load' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${here/name | here/id} ${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+aggregate_load
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='All Temperatures' module='Products.ZenModel.Report' class='Report'>
+</object>
+<object id='All Humidities' module='Products.ZenModel.Report' class='Report'>
+</object>
+</object>
+</objects>

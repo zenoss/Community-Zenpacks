@@ -1,0 +1,192 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method=post
+    tal:define="manager here/isManager;"
+    tal:attributes="action string:${here/absolute_url_path}">
+    <input type="hidden" name="zenScreenName"
+        tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:SLAs;
+                menu_id string:Lockable;">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<tr>
+        <td class="tableheader" colspan="1" align=right>Name/Tag</td>
+        <td class="tableheader" colspan="1" align=right>Owner</td>
+        <td class="tableheader" colspan="1" align=right>Type</td>
+        <td class="tableheader" colspan="1" align=right>Threshold</td>
+        <td class="tableheader" colspan="1" align=right>Frequency</td>
+        <td class="tableheader" colspan="1" align=right>Timeout</td>
+        <td class="tableheader" colspan="1" align=right>Verify</td>
+        <td class="tableheader" colspan="1" align=right>Status</td>
+        <td class="tableheader" colspan="1" align=right>Nv gen</td>
+        <td class="tableheader" colspan="1" align=right>Group Name</td>
+        <td class="tableheader" colspan="1" align=right>Protocol</td>
+</tr>
+<tr>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/viewName"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminOwner"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminRttType"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminThreshold"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminFrequency"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminTimeout"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminVerifyData"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminStatus"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminNvgen"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonCtrlAdminGroupName"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminProtocol"/>
+</tr>
+<tr>
+        <td class="tableheader" colspan="11" style="background-color:#555555"></td>
+</tr>
+<tr>
+        <td class="tableheader" colspan="1" align=right>Target Addr</td>
+        <td class="tableheader" colspan="1" align=right>Pkt Req Size</td>
+        <td class="tableheader" colspan="1" align=right>Pkt Reply Size</td>
+        <td class="tableheader" colspan="1" align=right>Target Port</td>
+        <td class="tableheader" colspan="1" align=right>Source Addr</td>
+        <td class="tableheader" colspan="1" align=right>Source Port</td>
+        <td class="tableheader" colspan="1" align=right>Control Toggle</td>
+        <td class="tableheader" colspan="1" align=right>TOS</td>
+        <td class="tableheader" colspan="1" align=right>LS Toggle</td>
+        <td class="tableheader" colspan="1" align=right>Str Target Addr</td>
+        <td class="tableheader" colspan="1" align=right>Name Server</td>
+</tr>
+<tr>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetAddress"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminPktDataRequestSize"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminPktDataResponseSize"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetPort"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminSourceAddress"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminSourcePort"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminControlEnable"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTOS"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSREnable"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetAddressString"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminNameServer"/>
+</tr>
+<tr>
+        <td class="tableheader" colspan="11" style="background-color:#555555"></td>
+</tr>
+<tr>
+        <td class="tableheader" colspan="1" align=right>Operation</td>
+        <td class="tableheader" colspan="1" align=right>HTTP Ver</td>
+        <td class="tableheader" colspan="1" align=right>URL</td>
+        <td class="tableheader" colspan="1" align=right>Cache</td>
+        <td class="tableheader" colspan="1" align=right> Interval</td>
+        <td class="tableheader" colspan="1" align=right># Pkts</td>
+        <td class="tableheader" colspan="1" align=right>Proxy</td>
+        <td class="tableheader" colspan="1" align=right>String 1</td>
+        <td class="tableheader" colspan="1" align=right>String 2</td>
+        <td class="tableheader" colspan="1" align=right>String 3</td>
+        <td class="tableheader" colspan="1" align=right>String 4</td>
+</tr>
+<tr>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminOperation"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminHTTPVersion"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminURL"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCache"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminInterval"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminNumPackets"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminProxy"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminString1"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminString2"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminString3"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminString4"/>
+</tr>
+<tr>
+        <td class="tableheader" colspan="11" style="background-color:#555555"></td>
+</tr>
+<tr>
+        <td class="tableheader" colspan="1" align=right>Srting 5</td>
+        <td class="tableheader" colspan="1" align=right>Admin Mode</td>
+        <td class="tableheader" colspan="1" align=right>Vrf Name</td>
+        <td class="tableheader" colspan="1" align=right>Codec Type</td>
+        <td class="tableheader" colspan="1" align=right>Codec Interval</td>
+        <td class="tableheader" colspan="1" align=right>Codec Payload</td>
+        <td class="tableheader" colspan="1" align=right># Pkts Codec</td>
+        <td class="tableheader" colspan="1" align=right>ICPIF Factor</td>
+        <td class="tableheader" colspan="1" align=right>LSPFEC Type</td>
+        <td class="tableheader" colspan="1" align=right>LSP Selector</td>
+        <td class="tableheader" colspan="1" align=right>LSP Reply Mode</td>
+</tr>
+<tr>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminString5"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminMode"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminVrfName"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCodecType"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCodecInterval"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCodecPayload"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCodecNumPackets"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminICPIFAdvFactor"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPFECType"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPSelector"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPReplyMode"/>
+</tr>
+<tr>
+        <td class="tableheader" colspan="11" style="background-color:#555555"></td>
+</tr>
+<tr>
+        <td class="tableheader" colspan="1" align=right>LSP TTL</td>
+        <td class="tableheader" colspan="1" align=right>LSP Exp</td>
+        <td class="tableheader" colspan="1" align=right>Precision</td>
+        <td class="tableheader" colspan="1" align=right>Probe Priority</td>
+        <td class="tableheader" colspan="1" align=right>OWNTP Sync Abs</td>
+        <td class="tableheader" colspan="1" align=right>OWNTP Sync Pct</td>
+        <td class="tableheader" colspan="1" align=right>OWNTP Type</td>
+        <td class="tableheader" colspan="1" align=right>Called Number</td>
+        <td class="tableheader" colspan="1" align=right>Detection Point</td>
+        <td class="tableheader" colspan="1" align=right>GK Registration</td>
+        <td class="tableheader" colspan="1" align=right>Source Voice Port</td>
+</tr>
+<tr>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPTTL"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPExp"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminPrecision"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminProbePakPriority"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminOWNTPSyncTolAbs"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminOWNTPSyncTolPct"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminOWNTPSyncTolType"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCalledNumber"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminDetectPoint"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminGKRegistration"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminSourceVoicePort"/>
+</tr>
+<tr>
+        <td class="tableheader" colspan="11" style="background-color:#555555"></td>
+</tr>
+<tr>
+        <td class="tableheader" colspan="1" align=right>Call Duration</td>
+        <td class="tableheader" colspan="1" align=right>LSP Reply Description</td>
+        <td class="tableheader" colspan="1" align=right>LSP Null Shim</td>
+        <td class="tableheader" colspan="1" align=right>Target MPID</td>
+        <td class="tableheader" colspan="1" align=right>Target Domain</td>
+        <td class="tableheader" colspan="1" align=right>Target VLAN</td>
+        <td class="tableheader" colspan="1" align=right>Ethernet COS</td>
+        <td class="tableheader" colspan="1" align=right>LSP ccvID</td>
+        <td class="tableheader" colspan="1" align=right>Target EVC</td>
+</tr>
+<tr>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminCallDuration"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPReplyDscp"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPNullShim"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetMPID"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetDomainName"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetVLAN"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminEthernetCOS"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminLSPVccvID"/>
+        <td class="tablevalues" colspan="1" align=left tal:content="here/rttMonEchoAdminTargetEVC"/>
+</tr>
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf"/>
+</tal:block>
+</tal:block>

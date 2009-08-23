@@ -56,8 +56,10 @@ var FavoriteReportsPortlet = YAHOO.zenoss.Subclass.create(
         args = args || {};
         id = 'id' in args? args.id : getUID('FavoriteReports');
         title = 'title' in args? args.title: "Favorite Reports",
+	b=args.datasource;
         datasource = 'datasource' in args? args.datasource : new YAHOO.zenoss.portlet.StaticDatasource.Table (
-		{html:'', postContent: [], });
+		{html:'', postContent: [] }
+		);
         bodyHeight = 'bodyHeight' in args? args.bodyHeight:200;
         refreshTime = 'refreshTime' in args? args.refreshTime: 60;
         this.superclass.__init__(
@@ -133,6 +135,7 @@ var FavoriteReportsPortlet = YAHOO.zenoss.Subclass.create(
                 short=parts[parts.length-1];
 		data[i] = Array (removelink+"<a class=\"prettylink\" href=\""+url+"\" title=\""+this.datasource.postContent[i]+"\">"+short+"</a>");
 	}
+
 	
         if ('dataSource' in this) {
 		this.dataSource.liveData = data;

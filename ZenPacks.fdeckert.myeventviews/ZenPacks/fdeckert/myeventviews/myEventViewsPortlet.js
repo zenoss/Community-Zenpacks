@@ -18,24 +18,27 @@ YAHOO.zenoss.portlet.SiteWindowDatasource = SiteWindowDatasource;
 
 var myEventViewsPortlet = YAHOO.zenoss.Subclass.create(
     YAHOO.zenoss.portlet.Portlet);
+
 myEventViewsPortlet.prototype = {
     __class__: "YAHOO.zenoss.portlet.myEventViewsPortlet",
     __init__: function(args) {
         args = args || {};
         id = 'id' in args? args.id : getUID('myeventviews');
-        baseLoc = 'zport/dmd/ZenPackManager/packs/ZenPacks.fdeckert.myeventviews/myEventViews'
+        baseLoc = 'zport/dmd/ZenPackManager/packs/ZenPacks.fdeckert.myeventviews/myEventViews';
         bodyHeight = 'bodyHeight' in args? args.bodyHeight : 400;
         title = 'title' in args? args.title: "myEventViews";
         refreshTime = 'refreshTime' in args? args.refreshTime : 60;
 	miscthing = 'miscthing' in args? args.miscthing: "miscthing";
         this.mapobject = null;
-        var datasource = 'datasource' in args? 
-            args.datasource:
-            new YAHOO.zenoss.portlet.SiteWindowDatasource(
-                {'baseLoc':baseLoc?baseLoc:''});
+        var datasource = 'datasource' in args? args.datasource: new YAHOO.zenoss.portlet.SiteWindowDatasource( { 'baseLoc': baseLoc });
         this.superclass.__init__(
-            {id:id, title:title, refreshTime:refreshTime, miscthing:miscthing,
-            datasource:datasource, bodyHeight:bodyHeight}
+            {id:id, 
+		title:title, 
+		refreshTime:refreshTime, 
+		miscthing:miscthing,
+            	datasource:datasource,
+		bodyHeight:bodyHeight
+	    }
         );
     },
     submitSettings: function(e, settings) {
@@ -43,15 +46,6 @@ myEventViewsPortlet.prototype = {
         if (baseLoc.length<1) baseLoc = this.datasource.baseLoc;
         this.locsearch.input.value = '';
         this.superclass.submitSettings(e, {'baseLoc':baseLoc});
-    },
-/*
-    startRefresh: function(firsttime) {
-        if (!firsttime) this.mapobject.refresh();
-	this.fill();
-        if (this.refreshTime>0)
-            this.calllater = callLater(this.refreshTime, this.startRefresh);
     }
-*/
-
 }
 YAHOO.zenoss.portlet.myEventViewsPortlet = myEventViewsPortlet;

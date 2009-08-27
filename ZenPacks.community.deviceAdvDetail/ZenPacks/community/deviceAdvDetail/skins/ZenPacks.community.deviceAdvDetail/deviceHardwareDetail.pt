@@ -24,7 +24,7 @@
            components python:[comp for comp in here.hw.getRelationshipNames() if not comp in exclude];
            components python:(['cpus'] + components + ['cards']);">
 <tal:block tal:repeat="comp components">
-<tal:block tal:define="component python:path('here/deviceHardwareC%sDetail/macros/compList' % comp);">
+<tal:block tal:on-error="nothing" tal:define="component python:path('here/deviceHardwareC%sDetail/macros/compList' % comp);">
 <tal:block metal:use-macro="component">
 </tal:block>
 </tal:block>

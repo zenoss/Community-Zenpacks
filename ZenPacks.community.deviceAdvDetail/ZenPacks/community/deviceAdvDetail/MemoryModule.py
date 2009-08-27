@@ -33,13 +33,11 @@ class MemoryModule(HWComponent):
 
     slot = 0
     size = 0
-    moduletype = ""
     status = 1
     
     _properties = HWComponent._properties + (
         {'id':'slot', 'type':'int', 'mode':'w'},
         {'id':'size', 'type':'int', 'mode':'w'},
-        {'id':'moduletype', 'type':'string', 'mode':'w'},
         {'id':'status', 'type':'int', 'mode':'w'},
     )
 

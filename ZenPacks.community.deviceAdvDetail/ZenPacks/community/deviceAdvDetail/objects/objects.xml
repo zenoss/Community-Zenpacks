@@ -4,25 +4,24 @@
 <object id='/zport/dmd/Events/Change/Set/Status' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
 if evt.firstTime == evt.lastTime:
-    words = evt.message.split()
-    for comp in device.getMonitoredComponents(type=words[2]):
+     for comp in device.getMonitoredComponents(type=evt.compClass):
         if comp.id != evt.component: continue
-        comp.status = int(words[-1].split('.')[0])
-        evt.severity = comp.statusSeverity(comp.status)
+        comp.status = int(evt.compStatus)
         from transaction import commit
         commit()
         break
 </property>
 <property type="text" id="transform" mode="w" >
 if evt.firstTime == evt.lastTime:
-    words = evt.message.split()
-    for comp in device.getMonitoredComponents(type=words[2]):
+     for comp in device.getMonitoredComponents(type=evt.compClass):
         if comp.id != evt.component: continue
-        comp.status = int(words[-1].split('.')[0])
-        evt.severity = comp.statusSeverity(comp.status)
+        comp.status = int(evt.compStatus)
         from transaction import commit
         commit()
         break
+</property>
+<property visible="True" type="string" id="zEventAction" >
+status
 </property>
 </object>
 </objects>

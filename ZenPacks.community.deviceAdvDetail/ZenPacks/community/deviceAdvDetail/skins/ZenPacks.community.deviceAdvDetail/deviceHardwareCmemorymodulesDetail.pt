@@ -13,7 +13,9 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'snmpindex','Slot')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                        tableName,'moduletype','Type')"/>
+                        tableName,'getManufacturerName','Manufacturer')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getProductName','Model')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'size','Size')"/>
         <th class="tableheader" align="center" width="60">Status</th>
@@ -25,7 +27,8 @@
             <tal:block 
              tal:content="structure python:card.urlLink(text=str(card.id))"/>
         </td>
-        <td class="tablevalues" tal:content="structure card/moduletype"/>
+        <td class="tablevalues" tal:content="structure card/getManufacturerLink"/>
+        <td class="tablevalues" tal:content="structure card/getProductLink"/>
         <td class="tablevalues" tal:content="structure card/sizeString"/>
         <td tal:define="color card/statusDot|string:grey" 
           class="tablevalues" style="text-align:center;">

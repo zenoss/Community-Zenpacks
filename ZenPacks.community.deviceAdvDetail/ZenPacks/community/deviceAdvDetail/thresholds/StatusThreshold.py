@@ -71,7 +71,8 @@ class StatusThreshold(ThresholdClass):
                                       self.dsnames,
                                       self.eventClass,
                                       self.escalateCount,
-                                      context.statusmap,)
+                                      context.statusmap,
+                                      context.meta_type)
         return mmt
 
 
@@ -86,7 +87,7 @@ class StatusThresholdInstance(ThresholdInstance):
     count = {}
     statusmap = ''
 
-    def __init__(self, id, context, dpNames,eventClass,escalateCount,statusmap):
+    def __init__(self,id,context,dpNames,eventClass,escalateCount,statusmap,mt):
         self.count = {}
         self._context = context
         self.id = id
@@ -95,6 +96,7 @@ class StatusThresholdInstance(ThresholdInstance):
         self.dataPointNames = dpNames
         self._rrdInfoCache = {}
         self.statusmap = statusmap
+        self.mtype = mt
 
     def name(self):
         "return the name of this threshold (from the ThresholdClass)"
@@ -124,7 +126,7 @@ class StatusThresholdInstance(ThresholdInstance):
 
     def countKey(self, dp):
         return(':'.join(self.context().key()) + ':' + dp)
-        
+
     def getCount(self, dp):
         countKey = self.countKey(dp)
         if not self.count.has_key(countKey):
@@ -140,7 +142,7 @@ class StatusThresholdInstance(ThresholdInstance):
 
     def resetCount(self, dp):
         self.count[self.countKey(dp)] = 0
-    
+
     def fetchLastValue(self, dp, cycleTime):
         """
         Fetch the most recent value for a data point from the RRD file.
@@ -188,14 +190,16 @@ class StatusThresholdInstance(ThresholdInstance):
             status = self.statusmap.get(value, None)
         except: return []
         if not status: return []
-        msg = 'threshold of %s exceeded: current value %.2f' %(self.name(), value)
+        msg = 'threshold of %s exceeded: current status %s' %(self.name(), status[2])
         return [dict(device=self.context().deviceName,
                     summary=msg,
+                    compStatus=value,
+                    compClass=self.mtype,
                     eventKey=self.id,
                     eventClass=self.eventClass,
                     component=self.context().componentName,
                     severity=status[1])]
-        
+
 
     def getGraphElements(self, template, context, gopts, namespace, color,
                          legend, relatedGps):

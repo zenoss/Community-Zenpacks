@@ -26,17 +26,17 @@
     </td>
 </tr>  
 <tr>
-     <td class="tableheader" align=left>Slot</td>
-     <td class="tablevalues" tal:content="here/slot">1</td>
+    <td class="tableheader" align=left>Model</td>
+    <td class="tablevalues" tal:content="python:here.productClass().name"/>
+    <td class="tableheader" align=left>Part Number</td>
+    <td class="tablevalues" tal:content="python:here.productClass().partNumber"/>
+</tr>  
+<tr>
+    <td class="tableheader" align=left>Size</td>
+    <td class="tablevalues" tal:content="here/sizeString"/>
     <td class="tableheader" align=left>Status</td>
     <td class="tablevalues" tal:content="here/statusString"/>
 </tr>  
-<tr>
-    <td class="tableheader" align=left>Type</td>
-    <td class="tablevalues" tal:content="here/moduletype"/>
-    <td class="tableheader" align=left>Size</td>
-    <td class="tablevalues" tal:content="here/sizeString"/>
-</tr>
 <tr>
     <td align="left"  class="tableheader" colspan="4">
         <input class="tableheader" type="submit" value=" Save "

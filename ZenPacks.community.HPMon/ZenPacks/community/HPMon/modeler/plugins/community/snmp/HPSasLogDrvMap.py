@@ -12,7 +12,7 @@ __doc__="""HPSasLogDrvMap
 
 HPSasLogDrvMap maps the cpqSasLogDrvTable to disks objects
 
-$Id: HPSasLogDrvMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPSasLogDrvMap.py,v 1.1 2009/08/18 17:00:53 egor Exp $"""
 
 __version__ = '$Revision: 1.0 $'[11:-2]
 
@@ -52,10 +52,10 @@ class HPSasLogDrvMap(HPLogicalDiskMap):
 	disktable = tabledata.get('cpqSasLogDrvTable')
 	if not device.id in HPLogicalDiskMap.oms:
 	    HPLogicalDiskMap.oms[device.id] = []
-        for disk in disktable.values():
+        for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d" % (om._cntrlindex, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
 		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
 		om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)

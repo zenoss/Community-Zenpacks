@@ -12,9 +12,9 @@ __doc__="""HPScsiLogDrvMap
 
 HPScsiLogDrvMap maps the cpqScsiLogDrvTable to disks objects
 
-$Id: HPScsiLogDrvMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPScsiLogDrvMap.py,v 1.1 2009/08/18 17:03:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPLogicalDiskMap import HPLogicalDiskMap
@@ -29,9 +29,6 @@ class HPScsiLogDrvMap(HPLogicalDiskMap):
         GetTableMap('cpqScsiLogDrvTable',
 	            '.1.3.6.1.4.1.232.5.2.3.1.1',
 		    {
-		        '.1': '_cntrlindex',
-			'.2': '_busindex',
-			'.3': 'snmpindex',
 			'.4': 'diskType',
 			'.5': 'status',
 			'.6': 'size',
@@ -56,10 +53,10 @@ class HPScsiLogDrvMap(HPLogicalDiskMap):
 	disktable = tabledata.get('cpqScsiLogDrvTable')
 	if not device.id in HPLogicalDiskMap.oms:
 	    HPLogicalDiskMap.oms[device.id] = []
-        for disk in disktable.values():
+        for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d.%d" % (om._cntrlindex, om._busindex, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
 		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
 		om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)

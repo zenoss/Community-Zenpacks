@@ -12,9 +12,9 @@ __doc__="""HPExpansionCardMap
 
 HPExpansionCardMap maps the cpqSePciSlotTable table to cards objects
 
-$Id: HPExpansionCardMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPExpansionCardMap.py,v 1.1 2009/08/18 16:40:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -33,8 +33,6 @@ class HPExpansionCardMap(SnmpPlugin):
         GetTableMap('cpqSePciSlotTable',
 	            '.1.3.6.1.4.1.232.1.2.13.1.1',
 		    {
-		        '.1': '_busnumber',
-			'.2': 'snmpindex',
 			'.3': 'slot',
 			'.5': '_model',
 		    }
@@ -55,10 +53,10 @@ class HPExpansionCardMap(SnmpPlugin):
             for om in self.oms[device.id]:
     	        if om.modname == "ZenPacks.community.HPMon.cpqSiMemModule": continue
 	        pcimap[int(om.slot)] = 1
-            for card in pcicardtable.values():
+            for oid, card in pcicardtable.iteritems():
                 try:
                     om = self.objectMap(card)
-		    om.snmpindex = "%d.%d" % (om._busnumber, om.snmpindex)
+		    om.snmpindex = oid.strip('.')
 	            if int(om.slot) == 0: continue
                     if int(om.slot) in pcimap: continue
                     om.id = self.prepId("cpqSePciSlot%d" % om.slot)

@@ -12,9 +12,9 @@ __doc__="""HPIdeAtaDiskMap
 
 HPIdeAtaDiskMap maps the cpqIdeAtaDiskTable to disks objects
 
-$Id: HPIdeAtaDiskMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPIdeAtaDiskMap.py,v 1.1 2009/08/18 16:49:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPHardDiskMap import HPHardDiskMap
@@ -29,8 +29,6 @@ class HPIdeAtaDiskMap(HPHardDiskMap):
         GetTableMap('cpqIdeAtaDiskTable',
 	            '.1.3.6.1.4.1.232.14.2.4.1.1',
 		    {
-		        '.1': '_cntrlindex',
-			'.2': 'snmpindex',
 			'.3': 'description',
 			'.4': 'FWRev',
 			'.5': 'serialNumber',
@@ -54,10 +52,10 @@ class HPIdeAtaDiskMap(HPHardDiskMap):
 	disktable = tabledata.get('cpqIdeAtaDiskTable')
 	if not device.id in HPHardDiskMap.oms:
 	    HPHardDiskMap.oms[device.id] = []
-        for disk in disktable.values():
+        for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d" % (om._cntrlindex, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("HardDisk%s" % om.snmpindex).replace('.', '_')
 		if hasattr(om, 'vendor'):
 		    om.description = "%s %s" % (om.vendor, om.description)

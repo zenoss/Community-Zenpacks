@@ -12,9 +12,9 @@ __doc__="""HPFcaPhyDrvMap
 
 HPFcaPhyDrvMap maps the cpqFcaPhyDrvTable to disks objects
 
-$Id: HPFcaPhyDrvMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPFcaPhyDrvMap.py,v 1.1 2009/08/18 16:48:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPHardDiskMap import HPHardDiskMap
@@ -30,7 +30,6 @@ class HPFcaPhyDrvMap(HPHardDiskMap):
 	            '.1.3.6.1.4.1.232.16.2.5.1.1',
 		    {
 		        '.1': 'chassis',
-			'.2': 'snmpindex',
 			'.3': 'description',
 			'.4': 'FWRev',
 			'.5': 'bay',
@@ -46,7 +45,6 @@ class HPFcaPhyDrvMap(HPHardDiskMap):
         GetTableMap('cpqSsChassisTable',
 	            '.1.3.6.1.4.1.232.8.2.2.1.1',
 		    {
-			'.1': 'snmpindex',
 			'.4': 'name',
 		    }
 	),
@@ -65,15 +63,15 @@ class HPFcaPhyDrvMap(HPHardDiskMap):
 	disktable = tabledata.get('cpqFcaPhyDrvTable')
         chassismap = {}
 	chassistable = tabledata.get('cpqSsChassisTable')
-	for chassis in chassistable.values():
-	    chassismap[chassis['snmpindex']] = chassis['name']
+	for oid, chassis in chassistable.iteritems():
+	    chassismap[oid.strip('.')] = chassis['name']
 	external = 'community.snmp.HPSsChassisMap' in getattr(device, 'zCollectorPlugins', [])
 	if not device.id in HPHardDiskMap.oms:
 	    HPHardDiskMap.oms[device.id] = []
-        for disk in disktable.values():
+        for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d" % (om.chassis, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("HardDisk%s" % om.snmpindex).replace('.', '_')
 		if hasattr(om, 'vendor'):
 		    om.description = "%s %s" % (om.vendor, om.description)

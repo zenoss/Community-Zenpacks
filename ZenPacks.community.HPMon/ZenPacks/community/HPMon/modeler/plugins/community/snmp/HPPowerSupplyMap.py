@@ -12,9 +12,9 @@ __doc__="""HPPowerSupplyMap
 
 HPPowerSupplyMap maps the cpqHeFltTolPowerSupplyTable table to powersupplies objects
 
-$Id: HPPowerSupplyMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPPowerSupplyMap.py,v 1.1 2009/08/18 16:58:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -30,8 +30,6 @@ class HPPowerSupplyMap(SnmpPlugin):
         GetTableMap('cpqHeFltTolPowerSupplyTable',
 	            '.1.3.6.1.4.1.232.6.2.9.3.1',
 		    {
-		        '.1': '_chassis',
-			'.2': 'id',
 			'.3': '_present',
 			'.5': 'status',
 			'.6': 'millivolts',
@@ -53,11 +51,11 @@ class HPPowerSupplyMap(SnmpPlugin):
         getdata, tabledata = results
         rm = self.relMap()
         pstable = tabledata.get('cpqHeFltTolPowerSupplyTable')
-        for ps in pstable.values():
+        for oid, ps in pstable.iteritems():
             try:
                 om = self.objectMap(ps)
 		if om._present < 3: continue
-		om.snmpindex =  "%d.%d" % (om._chassis, om.id)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("PSU%s" % om.snmpindex.replace('.', '_'))
                 om.type = "%s" % self.typemap.get(getattr(om, 'type', 1), '%s (%d)' %(self.typemap[1], om.type))
             except AttributeError:

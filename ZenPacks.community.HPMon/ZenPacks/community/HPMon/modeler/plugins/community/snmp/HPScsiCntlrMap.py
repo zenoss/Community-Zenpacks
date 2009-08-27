@@ -12,9 +12,9 @@ __doc__="""HPScsiCntlrMap
 
 HPScsiCntlrMap maps the cpqScsiCntlrTable table to cpqScsiCntlr objects
 
-$Id: HPScsiCntlrMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPScsiCntlrMap.py,v 1.1 2009/08/18 17:02:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -29,8 +29,6 @@ class HPScsiCntlrMap(HPExpansionCardMap):
         GetTableMap('cpqScsiCntlrTable',
 	            '.1.3.6.1.4.1.232.5.2.2.1.1',
 		    {
-		        '.1': '_cntrlindex',
-			'.2': 'snmpindex',
 			'.3': 'model',
 			'.4': 'FWRev',
 			'.6': 'slot',
@@ -74,10 +72,10 @@ class HPScsiCntlrMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqScsiCntlrTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%s.%s" %(om._cntrlindex, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqScsiCntlr%s" % om.snmpindex.replace('.', '_'))
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 16), '%s (%d)' %(self.models[16], om.model))

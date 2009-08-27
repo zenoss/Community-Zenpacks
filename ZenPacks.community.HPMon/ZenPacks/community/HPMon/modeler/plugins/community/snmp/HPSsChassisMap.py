@@ -12,9 +12,9 @@ __doc__="""HPSsChassisMap
 
 HPSsChassisMap maps the cpqSsChassisTable table to cpqSsChassis objects
 
-$Id: HPSsChassisMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPSsChassisMap.py,v 1.1 2009/08/18 17:07:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -29,7 +29,6 @@ class HPSsChassisMap(HPExpansionCardMap):
         GetTableMap('cpqSsChassisTable',
 	            '.1.3.6.1.4.1.232.8.2.2.1.1',
 		    {
-			'.1': 'snmpindex',
 			'.2': 'connectionType',
 			'.3': 'serialNumber',
 			'.4': 'name',
@@ -60,10 +59,10 @@ class HPSsChassisMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqSsChassisTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%d" % (om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSsChassis%s" % om.snmpindex.replace('.', '_'))
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))

@@ -12,9 +12,9 @@ __doc__="""HPFcaCntlrMap
 
 HPFcaCntlrMap maps the cpqFcaCntlrTable table to cpqFcaCntlr objects
 
-$Id: HPFcaCntlrMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPFcaCntlrMap.py,v 1.1 2009/08/18 16:44:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -30,7 +30,6 @@ class HPFcaCntlrMap(HPExpansionCardMap):
 	            '.1.3.6.1.4.1.232.16.2.2.1.1',
 		    {
 		        '.1': 'chassis',
-			'.2': 'snmpindex',
 			'.3': 'model',
 			'.4': 'FWRev',
 			'.5': 'status',
@@ -44,7 +43,6 @@ class HPFcaCntlrMap(HPExpansionCardMap):
         GetTableMap('cpqSsChassisTable',
 	            '.1.3.6.1.4.1.232.8.2.2.1.1',
 		    {
-			'.1': 'snmpindex',
 			'.4': 'name',
 		    }
 	),
@@ -78,15 +76,15 @@ class HPFcaCntlrMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqFcaCntlrTable')
         chassismap = {}
 	chassistable = tabledata.get('cpqSsChassisTable')
-	for chassis in chassistable.values():
-	    chassismap[chassis['snmpindex']] = chassis['name']
+	for oid, chassis in chassistable.iteritems():
+	    chassismap[oid.strip('.')] = chassis['name']
 	external = 'community.snmp.HPSsChassisMap' in getattr(device, 'zCollectorPlugins', [])
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%d.%d" % (om.chassis, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqFcaCntlr%s" % om.snmpindex.replace('.', '_'))
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))

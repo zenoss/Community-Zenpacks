@@ -103,27 +103,18 @@ True
 0
 </property>
 </object>
-<object id='HPFan status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='HPFan status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -278,27 +269,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='HPPowerSupply status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='HPPowerSupply status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-1
-</property>
-<property type="string" id="maxval" mode="w" >
-1
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -445,27 +427,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='HPTemperatureSensor status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='HPTemperatureSensor status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 <object id='Overheating' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
@@ -640,27 +613,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='HPsdFan status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='HPsdFan status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -768,27 +732,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqDaCntlr status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqDaCntlr status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -840,27 +795,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqDaLogDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqDaLogDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -1266,27 +1212,18 @@ True
 0
 </property>
 </object>
-<object id='cpqDaPhyDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqDaPhyDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -1679,27 +1616,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqFcaCntlr status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqFcaCntlr status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -1751,27 +1679,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqFcaHostCntlr status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqFcaHostCntlr status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -1823,27 +1742,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqFcaLogDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqFcaLogDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -2249,27 +2159,18 @@ True
 0
 </property>
 </object>
-<object id='cpqFcaPhyDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqFcaPhyDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-3
-</property>
-<property type="string" id="maxval" mode="w" >
-3
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -2662,27 +2563,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqIdeAtaController status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqIdeAtaController status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -2734,27 +2626,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqIdeAtaDisk status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqIdeAtaDisk status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -2806,27 +2689,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqIdeLogicalDrive status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqIdeLogicalDrive status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3022,27 +2896,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3243,27 +3108,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqSasHba status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqSasHba status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3315,27 +3171,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqSasLogDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqSasLogDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3387,27 +3234,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqSasPhyDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqSasPhyDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3459,27 +3297,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqScsiCntlr status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqScsiCntlr status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3531,27 +3360,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqScsiLogDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqScsiLogDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -3885,27 +3705,18 @@ True
 0
 </property>
 </object>
-<object id='cpqScsiPhyDrv status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqScsiPhyDrv status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -4201,27 +4012,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqSiMemModule status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqSiMemModule status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-4
-</property>
-<property type="string" id="maxval" mode="w" >
-4
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -4273,27 +4075,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqSm2Cntlr status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqSm2Cntlr status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-3
-</property>
-<property type="string" id="maxval" mode="w" >
-3
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -4345,27 +4138,18 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqSsChassis status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<object id='cpqSsChassis status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
+<property type="int" id="escalateCount" mode="w" >
+0
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Change/Set/Status
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
 </property>
 </object>
 </tomanycont>
@@ -16706,7 +16490,7 @@ User Action: If the controller status is failed, replace the
 controller.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqFcaHostCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWideName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrModel': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrIndex': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWidePortName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrStatus': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqFcaHostCntlrWorldWideName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrModel': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrIndex': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWidePortName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrStatus': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqFcaAccelBadDataTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -22571,7 +22355,7 @@ The fault tolerant power supply condition has been set
 to degraded for the specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyFailed' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -22592,7 +22376,7 @@ The fault tolerant power supply condition has been set
 to failed for the specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyInserted' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -22613,7 +22397,7 @@ A Fault Tolerant Power Supply has been inserted into the
 specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyRemoved' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -22634,7 +22418,7 @@ A Fault Tolerant Power Supply has been removed from the
 specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPwrSupplyDegraded' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -33968,7 +33752,7 @@ cpqDaPhyDrvBusNumber indicates the SCSI bus number associated
 with the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaPhyDrvThreshPassed': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvThreshPassed': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
 </property>
 </object>
 <object id='cpqDa3SpareStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>

@@ -12,9 +12,9 @@ __doc__="""HPSasPhyDrvMap
 
 HPSasPhyDrvMap maps the cpqSasPhyDrvTable to disks objects
 
-$Id: HPSasPhyDrvMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPSasPhyDrvMap.py,v 1.1 2009/08/18 17:01:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPHardDiskMap import HPHardDiskMap
@@ -29,8 +29,6 @@ class HPSasPhyDrvMap(HPHardDiskMap):
         GetTableMap('cpqSasPhyDrvTable',
 	            '.1.3.6.1.4.1.232.5.5.2.1.1',
 		    {
-		        '.1': '_cntrlindex',
-			'.2': 'snmpindex',
 			'.3': 'bay',
 			'.4': 'description',
 			'.5': 'status',
@@ -56,10 +54,10 @@ class HPSasPhyDrvMap(HPHardDiskMap):
 	disktable = tabledata.get('cpqSasPhyDrvTable')
 	if not device.id in HPHardDiskMap.oms:
 	    HPHardDiskMap.oms[device.id] = []
-        for disk in disktable.values():
+        for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d" % (om._cntrlindex, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("HardDisk%s" % om.snmpindex).replace('.', '_')
 		if hasattr(om, 'vendor'):
 		    om.description = "%s %s" % (om.vendor, om.description)

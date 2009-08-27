@@ -12,9 +12,9 @@ __doc__="""HPIdeLogicalDriveMap
 
 HPIdeLogicalDriveMap maps the cpqIdeLogicalDriveTable to disks objects
 
-$Id: HPIdeLogicalDriveMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPIdeLogicalDriveMap.py,v 1.1 2009/08/18 16:51:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPLogicalDiskMap import HPLogicalDiskMap
@@ -29,8 +29,6 @@ class HPIdeLogicalDriveMap(HPLogicalDiskMap):
         GetTableMap('cpqIdeLogicalDriveTable',
 	            '.1.3.6.1.4.1.232.14.2.6.1.1',
 		    {
-		        '.1': 'cntrlindex',
-			'.2': 'snmpindex',
 			'.3': 'diskType',
 			'.4': 'size',
 			'.5': 'status',
@@ -56,10 +54,10 @@ class HPIdeLogicalDriveMap(HPLogicalDiskMap):
 	disktable = tabledata.get('cpqIdeLogicalDriveTable')
 	if not device.id in HPLogicalDiskMap.oms:
 	    HPLogicalDiskMap.oms[device.id] = []
-        for disk in disktable.values():
+        for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex =  "%d.%d" % (om.cntrlindex, om.snmpindex)
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
 		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
 		om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)

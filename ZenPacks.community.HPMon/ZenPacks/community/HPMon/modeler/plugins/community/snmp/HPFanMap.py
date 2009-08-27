@@ -12,9 +12,9 @@ __doc__="""HPFanMap
 
 HPFanMap maps the cpqHeFltTolFanTable table to fab objects
 
-$Id: HPFanMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPFanMap.py,v 1.1 2009/08/18 16:41:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -31,8 +31,6 @@ class HPFanMap(SnmpPlugin):
         GetTableMap('cpqHeFltTolFanTable',
 	            '.1.3.6.1.4.1.232.6.2.6.7.1',
 		    {
-		        '.1': '_chassis',
-			'.2': 'snmpindex',
 			'.3': '_locale',
 			'.4': '_present',
 			'.5': 'type',
@@ -70,12 +68,12 @@ class HPFanMap(SnmpPlugin):
         rm = self.relMap()
         fantable = tabledata.get('cpqHeFltTolFanTable')
 	localecounter = {}
-        for fan in fantable.values():
+        for oid, fan in fantable.iteritems():
             try:
                 om = self.objectMap(fan)
 	        if om._present < 3: continue
 	        if not hasattr(om, '_rpm'): om.modname = "ZenPacks.community.HPMon.HPsdFan"
-	        om.snmpindex =  "%d.%d" % (om._chassis, om.snmpindex)
+		om.snmpindex = oid.strip('.')
 	        om.type = self.typemap.get(getattr(om, 'type', 1), self.typemap[1])
 	        if om._locale in localecounter:
 	            localecounter[om._locale] = localecounter[om._locale] + 1

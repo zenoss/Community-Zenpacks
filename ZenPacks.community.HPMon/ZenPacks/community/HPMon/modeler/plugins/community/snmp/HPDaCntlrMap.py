@@ -12,9 +12,9 @@ __doc__="""HPDaCntlrMap
 
 HPDaCntlrMap maps the cpqDaCntlrTable table to cpqDaCntlr objects
 
-$Id: HPDaCntlrMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPDaCntlrMap.py,v 1.1 2009/08/18 16:38:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
@@ -30,7 +30,6 @@ class HPDaCntlrMap(HPExpansionCardMap):
         GetTableMap('cpqDaCntlrTable',
 	            '.1.3.6.1.4.1.232.3.2.2.1.1',
 		    {
-		        '.1': 'snmpindex',
 			'.2': 'model',
 			'.3': 'FWRev',
 			'.5': 'slot',
@@ -95,10 +94,10 @@ class HPDaCntlrMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqDaCntlrTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%s" % om.snmpindex
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqDaCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))

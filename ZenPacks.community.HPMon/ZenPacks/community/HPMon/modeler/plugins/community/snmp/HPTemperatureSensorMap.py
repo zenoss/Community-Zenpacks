@@ -12,9 +12,9 @@ __doc__="""HPTemperatureSensorMap
 
 HPTemperatureSensorMap maps the cpqHeTemperatureTable table to temperaturesensors objects
 
-$Id: HPTemperatureSensorMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPTemperatureSensorMap.py,v 1.1 2009/08/18 17:08:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -30,8 +30,6 @@ class HPTemperatureSensorMap(SnmpPlugin):
         GetTableMap('cpqHeTemperatureTable',
 	            '.1.3.6.1.4.1.232.6.2.6.8.1',
 		    {
-		        '.1': '_chassis',
-			'.2': 'snmpindex',
 			'.3': '_location',
 			'.5': 'threshold',
 			'.6': 'status',
@@ -61,11 +59,11 @@ class HPTemperatureSensorMap(SnmpPlugin):
         tsensorstable = tabledata.get("cpqHeTemperatureTable")
         rm = self.relMap()
 	localecounter = {}
-        for tsensor in tsensorstable.values():
+        for oid, tsensor in tsensorstable.iteritems():
             try:
                 om = self.objectMap(tsensor)
 		if om.status == 1: continue
-		om.snmpindex =  "%d.%d" % (om._chassis, om.snmpindex)
+		om.snmpindex = oid.strip('.')
 		if om._location in localecounter:
 		    localecounter[om._location] = localecounter[om._location] + 1
 		else:

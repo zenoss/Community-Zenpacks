@@ -12,9 +12,9 @@ __doc__="""HPFcaHostCntlrMap
 
 HPFcaHostCntlrMap maps the cpqFcaHostCntlrTable table to cpqFcaHostCntlr objects
 
-$Id: HPFcaHostCntlrMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPFcaHostCntlrMap.py,v 1.1 2009/08/18 16:45:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -29,7 +29,6 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
         GetTableMap('cpqFcaHostCntlrTable',
 	            '.1.3.6.1.4.1.232.16.2.7.1.1',
 		    {
-		        '.1': 'snmpindex',
 			'.2': 'slot',
 			'.3': 'model',
 			'.4': 'status',
@@ -81,10 +80,10 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqFcaHostCntlrTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%s" % om.snmpindex
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqFcaHostCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))

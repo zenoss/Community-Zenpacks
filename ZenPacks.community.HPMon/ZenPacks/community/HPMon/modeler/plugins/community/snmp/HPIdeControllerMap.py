@@ -12,9 +12,9 @@ __doc__="""HPIdeControllerMap
 
 HPIdeControllerMap maps the cpqIdeControllerTable table to cpqIdeController objects
 
-$Id: HPIdeControllerMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPIdeControllerMap.py,v 1.1 2009/08/18 16:50:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -29,7 +29,6 @@ class HPIdeControllerMap(HPExpansionCardMap):
         GetTableMap('cpqIdeControllerTable',
 	            '.1.3.6.1.4.1.232.14.2.3.1.1',
 		    {
-		        '.1': 'snmpindex',
 			'.3': 'model',
 			'.4': 'FWRev',
 			'.5': 'slot',
@@ -46,10 +45,10 @@ class HPIdeControllerMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqIdeControllerTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%s" %om.snmpindex
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqIdeController%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
 		if om.slot == -1: om.slot = 0

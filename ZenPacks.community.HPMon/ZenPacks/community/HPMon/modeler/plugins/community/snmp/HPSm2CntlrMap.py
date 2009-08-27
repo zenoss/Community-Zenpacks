@@ -67,10 +67,10 @@ class HPSm2CntlrMap(HPExpansionCardMap):
 	iloniccardtable = tabledata.get('cpqSm2NicConfigTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "0"
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSm2Cntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))

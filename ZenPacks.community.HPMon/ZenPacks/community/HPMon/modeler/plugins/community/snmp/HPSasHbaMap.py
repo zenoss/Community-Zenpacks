@@ -12,9 +12,9 @@ __doc__="""HPSasHbaMap
 
 HPSasHbaMap maps the cpqSasHbaTable table to cpqSasHba objects
 
-$Id: HPSasHbaMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPSasHbaMap.py,v 1.1 2009/08/18 16:59:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -29,7 +29,6 @@ class HPSasHbaMap(HPExpansionCardMap):
         GetTableMap('cpqSasHbaTable',
 	            '.1.3.6.1.4.1.232.5.5.1.1.1',
 		    {
-		        '.1': 'snmpindex',
 			'.2': 'slot',
 			'.3': 'model',
 			'.4': 'status',
@@ -54,10 +53,10 @@ class HPSasHbaMap(HPExpansionCardMap):
 	cardtable = tabledata.get('cpqSasHbaTable')
 	if not device.id in HPExpansionCardMap.oms:
 	    HPExpansionCardMap.oms[device.id] = []
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%s" %om.snmpindex
+		om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSasHba%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
 		om.model = self.models.get(getattr(om, 'model', 2), '%s (%d)' %(self.models[2], om.model))

@@ -42,7 +42,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
     _relations = RRDDataSource.RRDDataSource._relations + (
         )
-    
+
     # Screen action bindings (and tab definitions)
     factory_type_information = ( 
     { 
@@ -112,7 +112,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                     l = cgi.escape(l)
                     l = l.replace('\n', endLine + startLine)
                     out.write(startLine + l + endLine)
-        
+
         # Determine which device to execute against
         device = None
         if testDevice:
@@ -138,7 +138,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         # Render
         header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
         out.write(str(header))
-        
+
         queries = {'test':
             RRDDataSource.RRDDataSource.getCommand(self, device, self.instance)}
         write('Get WBEM Instance %s from %s' % (queries['test'], device.id))
@@ -151,12 +151,16 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             creds = (device.zWinUser, device.zWinPassword)
             conn = pywbem.WBEMConnection(url,creds)
             if kb:
-                instanceName = pywbem.CIMInstanceName(cn,keybindings=kb,namespace=ns)
-                instance = conn.GetInstance(instanceName)
+                instanceName = pywbem.CIMInstanceName(  cn,
+                                                        keybindings=kb,
+                                                        namespace=ns)
+                instance = conn.GetInstance(instanceName,
+                                            includeQualifiers=True,
+                                            localOnly=False)
                 for property in instance.items():
                     write('%s = %s' % (property[0], property[1]))
             else:
-                instance = conn.EnumerateInstanceNames(cn, namespace=ns)
+                instance = conn.EnumerateInstanceNames( cn, namespace=ns)
                 for property in instance:
                     write('%s' % property)
         except:

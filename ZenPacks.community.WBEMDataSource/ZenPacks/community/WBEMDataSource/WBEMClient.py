@@ -66,10 +66,15 @@ class WBEMClient(BaseClient):
                                                     namespace=query[2])
                         queryResult[tableName] = self._wbem.GetInstance(
                                                         instancename,
-                                                        PropertyList=query[3])
+                                                        PropertyList=query[3],
+                                                        includeQualifiers=True,
+                                                        localOnly=False)
                     else:
                         queryResult[tableName] = self._wbem.EnumerateInstances(
-                                                        query[0])
+                                                    query[0],
+                                                    namespace=query[2],
+                                                    includeQualifiers=True,
+                                                    localOnly=False)
                 yield defer.succeed(queryResult)
                 driver.next()
             except Exception, ex:

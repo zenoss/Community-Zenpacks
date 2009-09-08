@@ -78,7 +78,8 @@ class OdbcClient(BaseClient):
                         dbpools[query[0]] = []
                     dbpools[query[0]].append((table, query[1], query[2]))
                 for cs, qs in dbpools.iteritems():
-                    dbpool = adbapi.ConnectionPool("pyodbc", cs)
+                    dbpool = adbapi.ConnectionPool("pyodbc", cs,
+                        autocommit=True, ansi=True, unicode_results=False)
                     for table, query, fields in qs:
                         queryResult[table] = []
                         try:

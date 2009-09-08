@@ -68,6 +68,13 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
     def useZenCommand(self):
         return False
 
+    def checkCommandPrefix(self, context, cmd):
+        """
+        Overriding method to verify that zCommandPath is not prepending to our
+        connection string or SQL statements.
+        """
+        return cmd
+
     def zmanage_editProperties(self, REQUEST=None):
         'add some validation'
         if REQUEST:

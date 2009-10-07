@@ -22,7 +22,10 @@ class AAZenossAdminPlugin(Plugin):
     log.debug('Got a message from %s.  Going to look for a Zenoss user to map it to.' % sender)
     # look through all zenoss users until we find one with the sender's JabberID
     for user in adapter.userSettings():
-        jabberProperty = user.getProperty('JabberId').lower()
+        try:
+            jabberProperty = user.getProperty('JabberId').lower()
+        except:
+            jabberProperty = None
         if jabberProperty == sender:
             log.debug('JabberID %s maps to the sender: %s.  This user is authorized.' % (jabberProperty, sender))
             return True

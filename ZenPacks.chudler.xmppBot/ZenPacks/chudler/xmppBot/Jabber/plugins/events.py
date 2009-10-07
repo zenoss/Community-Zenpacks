@@ -33,7 +33,7 @@ class Events(Plugin):
     if options.device:
         devices = adapter.devices(options.device)
         if len(devices) == 0:
-            return 'Cannot find a device, ip or mac named "%s"' % args
+            return 'Cannot find a device, ip or mac named "%s"' % options.device
         deviceIds = [device.id for device in devices]
         print 'Found %d devices machting %s' % (len(devices), devices)
         events = filter(lambda event: event.device in deviceIds, events)

@@ -11,7 +11,7 @@ class Ack(Plugin):
   name = 'ack'
   capabilities = ['ack', 'acknowledge', 'help']
 
-  def call(self, args, log, **kw):
+  def call(self, args, sender, log, **kw):
     log.debug('Alert Ack plugin running with arguments: %s' % args)
 
     adapter = ZenAdapter()
@@ -48,17 +48,18 @@ class Ack(Plugin):
                 acking.append(id)
 
     if len(acking) > 0:
-        return self.acknowledge(adapter, options.test, options.verbose, acking, log)
+        return self.acknowledge(adapter, options.test, options.verbose, acking, sender, log)
     else:
         return 'Sorry.  Found no events to acknowledge.'
 
-  def acknowledge(self, adapter, dryrun, verbose, events, log):
+  def acknowledge(self, adapter, dryrun, verbose, events, sender, log):
         if dryrun:
             log.debug('Test mode is activated, so events will not be acknowledged.')
             message = 'Test mode: %d WOULD have been acknowledged.' % len(events)
         else:
             log.debug('Acking all queued events.')
-            adapter.ackEvents(events)
+	    zenUser = self.findUser(sender, adapter)
+            adapter.ackEvents(zenUser, events)
             log.debug('Done Acking all queued events.')
             transaction.commit()
             message = 'Acknowledged %d' % len(events)
@@ -66,6 +67,14 @@ class Ack(Plugin):
             message += '\n'
             message += ', '.join(events)
         return message
+
+  def findUser(self, sender, adapter):
+        for user in adapter.userSettings():
+                jabberProperty = user.getProperty('JabberId').lower()
+                if jabberProperty == sender:
+                        return user.id
+        return 'unknown_user'
+
     
   def options(self):
     parser = Options(description = 'Acknowledge events by eventid', prog = 'ack')

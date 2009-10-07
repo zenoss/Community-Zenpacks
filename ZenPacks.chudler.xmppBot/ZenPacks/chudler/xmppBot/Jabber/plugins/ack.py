@@ -35,17 +35,17 @@ class Ack(Plugin):
         for event in adapter.events():
             acking.append(event.evid)
             log.debug('Queuing %s event to ack.' % event.evid)
-        return self.acknowledge(adapter, options.test, options.verbose, acking, log)
+        return self.acknowledge(adapter, options.test, options.verbose, acking, sender, log)
     
     idsToAck = options.eventIds.lower().split(',')
     for event in adapter.events():
         # python 2.5 will accept tuple instead of this.
         for idToAck in idsToAck:
-            id = event.evid
-            log.debug('Checking if eventid %s is one to ack (%s)' % (id, idToAck))
-            if id.lower().startswith(idToAck) or id.lower().endswith(idToAck):
-                log.debug('We should ack this event: %s.  It will be queued' % id)
-                acking.append(id)
+            eventid = event.evid
+            log.debug('Checking if eventid %s is one to ack (%s)' % (eventid, idToAck))
+            if eventid.lower().startswith(idToAck) or eventid.lower().endswith(idToAck):
+                log.debug('We should ack this event: %s.  It will be queued' % eventid)
+                acking.append(eventid)
 
     if len(acking) > 0:
         return self.acknowledge(adapter, options.test, options.verbose, acking, sender, log)
@@ -86,7 +86,7 @@ class Ack(Plugin):
     return parser
 
   def private(self):
-    False
+    return False
 
   def help(self):
     opts = self.options()

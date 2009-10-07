@@ -26,7 +26,7 @@ class Data(Plugin):
 
     devices = adapter.devices(options.deviceName)
     if len(devices) == 0:
-        return 'Cannot find a device, ip or mac for "%s"' % wantsDevice
+        return 'Cannot find a device, ip or mac for "%s"' % options.deviceName
     log.debug('Found %d devices matching %s' % (len(devices), devices))
     if options.list:
         dataPoints = {}
@@ -64,14 +64,13 @@ class Data(Plugin):
             value = device.getRRDValue(dataPoint)
             message += '%s: %s\n' % (device.id, value)
         elif component is not None:
-            if self.findComponend(device, components) is None:
+            if self.findComponent(device, component) is None:
                 return 'Sorry.  Cannot find a component %s on %s' % (component, device)
-            for managedEntity in componentList:
-                if self.hasDataPoint(managedEntity, dataPoint):
-                    value = managedEntity.getRRDValue(dataPoint)
-                    message += '%s %s: %s\n' % (device.id, component.id, value)
-                else:
-                    message += '%s %s: Does not have a datapoint named %s.  Remember, spelling and case matter.  Try -l for a list of datapoint' % (device.id, component.id, dataPoint)
+            if self.hasDataPoint(component, dataPoint):
+                value = component.getRRDValue(dataPoint)
+                message += '%s %s: %s\n' % (device.id, component.id, value)
+            else:
+                message += '%s %s: Does not have a datapoint named %s.  Remember, spelling and case matter.  Try -l for a list of datapoint' % (device.id, component.id, dataPoint)
         else:
             message += '%s: Unable to find the datapoint %s. Remember, spelling and case matter.  Try -l for a list of datapoints' % (device.id, dataPoint)
     return message
@@ -100,27 +99,27 @@ class Data(Plugin):
             but I don't have a better way to do it right now.
             """
             component = self.walkComponents(device, components.split('.')[:-1])
-            if result is not None:
+            if component is not None:
                 # try to call the method by name from the end of the users's subcomponent
                 try:
                    componentList = getattr(component, components.split('.').pop())()
                 except AttributeError:
                     return None
-                    
+    return componentList
 
   def walkComponents(self, entity, remainder):
     """This is a recursive function that will walk down each subcomponent and return the last one"""
     for sub in remainder:
         try:
-            newSub = getattr(device, sub)
+            newSub = getattr(entity, sub)
             # recurse to the next component, if there is one
-            walkComponents(newSub, remainder[1:])
+            self.walkComponents(newSub, remainder[1:])
         except AttributeError:
             return None
     return entity
 
   def private(self):
-    False
+    return False
 
 
     # parse the options
@@ -135,4 +134,3 @@ class Data(Plugin):
   def help(self):
     opts = self.options()
     return str(opts.help())
-

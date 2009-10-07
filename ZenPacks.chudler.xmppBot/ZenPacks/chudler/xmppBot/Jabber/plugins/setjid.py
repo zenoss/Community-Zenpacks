@@ -56,7 +56,7 @@ class SetJid(Plugin):
     if haveUser:
         return 'JabberId for this user has been saved.  Thanks.'
     else:
-        return 'Sorry! I Could not find a Zenoss user by the name %s' % zenuser
+        return 'Sorry! I Could not find a Zenoss user by the name %s' % options.zenUser
 
   def mapIds(self, jabberId, zenUser):
     self.setPropertyIfNeeded(zenUser)
@@ -75,7 +75,7 @@ class SetJid(Plugin):
         #zenUser._setProperty('JabberId', '', 'string')
 
   def private(self):
-    False
+    return False
 
   def options(self):
     parser = Options(description = 'Acknowledge events by eventid', prog = 'ack')

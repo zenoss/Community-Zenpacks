@@ -9,7 +9,7 @@ class Options(OptionParser):
         result = message
         if not message:
             result = 'An Error Occured.  Something wrong with your arguments\n'
-        resuls = result + '\n' + self.get_usage()
+        result = result + '\n' + self.get_usage()
         raise OptionError, result
 
     def exit(self, status = 0, message = None):

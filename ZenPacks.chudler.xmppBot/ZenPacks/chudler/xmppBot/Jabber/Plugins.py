@@ -1,5 +1,4 @@
 import sys
-import os
 
 """Find and load plugins for the jabber bot"""
 

@@ -35,4 +35,4 @@ class AAZenossAdminPlugin(Plugin):
     return False
 
   def private(self):
-    True
+    return True

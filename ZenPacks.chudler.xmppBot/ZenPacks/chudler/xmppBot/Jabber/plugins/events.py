@@ -48,7 +48,7 @@ class Events(Plugin):
     return message
 
   def private(self):
-    False
+    return False
 
   def options(self):
     parser = Options(description = 'Acknowledge events by eventid', prog = 'ack')

@@ -20,7 +20,7 @@ from Products.ZenUtils.ZCmdBase import ZCmdBase
 from Products.ZenHub.PBDaemon import PBDaemon 
 from Products.ZenEvents.zenactions import *
 
-class XmppBot(PBDaemon, ZCmdBase, ZenActions):
+class XmppBot(ZenActions,ZCmdBase, PBDaemon):
 
     def buildOptions(self):
         ZCmdBase.buildOptions(self)
@@ -41,8 +41,8 @@ class XmppBot(PBDaemon, ZCmdBase, ZenActions):
         PBDaemon.__init__(self, keeproot=True)
         ZCmdBase.__init__(self)
 
-        ssl = self.options.ssl
-        if ssl and not HAVE_SSL:
+        wants_ssl = self.options.ssl
+        if wants_ssl and not HAVE_SSL:
             self.log.error('SSL was requested for Jabber connection, but pyopenssl is not installed.  Please install it and start the xmppBot again.')
             sys.exit(2)
 
@@ -89,7 +89,7 @@ class XmppBot(PBDaemon, ZCmdBase, ZenActions):
         server = server,
         userId = username, userPassword = password, 
         firstRoom = chatroom, debug = True, 
-        groupServer = groupServer, realHost = realHost, ssl = ssl)
+        groupServer = groupServer, realHost = realHost, wants_ssl = wants_ssl)
 
         self.adapter.client = client
 
@@ -97,20 +97,20 @@ class XmppBot(PBDaemon, ZCmdBase, ZenActions):
         pluginPath = os.path.dirname(path) + '/Jabber/plugins'
         self.log.info("xmppBot plugins will be loaded from %s" % pluginPath)
 
-        plugins = [file.split('/')[-1].split('.py')[0] for file in glob.glob( os.path.join(pluginPath, '*.py') )]
+        plugins = [pluginFile.split('/')[-1].split('.py')[0] for pluginFile in glob.glob( os.path.join(pluginPath, '*.py') )]
         initPluginSystem({'pluginPath': pluginPath, 'plugins': plugins})
 
         self.log.info('started')
 
         # connect to the jabber server
-        reactor = client.connect()
+        jabber_reactor = client.connect()
 
         # begin looking for zenevents
         self.schedule.start()
         self.runCycle()
 
         # start event loop which will process jabber messages and zenevents
-        reactor.run()
+        jabber_reactor.run()
 
     def setFirstUser(self, zenUser, jabberId):
         zenUser = zenUser.lower()
@@ -174,10 +174,10 @@ class XmppBot(PBDaemon, ZCmdBase, ZenActions):
         for recipient in recipients:
           self.log.debug('Sending message to %s: %s', recipient, message)
           if recipient.lower().endswith('/groupchat'):
-              type = 'groupchat'
+              messageType = 'groupchat'
           else:
-              type = 'chat'
-          self.adapter.sendMessage(message, recipient, type)
+              messageType = 'chat'
+          self.adapter.sendMessage(message, recipient, messageType)
         return True
 
     def getAddress(self, action):

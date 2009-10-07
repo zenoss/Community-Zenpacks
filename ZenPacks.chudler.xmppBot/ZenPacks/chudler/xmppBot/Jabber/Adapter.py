@@ -4,7 +4,6 @@
 """This needs to be rewritten so that TwistedJabberClient and JabberAdapter are
 One class.  They are very promiscuous as it is, and are lacking a real design."""
 
-import sys
 import re
 import logging
 
@@ -29,7 +28,7 @@ JABBER_CLIENT_NS = 'jabber:client'
    
 class TwistedJabberClient:
 
-    def __init__(self, dialogHandler, server, userId, userPassword, groupServer, realHost, ssl, firstRoom, debug):
+    def __init__(self, dialogHandler, server, userId, userPassword, groupServer, realHost, wants_ssl, firstRoom, debug):
         self.dialogHandler = dialogHandler
         self.server = server
         try:
@@ -41,7 +40,7 @@ class TwistedJabberClient:
             self.port = int(self.port)
         self.userId = userId
         self.userPassword = userPassword
-        self.ssl = ssl
+        self.wants_ssl = wants_ssl
 
         if realHost:
             self.realHost = realHost
@@ -98,7 +97,7 @@ class TwistedJabberClient:
         factory.addBootstrap(client.BasicAuthenticator.REGISTER_FAILED_EVENT, self.fatalError)
 
         self.dprint('connecting to server %s using id %s...' % (self.server, self.userId))
-        if self.ssl:
+        if self.wants_ssl:
             class contextFactory:
                 isClient = 1
                 method = ssl.SSL.SSLv3_METHOD
@@ -134,7 +133,7 @@ class TwistedJabberClient:
         twxml.addObserver('/presence', self.dialogHandler.presenceHandler)
         twxml.addObserver('/message',  self.dialogHandler.messageHandler)
         self.dprint('connected')
-        self.requestRoster
+        self.requestRoster()
         keepalive = LoopingCall(self.loopEntry)
         keepalive.start(60)
         self.connected = True
@@ -182,14 +181,14 @@ class TwistedJabberClient:
         """
         if self._waitingRoster and twxml.query.uri == 'jabber:iq:roster':
             # got roster, send presence so clients know we're actually online
-            self.sendPresence
+            self.sendPresence()
             self._waitingRoster = False
 
 
 class JabberAdapter:
     """actions for the jabber client"""
 
-    def __init__(self, groupServer, debug=True):
+    def __init__(self, debug=True):
         self.debug = debug
         self.mute = False # mute chat command acts globally
         self.client = None # will be set later due to a cyclic dependency
@@ -201,16 +200,16 @@ class JabberAdapter:
     def checkAccess(self, twxml):
         """Access control plugins"""
         fromJid = twxml['from']
-        type = twxml.attributes.get('type', 'nothing')
+        messageType = twxml.attributes.get('type', 'nothing')
         if type == 'groupchat':
             # no access control for group chat.
             # need a way to tell exactly which user sent a message, but is it
             # posslbe?
             return fromJid
-	elif type == 'presence':
+	elif messageType == 'presence':
 	    pass
 	    # do something with these
-        elif type == 'nothing':
+        elif messageType == 'nothing':
             for elmt in twxml.elements():
                 for child in elmt.children:
                     try:
@@ -246,8 +245,8 @@ class JabberAdapter:
         self.dprint('-< received %s' % twxml.toXml())
         sender = self.checkAccess(twxml)
         if sender:
-            type = twxml.attributes.get('type', 'nothing')
-            if type == 'subscribe':
+            messageType = twxml.attributes.get('type', 'nothing')
+            if messageType == 'subscribe':
                 self.sendAction(presenceElement(self.client.jidString(self.client.userId), twxml['from'], 'subscribed'))
         
     def messageHandler(self, twxml):
@@ -296,12 +295,12 @@ class JabberAdapter:
                     self.sendMessage(message, twxml['from'], messageType)
                   break
 
-    def sendMessage(self, message, to, type):
+    def sendMessage(self, message, to, messageType):
       if not self.mute:
-        msgStanza = self.sendMessage2twxml(message, to, type)
+        msgStanza = self.sendMessage2twxml(message, to, messageType)
         self.sendAction(msgStanza)
 
-    def checkCommand(self, message, fromJid, type):
+    def checkCommand(self, message, fromJid, messageType):
         """Take the message and return a dict of its parts for command dispatching"""
         self.dprint('Checking message %s' % message)
         command = {}
@@ -313,7 +312,7 @@ class JabberAdapter:
         elif self.client.userId in message:
           to, commandPart = message.split('%s:' % self.client.userId)
         if commandPart is None:
-          if not self.fromRoom(fromJid) or type == 'chat':
+          if not self.fromRoom(fromJid) or messageType == 'chat':
             commandPart = message
             to = self.client.userId
             self.dprint('Found command %s' % commandPart)
@@ -375,14 +374,14 @@ class JabberAdapter:
     def fromRoom(self, sender):
         return re.search(self.client.groupServer, sender)
 
-    def sendMessage2twxml(self, message, sender, type):
+    def sendMessage2twxml(self, message, sender, messageType):
         """transform a SendMessage action into a twisted xml element"""
         inForum = False
         resource = False
         twxml = domish.Element((JABBER_CLIENT_NS, 'message'))
         if self.fromRoom(sender) :
           inForum = sender.split('@', 1)[0]
-          if type.lower() == 'groupchat':
+          if messageType.lower() == 'groupchat':
             twxml['type'] = 'groupchat'
             self.dprint('We are in a forum and this message should go back to %s' % inForum)
           else:

@@ -44,7 +44,7 @@ class Model(Plugin):
     return parser
     
   def private(self):
-    False
+    return False
 
   def help(self):
     opts = self.options()

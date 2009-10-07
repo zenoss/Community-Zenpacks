@@ -1,7 +1,6 @@
 import Globals
 import logging
 import glob
-import logging
 
 log = logging.getLogger('zen.xmppBot')
 
@@ -38,7 +37,7 @@ class ZenAdapter:
 
     def ackEvents(self, user, eventsToAck):
         """Change list of events to acknowledged"""
-	events = self.dmd.ZenEventManager.manage_setEventStates(1, eventsToAck, user)
+	self.dmd.ZenEventManager.manage_setEventStates(1, eventsToAck, user)
 
     def events(self):
         return self.evManager.getEventList()

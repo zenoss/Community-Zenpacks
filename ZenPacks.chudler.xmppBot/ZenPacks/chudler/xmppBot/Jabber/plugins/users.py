@@ -30,7 +30,7 @@ class Users(Plugin):
 
 
   def private(self):
-    False
+    return False
 
   def help(self):
     return """

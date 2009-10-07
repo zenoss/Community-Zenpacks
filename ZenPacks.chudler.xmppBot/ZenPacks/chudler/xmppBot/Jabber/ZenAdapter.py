@@ -36,9 +36,9 @@ class ZenAdapter:
         allEvents = self.events()
         return filter(lambda event: event.eventState == ackState, allEvents)
 
-    def ackEvents(self, eventsToAck):
+    def ackEvents(self, user, eventsToAck):
         """Change list of events to acknowledged"""
-        events = self.dmd.ZenEventManager.manage_ackEvents(eventsToAck)       
+	events = self.dmd.ZenEventManager.manage_setEventStates(1, eventsToAck, user)
 
     def events(self):
         return self.evManager.getEventList()

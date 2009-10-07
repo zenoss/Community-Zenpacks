@@ -68,7 +68,8 @@ class SetJid(Plugin):
         zenUser.getProperty('JabberId')
     except AttributeError:
         zenUser.manage_addProperty('JabberId', '', 'string')
-        zenUser._setProperty('JabberId', '', 'string')
+        # unnecessary?
+        #zenUser._setProperty('JabberId', '', 'string')
 
   def private(self):
     False

@@ -19,7 +19,10 @@ class Users(Plugin):
     haveUser = False
     for user in adapter.userSettings():
         haveUser = True
-        jabberId = user.getProperty('JabberId') or 'No JabberId'
+        try:
+            jabberId = user.getProperty('JabberId') or 'No JabberId'
+        except AttributeError:
+            jabberId = 'No JabberId'
         users.append('%s (%s)' % (user.id, jabberId))
     if haveUser:
         message = '\n'.join(users)

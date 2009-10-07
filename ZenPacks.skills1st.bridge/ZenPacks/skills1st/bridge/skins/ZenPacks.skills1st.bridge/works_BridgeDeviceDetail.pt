@@ -1,0 +1,74 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" 
+    name="BridgeDeviceDetail">
+
+<tal:block metal:define-macro="BridgeDeviceFormList"
+    tal:define="tableName string:BridgeDeviceFormList;
+    objects here/BridgeInt/objectValuesAll;
+    tabletitle string:Bridge blah blah Interfaces;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='Name');
+    ts python:here.ZenTableManager.getTableState(tableName);
+    menu_id string:BridgeInt;
+    showfilterbox python:False;">
+<input type='hidden' name='tableName'
+    tal:attributes="value tableName" />
+    
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="objects">
+        <td class="tableheader" width="20" align=center>Bridge</td>
+        <td class="tableheader" width="10" align=center>Port</td>
+        <td class="tableheader" width="20" align=center>Remote Address</td>
+    </tr>
+    <tr tal:condition="not:objects">
+        <th class="tableheader" align="left" colspan="9">
+            No Interfaces found. Double check you have the correct collector plugin and you have remodeled.
+        </th>
+    </tr>
+    <tal:block tal:repeat="Bridge batch">
+    <tr tal:define="odd repeat/Bridge/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        
+      
+      <td class="tablevalues">
+        <a class=tablevalues tal:content="Bridge/name" 
+        tal:attributes="href Bridge/getPrimaryUrlPath">BlaBla</a>
+      </td>
+      
+      <td class="tablevalues" align="center">
+      <img border="0"
+        tal:attributes="src python:test(Bridge.Port==1,
+    	    here.getStatusImgSrc(0),
+            here.getStatusImgSrc(3))" />
+      </td>
+      
+      <td class="tablevalues" align="center">
+      <img border="0"
+        tal:attributes="src python:test(Bridge.RemoteAddress==1,
+    	    here.getStatusImgSrc(0),
+            here.getStatusImgSrc(3))" />
+      </td>
+
+     </tr>
+    </tal:block>
+    <tr>
+        <td colspan="9" class="tableheader" align='center'>
+            <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+</tal:block>
+</tal:block>

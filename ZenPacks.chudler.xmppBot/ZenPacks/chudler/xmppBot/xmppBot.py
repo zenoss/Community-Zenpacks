@@ -184,7 +184,25 @@ class XmppBot(PBDaemon, ZCmdBase, ZenActions):
         if action.targetAddr:
             return [action.targetAddr]
         else:
-            [ action.getUser().jabberId.strip() ]
+	    results = []
+            zenUser = action.getUser()
+	    # attempt to detect a group and resolve its users, otherwise see if it is a user
+            if 'getMemberUserIds' in dir(zenUser):
+            	for username in zenUser.getMemberUserIds():
+                        try:
+            			results.append(zenUser.getUserSettings(username).getProperty('JabberId').strip())
+ 			except None:
+				self.log.error('Unable to send xmpp alert message to %s.  This might happen if they are missing the jabberId property.  Try the bot command "setjid"' % username)
+
+            # getEmailAddresses should at least identify an entity that would have a jabberId on it, unless it was a group (above)
+	    elif 'getEmailAddresses' in dir(zenUser):
+            	try:
+			results.append(zenUser.getProperty('JabberId').lower())
+		except None:
+			self.log.error('Unable to send xmpp alert message to %s.  This might happen if they are missing the jabberId property.  Try the bot command "setjid"' % zenUser)
+	    else:
+		self.log.error('Unable to send xmpp alert message to %s.  Please report this error to the author of this plugin' % zenUser)
+            return results
 
 if __name__=='__main__':
     import logging

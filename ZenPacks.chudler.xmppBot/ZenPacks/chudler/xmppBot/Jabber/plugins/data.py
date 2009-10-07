@@ -125,7 +125,7 @@ class Data(Plugin):
 
     # parse the options
   def options(self):
-    parser = Options(description = 'Retrieve latest value read from the device for datapoint.  Simple example:\n data -d 10.1.1.1 -p laLoadInt1', prog = 'ack')
+    parser = Options(description = 'Retrieve latest value read from the device for datapoint.  Simple example:\n data -d 10.1.1.1 -p laLoadInt1', prog = 'data')
     parser.add_option('-d', '--device', dest='deviceName', help='Device name, IP or MAC.')
     parser.add_option('-p', '--point', dest='dataPointName', help='Acknowledge all events.  If -e is also specified, it will still acknowledge every event.')
     parser.add_option('-l', '--list', dest='list', action='store_true', help='Only list datapoints for the device and/or component.')

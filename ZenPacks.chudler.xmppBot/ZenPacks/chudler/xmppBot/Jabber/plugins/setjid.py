@@ -50,7 +50,7 @@ class SetJid(Plugin):
                     else:
                         self.mapIds(jabberId, user)
                         return 'This is your Zenoss user id, and the mapping is already set correctly.  However, the force option was used, so I set it anyway.  Since this will probably break communication with me, you can change it back from the Zope interface.'
-            log.debug('Setting the jabberid mapping property to %s for zenuser %s' % (jabberid, zenuser))
+            log.debug('Setting the jabberid mapping property to %s for zenuser %s' % (jabberId, user))
             self.mapIds(jabberId, user)
             break
     if haveUser:

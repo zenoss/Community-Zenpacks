@@ -12,7 +12,7 @@ class SetJid(Plugin):
   capabilities = ['setjid', 'mapuser', 'help']
 
   def call(self, args, sender, log, **kw):
-    print 'Users plugin running with %s' % args
+    log.debug('mapuser plugin running with %s' % args)
     opts = self.options()
 
     # parse the options

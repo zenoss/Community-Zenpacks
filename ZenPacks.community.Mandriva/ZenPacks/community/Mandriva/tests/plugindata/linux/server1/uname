@@ -1,0 +1,4 @@
+uname -a && echo __COMMAND__ && cat /etc/mandrakelinux-release | head -1'
+Linux linux-ddyk 2.6.27.7-9-default #1 SMP 2008-12-04 18:10:04 +0100 x86_64 x86_64 x86_64 GNU/Linux
+__COMMAND__
+Mandriva

@@ -197,8 +197,10 @@ class JabberAdapter:
       if self.debug:
         log.debug(message.encode('ascii', 'ignore'))
 
-    def checkAccess(self, fromJid, type):
+    def checkAccess(self, twxml):
         """Access control plugins"""
+        fromJid = twxml['from']
+        type = twxml.attributes.get('type', 'nothing')
         if type == 'groupchat':
             # no access control for group chat.
             # need a way to tell exactly which user sent a message, but is it
@@ -207,6 +209,16 @@ class JabberAdapter:
 	elif type == 'presence':
 	    pass
 	    # do something with these
+        elif type == 'nothing':
+            for elmt in twxml.elements():
+                for child in elmt.children:
+                    try:
+                        if child.name == 'invite':
+                            fromJid = child['from']
+                            log.debug('Invited to a room from %s.  Need to see if this user is authorized.' % fromJid)
+                            break
+                    except AttributeError:
+                        pass
         authorized = False
         user = fromJid
         for plugin in getPluginsByCapability('accessControl'):
@@ -231,7 +243,7 @@ class JabberAdapter:
         :param twxml: the xml stream containing a presence element
         """
         self.dprint('-< received %s' % twxml.toXml())
-        sender = self.checkAccess(twxml['from'], 'presence')
+        sender = self.checkAccess(twxml)
         if sender:
             type = twxml.attributes.get('type', 'nothing')
             if type == 'subscribe':
@@ -251,7 +263,7 @@ class JabberAdapter:
             return
         fromJid = twxml['from']
         self.dprint('-< received %s' % twxml.toXml())
-        sender = self.checkAccess(fromJid, twxml['type'])
+        sender = self.checkAccess(twxml)
         if sender:
             for elmt in twxml.elements():
                 # invited in a group chat ?
@@ -270,7 +282,7 @@ class JabberAdapter:
             if sender == self.client.userId:
                 self.dprint('*** dropping request from %s, is self' % fromJid)
                 return
-            sender = self.checkAccess(twxml['from'], twxml['type'])
+            sender = self.checkAccess(twxml)
             if sender:
               for elmt in twxml.elements():
                 if elmt.name == 'body':

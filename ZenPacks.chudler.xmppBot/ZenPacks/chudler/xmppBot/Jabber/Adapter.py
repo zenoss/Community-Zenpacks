@@ -9,6 +9,7 @@ import re
 import logging
 
 log = logging.getLogger('zen.xmppBot')
+log.setLevel(10)
 
 from twisted.words.xish import xmlstream
 from twisted.words.protocols.jabber import client, jid
@@ -263,6 +264,7 @@ class JabberAdapter:
             return
         fromJid = twxml['from']
         self.dprint('-< received %s' % twxml.toXml())
+        messageType = twxml.attributes.get('type', 'nothing')
         sender = self.checkAccess(twxml)
         if sender:
             for elmt in twxml.elements():
@@ -288,10 +290,10 @@ class JabberAdapter:
                 if elmt.name == 'body':
                   self.dprint('Processing chat body %s' % elmt.toXml())
                   body = elmt.children[0]
-                  command = self.checkCommand(body, twxml['from'], twxml['type'])
+                  command = self.checkCommand(body, twxml['from'], messageType)
                   message = self.dispatchCommand(command, twxml['from'], body, twxml)
                   if message:
-                    self.sendMessage(message, twxml['from'], twxml['type'])
+                    self.sendMessage(message, twxml['from'], messageType)
                   break
 
     def sendMessage(self, message, to, type):

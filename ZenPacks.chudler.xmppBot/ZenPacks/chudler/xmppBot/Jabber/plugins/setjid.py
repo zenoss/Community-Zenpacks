@@ -31,7 +31,10 @@ class SetJid(Plugin):
     for user in adapter.userSettings():
         if user.id.lower() == options.zenUser.lower():
             haveUser = True
-            currentId = user.getProperty('JabberId')
+            try:
+                currentId = user.getProperty('JabberId')
+            except AttributeError:
+                currentId = False
             if currentId:
                 if options.jabberId == currentId.lower():
                     if options.force:

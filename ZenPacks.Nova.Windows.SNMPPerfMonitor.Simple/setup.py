@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.Nova.Windows.SNMPPerfMonitor.Simple"
-VERSION = "1.2"
+VERSION = "1.3"
 AUTHOR = "Ryan Matte"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Nova', 'ZenPacks.Nova.Windows', 'ZenPacks.Nova.Windows.SNMPPerfMonitor', 'ZenPacks.Nova.Windows.SNMPPerfMonitor.Simple']

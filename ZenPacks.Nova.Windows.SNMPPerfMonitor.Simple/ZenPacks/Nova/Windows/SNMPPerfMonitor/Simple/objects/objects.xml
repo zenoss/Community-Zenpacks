@@ -23,7 +23,7 @@ snmpCpu
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.Nova.Windows.SNMPPerfMonitor/path}/libexec/wincpu.sh "${dev/manageIp}" "${dev/zSnmpCommunity}"
+${here/ZenPackManager/packs/ZenPacks.Nova.Windows.SNMPPerfMonitor.Simple/path}/libexec/wincpu.sh "${dev/manageIp}" "${dev/zSnmpCommunity}"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -62,7 +62,7 @@ snmpMemory
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.Nova.Windows.SNMPPerfMonitor/path}/libexec/winmem.sh "${dev/manageIp}" "${dev/zSnmpCommunity}"
+${here/ZenPackManager/packs/ZenPacks.Nova.Windows.SNMPPerfMonitor.Simple/path}/libexec/winmem.sh "${dev/manageIp}" "${dev/zSnmpCommunity}"
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

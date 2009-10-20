@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Websites', 'rrdTemplates', 'Synthetic Transactions') -->
+<object id='/zport/dmd/Devices/Websites/rrdTemplates/Synthetic Transactions' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='transaction_time' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.synthetictransactions.SonnyStormes/path}/libexec/transtest.py ${dev/id} ${here/ZenPackManager/packs/ZenPacks.synthetictransactions.SonnyStormes/path}/scripts/${dev/id}
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='time' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='Critical' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['transaction_time_time']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+30
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='Warning' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['transaction_time_time']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+20
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+3
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Synthetic Transaction Time' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Seconds
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Critical' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+Critical
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='Warning' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Warning
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='time_time' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+transaction_time_time
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</objects>

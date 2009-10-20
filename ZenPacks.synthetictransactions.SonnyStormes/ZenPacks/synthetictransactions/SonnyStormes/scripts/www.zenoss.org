@@ -1,0 +1,4 @@
+go http://community.zenoss.org/index.jspa
+follow ZENPACKS
+find "fping"
+code 200

@@ -9,7 +9,7 @@ LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.ZenODBC']
 INSTALL_REQUIRES = ['ZenPacks.community.RDBMS>=1.0']
-COMPAT_ZENOSS_VERS = ">=2.3"
+COMPAT_ZENOSS_VERS = ">=2.4"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

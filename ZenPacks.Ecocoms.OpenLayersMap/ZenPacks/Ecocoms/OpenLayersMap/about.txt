@@ -2,5 +2,5 @@
 title = OpenLayers Map
 url = http://www.ecocoms.com
 author = Nikolai Georgiev
-version = 1.1
+version = 1.2
 organization = Ecocoms Ltd.

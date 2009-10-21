@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.Ecocoms.OpenLayersMap'
-VERSION = '1.1'
+VERSION = '1.2'
 AUTHOR = 'Nikolai Georgiev'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Ecocoms']
@@ -57,15 +57,10 @@ setup(
     # Tell setuptools to figure out for itself which files to include
     # in the binary egg when it is built.
     include_package_data = True,
-
-    # Tell setuptools what non-python files should also be included
-    # with the binary egg.
-    package_data = {
-         '': ['*.txt'],
-         '':['../COPYRIGHT.txt','../LICENSE.txt'],
-         NAME: ['objects/*','skins/*/*','services/*', 'reports/*/*',
-                'modeler/*/*', 'daemons/*', 'lib/*', 'libexec/*'],
-         },
+    
+    # The MANIFEST.in file is the recommended way of including additional files
+    # in your ZenPack. package_data is another.
+    #package_data = {}
 
     # Indicate dependencies on other python modules or ZenPacks.  This line
     # is modified by zenoss when the ZenPack edit page is submitted.  Zenoss

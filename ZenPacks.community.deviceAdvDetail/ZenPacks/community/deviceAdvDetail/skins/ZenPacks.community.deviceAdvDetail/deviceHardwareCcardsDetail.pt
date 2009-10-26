@@ -13,9 +13,13 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'slot','Slot')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'id','Name')"/>
+ 	  	<th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'getManufacturerName','Manufacturer')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'serialNumber','Serial #')"/>
         <th class="tableheader" align="center" width="60">Status</th>
     </tr>
     <tal:block tal:repeat="card batch">
@@ -25,9 +29,11 @@
             <tal:block 
              tal:content="structure python:card.urlLink(text=str(card.slot))"/>
         </td>
+        <td class="tablevalues" tal:content="card/id"/>
         <td class="tablevalues" 
             tal:content="structure card/getManufacturerLink"/>
         <td class="tablevalues" tal:content="structure card/getProductLink"/>
+        <td class="tablevalues" tal:content="card/serialNumber"/>
         <td tal:define="color card/statusDot|string:grey" 
             class="tablevalues" style="text-align:center;">
             <img tal:attributes="src string:img/${color}_dot.png"/>

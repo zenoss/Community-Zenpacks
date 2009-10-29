@@ -17,6 +17,9 @@ THISDIR=`dirname $MYPATH`
 PRGHOME=`dirname $THISDIR`
 PRGNAME=zenperfwmi.py
 CFGFILE=$CFGDIR/zenperfwmi.conf
+if [ ! -f $CFGFILE ]; then
+    touch $CFGFILE
+fi
 
 generic "$@"
 

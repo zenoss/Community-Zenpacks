@@ -12,13 +12,11 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 1.1 2009/08/01 02:00:23 egor Exp $"""
+$Id: WmiPerfConfig.py,v 2.0 2009/10/29 16:55:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 2.0 $"[11:-2]
 
-from Products.ZenWin.services.WmiConfig import *
-from Products.ZenHub.PBDaemon import translateError
-from Products.ZenHub.services.Procrastinator import Procrastinate
+from Products.ZenCollector.services.config import CollectorConfigService
 
 import logging
 log = logging.getLogger('zen.ModelerService.WmiPerfConfig')
@@ -61,45 +59,50 @@ def getWmiComponentConfig(comp, queries, datapoints):
 
 
 
-class WmiPerfConfig(WmiConfig):
 
+class WmiPerfConfig(CollectorConfigService):
+    
     def __init__(self, dmd, instance):
-        WmiConfig.__init__(self, dmd, instance)
-        self.config = self.dmd.Monitors.Performance._getOb(self.instance)
-        self.procrastinator = Procrastinate(self.push)
-
-
-    def getDeviceConfigAndWmiDatasources(self, names):
-        """Return a list of (devname,user,passwd,namespace,queries,datapoints) 
-        """
-        deviceProxies = []
-        for device in self._monitoredDevices(names):
-	    queries = {}
-	    datapoints = {}
-            threshs = getWmiComponentConfig(device, queries, datapoints)
-            for comp in device.getMonitoredComponents():
-                threshs.extend(getWmiComponentConfig(comp, queries, datapoints))
-            for namespace, query in queries.iteritems():
-                proxy = self.createDeviceProxy(device)
-                proxy.id = device.getId()
-		proxy.namespace = namespace
-		proxy.queries = query
-		proxy.datapoints = datapoints[namespace]
-	        proxy.thresholds = threshs
-                if not proxy.queries:
-                    log.debug("Device %s skipped because there are no datasources",
+        deviceProxyAttributes = ('zWmiMonitorIgnore',
+                                 'zWinUser',
+                                 'zWinPassword')
+        CollectorConfigService.__init__(self, dmd, instance, deviceProxyAttributes)
+        
+    def _filterDevice(self, device):
+        include = CollectorConfigService._filterDevice(self, device)
+        
+        if getattr(device, 'zWmiMonitorIgnore', False):
+            self.log.debug("Device %s skipped because zWmiMonitorIgnore is True",
+                           device.id)
+            include = False
+            
+        return include
+        
+    def _createDeviceProxy(self, device):
+	queries = {}
+	datapoints = {}
+        proxy = CollectorConfigService._createDeviceProxy(self, device)
+	proxy.thresholds = []
+        
+        # for now, every device gets a single configCycleInterval based upon
+        # the collector's winCycleInterval configuration which is typically
+        # located at dmd.Monitors.Performance._getOb('localhost').
+        # TODO: create a zProperty that allows for individual device schedules
+        proxy.configCycleInterval = self._prefs.winCycleInterval
+        
+        threshs = getWmiComponentConfig(device, queries, datapoints)
+        for comp in device.getMonitoredComponents():
+            threshs.extend(getWmiComponentConfig(comp, queries, datapoints))
+        for namespace, query in queries.iteritems():
+#            proxy.id = device.getId()
+	    proxy.namespace = namespace
+	    proxy.queries = query
+	    proxy.datapoints = datapoints[namespace]
+	    proxy.thresholds = threshs
+            if not proxy.queries:
+                log.debug("Device %s skipped because there are no datasources",
                           proxy.id)
-                    continue
-
-                deviceProxies.append(proxy)
-                log.debug("Device %s added to proxy list", proxy.id)
-
-        return deviceProxies
-
-    @translateError
-    def remote_getDeviceConfigAndWmiDatasources(self, names):
-        return self.getDeviceConfigAndWmiDatasources(names)
-
-    @translateError
-    def remote_getDefaultRRDCreateCommand(self):
-        return self.config.getDefaultRRDCreateCommand()
+                return None
+                
+        return proxy
+        

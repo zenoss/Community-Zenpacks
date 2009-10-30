@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.0 2009/10/29 16:43:23 egor Exp $"""
+$Id: zenperfwmi.py,v 2.1 2009/10/30 17:05:23 egor Exp $"""
 
-__version__ = "$Revision: 2.0 $"[11:-2]
+__version__ = "$Revision: 2.1 $"[11:-2]
 
 import logging
 
@@ -165,7 +165,7 @@ class ZenPerfWmiTask(ObservableMixin):
         self._taskConfig = taskConfig
         self._devId = deviceId
         self._manageIp = self._taskConfig.manageIp
-        self._namespace = self._taskConfig.namespace
+        self._namespaces = self._taskConfig.queries.keys()
         self._queries = self._taskConfig.queries
         self._thresholds = self._taskConfig.thresholds
         self._datapoints = self._taskConfig.datapoints
@@ -175,7 +175,7 @@ class ZenPerfWmiTask(ObservableMixin):
         self._preferences = zope.component.queryUtility(ICollectorPreferences,
                                                         "zenperfwmi")
                                                         
-        self._wmic = None # the WMIClient
+        self._wmic = {} # the WMIClient
         self._reset()
         
     def _reset(self):
@@ -183,9 +183,11 @@ class ZenPerfWmiTask(ObservableMixin):
         Reset the WMI client and notification query watcher connection to the
         device, if they are presently active.
         """
-        if self._wmic:
-            self._wmic.close()
-        self._wmic = None
+	for namespace in self._namespaces:
+            if namespace in self._wmic:
+                self._wmic[namespace].close()
+            self._wmic[namespace] = None
+        self._wmic = {}
         
     def _finished(self, result):
         """
@@ -206,15 +208,13 @@ class ZenPerfWmiTask(ObservableMixin):
         # ZenCollector framework can keep track of the success/failure rate
         return result
 
-    def _failure(self, result):
+    def _failure(self, result, namespace=None):
         """
         Errback for an unsuccessful asynchronous connection or collection 
         request.
         """
         err = result.getErrorMessage()
-        log.error("Unable to scan device %s: %s", self._devId, err)
-
-        self._reset()
+        log.error("Unable to scan device %s: %s %s", self._devId, namespace, err)
 
         summary = """
             Could not get WMI Instance (%s). Check your
@@ -242,32 +242,33 @@ class ZenPerfWmiTask(ObservableMixin):
         
         log.debug("Successful collection from %s [%s], results=%s",
                   self._devId, self._manageIp, results)
-                  
-        if results:
-	    for tableName, data  in results.iteritems():
-		for (dpname, comp, rrdPath, rrdType, rrdCreate, minmax) in self._datapoints[tableName]:
+        
+	if results:          
+	    for tableName, data in results.iteritems():
+		for (dpname, comp, rrdPath, rrdType, rrdCreate,
+		                        minmax) in self._datapoints[tableName]:
 		    if dpname == 'sysUpTime':
 		        value = long(getattr(data[0], 'SystemUpTime',None)) * 100
 		    else:
 		        value = long(getattr(data[0], dpname, None))
                     self._dataService.writeRRD( rrdPath,
-                                        value,
-                                        rrdType,
-			                rrdCreate,
-                                        min=minmax[0],
-                                        max=minmax[1])
+                                                value,
+                                                rrdType,
+			                        rrdCreate,
+                                                min=minmax[0],
+                                                max=minmax[1])
 	return results
 
-    def _collectCallback(self, result):
+    def _collectCallback(self, result, namespace):
         """
         Callback called after a connect or previous collection so that another
         collection can take place.
         """
-        log.debug("Polling for WMI data from %s [%s]", 
-                  self._devId, self._manageIp)
+        log.debug("Polling for WMI data from %s [%s] %s", 
+                  self._devId, self._manageIp, namespace)
 
         self.state = ZenPerfWmiTask.STATE_WMIC_QUERY
-        d = self._wmic.query(self._queries)
+	d = self._wmic[namespace].query(self._queries[namespace])
         d.addCallbacks(self._collectSuccessful, self._failure)
         return d
 
@@ -278,15 +279,16 @@ class ZenPerfWmiTask(ObservableMixin):
         log.debug("Connected to %s [%s]", self._devId, self._manageIp)
         
 
-    def _connect(self):
+    def _connect(self, namespace):
         """
         Called when a connection needs to be created to the remote Windows
         device.
         """
-        log.debug("Connecting to %s [%s]", self._devId, self._manageIp)
+        log.debug("Connecting to %s [%s] %s", self._devId, self._manageIp,
+	                                                        namespace)
         self.state = ZenPerfWmiTask.STATE_WMIC_CONNECT
-        self._wmic = myWMIClient(self._taskConfig)
-        d = self._wmic.connect(namespace=self._namespace)
+        self._wmic[namespace] = myWMIClient(self._taskConfig)
+        d = self._wmic[namespace].connect(namespace=namespace)
         return d
 
     def cleanup(self):
@@ -296,21 +298,24 @@ class ZenPerfWmiTask(ObservableMixin):
         log.debug("Scanning device %s [%s]", self._devId, self._manageIp)
         
         # connect to device
-        d = self._connect()
-        d.addCallbacks(self._connectCallback, self._failure)
+	pool = []
+	for namespace in self._namespaces:
+            pool.append(self._connect(namespace))
+            pool[-1].addCallbacks(self._connectCallback, self._failure)
 
-        # try collecting events after a successful connect, or if we're already
-        # connected
-        d.addCallback(self._collectCallback)
+            # try collecting events after a successful connect, or if we're
+            # already connected
+            pool[-1].addCallback(self._collectCallback, namespace=namespace)
+        dl = defer.DeferredList(pool, consumeErrors=True)
 
         # Add the _finished callback to be called in both success and error
         # scenarios. While we don't need final error processing in this task,
         # it is good practice to catch any final errors for diagnostic purposes.
-        d.addBoth(self._finished)
+        dl.addCallback(self._finished)
 
         # returning a Deferred will keep the framework from assuming the task
         # is done until the Deferred actually completes
-        return d
+        return dl
     
 
 #

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the WMIDataSource Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2009 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 2.0 2009/10/29 16:55:23 egor Exp $"""
+$Id: WmiPerfConfig.py,v 2.1 2009/10/30 17:06:22 egor Exp $"""
 
-__version__ = "$Revision: 2.0 $"[11:-2]
+__version__ = "$Revision: 2.1 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 
@@ -31,19 +31,17 @@ def getWmiComponentConfig(comp, queries, datapoints):
             if not ds.enabled: continue
             wql = ds.getWql(comp)
             if not wql: continue
-	    namespace = ds.namespace
-	    if not queries.get(namespace, False):
-	        queries[namespace] = {}
-	        datapoints[namespace] = {}
+	    if ds.namespace not in queries:
+	        queries[ds.namespace] = {}
 	    qid = comp.id + "_" + templ.id + "_" + ds.id
-	    queries[namespace][qid] = wql
-	    datapoints[namespace][qid] = []
+	    queries[ds.namespace][qid] = wql
+	    datapoints[qid] = []
 	    compname = comp.meta_type != "Device" and "" or ds.id
             for dp in ds.getRRDDataPoints():
                 names.append(dp.name())
                 dpname = comp.meta_type != "Device" \
                         and comp.viewName() or dp.id
-                datapoints[namespace][qid].append(( dpname,
+                datapoints[qid].append(( dpname,
 		                            compname,
                                             "/".join((basepath, dp.name())),
                                             dp.rrdtype,
@@ -75,7 +73,6 @@ class WmiPerfConfig(CollectorConfigService):
             self.log.debug("Device %s skipped because zWmiMonitorIgnore is True",
                            device.id)
             include = False
-            
         return include
         
     def _createDeviceProxy(self, device):
@@ -93,16 +90,13 @@ class WmiPerfConfig(CollectorConfigService):
         threshs = getWmiComponentConfig(device, queries, datapoints)
         for comp in device.getMonitoredComponents():
             threshs.extend(getWmiComponentConfig(comp, queries, datapoints))
-        for namespace, query in queries.iteritems():
-#            proxy.id = device.getId()
-	    proxy.namespace = namespace
-	    proxy.queries = query
-	    proxy.datapoints = datapoints[namespace]
-	    proxy.thresholds = threshs
-            if not proxy.queries:
-                log.debug("Device %s skipped because there are no datasources",
-                          proxy.id)
-                return None
+	proxy.queries = queries
+	proxy.datapoints = datapoints
+	proxy.thresholds = threshs
+        if not proxy.queries:
+            log.debug("Device %s skipped because there are no datasources",
+                          device.getId())
+            return None
                 
         return proxy
         

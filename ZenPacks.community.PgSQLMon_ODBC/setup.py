@@ -8,8 +8,8 @@ AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.PgSQLMon_ODBC']
-INSTALL_REQUIRES = ['ZenPacks.community.deviceAdvDetail>=1.2', 'ZenPacks.community.ZenODBC>=2.1']
-COMPAT_ZENOSS_VERS = ">=2.4"
+INSTALL_REQUIRES = ['ZenPacks.community.deviceAdvDetail>=1.1', 'ZenPacks.community.ZenODBC>=2.0']
+COMPAT_ZENOSS_VERS = ">=2.3"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

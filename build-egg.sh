@@ -22,16 +22,18 @@ fi
 echo PACK: $PACK
 echo OS: $OS
 echo ZVERSION: $ZVERSION
-
 echo
-cp -r $PACK $TMPDIR
-cp LICENSE.txt $TMPDIR/$PACK
-cd $TMPDIR/$PACK
-find . | grep .svn | xargs rm -rf
+rm -rf $PACK/dist
+cp LICENSE.txt $PACK
+cd $PACK
 echo In $PACK
 $PYTHON setup.py bdist_egg
-cd -
-mv $TMPDIR/$PACK/dist/*.egg .
-rm -rf $TMPDIR/$PACK
+rm LICENSE.txt
+cd dist
+for f in `ls -1 | grep py2.3.egg` ; do
+    mv $f `echo $f | sed 's/2.3/2.4/'`
+done ;
+cd ..
+cp dist/*.egg ..
 true
 

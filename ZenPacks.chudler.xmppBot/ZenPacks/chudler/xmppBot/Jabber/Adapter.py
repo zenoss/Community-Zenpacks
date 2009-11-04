@@ -206,9 +206,9 @@ class JabberAdapter:
             # need a way to tell exactly which user sent a message, but is it
             # posslbe?
             return fromJid
-	elif messageType == 'presence':
-	    pass
-	    # do something with these
+        elif messageType == 'presence':
+            pass
+        # do something with these
         elif messageType == 'nothing':
             for elmt in twxml.elements():
                 for child in elmt.children:

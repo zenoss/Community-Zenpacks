@@ -201,7 +201,7 @@ class JabberAdapter:
         """Access control plugins"""
         fromJid = twxml['from']
         messageType = twxml.attributes.get('type', 'nothing')
-        if type == 'groupchat':
+        if messageType == 'groupchat':
             # no access control for group chat.
             # need a way to tell exactly which user sent a message, but is it
             # posslbe?

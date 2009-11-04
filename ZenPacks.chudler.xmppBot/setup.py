@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.chudler.xmppBot'
-VERSION = '1.0'
+VERSION = '1.1'
 AUTHOR = 'Colin Hudler'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.chudler']

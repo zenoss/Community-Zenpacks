@@ -37,6 +37,7 @@ class MySqlDatabaseMap(OdbcPlugin):
 
     def queries(self, device):
         cs =  ';'.join((getattr(device, 'zMySqlConnectionString', None),
+	                'DATABASE=information_schema',
                         'SERVER=%s'%str(device.manageIp),
                         'UID=%s'%getattr(device, 'zMySqlUsername', None),
                         'PWD=%s'%getattr(device, 'zMySqlPassword', None)))

@@ -13,5 +13,5 @@ class ZenPack(ZenPackBase):
     """ MsSQLMon_ODBC loader
     """
     packZProperties = [
-            ('zMsSqlConnectionString', 'Driver={FreeTDS};TDS_Version=8.0;PORT=1433;Database=master', 'string'),
+            ('zMsSqlConnectionString', 'DRIVER={FreeTDS};TDS_Version=8.0;PORT=1433', 'string'),
 	    ]

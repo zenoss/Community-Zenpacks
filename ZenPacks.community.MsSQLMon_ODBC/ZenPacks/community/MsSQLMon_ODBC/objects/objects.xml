@@ -23,7 +23,7 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp}
+${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
 use ${here/dbname}; select sum(convert(dec(15),case when status &amp; 64 = 0 then size else 0 end)), sum(convert(dec(15),case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles;
@@ -61,7 +61,7 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp}
+${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
 use ${here/dbname}; select sum(convert(dec(15),case when indid &lt; 2 then dpages when indid = 255 then used else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then reserved else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then used else 0 end)) from sysindexes;
@@ -333,7 +333,7 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp}
+${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
 use ${here/dbname}; select sum(convert(bigint,case when status &amp; 64 = 0 then size else 0 end)), sum(convert(bigint,case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles;
@@ -371,7 +371,7 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zMsSqlConnectionString};Server=${here/manageIp}
+${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
 use ${here/dbname}; select sum(CASE When it.internal_type IN (202,204) Then 0 When a.type &lt;&gt; 1 Then a.used_pages When p.index_id &lt; 2 Then a.data_pages Else 0 END), sum(a.total_pages), sum(a.used_pages) from sys.partitions p join sys.allocation_units a on p.partition_id = a.container_id left join sys.internal_tables it on p.object_id = it.object_id;

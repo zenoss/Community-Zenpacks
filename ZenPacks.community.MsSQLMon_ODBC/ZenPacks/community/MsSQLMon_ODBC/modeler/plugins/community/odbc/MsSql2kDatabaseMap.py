@@ -8,26 +8,26 @@
 #
 ################################################################################
 
-__doc__="""MsSqlDatabaseMap.py
+__doc__="""MsSql2kDatabaseMap.py
 
-MsSqlDatabaseMap maps the MSSQL Databases table to Database objects
+MsSql2kDatabaseMap maps the MSSQL 2000 Databases table to Database objects
 
-$Id: MsSqlDatabaseMap.py,v 1.1 2009/08/13 19:35:23 egor Exp $"""
+$Id: MsSqlDatabaseMap.py,v 1.0 2009/11/11 11:00:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.0 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 
-class MsSqlDatabaseMap(OdbcPlugin):
+class MsSql2kDatabaseMap(OdbcPlugin):
     
 
     ZENPACKID = 'ZenPacks.community.MsSQLMon_ODBC'
 
-    maptype = "MsSqlDatabaseMap"
+    maptype = "MsSql2kDatabaseMap"
     compname = "os"
     relname = "softwaredatabases"
-    modname = "ZenPacks.community.MsSQLMon_ODBC.MsSql90Database"
+    modname = "ZenPacks.community.MsSQLMon_ODBC.MsSql80Database"
     deviceProperties = \
                 OdbcPlugin.deviceProperties + ('zWinUser',
 		                               'zWinPassword',
@@ -37,6 +37,7 @@ class MsSqlDatabaseMap(OdbcPlugin):
 
     def queries(self, device):
         cs =  ';'.join((getattr(device, 'zMsSqlConnectionString', None),
+	                'DATABASE=master',
                         'SERVER=%s'%str(device.manageIp),
                         'UID=%s'%getattr(device, 'zWinUser', None),
                         'PWD=%s'%getattr(device, 'zWinPassword', None)))
@@ -45,10 +46,6 @@ class MsSqlDatabaseMap(OdbcPlugin):
                 """USE master;
                 sp_databases;""",
 		['dbname', 'size', 'remarks']),
-            "dbtypes90": (cs,
-                """USE master;
-                SELECT name, compatibility_level, state FROM sys.databases;""",
-		['dbname', 'type', 'status']),
             "dbtypes80":(cs,
                 """USE master;
                 SELECT name, cmptlevel, status FROM sysdatabases;""",
@@ -62,16 +59,13 @@ class MsSqlDatabaseMap(OdbcPlugin):
 	        65: 'SQL Server 6.5',
 	        70: 'SQL Server 7.0',
 	        80: 'SQL Server 2000',
-		90: 'SQL Server 2005',
 		}
         rm = self.relMap()
 	dbsize = {}
+
 	for db in results.get('dbsize', []):
 	    dbsize[db['dbname']] = db['size'] * 1024
-	databases = results.get('dbtypes90', None)
-	if not databases:
-	    databases = results.get('dbtypes80', None)
-            self.modname = "ZenPacks.community.MsSQLMon_ODBC.MsSql80Database"
+	databases = results.get('dbtypes80', None)
         if not databases: return	    
         for database in databases:
 	    try:

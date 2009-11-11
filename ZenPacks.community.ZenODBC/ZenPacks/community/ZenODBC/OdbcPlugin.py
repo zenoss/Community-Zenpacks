@@ -12,13 +12,13 @@ __doc__="""OdbcPlugin
 
 wrapper for PythonPlugin
 
-$Id: OdbcPlugin.py,v 1.0 2009/08/06 13:13:23 egor Exp $"""
+$Id: OdbcPlugin.py,v 1.1 2009/11/11 13:26:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
-from OdbcClient import OdbcClient
+from OdbcClient import OdbcClient, CError
 from twisted.internet import defer
 
 class OdbcPlugin(CollectorPlugin):
@@ -37,10 +37,13 @@ class OdbcPlugin(CollectorPlugin):
         return d
 
     def preprocess(self, results, log):
-        if isinstance(results, Exception):
-            log.error(results)
-            return None
-        return results
+        newres = {}
+        for table, value in results.iteritems():
+            if isinstance(value[0], CError):
+                log.error(value[0].getErrorMessage())
+                continue
+	    newres[table] = value
+        return newres
 
 
 

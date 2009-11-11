@@ -12,7 +12,7 @@ __doc__="""OdbcClient
 
 Gets ODBC performance data and stores it in RRD files.
 
-$Id: OdbcClient.py,v 1.0 2009/08/14 23:42:23 egor Exp $"""
+$Id: OdbcClient.py,v 1.1 2009/11/11 13:25:23 egor Exp $"""
 
 __version__ = "$Revision: 1.1 $"[11:-2]
 
@@ -87,6 +87,7 @@ class OdbcClient(BaseClient):
                             output = driver.next()
                             if not output: continue
                         except Error, ex:
+                            log.debug("Exception collecting query: %s", str(ex))
                             queryResult[table] = [CError(str(ex))]
                             continue
                         try:

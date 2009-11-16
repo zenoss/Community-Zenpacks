@@ -19,5 +19,17 @@ class ZenPack(ZenPackBase):
     """
     packZProperties = [
             ('zWbemPort', '5989', 'string'),
+            ('zWbemProxy', '', 'string'),
             ('zWbemUseSSL', 'True', 'boolean'),
 	    ]
+
+    def install(self, app):
+        self.dmd.Events.createOrganizer("/Status/Wbem")
+        ZenPackBase.install(self, app)
+
+    def upgrade(self, app):
+        self.dmd.Events.createOrganizer("/Status/Wbem")
+        ZenPackBase.upgrade(self, app)
+
+    def remove(self, app, junk):
+        ZenPackBase.remove(self, app, junk)

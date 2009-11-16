@@ -50,7 +50,7 @@
             tal:content="here/enabled"/>
     </tr>
     <tr>
-        <td class="tableheader">CIM Namespace</td>
+        <td class="tableheader">Namespace</td>
         <td class="tablevalues" tal:condition="editable">
         <input class="tablevalues" type="text" name="namespace:text" size="80"
             tal:attributes="value here/namespace" />
@@ -59,7 +59,7 @@
             tal:content="here/namespace"/>
     </tr>
     <tr>
-        <td class="tableheader">Instance</td>
+        <td class="tableheader">Query</td>
         <td class="tablevalues" tal:condition="editable">
             <textarea class="tablevalues" rows="3" cols="80" 
                 name="instance:text"

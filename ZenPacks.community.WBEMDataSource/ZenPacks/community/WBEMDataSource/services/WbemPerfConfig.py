@@ -16,13 +16,7 @@ $Id: WbemPerfConfig.py,v 1.0 2009/07/25 00:34:23 egor Exp $"""
 
 __version__ = "$Revision: 1.1 $"[11:-2]
 
-
-from Products.ZenHub.services.ModelerService import ModelerService
-from Products.ZenModel.Device import Device
-
-from Products.ZenHub.services.Procrastinator import Procrastinate
-from Products.ZenHub.services.ThresholdMixin import ThresholdMixin
-from Products.ZenHub.PBDaemon import translateError
+from Products.ZenCollector.services.config import CollectorConfigService
 
 import logging
 log = logging.getLogger('zen.ModelerService.WbemPerfConfig')
@@ -62,75 +56,38 @@ def getWbemComponentConfig(comp, queries, datapoints):
     return threshs
 
 
-
-class WbemPerfConfig(ModelerService, ThresholdMixin):
-
-
+class WbemPerfConfig(CollectorConfigService):
+    
     def __init__(self, dmd, instance):
-        ModelerService.__init__(self, dmd, instance)
-        self.config = self.dmd.Monitors.Performance._getOb(self.instance)
-        self.procrastinator = Procrastinate(self.pushConfig)
-
-
-    def createDeviceProxy(self, dev):
-        result = ModelerService.createDeviceProxy(self, dev)
-        for prop in (
-            'zWinUser',
-            'zWinPassword',
-            'zWbemUseSSL',
-            'zWbemPort'):
-            if hasattr(dev, prop):
-                setattr(result, prop, getattr(dev, prop))
-        return result
-
-
-    def remote_getConfig(self):
-        return self.config.propertyItems()
-
-
-    def update(self, object):
-        from Products.ZenModel.RRDDataSource import RRDDataSource
-        if isinstance(object, RRDDataSource):
-            if object.sourcetype != 'WBEM':
-                return
-        ModelerService.update(self, object)
-
-
-    def deleted(self, obj):
-        for listener in self.listeners:
-            if isinstance(obj, Device):
-                listener.callRemote('deleteDevice', obj.id)
-
-
-    def getDeviceConfigAndWbemDatasources(self, names):
-        """Get the WBEM configuration for all devices. 
-        """
-        deviceProxies = []
-        for device in self.config.devices():
-            if names and device.id not in names: continue
-            device = device.primaryAq()
-	    queries = {}
-	    datapoints = {}
-            threshs = getWbemComponentConfig(device, queries, datapoints)
-            for comp in device.getMonitoredComponents():
-                threshs.extend(getWbemComponentConfig(comp, queries, datapoints))
-            proxy = self.createDeviceProxy(device)
-            proxy.id = device.getId()
-	    proxy.queries = queries
-	    proxy.datapoints = datapoints
-	    proxy.thresholds = threshs
-            if not proxy.queries:
-                log.debug("Device %s skipped because there are no datasources",
-                    proxy.id)
-                continue
-            deviceProxies.append(proxy)
-            log.debug("Device %s added to proxy list", proxy.id)
-        return deviceProxies
-
-    @translateError
-    def remote_getDeviceConfigAndWbemDatasources(self, names):
-        return self.getDeviceConfigAndWbemDatasources(names)
-
-    @translateError
-    def remote_getDefaultRRDCreateCommand(self):
-        return self.config.getDefaultRRDCreateCommand()
+        deviceProxyAttributes = ('zWinUser',
+                                 'zWinPassword',
+                                 'zWbemUseSSL',
+                                 'zWbemPort',
+				 'zWbemProxy')
+        CollectorConfigService.__init__(self, dmd, instance, deviceProxyAttributes)
+        
+        
+    def _createDeviceProxy(self, device):
+	queries = {}
+	datapoints = {}
+        proxy = CollectorConfigService._createDeviceProxy(self, device)
+	proxy.thresholds = []
+        
+        # for now, every device gets a single configCycleInterval based upon
+        # the collector's winCycleInterval configuration which is typically
+        # located at dmd.Monitors.Performance._getOb('localhost').
+        # TODO: create a zProperty that allows for individual device schedules
+        proxy.configCycleInterval = self._prefs.winCycleInterval
+        
+        threshs = getWbemComponentConfig(device, queries, datapoints)
+        for comp in device.getMonitoredComponents():
+            threshs.extend(getWbemComponentConfig(comp, queries, datapoints))
+	proxy.queries = queries
+	proxy.datapoints = datapoints
+	proxy.thresholds = threshs
+        if not proxy.queries:
+            log.debug("Device %s skipped because there are no datasources",
+                          device.getId())
+            return None
+                
+        return proxy

@@ -77,6 +77,8 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
     def getInstanceName(self, context):
         inst = RRDDataSource.RRDDataSource.getCommand(self, context, self.instance)
+	if inst.upper().startswith('WQL:'):
+	    return (inst[4:], 'WQL', self.namespace)
         try:
             classname, keys = inst.split('.', 1)
         except:
@@ -149,20 +151,28 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             url = 'http%s://%s:%s' % (device.zWbemUseSSL is True and 's' or '',
                                             device.manageIp, device.zWbemPort)
             creds = (device.zWinUser, device.zWinPassword)
-            conn = pywbem.WBEMConnection(url,creds)
-            if kb:
+            conn = pywbem.WBEMConnection(url, creds)
+	    if kb =='WQL':
+	        instances = conn.ExecQuery(kb, cn, namespace=ns)
+                for instance in instances:
+                    write('InstanceName: %s' % instance.path)
+		if len(instances) == 1:
+                    for property in instances[0].items():
+                        write('%s = %s' % (property[0], property[1]))
+            elif kb:
                 instanceName = pywbem.CIMInstanceName(  cn,
                                                         keybindings=kb,
                                                         namespace=ns)
                 instance = conn.GetInstance(instanceName,
                                             includeQualifiers=True,
                                             localOnly=False)
+                write('InstanceName: %s' % instance.path)
                 for property in instance.items():
                     write('%s = %s' % (property[0], property[1]))
             else:
                 instance = conn.EnumerateInstanceNames( cn, namespace=ns)
                 for property in instance:
-                    write('%s' % property)
+                    write('InstanceName: %s' % property)
         except:
             import sys
             write('exception while executing command')

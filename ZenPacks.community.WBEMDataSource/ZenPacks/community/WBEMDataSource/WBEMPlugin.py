@@ -32,6 +32,7 @@ class WBEMPlugin(CollectorPlugin):
         'zWinUser',
         'zWinPassword',
         'zWbemPort',
+        'zWbemProxy',
         'zWbemUseSSL',
     )
     

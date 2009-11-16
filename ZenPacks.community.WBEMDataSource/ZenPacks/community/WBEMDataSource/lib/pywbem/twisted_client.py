@@ -31,7 +31,7 @@ from twisted.web import http, client, error
 from pywbem import CIMClass, CIMClassName, CIMInstance, CIMInstanceName, CIMError, cim_types, cim_xml
 
 try:
-    from ZenPacks.community.WBEMDataSource.lib.elementtree.ElementTree import fromstring, tostring
+    from elementtree.ElementTree import fromstring, tostring
 except ImportError, arg:
     from xml.etree.ElementTree import fromstring, tostring
 

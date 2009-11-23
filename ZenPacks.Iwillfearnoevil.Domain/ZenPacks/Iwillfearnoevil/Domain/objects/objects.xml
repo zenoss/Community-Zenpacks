@@ -34,7 +34,7 @@ Domain_expiration
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/usr/local/zenoss/common/libexec/check_domain.sh -x 30 -d ${here/id} -n
+${here/ZenPackManager/packs/ZenPacks.Iwillfearnoevil.Domain/path}/libexec/check_domain.sh -x 30 -d ${here/id} -n
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -178,7 +178,7 @@ Domain_expiration
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/usr/local/zenoss/common/libexec/check_domain.sh -x 30 -d ${here/id} -n
+${here/ZenPackManager/packs/ZenPacks.Iwillfearnoevil.Domain/path}/libexec/check_domain.sh -x 30 -d ${here/id} -n
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -220,7 +220,7 @@ SSL_Check
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/usr/local/zenoss/common/libexec/check_certs_Nagios.sh -x 60 -n -s ${here/id} -p 443
+${here/ZenPackManager/packs/ZenPacks.Iwillfearnoevil.Domain/path}/libexec/check_certs_Nagios.sh -x 60 -n -s ${here/id} -p 443
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

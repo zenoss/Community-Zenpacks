@@ -1,0 +1,103 @@
+
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" 
+    name="Pdu7930Detail" tal:attributes="action string:${here/absolute_url_path}/${template/id}">
+
+<tal:block metal:define-macro="Pdu7930FormList"
+    tal:define="tableName string:Pdu7930FormList;
+    objects here/PduOutlet7930/objectValuesAll;
+    tabletitle string:PDU Outlet Status Table V2;
+    batch python:here.ZenTableManager.getBatch(tableName,objects);
+    menu_id string:PduOutlet7930;
+    showfilterbox python:True;">
+<input type='hidden' name='tableName' tal:attributes="value tableName" />
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/> 
+    
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="objects">
+
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'OutletNumber','Outlet Number', attributes='width=20')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'DeviceControlled','Device Controlled', attributes='width=20')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'Status','Integer', attributes='width=20')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'Status','On', attributes='width=20')"/>
+
+    </tr>
+    <tr tal:condition="not:objects">
+        <th class="tableheader" align="left" colspan="9">
+            No outlets found. Double check you have the correct collector plugin and you have remodeled.
+        </th>
+    </tr>
+
+<!-- the tal:repeat statement takes a variable name and an expression.  The expression should evaluate to 
+     a sequence - in this case the expression is "batch" and will be the table of values for the 
+     attributes / methods on the PduOutlet relation.
+     The variable is a local variable - here the variable name "Pdu7930" is used.  For each repetition, 
+     the local variable is set to the current sequence element. -->
+
+    <tal:block tal:repeat="Pdu7930 batch">
+
+<!-- In order to have our rows alternate colors, we'll use the useful TALES attribute odd,
+     which is True for every other item in a tal:repeat loop  -->
+
+    <tr tal:define="odd repeat/Pdu7930/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        
+      
+      <td class="tablevalues">
+        <a class=tablevalues tal:content="Pdu7930/OutletNumber" 
+        tal:attributes="href Pdu7930/getPrimaryUrlPath">BlaBla</a>
+      </td>
+      <td class="tablevalues">
+        <a class=tablevalues tal:content="Pdu7930/DeviceControlled" 
+        tal:attributes="href Pdu7930/getPrimaryUrlPath">BlaBla</a>
+      </td>
+      <td class="tablevalues">
+        <a class=tablevalues tal:content="Pdu7930/Status"
+        tal:attributes="href Pdu7930/getPrimaryUrlPath">BlaBla</a>
+      </td>
+
+<!--      <td class="tablevalues" tal:content="Pdu7930/getIpRemoteAddress">Nomatch </td>
+      <td class="tablevalues" tal:content="Pdu7930/getIpRemoteHostname">Nomatch </td>
+      <td class="tablevalues" tal:content="Pdu7930/getIpRemoteIfDesc">Nomatch </td>
+      <td class="tablevalues" 
+		tal:content="python:Pdu7930.OutletState.Status==3 and 'Learned (3)' or 'Not active (' + str(Pdu7930.PortStatus) + ')'">
+                   Learned
+      </td>
+-->      
+      <td class="tablevalues" align="left">
+      <img border="0"
+        tal:attributes="src python:test(Pdu7930.Status==1,
+    	    here.getStatusImgSrc(0),
+            here.getStatusImgSrc(3))" />
+      </td>
+
+     </tr>
+    </tal:block>
+    <tr>
+        <td colspan="9" class="tableheader" align='center'>
+
+<!-- The here/zenTableNavigation/macros/navtool doesn't seem to support table filtering and "Show all"
+     although it does support sorting.  The here/zenTableNavigation/macros/navbodypagedevice
+     seems to support sorting, filtering and breaking into pages / show all   -->
+
+<!--            <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form> -->
+            <span metal:use-macro="here/zenTableNavigation/macros/navbodypagedevice" />
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+</tal:block>
+</tal:block>
+

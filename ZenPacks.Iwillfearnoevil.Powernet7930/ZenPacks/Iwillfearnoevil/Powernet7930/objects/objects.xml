@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Power', 'MasterSwitch_AP7930') -->
+<object id='/zport/dmd/Devices/Power/MasterSwitch_AP7930' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.APCDeviceMap', 'zenoss.snmp.PowerwareDeviceMap', 'PduOutlet7930Device', 'Pdu7930Device']
+</property>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.Iwillfearnoevil.Powernet7930.Pdu7930
+</property>
+</object>
+</objects>

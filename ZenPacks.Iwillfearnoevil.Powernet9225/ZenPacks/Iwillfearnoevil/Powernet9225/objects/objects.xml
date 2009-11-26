@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Power', 'MasterSwitch_AP9225') -->
+<object id='/zport/dmd/Devices/Power/MasterSwitch_AP9225' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.speakeasy.Powernet9225.Pdu9225
+</property>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.APCDeviceMap', 'zenoss.snmp.PowerwareDeviceMap', 'Pdu9225Device', 'PduOutletDevice']
+</property>
+</object>
+</objects>

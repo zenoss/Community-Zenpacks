@@ -12,17 +12,15 @@ __doc__="""OdbcClient
 
 Gets ODBC performance data and stores it in RRD files.
 
-$Id: OdbcClient.py,v 1.1 2009/11/11 13:25:23 egor Exp $"""
+$Id: OdbcClient.py,v 1.2 2009/12/01 23:39:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from Products.ZenUtils.Utils import zenPath
+import Globals
 from Products.ZenUtils.Driver import drive
 from Products.DataCollector.BaseClient import BaseClient
 
-from twisted.enterprise import adbapi
-from pyodbc import OperationalError, Error
-from twisted.internet import threads, defer
+from twisted.internet import defer, reactor
 
 import os
 import socket
@@ -43,17 +41,69 @@ class CError:
     def getErrorMessage(self):
         return self.errormsg
 
+class pyOdbcClient:
+
+    def __init__(self, connectionString):
+        self.results = {}
+        self.connectionString = connectionString
+        self.dbpool = adbapi.ConnectionPool("pyodbc", connectionString,
+                            autocommit=True, ansi=True, unicode_results=False)
+
+    def addResult(self, result, table):
+        self.results[table] = result
+            
+    def addError(self, ex, table):
+        log.debug("Exception collecting query: %s\n", str(ex.value[1]))
+        self.results[table] = [CError(str(ex.value[1]))]
+
+    def getResults(self, results):
+        self.dbpool.close()
+        return self.results
+
+    def query(self, queries):
+        def _getQueries(txn, query, fields):
+            for q in query.split(';'):
+                if not q.strip('\n '): continue
+                txn.execute(q.strip('\n '))
+            result = txn.fetchall()
+            if result:
+                try:
+                    r = dict(result)
+                    values = {}
+                    for field in fields:
+                        values[field] = r[field]
+                    table = [values]
+                except:
+                    table = []
+                    for r in result:
+                        table.append(dict(zip(fields, r)))
+                return table
+            else:
+                return None
+            
+        deferreds = []
+        for table, query, fields in queries:
+            deferreds.append(self.dbpool.runInteraction(_getQueries, query,
+                                                                    fields))
+            deferreds[-1].addCallback(self.addResult, table)
+            deferreds[-1].addErrback(self.addError, table)
+        dl = defer.DeferredList(deferreds)
+        dl.addCallback(self.getResults)
+        return dl
+
+try:
+    from twisted.enterprise import adbapi
+    from pyodbc import OperationalError, Error
+    currentOdbcClient = pyOdbcClient
+except:
+    from isqlClient import isqlClient
+    currentOdbcClient = isqlClient
+
 class OdbcClient(BaseClient):
 
-    def __init__(self, device, datacollector=None, plugins=[]):
+    def __init__(self, device=None, datacollector=None, plugins=[]):
         BaseClient.__init__(self, device, datacollector)
         self.device = device
-        self.host = device.id
-        if socket.getfqdn().lower() == device.id.lower(): 
-            self.host = "."
-        elif device.manageIp is not None:
-            self.host = device.manageIp
-        self.name = device.id
         self.datacollector = datacollector
         self.plugins = plugins
         self.results = []
@@ -78,28 +128,9 @@ class OdbcClient(BaseClient):
                         dbpools[query[0]] = []
                     dbpools[query[0]].append((table, query[1], query[2]))
                 for cs, qs in dbpools.iteritems():
-                    dbpool = adbapi.ConnectionPool("pyodbc", cs,
-                        autocommit=True, ansi=True, unicode_results=False)
-                    for table, query, fields in qs:
-                        queryResult[table] = []
-                        try:
-                            yield dbpool.runInteraction(_getQueries, query)
-                            output = driver.next()
-                            if not output: continue
-                        except Error, ex:
-                            log.debug("Exception collecting query: %s", str(ex))
-                            queryResult[table] = [CError(str(ex))]
-                            continue
-                        try:
-                            r = dict(output)
-                            values = {}
-                            for field in fields:
-                                values[field] = r[field]
-                            queryResult[table] = [values]
-                        except:
-                            for r in output:
-                                queryResult[table].append(dict(zip(fields, r)))
-                    dbpool.close()
+                    odbcc = currentOdbcClient(cs)
+                    yield odbcc.query(qs)
+                    queryResult.update(driver.next()) 
                 yield defer.succeed(queryResult)
                 driver.next()
             except Exception, ex:
@@ -110,11 +141,10 @@ class OdbcClient(BaseClient):
     def run(self):
         def inner(driver):
             try:
-                driver.next()
                 for plugin in self.plugins:
                     pluginName = plugin.name()
                     log.debug("Sending queries for plugin: %s", pluginName)
-                    log.debug("Queries: %s" % str(plugin.queries().values()))
+                    log.debug("Queries: %s" % str(plugin.queries(self.device)))
                     try:
                         yield self.query(plugin.queries())
                         self.results.append((plugin, driver.next()))
@@ -126,6 +156,8 @@ class OdbcClient(BaseClient):
         def finish(result):
             if self.datacollector:
                 self.datacollector.clientFinished(self)
+            else:
+                reactor.stop()
         d.addBoth(finish)
         return d
 
@@ -134,3 +166,23 @@ class OdbcClient(BaseClient):
         """Return data for this client
         """
         return self.results
+
+
+def OdbcGet(tables):
+    from OdbcPlugin import OdbcPlugin
+    op = OdbcPlugin()
+    op.tables = tables
+    cl = OdbcClient(plugins=[op,])
+    cl.run()
+    reactor.run()
+    try:
+        return cl.getResults()[0][1]
+    except:
+        return
+
+
+if __name__ == "__main__":
+    cs = "DRIVER={MySQL};OPTION=3;PORT=3306;Database=information_schema;SERVER=localhost;UID=zenoss;PWD=zenoss"
+    query = "USE information_schema; SHOW GLOBAL STATUS;"
+    fields = ['Bytes_received', 'Bytes_sent',]
+    print OdbcGet({'table': (cs, query, fields)})    

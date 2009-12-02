@@ -29,8 +29,10 @@ class OdbcPlugin(CollectorPlugin):
     """
     transport = "python"
 
-    def queries(self, device):
-        raise NotImplementedError
+    tables = {}
+
+    def queries(self, device=None):
+        return self.tables
 
     def collect(self, device, log):
         d = defer.maybeDeferred(OdbcClient(device).query, self.queries(device))

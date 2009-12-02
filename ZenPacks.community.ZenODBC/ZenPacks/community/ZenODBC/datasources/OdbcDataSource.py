@@ -13,16 +13,15 @@ __doc__="""OdbcDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: OdbcDataSource.py,v 1.0 2009/05/15 16:33:23 egor Exp $"""
+$Id: OdbcDataSource.py,v 1.1 2009/12/02 18:56:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from AccessControl import ClassSecurityInfo, Permissions
 
-from Products.ZenUtils.Utils import executeStreamCommand
-import pyodbc
+from ZenPacks.community.ZenODBC.OdbcClient import OdbcGet
 
 import cgi, time
 
@@ -141,31 +140,12 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
         header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
         out.write(str(header))
         cs, query, fields = self.getQuery(device)
-        cst = dict([prop.split('=') for prop in cs.split(';')])
-        if cst.has_key('PWD'):
-            cst['PWD'] = '*****'
-            cst = ';'.join([var + '=' + val for var, val in cst.iteritems()])
-        else:
-            csa = cs
-        write('Executing query: "%s" against "%s"' %(query, cst))
+        write('Executing query: "%s"'%query)
         write('')
         start = time.time()
         try:
-            cnxn = pyodbc.connect(cs)
-            cursor = cnxn.cursor()
-            for q in query.split(';'):
-                if not q.strip('\n '): continue
-                cursor.execute(q.strip('\n '))
-            output = cursor.fetchall()
-            try:
-                r = dict(output)
-                values = {}
-                for field in fields:
-                    values[field] = r[field]
-                write('%s' %values)
-            except:
-                for r in output:
-                    write('%s' %dict(zip(fields, r)))
+            for fields in OdbcGet({'t': (cs, query, fields)})['t'][0].items():
+                write('%s = %s'%fields)
         except:
             import sys
             write('exception while executing query')

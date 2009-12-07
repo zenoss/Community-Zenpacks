@@ -23,7 +23,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/home/zenoss/ZenPacks.vmware.VirtualMachines/ZenPacks/vmware/VirtualMachines/libexec/check_esx2 -N -H ${dev/id} -C ${here/zSnmpCommunity} -v ${here/vmDisplayName} -l CPU -w 90 -c 95 |sed -e 's/.*CPU\susage\sis\s/cpuUtil=/;s#%##;s/on.*(/cpuSec=/;s#s##;s/average.*$$//'
+${here/ZenPackManager/packs/ZenPacks.vmware.VirtualMachines/path}/libexec/check_esx2 -N -H ${dev/id} -C ${here/zSnmpCommunity} -v ${here/vmDisplayName} -l CPU -w 90 -c 95 |sed -e 's/.*CPU\susage\sis\s/|cpuUtil=/;s#%##;s/on.*(/cpuSec=/;s#s##;s/average.*$$//'
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

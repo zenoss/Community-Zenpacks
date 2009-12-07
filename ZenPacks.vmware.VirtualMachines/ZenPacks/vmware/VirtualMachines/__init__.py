@@ -6,10 +6,11 @@ import os.path
 
 # If the ZenPack contains a skins directory it needs to be registered when
 # the ZenPack module is loaded.
+skinsDir = os.path.join(os.path.dirname(__file__), 'skins')
 from Products.CMFCore.DirectoryView import registerDirectory
 
-
-registerDirectory('skins', globals())
+if os.path.isdir(skinsDir):
+    registerDirectory(skinsDir, globals())
 
 # When a user creates a ZenPack through the Zenoss Create New ZenPack
 # command in the UI the ZenPack that's created is an instance of

@@ -12,9 +12,9 @@ __doc__="""OdbcClient
 
 Gets ODBC performance data and stores it in RRD files.
 
-$Id: OdbcClient.py,v 1.2 2009/12/01 23:39:23 egor Exp $"""
+$Id: OdbcClient.py,v 1.3 2009/12/08 22:01:23 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -184,5 +184,23 @@ def OdbcGet(tables):
 if __name__ == "__main__":
     cs = "DRIVER={MySQL};OPTION=3;PORT=3306;Database=information_schema;SERVER=localhost;UID=zenoss;PWD=zenoss"
     query = "USE information_schema; SHOW GLOBAL STATUS;"
-    fields = ['Bytes_received', 'Bytes_sent',]
-    print OdbcGet({'table': (cs, query, fields)})    
+    fields = ['Bytes_received', 'Bytes_sent']
+    import getopt
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hc:q:f:",
+                        ["help", "cs=", "query=", "fields="])
+    except getopt.GetoptError:
+        usage()
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif opt in ("-c", "--cs"):
+            cs = arg
+        elif opt in ("-q", "--query"):
+            query = arg
+        elif opt in ("-f", "--fields"):
+            fields = arg.split() 
+    for var, val in OdbcGet({'table': (cs, query, fields)})['table'][0].items():
+        print "%s = %s"%(var, val)

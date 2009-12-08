@@ -13,15 +13,16 @@ __doc__="""OdbcDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: OdbcDataSource.py,v 1.1 2009/12/02 18:56:23 egor Exp $"""
+$Id: OdbcDataSource.py,v 1.2 2009/12/08 22:23:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
+from Products.ZenUtils.Utils import executeStreamCommand
 from AccessControl import ClassSecurityInfo, Permissions
 
-from ZenPacks.community.ZenODBC.OdbcClient import OdbcGet
+from  ZenPacks.community.ZenODBC import OdbcClient
 
 import cgi, time
 
@@ -144,8 +145,14 @@ class OdbcDataSource(RRDDataSource.RRDDataSource, ZenPackPersistence):
         write('')
         start = time.time()
         try:
-            for fields in OdbcGet({'t': (cs, query, fields)})['t'][0].items():
-                write('%s = %s'%fields)
+            pcmd = "python %s -c \"%s\" -q \"%s\" -f \"%s\""%(
+                                                            OdbcClient.__file__,
+                                                            cs,
+                                                            query,
+                                                            " ".join(fields)
+                                                            )
+            command = RRDDataSource.RRDDataSource.getCommand(self, device, pcmd)
+            executeStreamCommand(command, write)
         except:
             import sys
             write('exception while executing query')

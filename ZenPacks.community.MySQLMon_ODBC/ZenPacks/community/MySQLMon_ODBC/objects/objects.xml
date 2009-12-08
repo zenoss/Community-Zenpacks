@@ -26,7 +26,7 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zMySqlConnectionString};DATABASE=informarion_schema;SERVER=${here/manageIp};UID='${here/zMySqlUsername}';PWD='${here/zMySqlPassword}'
+${here/zMySqlConnectionString};DATABASE=informarion_schema;SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
 USE information_schema; SHOW GLOBAL STATUS;
@@ -1129,7 +1129,7 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zMySqlConnectionString};DATABASE=informarion_schema;SERVER=${here/manageIp};UID='${here/zMySqlUsername}';PWD='${here/zMySqlPassword}'
+${here/zMySqlConnectionString};DATABASE=informarion_schema;SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
 USE information_schema; SELECT sum(data_length), sum(index_length), sum( data_length + index_length ) FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema;

@@ -12,9 +12,9 @@ __doc__="""OdbcClient
 
 Gets ODBC performance data and stores it in RRD files.
 
-$Id: OdbcClient.py,v 1.3 2009/12/08 22:01:23 egor Exp $"""
+$Id: OdbcClient.py,v 1.4 2009/12/08 22:45:23 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -201,6 +201,10 @@ if __name__ == "__main__":
         elif opt in ("-q", "--query"):
             query = arg
         elif opt in ("-f", "--fields"):
-            fields = arg.split() 
-    for var, val in OdbcGet({'table': (cs, query, fields)})['table'][0].items():
-        print "%s = %s"%(var, val)
+            fields = arg.split()
+    res = OdbcGet({'t': (cs, query, fields)})['t'][0]
+    if isinstance(res, CError):
+        print res.getErrorMessage()
+    else:
+        for var, val in res.items():
+            print "%s = %s"%(var, val)

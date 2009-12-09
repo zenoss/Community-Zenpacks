@@ -1,10 +1,25 @@
 <tal:block tal:define="
-        objects python:here.ReportServer.plugin('databases', here.REQUEST);
-	tableName string: databaseutilreport;
+    tableName string: databaseutilreport;
+    tm here/ZenTableManager;
+    tableState python:tm.getTableState(tableName, sortedHeader='percentFull',
+                                           sortedSence='desc');
+
+    sts python:here.ZenTableManager.setReqTableState;
+    zem python:here.dmd.ZenEventManager;
+    startDate python:sts(tableName, 'startDate', 
+                         zem.defaultAvailabilityStart());
+    endDate python:sts(tableName, 'endDate', 
+                       zem.defaultAvailabilityEnd());
+    how python:sts(tableName, 'how', 'AVERAGE');
+    summaryOptions python:('AVERAGE', 'MAXIMUM');
+    deviceClass python:sts(tableName, 'deviceClass', '/');
+    deviceFilter python:sts(tableName, 'deviceFilter', '');
+
+    objects python:here.ReportServer.plugin('databases', tableState);
 	batch python:here.ZenTableManager.getBatch(tableName,objects,
 	sortedHeader='percentFull', sortedSence='desc');
-	exportFields python:['deviceName', 'dbname', 'totalBytes',
-        		     'usedBytes', 'availBytes', 'percentFull'];">
+	exportFields python:['deviceName', 'dbname', 'type', 'totalBytes',
+        		     'usedBytes', 'availableBytes', 'percentFull'];">
 <tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
 <tal:block metal:fill-slot="report">
 
@@ -17,7 +32,7 @@
 <tal:block metal:use-macro="here/reportMacros/macros/utilizationForm"/>
 
 <form method="POST" tal:attributes="action request/URL; name string:deviceList"
-			tal:define="tabletitle string:Databases Utilization;
+			tal:define="tabletitle string:Database Utilization;
                         showfilterbox python:True;
 						tblcolspan string:6">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
@@ -35,26 +50,26 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'usedBytes','Used bytes')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'availBytes','Free bytes')"/>
+                            tableName,'availableBytes','Free bytes')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'percentFull','% Util')"/>
     </tr>
     <tal:block tal:repeat="obj batch">
     <tr>
       <td class="tablevalues" 
-tal:content="structure python:obj.database.getDeviceLink('deviceOsDetail')"/>
+tal:content="structure python:obj.component.getDeviceLink('deviceOsDetail')"/>
       <td class="tablevalues">
-          <a class=tablevalues tal:content="obj/database/dbname" 
-             tal:attributes="href obj/database/getPrimaryUrlPath"/>
+          <a class=tablevalues tal:content="python: obj.dbname"
+             tal:attributes="href python: obj.component.getPrimaryUrlPath()"/>
       </td>
       <td class="tablevalues"
-        tal:content="obj/database/type"/>
+        tal:content="obj/type"/>
       <td class="tablevalues"
         tal:content="python:obj.humanBytes(obj.totalBytes)"/>
       <td class="tablevalues"
         tal:content="python:obj.humanBytes(obj.usedBytes)"/>
       <td class="tablevalues"
-        tal:content="python:obj.humanBytes(obj.availBytes)"/>
+        tal:content="python:obj.humanBytes(obj.availableBytes)"/>
       <td class="tablevalues"
         tal:content="python:obj.percentString(obj.percentFull)"/>
     </tr>

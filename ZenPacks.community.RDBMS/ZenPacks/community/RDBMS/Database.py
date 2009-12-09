@@ -15,6 +15,7 @@ Database is a Database
 $Id: Database.py,v 1.0 2009/05/15 16:18:23 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
+
 from Globals import InitializeClass
 from Globals import DTMLFile
 

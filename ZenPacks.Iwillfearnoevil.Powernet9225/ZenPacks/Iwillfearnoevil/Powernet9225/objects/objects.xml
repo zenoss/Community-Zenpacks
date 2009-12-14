@@ -2,11 +2,11 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Power', 'MasterSwitch_AP9225') -->
 <object id='/zport/dmd/Devices/Power/MasterSwitch_AP9225' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
-<property visible="True" type="string" id="zPythonClass" >
-ZenPacks.speakeasy.Powernet9225.Pdu9225
-</property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.APCDeviceMap', 'zenoss.snmp.PowerwareDeviceMap', 'Pdu9225Device', 'PduOutletDevice']
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.APCDeviceMap', 'zenoss.snmp.PowerwareDeviceMap', 'PduOutlet9225Device', 'Pdu9225Device']
+</property>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.Iwillfearnoevil.Powernet9225.Pdu9225
 </property>
 </object>
 </objects>

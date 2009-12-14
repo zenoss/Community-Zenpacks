@@ -1,12 +1,12 @@
 ######################################################################
 #
-# PduOutlet object class
+# PduOutlet9225 object class
 #
 ######################################################################
 
-__doc__="""PduOutlet
+__doc__="""PduOutlet9225
 
-PduOutlet is a component of Pdu9225
+PduOutlet9225 is a component of Pdu9225
 
 $Id: $"""
 
@@ -22,10 +22,10 @@ from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.ManagedEntity import ManagedEntity
 
 
-class PduOutlet(DeviceComponent, ManagedEntity):
+class PduOutlet9225(DeviceComponent, ManagedEntity):
     """Pdu Outlet object"""
 
-    event_key = portal_type = meta_type = 'PduOutlet'
+    event_key = portal_type = meta_type = 'PduOutlet9225'
     
     #**************Custom data Variables here from modeling************************
     
@@ -48,13 +48,13 @@ class PduOutlet(DeviceComponent, ManagedEntity):
     
     _relations = (
         ("Pdu9225", ToOne(ToManyCont,
-            "ZenPacks.speakeasy.Powernet9225.Pdu9225", "PduOutlet")),
+            "ZenPacks.Iwillfearnoevil.Powernet9225.Pdu9225", "PduOutlet9225")),
         )
 
     factory_type_information = ( 
         { 
-            'id'             : 'PduOutlet',
-            'meta_type'      : 'PduOutlet',
+            'id'             : 'PduOutlet9225',
+            'meta_type'      : 'PduOutlet9225',
             'description'    : """PDU Outlet info""",
             'product'        : 'Powernet9225',
             'immediate_view' : 'viewPduOutlet',
@@ -62,7 +62,7 @@ class PduOutlet(DeviceComponent, ManagedEntity):
             ( 
                 { 'id'            : 'status'
                 , 'name'          : 'PDU Outlet Status'
-                , 'action'        : 'viewPduOutlet'
+                , 'action'        : 'viewPduOutlet9225'
                 , 'permissions'   : (ZEN_VIEW, )
                 },
                 { 'id'            : 'perfConf'
@@ -144,4 +144,4 @@ class PduOutlet(DeviceComponent, ManagedEntity):
 	return []
 
 
-InitializeClass(PduOutlet)
+InitializeClass(PduOutlet9225)

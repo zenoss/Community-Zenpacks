@@ -6,10 +6,10 @@
 
 <tal:block metal:define-macro="Pdu9225FormList"
     tal:define="tableName string:Pdu9225FormList;
-    objects here/PduOutlet/objectValuesAll;
-    tabletitle string:PDU Outlet Status Table V4;
+    objects here/PduOutlet9225/objectValuesAll;
+    tabletitle string:PDU Outlet Status Table;
     batch python:here.ZenTableManager.getBatch(tableName,objects);
-    menu_id string:PduOutlet;
+    menu_id string:PduOutlet9225;
     showfilterbox python:True;">
 <input type='hidden' name='tableName' tal:attributes="value tableName" />
 <input type="hidden" name="zenScreenName" tal:attributes="value template/id"/> 

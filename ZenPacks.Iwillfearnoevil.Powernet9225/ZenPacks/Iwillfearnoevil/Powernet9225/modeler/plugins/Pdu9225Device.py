@@ -1,10 +1,10 @@
 ######################################################################
 #
-# PduOutletDevice modeler plugin
+# Pdu9225Device modeler plugin
 #
 ######################################################################
 
-__doc__="""PduOutletDevice
+__doc__="""Pdu9225Device
 
 PduOutletDevice maps Outlets and states to connected Devices
 
@@ -17,8 +17,8 @@ from Products.DataCollector.plugins.DataMaps import ObjectMap
 
 class PduOutletDevice(SnmpPlugin):
 
-    relname = "PduOutlet"
-    modname = "ZenPacks.speakeasy.Powernet9225.PduOutlet"
+    relname = "PduOutlet9225"
+    modname = "ZenPacks.Iwillfearnoevil.Powernet9225.PduOutlet9225"
 #    compname not needed as PduOutlet is a relationship on object class Pdu9225 
 #    which is a direct child of Device"
 #    compname = ""

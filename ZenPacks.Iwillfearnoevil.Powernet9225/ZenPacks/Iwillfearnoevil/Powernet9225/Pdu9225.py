@@ -15,13 +15,13 @@ class Pdu9225(Device):
     "A PDU Device"
 
     _relations = Device._relations + (
-        ('PduOutlet', ToManyCont(ToOne,
-            'ZenPacks.speakeasy.Powernet9225.PduOutlet', 'Pdu9225')),
+        ('PduOutlet9225', ToManyCont(ToOne,
+            'ZenPacks.Iwillfearnoevil.Powernet9225.PduOutlet9225', 'Pdu9225')),
         )
 
     factory_type_information = deepcopy(Device.factory_type_information)
     factory_type_information[0]['actions'] += (
-            { 'id'              : 'PduOutlet'
+            { 'id'              : 'Outlet9225'
             , 'name'            : 'PDU Outlets'
             , 'action'          : 'Pdu9225Detail'
             , 'permissions'     : (ZEN_VIEW, ) },

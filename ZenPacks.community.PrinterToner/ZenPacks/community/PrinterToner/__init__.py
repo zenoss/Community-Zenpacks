@@ -28,14 +28,14 @@ class ZenPack(ZenPackBase):
         ZenPackBase.install(self, app)
         dc  = app.zport.dmd.Devices.getOrganizer('Devices/Printer/Laser')
         dc._setProperty('zPythonClass', 'ZenPacks.community.PrinterToner.PrinterTonerDevice')
-#        self.modifyPlugins(app.zport.dmd.Devices.Printer.Laser,"add")
+        self.modifyPlugins(app.zport.dmd.Devices.Printer.Laser,"add")
 
     def upgrade(self, app):
         ZenPackBase.upgrade(self, app)
-#        self.modifyPlugins(app.zport.dmd.Devices.Printer.Laser,"add")
+        self.modifyPlugins(app.zport.dmd.Devices.Printer.Laser,"add")
 
     def remove(self, app, leaveObjects=False):
-#        self.modifyPlugins(app.zport.dmd.Devices.Printer.Laser,"remove")
+        self.modifyPlugins(app.zport.dmd.Devices.Printer.Laser,"remove")
         #ZenPackBase.remove(app, leaveObjects)
         ZenPackBase.remove(self, app)
 

@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.EventGraph.BySeverity"
-VERSION = "1.1"
+VERSION = "2.0"
 AUTHOR = "Nathan Elliott"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.EventGraph']

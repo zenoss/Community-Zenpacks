@@ -1,0 +1,3 @@
+1. exchange ssh pub key on remote host in order to not have ssh password error
+2. copy this .sh file on asterisk server under /zenoss folder
+3- make them executable (chmod 777)

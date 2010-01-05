@@ -13,5 +13,5 @@ class ZenPack(ZenPackBase):
     """ DellMon loader
     """
     packZProperties = [
-            ('zDellExpansionCardMapIgnorePci', 'False', 'boolean'),
+            ('zDellExpansionCardMapIgnorePci', False, 'boolean'),
 	    ]

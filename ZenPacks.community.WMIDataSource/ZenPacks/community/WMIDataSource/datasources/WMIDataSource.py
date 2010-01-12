@@ -13,20 +13,17 @@ __doc__="""WMIDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WMIDataSource.py,v 1.1 2009/08/01 02:00:23 egor Exp $"""
+$Id: WMIDataSource.py,v 1.2 2009/12/20 13:51:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
+from Products.ZenUtils.Utils import executeStreamCommand
 from AccessControl import ClassSecurityInfo, Permissions
 
-from Products.ZenEvents.ZenEventClasses import Cmd_Fail
-from Products.ZenUtils.Utils import executeStreamCommand
 import cgi, time
 import os
-
-wmictemplate = ("wmic -U '${dev/zWinUser}'%%'%s' //%s --namespace='%s' \"%s\"")
 
 class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
@@ -34,7 +31,7 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
     sourcetypes = ('WMI',)
     sourcetype = 'WMI'
-    namespace = 'root\cimv2'
+    namespace = 'root/cimv2'
     wql = ''
 
     _properties = RRDDataSource.RRDDataSource._properties + (
@@ -44,7 +41,7 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
     _relations = RRDDataSource.RRDDataSource._relations + (
         )
-    
+
     # Screen action bindings (and tab definitions)
     factory_type_information = ( 
     { 
@@ -69,6 +66,15 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
     def useZenCommand(self):
         return False
 
+
+    def checkCommandPrefix(self, context, cmd):
+        """
+        Overriding method to verify that zCommandPath is not prepending to our
+        Instance name or Query statement.
+        """
+        return cmd
+
+
     def zmanage_editProperties(self, REQUEST=None):
         'add some validation'
         if REQUEST:
@@ -77,21 +83,22 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         return RRDDataSource.RRDDataSource.zmanage_editProperties(
                                                                 self, REQUEST)
 
-    def getWql(self, context):
-        return RRDDataSource.RRDDataSource.getCommand(self, context, self.wql)
+    def getInstanceInfo(self, context):
+        instance = RRDDataSource.RRDDataSource.getCommand(self, context,
+                                                            self.wql)
+        namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
+                                            self.namespace).replace("\\", "/")
+        if instance.upper().startswith('SELECT '):
+            return ('WMI', instance, 'WQL', namespace)
+        classname = instance.split('.', 1)
+	if len(classname) < 2:
+            return ('WMI', instance, None, namespace)
+        keybindings = {}
+        for key in classname[1].split(','):
+            var, val = key.split('=')
+            keybindings[var] = val.strip('"')
+        return ('WMI', classname[0], keybindings, namespace)
 
-    def getCommand(self, context, password='${dev/zWinPassword}'):
-        if self.namespace.startswith("\\\\"):
-	    t1, t2, manageIp, namespace = self.namespace.split('\\', 3)
-	else:
-	    manageIp = "${dev/manageIp}"
-	    namespace = self.namespace
-        cmd = wmictemplate %(password, manageIp, namespace, self.wql)
-        cmd = RRDDataSource.RRDDataSource.getCommand(self, context, cmd)
-        return cmd
-
-    def checkCommandPrefix(self, context, cmd):
-        return cmd
 
     security.declareProtected('Change Device', 'manage_testDataSource')
     def manage_testDataSource(self, testDevice, REQUEST):
@@ -117,7 +124,7 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                     l = cgi.escape(l)
                     l = l.replace('\n', endLine + startLine)
                     out.write(startLine + l + endLine)
-        
+
         # Determine which device to execute against
         device = None
         if testDevice:
@@ -140,17 +147,30 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             REQUEST['message'] = 'Cannot determine a device to test against.'
             return self.callZenScreen(REQUEST)
 
-        # Get the command to run
-        command = self.getCommand(device)
-	dCommand = self.getCommand(device, password='*****')
         # Render
         header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
         out.write(str(header))
-        
-        write('Executing command %s against %s' %(dCommand, device.id))
-        write('')
+
         start = time.time()
         try:
+            tr, inst, kb, namespace = self.getInstanceInfo(device)
+            inst = RRDDataSource.RRDDataSource.getCommand(self, device,
+                                                            self.wql)
+	    properties = dict([(
+	                dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
+			dp.id) for dp in self.getRRDDataPoints()])
+            url = '//%%s%s/%s'%(device.zWmiProxy or device.manageIp, namespace)
+            write('Get %s Instance %s from %s' % (tr, inst, str(url%'')))
+            write('')
+            creds = '%s:%s@'%(device.zWinUser, device.zWinPassword)
+            zp = self.dmd.ZenPackManager.packs._getOb(
+                                   'ZenPacks.community.%sDataSource'%tr, None)
+            command = "python %s -c \"%s\" -q \"%s\" -f \"%s\" -a \"%s\""%(
+                                                zp.path('%sClient.py'%tr),
+                                                str(url%creds),
+                                                inst,
+                                                " ".join(properties.keys()),
+						" ".join(properties.values()))
             executeStreamCommand(command, write)
         except:
             import sys

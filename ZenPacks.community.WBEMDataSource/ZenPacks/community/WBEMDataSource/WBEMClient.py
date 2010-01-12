@@ -12,22 +12,36 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 1.1 2009/11/12 07:42:23 egor Exp $"""
+$Id: WBEMClient.py,v 1.3 2009/12/20 20:26:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
+import Globals
 from Products.ZenUtils.Driver import drive
 from Products.DataCollector.BaseClient import BaseClient
 from ZenPacks.community.WBEMDataSource.lib import pywbem
 
-from twisted.internet import defer
+from twisted.internet import defer, reactor
 import socket
 
+import time
 import logging
 log = logging.getLogger("zen.WBEMClient")
 
 
 class BadCredentials(Exception): pass
+
+
+class CError:
+
+    errormsg = ''
+    
+    def __init__(self, errormsg):
+        self.errormsg = errormsg
+        
+    def getErrorMessage(self):
+        return self.errormsg
+
 
 class WBEMClient(BaseClient):
 
@@ -35,15 +49,17 @@ class WBEMClient(BaseClient):
         BaseClient.__init__(self, device, datacollector)
         self.device = device
         self.host = device.id
-        if socket.getfqdn().lower() == device.id.lower(): 
+        if device.zWbemProxy is not "":
+            self.host = device.zWbemProxy
+        elif socket.getfqdn().lower() == device.id.lower(): 
             self.host = "."
-            device.zWinUser = device.zWinPassword = ""
         elif device.manageIp is not None:
             self.host = device.manageIp
         self.name = device.id
-        self.url = 'http%s://%s:%s' % (device.zWbemUseSSL is True and 's' or '',
-                        device.zWbemProxy and device.zWbemProxy or self.host,
-			device.zWbemPort)
+        self.url = '%s://%s:%s' % (
+                        device.zWbemUseSSL and 'https' or 'http',
+                        self.host,
+                        device.zWbemPort)
         self.creds = (device.zWinUser, device.zWinPassword)
         self._wbem = pywbem.WBEMConnection(self.url, self.creds, 
                                             default_namespace='root/cimv2')
@@ -52,87 +68,153 @@ class WBEMClient(BaseClient):
         self.results = []
 
 
-    def _wbemEnumerateInstances(self, classname, namespace, instMap):
-        def parse(instances):
-	    result = {}
-	    keybindings = ()
-	    for instance in instances:
-	        if () not in instMap:
-		    cname, kb = str(instance.path).split('.', 1)
-		    keybindings = tuple(sorted([i.split('=')[1].strip('"') for i in kb.split(',')]))
-		if keybindings in instMap:
-		    instance.PropertyList =instMap[keybindings][1]
-		    if instMap[keybindings][0] not in result:
-		        result[instMap[keybindings][0]] = []
-		    result[instMap[keybindings][0]].append(instance)
-	    return result
+    def parseError(self, err, instMap):
+        if type(instMap) is not dict:
+            if str(err.type).split('.')[-1] == 'CIMError':
+                return {instMap: [CError(err.value[1])]}
+            return {instMap: [CError(err.value)]}
+        result = {}
+        for key, val in instMap.iteritems():
+            if str(err.type).split('.')[-1] == 'CIMError':
+                result[val[0]] = [CError(err.value[1])]
+            else:
+                result[val[0]] = [CError(err.value)]
+        return result
 
+
+    def parseValue(self, value):
+	if isinstance(value, pywbem.Uint16): return int(value)
+	if isinstance(value, pywbem.Uint32): return int(value)
+	if isinstance(value, pywbem.Uint64): return int(value)
+	if isinstance(value, pywbem.Sint16): return int(value)
+	if isinstance(value, pywbem.Sint32): return int(value)
+	if isinstance(value, pywbem.Sint64): return int(value)
+	if isinstance(value, pywbem.Real32): return float(value)
+	if isinstance(value, pywbem.Real64): return float(value)
+	if isinstance(value, pywbem.CIMDateTime): return value.datetime
+	return value
+
+
+    def parseInstance(self, instance, properties={}):
+        if len(properties) == 0:
+	     properties = instance.properties.keys()
+	if type(properties) is not dict:
+	     properties = dict(zip(properties, properties))
+        idict = {}
+	for name, aname in properties.iteritems():
+	    if name not in instance.properties: continue
+	    prop = instance.properties[name]
+	    if prop.is_array and prop.value:
+	        idict[aname] = [self.parseValue(v) for v in prop.value]
+	    else:
+	        idict[aname] = self.parseValue(prop.value)
+	    if 'Values' not in prop.qualifiers: continue
+	    try:
+	        idx = prop.qualifiers['ValueMap'].value.index(str(prop.value))
+	        idict[aname] = prop.qualifiers['Values'].value[idx]
+	    except: pass
+	idict[properties.get('__path', '__path')] = instance.path
+	return idict
+
+
+    def _wbemEnumerateInstances(self, classname, namespace, instMap, qualifier):
+        def parse(instances):
+            result = {}
+            for instance in instances:
+	        for kbKey, kbVal in instMap.iteritems():
+	            kb = []
+	            if kbKey is None or kbKey is 'WQL':
+		        table, props = kbVal
+		    else:
+		        try:
+		            kbIns=tuple([instance[k] for k in kbKey])
+		            if kbIns not in kbVal: continue
+			except: continue
+                        table, props = kbVal[kbIns]
+                    if table not in result:
+                        result[table] = []
+                    result[table].append(self.parseInstance(instance, props))
+            return result
+            
         d = defer.maybeDeferred(self._wbem.EnumerateInstances,
                                                     classname,
                                                     namespace=namespace,
-                                                    includeQualifiers=True,
+                                                    includeQualifiers=qualifier,
                                                     localOnly=False)
         d.addCallback(parse)
+        d.addErrback(self.parseError, instMap)
         return d
 
-    def _wbemExecQuery(self, query, namespace, queryLang, tableName, properties):
-        def parse(instances):
-	    for instance in instances:
-	        instance.PropertyList = properties
-	    return {tableName: instances}
 
+    def _wbemExecQuery(self, query, namespace, instMap, qualifier):
+        def parse(instances):
+            tableName, props = instMap['WQL']
+	    if isinstance(instances, pywbem.CIMInstance):
+	        instances = [instances]
+            return {tableName: [self.parseInstance(i, props) for i in instances]}
+	    
         d = defer.maybeDeferred(self._wbem.ExecQuery,
-	                                    queryLang,
+                                            'WQL',
                                             query,
                                             namespace=namespace)
         d.addCallback(parse)
+        d.addErrback(self.parseError, instMap['WQL'][0])
         return d
 
-    def _wbemGetInstance(self, classname, namespace, keybindings, tableName,
-                                                                properties):
+
+    def _wbemGetInstance(self, classname, namespace, instMap, qualifier):
         def parse(instance):
-	    return {tableName: [instance]}
-	
+            tableName, props = instMap.values()[0].values()[0]
+            return {tableName: [self.parseInstance(instance, props)]}
+	    
+        keybindings = dict(zip(instMap.keys()[0],
+	                       instMap.values()[0].keys()[0]))
         instancename = pywbem.CIMInstanceName(classname, keybindings,
-	                                            namespace=namespace)
-        d = defer.maybeDeferred(self._wbem.GetInstance,
-                                                    instancename,
-						    PropertyList=properties,
-                                                    includeQualifiers=True,
+                                                    namespace=namespace)
+        d = defer.maybeDeferred(self._wbem.GetInstance, instancename,
+                                                    includeQualifiers=qualifier,
                                                     localOnly=False)
         d.addCallback(parse)
+        d.addErrback(self.parseError, instMap.values()[0].values()[0][0])
         return d
 
 
-    def query(self, queries):
+    def query(self, queries, includeQualifiers=False):
+        instMap = {}
+        for tableName, query in queries.iteritems():
+            classname, keybindings, namespace, properties = query
+            classkey = (namespace, classname)
+            if classkey not in instMap:
+                instMap[classkey] = {}
+            if type(keybindings) is dict:
+                instkey = tuple(keybindings.keys())
+		instval = tuple(keybindings.values())
+		if instkey not in instMap[classkey]:
+		    instMap[classkey][instkey] = {}
+                instMap[classkey][instkey][instval]=(tableName, properties)
+            else:
+                instMap[classkey][keybindings]=(tableName, properties)
+	return self.sortedQuery(instMap, includeQualifiers=includeQualifiers)
+
+
+    def sortedQuery(self, queries, includeQualifiers=False):
         def inner(driver):
             try:
                 queryResult = {}
-		instancesMap = {}
-                for tableName, query in queries.iteritems():
-		    classname, keybindings, namespace, properties = query
-		    classkey = (namespace, classname)
-		    if type(keybindings) is dict:
-		        instkey = tuple(sorted(keybindings.values()))
-		    else:
-		        instkey = keybindings
-		    if classkey not in instancesMap:
-		        instancesMap[classkey] = {}
-		    instancesMap[classkey][instkey] = (tableName, properties,
-		                                                keybindings)
-		for (namespace, classname), value in instancesMap.iteritems():
-		    if len(instancesMap[(namespace, classname)]) == 1:
-		        key,(tableName,properties,keybindings) = value.popitem()
-		        if type(keybindings) is dict:
-			    yield self._wbemGetInstance(classname, namespace,
-			                    keybindings, tableName, properties)
-			else:
-			    yield self._wbemExecQuery(classname, namespace,
-			                    keybindings, tableName, properties)
-		    else:
+                for (namespace, classname), instMap in queries.iteritems():
+                    if 'WQL' in instMap:
+                        yield self._wbemExecQuery(classname, namespace,
+                                                    instMap, includeQualifiers)
+                    elif None in instMap:
                         yield self._wbemEnumerateInstances(classname, namespace,
-		                            instancesMap[(namespace,classname)])
-		    queryResult.update(driver.next())
+                                                    instMap, includeQualifiers)
+                    elif len(instMap) and len(instMap.values()[0]) == 1:
+                        yield self._wbemGetInstance(classname, namespace,
+                                                    instMap, includeQualifiers)
+                    else:
+                        yield self._wbemEnumerateInstances(classname, namespace,
+                                                    instMap, includeQualifiers)
+                    queryResult.update(driver.next())
                 yield defer.succeed(queryResult)
                 driver.next()
             except Exception, ex:
@@ -143,11 +225,10 @@ class WBEMClient(BaseClient):
     def run(self):
         def inner(driver):
             try:
-                driver.next()
                 for plugin in self.plugins:
                     pluginName = plugin.name()
                     log.debug("Sending queries for plugin: %s", pluginName)
-                    log.debug("Queries: %s" % str(plugin.queries().values()))
+                    log.debug("Queries: %s" % str(plugin.queries()))
                     try:
                         yield self.query(plugin.queries())
                         self.results.append((plugin, driver.next()))
@@ -159,6 +240,8 @@ class WBEMClient(BaseClient):
         def finish(result):
             if self.datacollector:
                 self.datacollector.clientFinished(self)
+            else:
+                reactor.stop()
         d.addBoth(finish)
         return d
 
@@ -167,3 +250,83 @@ class WBEMClient(BaseClient):
         """Return data for this client
         """
         return self.results
+
+def WbemGet(url, query, properties):
+    from Products.DataCollector.DeviceProxy import DeviceProxy
+    from WBEMPlugin import WBEMPlugin
+
+    url  = url.split('/', 3)
+    device = DeviceProxy()
+    device.zWbemUseSSL = True and url[0].lower() == 'https:' or False
+    device.zWinUser, url[2], device.zWbemPort = url[2].split(':')
+    device.zWinPassword, device.zWbemProxy = url[2].split('@')
+    device.id = device.zWbemProxy
+    device.manageIp = device.zWbemProxy
+    ns = url[3]
+
+    if query.upper().startswith('SELECT '):
+        cn = query
+        kb = 'WQL'
+    else:
+        try:
+            cn, keys = query.split('.', 1)
+            kb = {}
+            for key in keys.split(','):
+                var, val = key.split('=')
+                kb[var] = val.strip('"')
+        except:
+            cn = query
+            kb = None
+
+    wp = WBEMPlugin()
+    wp.tables = {'t': (cn, kb, ns, properties)}
+    cl = WBEMClient(device=device, plugins=[wp,])
+    cl.run()
+    reactor.run()
+    for plugin, result in cl.getResults():
+        if plugin == wp:
+            return result['t']
+    return
+
+
+if __name__ == "__main__":
+    url = "https://username:password@127.0.0.1:5989/root/cimv2"
+    query = 'CIM_Processor'
+    properties = []
+    aliases = []
+    import getopt, sys
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hc:q:f:a:",
+                    ["help", "cs=", "query=", "fields=", "aliases="])
+    except getopt.GetoptError:
+        usage()
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif opt in ("-c", "--cs"):
+            url = arg
+        elif opt in ("-q", "--query"):
+            query = arg
+        elif opt in ("-f", "--fields"):
+            properties = arg.split()
+        elif opt in ("-a", "--aliases"):
+            aliases = arg.split()
+    properties = dict(zip(properties, aliases))
+    if len(properties) > 0:
+        properties['__path'] = '__path'
+    results = WbemGet(url, query, properties)
+    if type(results) is not list:
+        print results
+        sys.exit(1)
+    for res in results:
+        if isinstance(res, CError):
+            print res.getErrorMessage()
+        else:
+            print "InstanceName: %s"%res['__path']
+            if len(results) == 1:
+                for var, val in res.items():
+                    if var == '__path': continue
+                    print "%s = %s"%(var, val)
+

@@ -12,14 +12,13 @@ __doc__="""WBEMPlugin
 
 wrapper for PythonPlugin
 
-$Id: WBEMPlugin.py,v 1.0 2009/07/31 21:29:23 egor Exp $"""
+$Id: WBEMPlugin.py,v 1.1 2009/12/20 20:30:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
-from WBEMClient import WBEMClient
-from twisted.internet import defer
+from WBEMClient import WBEMClient, CError
 
 class WBEMPlugin(CollectorPlugin):
     """
@@ -36,19 +35,22 @@ class WBEMPlugin(CollectorPlugin):
         'zWbemUseSSL',
     )
     
+    tables = {}
 
     def queries(self):
-        raise NotImplementedError
+        return self.tables
 
     def collect(self, device, log):
-        d = defer.maybeDeferred(WBEMClient(device).query, self.queries())
-        return d
+        return WBEMClient(device).query(self.queries(), includeQualifiers=True)
 
     def preprocess(self, results, log):
-        if isinstance(results, Exception):
-            log.error(results)
-            return None
-        return results
+        newres = {}
+        for table, value in results.iteritems():
+            if isinstance(value[0], CError):
+                log.error(value[0].getErrorMessage())
+                continue
+	    newres[table] = value
+        return newres
 
 
 

@@ -12,9 +12,9 @@ __doc__="""zenperfwbem
 
 Gets WBEM performance data and stores it in RRD files.
 
-$Id: zenperfwbem.py,v 2.0 2009/11/02 11:32:23 egor Exp $"""
+$Id: zenperfwbem.py,v 2.1 2010/01/10 00:50:23 egor Exp $"""
 
-__version__ = "$Revision: 2.0 $"[11:-2]
+__version__ = "$Revision: 2.1 $"[11:-2]
 
 import logging
 
@@ -28,6 +28,7 @@ import Globals
 import zope.component
 import zope.interface
 import time
+import datetime
 
 from twisted.internet import defer, reactor
 from twisted.python.failure import Failure
@@ -42,8 +43,7 @@ from Products.ZenCollector.tasks import SimpleTaskFactory,\
                                         TaskStates
 from Products.ZenEvents.ZenEventClasses import Error, Clear, Status_WinService
 from Products.ZenUtils.observable import ObservableMixin
-from ZenPacks.community.WBEMDataSource.WBEMClient import WBEMClient
-from ZenPacks.community.WBEMDataSource.lib.pywbem import CIMDateTime
+from ZenPacks.community.WBEMDataSource.WBEMClient import WBEMClient, CError
 
 # We retrieve our configuration data remotely via a Twisted PerspectiveBroker
 # connection. To do so, we need to import the class that will be used by the
@@ -56,6 +56,36 @@ unused(DeviceProxy)
 # creating a logging context for this module to use
 #
 log = logging.getLogger("zen.zenperfwbem")
+
+#
+# RPN reverse calculation
+#
+import operator
+ 
+OPERATORS = {
+    '-': operator.add,
+    '+': operator.sub,
+    '/': operator.mul,
+    '*': operator.truediv,
+}
+ 
+def rrpn(expression, value):
+    oper = None
+    try:
+        stack = [float(value)]
+	tokens = expression.split(',')
+	tokens.reverse()
+        for token in tokens:
+            if token == 'now': token = time.time()
+            try:
+                stack.append(float(token))
+            except ValueError:
+	        if oper:
+                    stack.append(OPERATORS[oper](stack.pop(-2), stack.pop()))
+                oper = token
+        return OPERATORS[oper](stack.pop(-2), stack.pop())
+    except:
+        return value
 
 
 # Create an implementation of the ICollectorPreferences interface so that the
@@ -150,7 +180,7 @@ class ZenPerfWbemTask(ObservableMixin):
         # ZenCollector framework can keep track of the success/failure rate
         return result
 
-    def _failure(self, result):
+    def _failure(self, result, comp='zenperfwbem'):
         """
         Errback for an unsuccessful asynchronous connection or collection 
         request.
@@ -158,14 +188,11 @@ class ZenPerfWbemTask(ObservableMixin):
         err = result.getErrorMessage()
         log.error("Unable to scan device %s: %s", self._devId, err)
 
-        summary = """
-            Could not get WBEM Instance (%s). Check your
-            username/password settings and verify network connectivity.
-            """ % err
+        summary = "Could not get WBEM Instance (%s)." % err
 
         self._eventService.sendEvent(dict(
             summary=summary,
-            component='zenperfwbem',
+            component=comp,
             eventClass='/Status/Wbem',
             device=self._devId,
             severity=Error,
@@ -185,25 +212,36 @@ class ZenPerfWbemTask(ObservableMixin):
         log.debug("Successful collection from %s [%s], results=%s",
                   self._devId, self._manageIp, results)
         
-	if results:          
-	    for tableName, data in results.iteritems():
-		for (dpname, comp, rrdPath, rrdType, rrdCreate,
+	if not results: return results
+	for tableName, data in results.iteritems():
+	    for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
 		                        minmax) in self._datapoints[tableName]:
-		    if isinstance(data[0][dpname], CIMDateTime):
-		        t = data[0][dpname].datetime
-		        value=time.mktime(t.timetuple())+1e-6*t.microsecond     
-		    if dpname == 'LastBootUpTime':
-		        value= round((time.time() - value) * 100)
-		        rrdPath.replace('OperatingSystem_LastBootUpTime',
-		                                'sysUpTime_sysUpTime') 
-		    else:
-		        value = long(data[0][dpname])
+		values = []
+		try:
+		    for d in data:
+		        if len(d) == 0: continue
+		        if isinstance(d, CError):
+		            self._failure(d, comp)
+		            continue
+		        if isinstance(d[dpname], datetime.datetime):
+		            mcs = float(d[dpname].microsecond * 1e-6)
+		            d[dpname] = time.mktime(d[dpname].timetuple()) + mcs
+		        if expr: d[dpname] = rrpn(expr, d[dpname])
+		        values.append(d[dpname])
+		    if not values: continue
+		    if len(values) == 1: value = values[0]
+		    elif dpname.endswith('_count'): value = len(values)
+		    elif dpname.endswith('_sum'): value = sum(values)
+		    elif dpname.endswith('_max'): value = max(values)
+		    elif dpname.endswith('_min'): value = min(values)
+		    else: value=sum(values)/len(values)
                     self._dataService.writeRRD( rrdPath,
-                                                value,
+                                                float(value),
                                                 rrdType,
 			                        rrdCreate,
                                                 min=minmax[0],
                                                 max=minmax[1])
+		except: pass
 	return results
 
     def _collectData(self):
@@ -216,7 +254,7 @@ class ZenPerfWbemTask(ObservableMixin):
 
         self.state = ZenPerfWbemTask.STATE_WBEMC_QUERY
         wbemc = WBEMClient(self._taskConfig)
-	d = wbemc.query(self._queries)
+	d = wbemc.sortedQuery(self._queries)
         d.addCallbacks(self._collectSuccessful, self._failure)
         return d
 	

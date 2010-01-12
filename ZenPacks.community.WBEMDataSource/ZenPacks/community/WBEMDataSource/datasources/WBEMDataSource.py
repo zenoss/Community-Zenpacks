@@ -13,15 +13,14 @@ __doc__="""WBEMDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WBEMDataSource.py,v 1.1 2009/06/12 12:52:23 egor Exp $"""
+$Id: WBEMDataSource.py,v 1.3 2009/12/20 13:51:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
+from Products.ZenUtils.Utils import executeStreamCommand
 from AccessControl import ClassSecurityInfo, Permissions
-
-from ZenPacks.community.WBEMDataSource.lib import pywbem
 
 import cgi, time
 import os
@@ -67,6 +66,15 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
     def useZenCommand(self):
         return False
 
+
+    def checkCommandPrefix(self, context, cmd):
+        """
+        Overriding method to verify that zCommandPath is not prepending to our
+        Instance name or Query statement.
+        """
+        return cmd
+
+
     def zmanage_editProperties(self, REQUEST=None):
         'add some validation'
         if REQUEST:
@@ -75,19 +83,21 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         return RRDDataSource.RRDDataSource.zmanage_editProperties(
                                                                 self, REQUEST)
 
-    def getInstanceName(self, context):
-        inst = RRDDataSource.RRDDataSource.getCommand(self, context, self.instance)
-	if inst.upper().startswith('WQL:'):
-	    return (inst[4:], 'WQL', self.namespace)
-        try:
-            classname, keys = inst.split('.', 1)
-        except:
-            return (inst, None, self.namespace)
+    def getInstanceInfo(self, context):
+        instance = RRDDataSource.RRDDataSource.getCommand(self, context,
+                                                            self.instance)
+        namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
+                                                            self.namespace)
+        if instance.upper().startswith('SELECT '):
+            return ('WBEM', instance, 'WQL', namespace)
+        classname = instance.split('.', 1)
+        if len(classname) < 2:
+            return ('WBEM', instance, None, namespace)
         keybindings = {}
-        for key in keys.split(','):
+        for key in classname[1].split(','):
             var, val = key.split('=')
             keybindings[var] = val.strip('"')
-        return (classname, keybindings, self.namespace)
+        return ('WBEM', classname[0], keybindings, namespace)
 
 
     security.declareProtected('Change Device', 'manage_testDataSource')
@@ -141,38 +151,29 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
         out.write(str(header))
 
-        queries = {'test':
-            RRDDataSource.RRDDataSource.getCommand(self, device, self.instance)}
-        write('Get WBEM Instance %s from %s' % (queries['test'], device.id))
-        write('')
         start = time.time()
         try:
-            cn, kb, ns = self.getInstanceName(device)
-            url = 'http%s://%s:%s' % (device.zWbemUseSSL is True and 's' or '',
-                                            device.manageIp, device.zWbemPort)
-            creds = (device.zWinUser, device.zWinPassword)
-            conn = pywbem.WBEMConnection(url, creds)
-	    if kb =='WQL':
-	        instances = conn.ExecQuery(kb, cn, namespace=ns)
-                for instance in instances:
-                    write('InstanceName: %s' % instance.path)
-		if len(instances) == 1:
-                    for property in instances[0].items():
-                        write('%s = %s' % (property[0], property[1]))
-            elif kb:
-                instanceName = pywbem.CIMInstanceName(  cn,
-                                                        keybindings=kb,
-                                                        namespace=ns)
-                instance = conn.GetInstance(instanceName,
-                                            includeQualifiers=True,
-                                            localOnly=False)
-                write('InstanceName: %s' % instance.path)
-                for property in instance.items():
-                    write('%s = %s' % (property[0], property[1]))
-            else:
-                instance = conn.EnumerateInstanceNames( cn, namespace=ns)
-                for property in instance:
-                    write('InstanceName: %s' % property)
+            tr, inst, kb, namespace = self.getInstanceInfo(device)
+            inst = RRDDataSource.RRDDataSource.getCommand(self, device,
+                                                            self.instance)
+	    properties = dict([(
+	                dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
+		        dp.id) for dp in self.getRRDDataPoints()])
+            url = '%s://%%s%s:%s/%s'%(device.zWbemUseSSL and 'https' or 'http',
+                                        device.zWbemProxy or device.manageIp,
+                                        device.zWbemPort, namespace)
+            write('Get %s Instance %s from %s' % (tr, inst, str(url%'')))
+            write('')
+            creds = '%s:%s@'%(device.zWinUser, device.zWinPassword)
+            zp = self.dmd.ZenPackManager.packs._getOb(
+                                   'ZenPacks.community.%sDataSource'%tr, None)
+            command = "python %s -c \"%s\" -q \"%s\" -f \"%s\" -a \"%s\""%(
+                                                zp.path('%sClient.py'%tr),
+                                                str(url%creds),
+                                                inst,
+                                                " ".join(properties.keys()),
+						" ".join(properties.values()))
+            executeStreamCommand(command, write)
         except:
             import sys
             write('exception while executing command')

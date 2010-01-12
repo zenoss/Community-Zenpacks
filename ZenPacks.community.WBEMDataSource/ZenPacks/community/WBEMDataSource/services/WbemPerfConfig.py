@@ -12,14 +12,16 @@ __doc__="""WbemPerfConfig
 
 Provides Wbem config to zenperfwmi clients.
 
-$Id: WbemPerfConfig.py,v 1.0 2009/07/25 00:34:23 egor Exp $"""
+$Id: WbemPerfConfig.py,v 1.1 2009/12/20 20:26:23 egor Exp $"""
 
 __version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
+from Products.ZenUtils.ZenTales import talesEval
 
 import logging
 log = logging.getLogger('zen.ModelerService.WbemPerfConfig')
+
 
 def getWbemComponentConfig(comp, queries, datapoints):
     threshs = []
@@ -27,32 +29,53 @@ def getWbemComponentConfig(comp, queries, datapoints):
     perfServer = comp.device().getPerformanceServer()
     for templ in comp.getRRDTemplates():
         names = []
-        for ds in templ.getRRDDataSources("WBEM"):
+        for ds in templ.getRRDDataSources("WBEM")+templ.getRRDDataSources("CIM"):
             if not ds.enabled: continue
-            instanceName = ds.getInstanceName(comp)
-            if not instanceName: continue
+            transport, classname, kb, namespace = ds.getInstanceInfo(comp)
+            if transport is not "WBEM": continue
 	    qid = comp.id + "_" + templ.id + "_" + ds.id
 	    datapoints[qid] = []
-	    compname = comp.meta_type != "Device" and "" or ds.id
-	    propertyList = []
+	    properties = {}
+	    compname = comp.meta_type == "Device" and "" or comp.id
             for dp in ds.getRRDDataPoints():
-                names.append(dp.name())
-                propertyList.append(dp.id)
-                dpname = comp.meta_type != "Device" \
-                        and comp.viewName() or dp.id
-                datapoints[qid].append(( dpname,
+                if len(dp.aliases()) > 0:
+                    alias = dp.aliases()[0].id
+                    expr = talesEval("string:%s"%dp.aliases()[0].formula, comp,
+		                                            extra={'now':'now'})
+                else:
+                    alias = dp.id
+                    expr = None
+		properties[alias] = dp.id
+                dpname = dp.name()
+                names.append(dpname)
+                datapoints[qid].append((dp.id,
 		                        compname,
-                                        "/".join((basepath, dp.name())),
+		                        expr,
+                                        "/".join((basepath, dpname)),
                                         dp.rrdtype,
                                         dp.getRRDCreateCommand(perfServer),
                                         (dp.rrdmin, dp.rrdmax)))
-	    queries[qid] =  instanceName + (propertyList, )
+            if type(kb) is dict:
+                instkey = tuple(sorted(kb.values()))
+            else:
+                instkey = kb
+	    classkey = (namespace, classname)
+            if classkey not in queries:
+                queries[classkey] = {}
+            if type(kb) is dict:
+                instkey = tuple(kb.keys())
+		instval = tuple(kb.values())
+		if instkey not in queries[classkey]:
+		    queries[classkey][instkey] = {}
+                queries[classkey][instkey][instval] = (qid, properties)
+	    else:
+                queries[classkey][kb] = (qid, properties)
         for threshold in templ.thresholds():
             if not threshold.enabled: continue
             for ds in threshold.dsnames:
-                if ds in names:
-                    threshs.append(threshold.createThresholdInstance(comp))
-                    break
+                if ds not in names: continue
+                threshs.append(threshold.createThresholdInstance(comp))
+                break
     return threshs
 
 
@@ -64,7 +87,8 @@ class WbemPerfConfig(CollectorConfigService):
                                  'zWbemUseSSL',
                                  'zWbemPort',
 				 'zWbemProxy')
-        CollectorConfigService.__init__(self, dmd, instance, deviceProxyAttributes)
+        CollectorConfigService.__init__(self, dmd, instance,
+                                                        deviceProxyAttributes)
         
         
     def _createDeviceProxy(self, device):

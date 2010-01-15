@@ -21,6 +21,8 @@ from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_SETTINGS
 from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.ManagedEntity import ManagedEntity
 
+import logging
+log = logging.getLogger('BridgeInterface')
 
 class BridgeInterface(DeviceComponent, ManagedEntity):
     """Bridge Interface object"""
@@ -82,54 +84,80 @@ class BridgeInterface(DeviceComponent, ManagedEntity):
 
 
     def viewName(self):
-	if self.RemoteAddress == '00:00:00:00:00:00' \
-	    or self.Port == '-1':
-		return "Unknown"
-	else:
-                return str( self.Port ) + "/" + self.RemoteAddress
+        """Pretty version human readable version of this object"""
+        if self.RemoteAddress == '00:00:00:00:00:00' or self.Port == '-1':
+            return "Unknown"
+        else:
+            return str( self.Port ) + " - " + self.RemoteAddress
 
-#    name = primarySortKey = viewName
-    name = viewName
+
+    # use viewName as titleOrId because that method is used to display a human
+    # readable version of the object in the breadcrumbs
+    titleOrId = name = viewName
 
     def primarySortKey(self):
-        """sort on Port status"""
-        return self.PortStatus
+        """Sort by port number then remote MAC"""
+        return "%s%s" % (self.Port, self.RemoteAddress)
 
     def device(self):
         return self.BridgeDev()
     
-    def getIpRemoteAddress(self):
-        dmd=self.dmd
-        devmac=self.RemoteAddress
-        IpAddress=[]
-        Ips=dmd.ZenLinkManager.layer2_catalog(macaddress=devmac)
-        for i in Ips:
-            IpAddress=IpAddress + [i.getObject().manageIp]
-        return IpAddress
+    def monitored(self):
+        """
+        If a bridge channel exists start monitoring it. Because channels are
+        very dynamic we will just assume that they should be modeled if they
+        exist. Of cuorse the modeler would need to run very fequently to give
+        accurate results as to who is talking at any given time. Looks like
+        the default timeout on a cisco switch is 5 minutes so the modeler
+        would need to run at about that frequency to keep this table accurate.
+        If you increase the timeout you will get more accurate resuslts with a
+        longer modeling cycle. The max time on a cisco box is 12 hours.
+        """
+        return True
+        
+    def getRemoteInterfaces(self):
+        """
+        return html snipits used in the UI to display links to remote
+        interfaces for a MAC and their associated IP addresses.
+        """
+        interfaces = []
+        for intobj in self._getInterfaces():
+            ipaddrs = [ip.urlLink() for ip in intobj.getIpAddressObjs()]
+            interfaces.append('<p style="padding:0.5em">%s: %s</p>' %
+                            (intobj.urlLink(), ", ".join(ipaddrs)))
+        return interfaces
 
-    def getIpRemoteIfDesc(self):
-        dmd=self.dmd
-        devmac=str(self.RemoteAddress)
-        IfDesc=[]
-        Ips=dmd.ZenLinkManager.layer2_catalog(macaddress=devmac)
-        for i in Ips:
-            IfDesc=IfDesc + [i.getObject().id]
-        return IfDesc
+    def getRemoteDevice(self):
+        """
+        return the remote device object for this bridge port. If any are
+        returned based on the MAC query we take the first one assuming that
+        MACs are unique to devices (eventhough they aren't on interfaces)
+        """
+        intobj = self._getInterfaces()
+        if len(intobj) > 0 and intobj[0].device(): 
+            return intobj[0].device().urlLink()
+
+    def _getInterfaces(self):
+        """
+        return a list of interfaces that match a MAC address from the layer2
+        index. There can be many interfaces per MAC because logical interfaces
+        on one physical port share the same MAC.
+        """
+        intobjs = []
+        for brain in self.dmd.ZenLinkManager.layer2_catalog(
+                        macaddress=self.RemoteAddress):
+            try:
+                intobj = brain.getObject()
+                intobjs.append(intobj)
+            except KeyError, e:
+                log.error('object %s not found from layer2 index'
+                            'the index needs to be rebuilt')
+        return intobjs
         
-    def getIpRemoteHostname(self):
-        dmd=self.dmd
-        find = dmd.Devices.findDevice
-        devmac=str(self.RemoteAddress)
-        Hostname=[]
-        Ips=dmd.ZenLinkManager.layer2_catalog(macaddress=devmac)
-        for i in Ips:
-            Hostname=Hostname + [find(i.getObject().manageIp).id]
-        return Hostname
-        
-    	
-    #THIS FUNCTION IS REQUIRED LEAVE IT BE IF NO RRD INFO IS PRESENT	    
+    #THIS FUNCTION IS REQUIRED LEAVE IT BE IF NO RRD INFO IS PRESENT
+    # I don't really understand this -EAD
     def getRRDNames(self):
-	return []
+        return []
 
 
 InitializeClass(BridgeInterface)

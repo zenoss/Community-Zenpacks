@@ -20,7 +20,7 @@ class BridgeDeviceMib(SnmpPlugin):
 #    relname = "BridgeInt"
     modname = "ZenPacks.skills1st.bridge.BridgeDevice"
 #    compname = "BridgeDevice"
-
+    
 # snmpGetMap gets scalar SNMP MIBs (single values)
 #  Use .1.3.6.1.2.1.17.1.1 ( dot1dBaseBridgeAddress) to populate the Serial No
 #  and 1.3.6.1.2.1.17.1.2 ( dot1dBaseNumPorts ) to populate the Hardware tag

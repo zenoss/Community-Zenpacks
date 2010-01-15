@@ -22,7 +22,12 @@ class BridgeInterfaceMib(SnmpPlugin):
 #    compname not needed as BridgeInt is a relationship on object class BridgeDevice 
 #    which is a direct child of Device"
 #    compname = ""
-
+    
+    # New classification stuff uses wait to help it determine what class a
+    # device should be in. Higher weight pushes the device to towards the 
+    # class were this plugin is defined.
+    weight = 4
+    
     basecolumns = {
                '.1': 'BasePort',
                '.2': 'BasePortIfIndex',
@@ -102,7 +107,7 @@ class BridgeInterfaceMib(SnmpPlugin):
                    om.PortIfIndex = bdata['BasePortIfIndex'] 
 
 # prepId function ensures that results are all unique - will add _1, _2 etc to achieve this
-            om.id = self.prepId("Port_" + str(om.Port) + "_ifIndex_" + str(om.PortIfIndex) + "_RemIp_" + str(om.RemoteAddress))
+            om.id = self.prepId("%s_%s" % (om.Port, om.RemoteAddress))
 
 # For lots of debugging, uncomment next 2 lines
 #            for key,value in om.__dict__.items():

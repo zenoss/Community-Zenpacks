@@ -12,7 +12,7 @@ __doc__="""OdbcCollector
 
 PB daemon-izable base class for creating Odbc collectors
 
-$Id: OdbcPlugin.py,v 2.1 2009/11/09 12:41:23 egor Exp $"""
+$Id: OdbcPlugin.py,v 2.2 2010/01/23 12:20:23 egor Exp $"""
 
 __version__ = "$Revision: 2.1 $"[11:-2]
 
@@ -223,7 +223,7 @@ class ZenPerfOdbcTask(ObservableMixin):
 		for (dpname, comp, rrdPath, rrdType, rrdCreate,
 		                        minmax) in self._datapoints[tableName]:
 		    value = data[0].get(dpname, None)
-		    if value:
+		    if isinstance(value, (int, long, float, complex)):
                         self._dataService.writeRRD( rrdPath,
                                                     value,
                                                     rrdType,

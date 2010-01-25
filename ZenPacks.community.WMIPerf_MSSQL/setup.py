@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.WMIPerf_MSSQL"
-VERSION = "1.3"
+VERSION = "1.4"
 AUTHOR = "R. Esteve"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.WMIPerf_MSSQL']
 INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=1.5']
-COMPAT_ZENOSS_VERS = '>=2.4'
+COMPAT_ZENOSS_VERS = '>=2.5.1'
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

@@ -26,7 +26,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfFormattedData_PerfDisk_PhysicalDisk WHERE Name='_Total'
+SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name='_Total'
 </property>
 <tomanycont id='datapoints'>
 <object id='DiskReadsPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -815,7 +815,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfFormattedData_PerfDisk_PhysicalDisk WHERE Name='_Total'
+SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name='_Total'
 </property>
 <tomanycont id='datapoints'>
 <object id='DiskReadsPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

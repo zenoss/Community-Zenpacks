@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the WBEMDataSource Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -10,11 +10,11 @@
 
 __doc__="""WbemPerfConfig
 
-Provides Wbem config to zenperfwmi clients.
+Provides Wbem config to zenperfwbem clients.
 
-$Id: WbemPerfConfig.py,v 1.1 2009/12/20 20:26:23 egor Exp $"""
+$Id: WbemPerfConfig.py,v 1.2 2010/01/17 20:16:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -23,53 +23,65 @@ import logging
 log = logging.getLogger('zen.ModelerService.WbemPerfConfig')
 
 
-def getWbemComponentConfig(comp, queries, datapoints):
+def sortQuery(qs, table, query):
+    cn, kbs, ns, props = query
+    if not kbs: kbs = {}
+    ikey = tuple(kbs.keys())
+    ival = tuple(kbs.values())
+    try:
+        if ival not in qs[ns][cn][ikey]:
+            qs[ns][cn][ikey][ival] = []
+        qs[ns][cn][ikey][ival].append((table, props))
+    except KeyError:
+        try:
+            qs[ns][cn][ikey] = {}
+        except KeyError:
+            try:
+                qs[ns][cn] = {}
+            except KeyError:
+                qs[ns] = {}
+                qs[ns][cn] = {}
+            qs[ns][cn][ikey] = {}
+        qs[ns][cn][ikey][ival] = [(table, props)]
+    return qs
+
+
+def getWbemComponentConfig(transports, comp, queries, datapoints):
     threshs = []
     basepath = comp.rrdPath()
     perfServer = comp.device().getPerformanceServer()
     for templ in comp.getRRDTemplates():
         names = []
-        for ds in templ.getRRDDataSources("WBEM")+templ.getRRDDataSources("CIM"):
+        datasources = []
+        for tr in transports:
+            datasources.extend(templ.getRRDDataSources(tr))
+        for ds in datasources:
             if not ds.enabled: continue
             transport, classname, kb, namespace = ds.getInstanceInfo(comp)
-            if transport is not "WBEM": continue
-	    qid = comp.id + "_" + templ.id + "_" + ds.id
-	    datapoints[qid] = []
-	    properties = {}
-	    compname = comp.meta_type == "Device" and "" or comp.id
+            if transport != transports[0]: continue
+            qid = comp.id + "_" + templ.id + "_" + ds.id
+            datapoints[qid] = []
+            properties = {}
+            compname = comp.meta_type == "Device" and "" or comp.id
             for dp in ds.getRRDDataPoints():
                 if len(dp.aliases()) > 0:
                     alias = dp.aliases()[0].id
                     expr = talesEval("string:%s"%dp.aliases()[0].formula, comp,
-		                                            extra={'now':'now'})
+                                                            extra={'now':'now'})
                 else:
                     alias = dp.id
                     expr = None
-		properties[alias] = dp.id
+                properties[alias] = dp.id
                 dpname = dp.name()
                 names.append(dpname)
                 datapoints[qid].append((dp.id,
-		                        compname,
-		                        expr,
+                                        compname,
+                                        expr,
                                         "/".join((basepath, dpname)),
                                         dp.rrdtype,
                                         dp.getRRDCreateCommand(perfServer),
                                         (dp.rrdmin, dp.rrdmax)))
-            if type(kb) is dict:
-                instkey = tuple(sorted(kb.values()))
-            else:
-                instkey = kb
-	    classkey = (namespace, classname)
-            if classkey not in queries:
-                queries[classkey] = {}
-            if type(kb) is dict:
-                instkey = tuple(kb.keys())
-		instval = tuple(kb.values())
-		if instkey not in queries[classkey]:
-		    queries[classkey][instkey] = {}
-                queries[classkey][instkey][instval] = (qid, properties)
-	    else:
-                queries[classkey][kb] = (qid, properties)
+            queries = sortQuery(queries,qid,(classname,kb,namespace,properties))
         for threshold in templ.thresholds():
             if not threshold.enabled: continue
             for ds in threshold.dsnames:
@@ -79,39 +91,49 @@ def getWbemComponentConfig(comp, queries, datapoints):
     return threshs
 
 
+def getWbemDeviceConfig(trs, device):
+    queries = {}
+    datapoints = {}
+    threshs = getWbemComponentConfig(trs, device, queries, datapoints)
+    for comp in device.getMonitoredComponents():
+        threshs.extend(getWbemComponentConfig(trs,comp,queries,datapoints))
+    return queries, datapoints, threshs
+
+
 class WbemPerfConfig(CollectorConfigService):
-    
+
     def __init__(self, dmd, instance):
-        deviceProxyAttributes = ('zWinUser',
-                                 'zWinPassword',
+        self.cimtransport = ['WBEM',]
+        deviceProxyAttributes = ('zWbemMonitorIgnore',
                                  'zWbemUseSSL',
                                  'zWbemPort',
-				 'zWbemProxy')
+                                 'zWbemProxy',
+                                 'zWinUser',
+                                 'zWinPassword')
         CollectorConfigService.__init__(self, dmd, instance,
                                                         deviceProxyAttributes)
-        
-        
+    def _filterDevice(self, device):
+        include = CollectorConfigService._filterDevice(self, device)
+        zIgnore = 'z%s%sMonitorIgnore'%(self.cimtransport[0][0].upper(),
+                                        self.cimtransport[0][1:].lower()) 
+        if getattr(device, zIgnore, False):
+            log.debug("Device %s skipped because %s is True", device.id,zIgnore)
+            include = False
+        return include
+
     def _createDeviceProxy(self, device):
-	queries = {}
-	datapoints = {}
         proxy = CollectorConfigService._createDeviceProxy(self, device)
-	proxy.thresholds = []
-        
+
         # for now, every device gets a single configCycleInterval based upon
         # the collector's winCycleInterval configuration which is typically
         # located at dmd.Monitors.Performance._getOb('localhost').
         # TODO: create a zProperty that allows for individual device schedules
         proxy.configCycleInterval = self._prefs.winCycleInterval
-        
-        threshs = getWbemComponentConfig(device, queries, datapoints)
-        for comp in device.getMonitoredComponents():
-            threshs.extend(getWbemComponentConfig(comp, queries, datapoints))
-	proxy.queries = queries
-	proxy.datapoints = datapoints
-	proxy.thresholds = threshs
+        proxy.queries, proxy.datapoints, proxy.thresholds = getWbemDeviceConfig(
+                                                            self.cimtransport,
+                                                            device)
         if not proxy.queries:
             log.debug("Device %s skipped because there are no datasources",
                           device.getId())
             return None
-                
         return proxy

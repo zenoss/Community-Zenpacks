@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the WMIDataSource Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.0 2009/12/28 13:12:23 egor Exp $"""
+$Id: WMIClient.py,v 1.1 2010/02/03 23:01:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -24,14 +24,19 @@ from Query import Query
 from Products.ZenUtils.Utils import zenPath
 from Products.ZenUtils.Driver import drive
 from Products.DataCollector.BaseClient import BaseClient
+from ZenPacks.community.WMIDataSource.services.WmiPerfConfig import sortQuery
 
 from twisted.internet import defer, reactor
+from datetime import datetime, timedelta
 
 import os
 import socket
 import sys
 import logging
 log = logging.getLogger("zen.WMIClient")
+
+import re
+DTPAT=re.compile(r'^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.(\d{6})(\d{4})')
 
 
 BaseName = os.path.basename(sys.argv[0])
@@ -55,10 +60,10 @@ class BadCredentials(Exception): pass
 class CError:
 
     errormsg = ''
-    
+
     def __init__(self, errormsg):
         self.errormsg = errormsg
-        
+
     def getErrorMessage(self):
         return self.errormsg
 
@@ -69,7 +74,7 @@ class WMIClient(BaseClient):
         self.device = device
         self.host = device.id
         self._wmipool = {}
-	if device.zWmiProxy is not "":
+        if device.zWmiProxy is not "":
             self.host = device.zWmiProxy
         elif socket.getfqdn().lower() == device.id.lower(): 
             self.host = "."
@@ -95,120 +100,116 @@ class WMIClient(BaseClient):
         self._wmipool[namespace] = Query()
         creds = '%s%%%s' % (self.user, self.passwd)
         return self._wmipool[namespace].connect(eventContext, self.device.id,
-	                                        self.host, creds, namespace)
+                                                self.host, creds, namespace)
 
 
     def close(self, namespace=None):
         if not namespace:
-	    namespaces = self._wmipool.keys()
-	else:
-	    namespaces = [namespace]
-	for namespace in namespaces:
+            namespaces = self._wmipool.keys()
+        else:
+            namespaces = [namespace]
+        for namespace in namespaces:
             self._wmipool[namespace].close()
-	    del self._wmipool[namespace]
-	    
+            del self._wmipool[namespace]
+
 
     def parseError(self, err, query, instMap):
         msg = 'Received %s from query: %s'%(err, query)
-	log.error(msg)
-        if type(instMap) is not dict:
-            return {instMap: [CError(msg)]}
-        result = {}
-        for key, val in instMap.iteritems():
-            result[val[0]] = [CError(msg)]
-        return result
+        err = CError(msg)
+        log.error(msg)
+        results = {}
+        for instances in instMap.values():
+            for tables in instances.values():
+                for table, props in tables:
+                    results[table] = [err]
+        return results
 
 
     def parseResults(self, instances, instMap):
-        result = {}
+        results = {}
         for instance in instances:
-	    for kbKey, kbVal in instMap.iteritems():
-	        if kbKey == None or kbKey == 'WQL':
-		    table, properties = kbVal
-		else:
-		    try: kbIns = tuple([getattr(instance,
-		                                    k.lower()) for k in kbKey])
-		    except: continue
-		    if kbIns not in kbVal: continue
-                    table, properties = kbVal[kbIns]
-		idict = {}
-                if len(properties) == 0:
-	            properties = instance.__dict__.keys()
-	        if type(properties) is not dict:
-		    properties = dict(zip(properties, properties))
-	        for name, aname in properties.iteritems():
-		    if name is '_class_name': continue
-	            try: idict[aname] = getattr(instance, name.lower())
-	            except: continue
-                if table not in result:
-                    result[table] = []
-                result[table].append(idict)
-	return result
+            for kbKey, kbVal in instMap.iteritems():
+                if kbKey == ():
+                    kbIns = ()
+                else:
+                    kbIns = tuple([getattr(instance,
+                                            k.lower(), None) for k in kbKey])
+                    if kbIns not in kbVal: continue
+                lastprops = None
+                for table, properties in kbVal[kbIns]:
+                    if properties == lastprops and lastprops is not None:
+                        results[table].append(result)
+                        continue
+                    result = {}
+                    if len(properties) == 0:
+                        properties = instance.__dict__.keys()
+                    if type(properties) is not dict:
+                        properties = dict(zip(properties, properties))
+                    for name, aname in properties.iteritems():
+                        if name is '_class_name': continue
+                        result[aname] = getattr(instance, name.lower(), None)
+                        if type(result[aname]) is not str: continue
+                        r = DTPAT.search(result[aname])
+                        if not r: continue
+                        g = r.groups()
+                        result[aname] = datetime(int(g[0]), int(g[1]), 
+                                    int(g[2]), int(g[3]), 
+                                    int(g[4]), int(g[5]), 
+                                    int(g[6]), timedelta(minutes = int(g[7])))
+                    if table not in results:
+                        results[table] = []
+                    results[table].append(result)
+        return results
 
 
     def query(self, queries, includeQualifiers=True):
         instMap = {}
-        for tableName, query in queries.iteritems():
-            classname, keybindings, namespace, properties = query
-            if namespace not in instMap:
-                instMap[namespace] = {}
-            if classname not in instMap[namespace]:
-                instMap[namespace][classname] = {}
-            if type(keybindings) is dict:
-                instkey = tuple(keybindings.keys())
-		instval = tuple(keybindings.values())
-		if instkey not in instMap[namespace][classname]:
-		    instMap[namespace][classname][instkey] = {}
-                instMap[namespace][classname][instkey][instval]=(tableName,
-		                                                    properties)
-            else:
-                instMap[namespace][classname][keybindings] = (tableName,
-		                                                    properties)
-	return self.sortedQuery(instMap, includeQualifiers=includeQualifiers)
+        for table, query in queries.iteritems():
+            instMap = sortQuery(instMap, table, query)
+        return self.sortedQuery(instMap, includeQualifiers=includeQualifiers)
 
 
     def sortedQuery(self, queries, includeQualifiers=False):
         def inner(driver):
             try:
                 queryResult = {}
-		for namespace, classes in queries.iteritems():
+                for namespace, classes in queries.iteritems():
                     yield self.connect(namespace=namespace)
                     driver.next()
                     for classname, instMap in classes.iteritems():
-                        if 'WQL' in instMap:
+                        if classname.upper().startswith('SELECT '):
                             query = classname
+                        elif () in instMap or len(instMap.values()[0]) > 1:
+                            query = "SELECT * FROM %s"%classname
                         else:
-		            query = "SELECT * FROM %s"%classname
-                        if None not in instMap and 'WQL' not in instMap:
-		            if len(instMap) and len(instMap.values()[0]) == 1:
-                                kb = zip(instMap.keys()[0],
-		    	            instMap.values()[0].keys()[0])
-		                query = "%s WHERE %s"%(query,
-		    	            " AND ".join(['%s="%s"'%v for v in kb]))
+                            kb = zip(instMap.keys()[0],
+                                    instMap.values()[0].keys()[0])
+                            query = "SELECT * FROM %s WHERE %s"%(classname,
+                                    " AND ".join(['%s="%s"'%v for v in kb]))
                         query = query.replace ("\\", "\\\\")
                         yield self._wmipool[namespace].query(query)
                         result = driver.next()
-		        instances = []
+                        instances = []
                         while 1:
                             more = None
                             yield result.fetchSome(includeQualifiers=includeQualifiers)
                             try:
                                 more = driver.next()
                             except WMIFailure, ex:
-		        	queryResult.update(self.parseError(ex, query,
-			                                            instMap))
-			        break
+                                queryResult.update(self.parseError(ex, query,
+                                                                    instMap))
+                                break
                             if not more:
-			        queryResult.update(self.parseResults(instances,
-			                                            instMap))
+                                queryResult.update(self.parseResults(instances,
+                                                                    instMap))
                                 break
                             instances.extend(more)
-		    self.close(namespace=namespace)
+                    self.close(namespace=namespace)
                 yield defer.succeed(queryResult)
                 driver.next()
             except Exception, ex:
                 log.debug("Exception collecting query: %s", str(ex))
-		self.close()
+                self.close()
                 raise
         return drive(inner)
 
@@ -225,7 +226,7 @@ class WMIClient(BaseClient):
                     except Exception, ex:
                         self.results.append((plugin, ex))
             except Exception, ex:
-		raise
+                raise
         d = drive(inner)
         def finish(result):
             if self.datacollector:
@@ -256,7 +257,7 @@ def WmiGet(url, query, properties):
 
     if query.upper().startswith('SELECT '):
         cn = query
-        kb = 'WQL'
+        kb = {}
     else:
         try:
             cn, keys = query.split('.', 1)
@@ -266,7 +267,7 @@ def WmiGet(url, query, properties):
                 kb[var] = val.strip('"')
         except:
             cn = query
-            kb = None
+            kb = {}
 
     wp = WMIPlugin()
     wp.tables = {'t': (cn, kb, ns, properties)}
@@ -309,7 +310,7 @@ if __name__ == "__main__":
     results = WmiGet(url, query, properties)
     if type(results) is not list:
         if results is not None: print results
-	sys.exit(1)
+        sys.exit(1)
     for res in results:
         if isinstance(res, CError):
             print res.getErrorMessage()

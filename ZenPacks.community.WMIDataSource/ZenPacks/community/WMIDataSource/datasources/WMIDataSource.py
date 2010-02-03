@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the WMIDataSource Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -13,9 +13,9 @@ __doc__="""WMIDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WMIDataSource.py,v 1.2 2009/12/20 13:51:23 egor Exp $"""
+$Id: WMIDataSource.py,v 1.3 2010/01/13 14:39:23 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -84,20 +84,27 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                                                                 self, REQUEST)
 
     def getInstanceInfo(self, context):
-        instance = RRDDataSource.RRDDataSource.getCommand(self, context,
+        classname = RRDDataSource.RRDDataSource.getCommand(self, context,
                                                             self.wql)
         namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
                                             self.namespace).replace("\\", "/")
-        if instance.upper().startswith('SELECT '):
-            return ('WMI', instance, 'WQL', namespace)
-        classname = instance.split('.', 1)
-	if len(classname) < 2:
-            return ('WMI', instance, None, namespace)
+        transport = self.sourcetype
+        if classname.upper().startswith('SELECT '):
+            return (transport, classname, {}, namespace)
+        kb = classname.split('.', 1)
+        cn = kb[0].split(':', 1)
+        if len(cn) > 1:
+            classname = cn[1]
+            namespace = cn[0]
+        else: classname = cn[0]
+        if len(kb) > 1: kb = kb[1]
+        else: return (transport, classname, {}, namespace)
         keybindings = {}
-        for key in classname[1].split(','):
-            var, val = key.split('=')
+        for key in kb.split(','):
+            try: var, val = key.split('=')
+            except: continue
             keybindings[var] = val.strip('"')
-        return ('WMI', classname[0], keybindings, namespace)
+        return (transport, classname, keybindings, namespace)
 
 
     security.declareProtected('Change Device', 'manage_testDataSource')
@@ -156,21 +163,22 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             tr, inst, kb, namespace = self.getInstanceInfo(device)
             inst = RRDDataSource.RRDDataSource.getCommand(self, device,
                                                             self.wql)
-	    properties = dict([(
-	                dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
-			dp.id) for dp in self.getRRDDataPoints()])
+            if inst.startswith("%s:"%namespace): inst = inst[len(namespace)+1:]
+            properties = dict([(
+                        dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
+                        dp.id) for dp in self.getRRDDataPoints()])
             url = '//%%s%s/%s'%(device.zWmiProxy or device.manageIp, namespace)
             write('Get %s Instance %s from %s' % (tr, inst, str(url%'')))
             write('')
             creds = '%s:%s@'%(device.zWinUser, device.zWinPassword)
             zp = self.dmd.ZenPackManager.packs._getOb(
                                    'ZenPacks.community.%sDataSource'%tr, None)
-            command = "python %s -c \"%s\" -q \"%s\" -f \"%s\" -a \"%s\""%(
+            command = "python %s -c \"%s\" -q \'%s\' -f \"%s\" -a \"%s\""%(
                                                 zp.path('%sClient.py'%tr),
                                                 str(url%creds),
                                                 inst,
                                                 " ".join(properties.keys()),
-						" ".join(properties.values()))
+                                                " ".join(properties.values()))
             executeStreamCommand(command, write)
         except:
             import sys

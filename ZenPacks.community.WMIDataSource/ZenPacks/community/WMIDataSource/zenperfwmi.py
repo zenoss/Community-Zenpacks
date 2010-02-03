@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.0 2009/10/29 16:43:23 egor Exp $"""
+$Id: zenperfwmi.py,v 2.1 2010/02/03 23:02:23 egor Exp $"""
 
-__version__ = "$Revision: 2.0 $"[11:-2]
+__version__ = "$Revision: 2.1 $"[11:-2]
 
 import logging
 
@@ -41,7 +41,7 @@ from Products.ZenCollector.interfaces import ICollectorPreferences,\
 from Products.ZenCollector.tasks import SimpleTaskFactory,\
                                         SimpleTaskSplitter,\
                                         TaskStates
-from Products.ZenEvents.ZenEventClasses import Error, Clear, Status_WinService
+from Products.ZenEvents.ZenEventClasses import Error, Clear
 from Products.ZenUtils.observable import ObservableMixin
 from WMIClient import WMIClient, CError
 from Products.ZenWin.utils import addNTLMv2Option, setNTLMv2Auth
@@ -62,30 +62,30 @@ log = logging.getLogger("zen.zenperfwmi")
 # RPN reverse calculation
 #
 import operator
- 
+
 OPERATORS = {
     '-': operator.add,
     '+': operator.sub,
     '/': operator.mul,
     '*': operator.truediv,
 }
- 
+
 def rrpn(expression, value):
     oper = None
     try:
         stack = [float(value)]
-	tokens = expression.split(',')
-	tokens.reverse()
+        tokens = expression.split(',')
+        tokens.reverse()
         for token in tokens:
             if token == 'now': token = time.time()
             try:
                 stack.append(float(token))
             except ValueError:
-	        if oper:
+                if oper:
                     stack.append(OPERATORS[oper](stack.pop(-2), stack.pop()))
                 oper = token
         val = OPERATORS[oper](stack.pop(-2), stack.pop())
-	return val//1
+        return val//1
     except:
         return value
 
@@ -94,7 +94,7 @@ def rrpn(expression, value):
 # ZenCollector framework can configure itself from our preferences.
 class ZenPerfWmiPreferences(object):
     zope.interface.implements(ICollectorPreferences)
-    
+
     def __init__(self):
         """
         Construct a new ZenWinPreferences instance and provide default
@@ -105,14 +105,14 @@ class ZenPerfWmiPreferences(object):
         self.cycleInterval = 5 * 60 # seconds
         self.configCycleInterval = 20 # minutes
         self.options = None
-        
+
         # the configurationService attribute is the fully qualified class-name
         # of our configuration service that runs within ZenHub
         self.configurationService = 'ZenPacks.community.WMIDataSource.services.WmiPerfConfig'
-        
+
         self.wmibatchSize = 10
         self.wmiqueryTimeout = 1000
-        
+
     def buildOptions(self, parser):
         parser.add_option('--debug', dest='debug', default=False,
                                action='store_true',
@@ -144,11 +144,11 @@ class ZenPerfWmiPreferences(object):
 
 class ZenPerfWmiTask(ObservableMixin):
     zope.interface.implements(IScheduledTask)
-        
+
     STATE_WMIC_CONNECT = 'WMIC_CONNECT'
     STATE_WMIC_QUERY = 'WMIC_QUERY'
     STATE_WMIC_PROCESS = 'WMIC_PROCESS'
-    
+
     def __init__(self,
                  deviceId,
                  taskName,
@@ -156,7 +156,7 @@ class ZenPerfWmiTask(ObservableMixin):
                  taskConfig):
         """
         Construct a new task instance to get WMI data.
-        
+
         @param deviceId: the Zenoss deviceId to watch
         @type deviceId: string
         @param taskName: the unique identifier for this task
@@ -167,12 +167,12 @@ class ZenPerfWmiTask(ObservableMixin):
         @param taskConfig: the configuration for this task
         """
         super(ZenPerfWmiTask, self).__init__()
-        
+
         self.name = taskName
         self.configId = deviceId
         self.interval = scheduleIntervalSeconds
         self.state = TaskStates.STATE_IDLE
-        
+
         self._taskConfig = taskConfig
         self._devId = deviceId
         self._manageIp = self._taskConfig.manageIp
@@ -180,26 +180,26 @@ class ZenPerfWmiTask(ObservableMixin):
         self._queries = self._taskConfig.queries
         self._thresholds = self._taskConfig.thresholds
         self._datapoints = self._taskConfig.datapoints
-        
+
         self._dataService = zope.component.queryUtility(IDataService)
         self._eventService = zope.component.queryUtility(IEventService)
         self._preferences = zope.component.queryUtility(ICollectorPreferences,
                                                         "zenperfwmi")
-                                                        
+
         self._wmic = {} # the WMIClient
         self._reset()
-        
+
     def _reset(self):
         """
         Reset the WMI client and notification query watcher connection to the
         device, if they are presently active.
         """
-	for namespace in self._namespaces:
+        for namespace in self._namespaces:
             if namespace in self._wmic:
                 self._wmic[namespace].close()
             self._wmic[namespace] = None
         self._wmic = {}
-        
+
     def _finished(self, result):
         """
         Callback activated when the task is complete so that final statistics
@@ -219,23 +219,24 @@ class ZenPerfWmiTask(ObservableMixin):
         # ZenCollector framework can keep track of the success/failure rate
         return result
 
-    def _failure(self, result, comp='zenperfwmi'):
+    def _failure(self, result, comp=None):
         """
         Errback for an unsuccessful asynchronous connection or collection 
         request.
         """
         err = result.getErrorMessage()
         log.error("Unable to scan device %s: %s", self._devId, err)
-
-        summary = "Could not get WMI Instance (%s)." % err
+        collectorName = self._preferences.collectorName
+        summary = "Could not get %s Instance (%s)." % (
+                                                collectorName[7:].upper(), err)
 
         self._eventService.sendEvent(dict(
             summary=summary,
-            component=comp,
-            eventClass=Status_WinService,
+            component=comp or collectorName,
+            eventClass='/Status/Wbem',
             device=self._devId,
             severity=Error,
-            agent='zenperfwmi',
+            agent=collectorName,
             ))
 
         # give the result to the rest of the errback chain
@@ -247,44 +248,43 @@ class ZenPerfWmiTask(ObservableMixin):
         Callback for a successful fetch of services from the remote device.
         """
         self.state = ZenPerfWmiTask.STATE_WMIC_PROCESS
-        
+
         log.debug("Successful collection from %s [%s], results=%s",
                   self._devId, self._manageIp, results)
-        
-	if not results: return None
-	for tableName, data in results.iteritems():
-	    for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
-		                        minmax) in self._datapoints[tableName]:
-		values = []
-		try:
-		    for d in data:
-	                if len(d) == 0: continue
-		        if isinstance(d, CError):
-		            self._failure(d, comp)
-		            continue
-			if len(str(d[dpname]))==25 and str(d[dpname])[14]=='.':
-			    print d[dpname]
-                            dt =datetime.datetime(*time.strptime(d[dpname][:14],
-			    "%Y%m%d%H%M%S")[:6]+(int(d[dpname][15:21]), None))
-                            td = datetime.timedelta(0,0,0,0,int(d[dpname][-4:]))
-			    d[dpname] = float((dt - td).strftime('%s'))
-		        if expr: d[dpname] = rrpn(expr, d[dpname])
-		        values.append(d[dpname])
-		    if not values: continue
-		    if len(values) == 1: value = values[0]
-		    elif dpname.endswith('_count'): value = len(values)
-		    elif dpname.endswith('_sum'): value = sum(values)
-		    elif dpname.endswith('_max'): value = max(values)
-		    elif dpname.endswith('_min'): value = min(values)
-		    else: value=sum(values)/len(values)
+
+        if not results: return None
+        for tableName, data in results.iteritems():
+            for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
+                                        minmax) in self._datapoints[tableName]:
+                values = []
+                try:
+                    for d in data:
+                        if len(d) == 0: continue
+                        if isinstance(d, CError):
+                            self._failure(d, comp)
+                            continue
+                        if isinstance(d[dpname], datetime.datetime):
+                            mcs = float(d[dpname].microsecond * 1e-6)
+                            d[dpname] = time.mktime(d[dpname].timetuple()) + mcs
+                        if expr: d[dpname] = rrpn(expr, d[dpname])
+                        values.append(d[dpname])
+                    if not values: continue
+                    if len(values) == 1: value = values[0]
+                    elif dpname.endswith('_count'): value = len(values)
+                    elif dpname.endswith('_sum'): value = sum(values)
+                    elif dpname.endswith('_max'): value = max(values)
+                    elif dpname.endswith('_min'): value = min(values)
+                    elif dpname.endswith('_first'): value = values[0]
+                    elif dpname.endswith('_last'): value = values[-1]
+                    else: value=sum(values)/len(values)
                     self._dataService.writeRRD( rrdPath,
                                                 float(value),
                                                 rrdType,
-			                        rrdCreate,
+                                                rrdCreate,
                                                 min=minmax[0],
                                                 max=minmax[1])
                 except: pass
-	return results
+        return results
 
 
     def _collectData(self):
@@ -297,10 +297,10 @@ class ZenPerfWmiTask(ObservableMixin):
 
         self.state = ZenPerfWmiTask.STATE_WMIC_QUERY
         wmic = WMIClient(self._taskConfig)
-	d = wmic.sortedQuery(self._queries)
+        d = wmic.sortedQuery(self._queries)
         d.addCallbacks(self._collectSuccessful, self._failure)
         return d
-	
+
 
     def cleanup(self):
         pass
@@ -308,10 +308,10 @@ class ZenPerfWmiTask(ObservableMixin):
 
     def doTask(self):
         log.debug("Scanning device %s [%s]", self._devId, self._manageIp)
-        
+
         # try collecting events after a successful connect, or if we're
         # already connected
-	
+
         d = self._collectData()
 
         # Add the _finished callback to be called in both success and error

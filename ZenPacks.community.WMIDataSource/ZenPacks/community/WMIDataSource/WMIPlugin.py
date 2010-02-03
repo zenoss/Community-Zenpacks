@@ -31,7 +31,7 @@ class WMIPlugin(CollectorPlugin):
         'zWinPassword',
         'zWmiProxy',
     )
-    
+
     tables = {}
 
     def queries(self):
@@ -46,7 +46,7 @@ class WMIPlugin(CollectorPlugin):
             if isinstance(value[0], CError):
                 log.error(value[0].getErrorMessage())
                 continue
-	    newres[table] = value
+            newres[table] = value
         return newres
 
 

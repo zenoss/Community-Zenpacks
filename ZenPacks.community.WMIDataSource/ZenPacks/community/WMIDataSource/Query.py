@@ -17,7 +17,6 @@ from twisted.internet import defer
 from pysamba.talloc import *
 from pysamba.rpc.credentials import *
 from pysamba.twisted.callback import Callback, WMIFailure
-import datetime
 
 library.ConnectAndQuery.restype = WERROR
 library.IEnumWbemClassObject_SmartNext.restype = WERROR
@@ -34,6 +33,11 @@ WBEM_S_TIMEDOUT = 0x40004L
 class com_context(Structure): pass
 class IEnumWbemClassObject(Structure): pass
 WERR_BADFUNC = 1
+
+# struct dcom_client_context *dcom_client_init(struct com_context *ctx,
+#         struct cli_credentials *credentials)
+library.dcom_client_init.restype = c_void_p
+library.dcom_client_init.argtypes = [POINTER(com_context), c_void_p]
 
 class _WbemObject:
     def __getattr__(self, name):
@@ -70,14 +74,6 @@ def convert(v, typeval):
     if typeval == CIM_REAL32: return float(v.v_uint32)
     if typeval == CIM_REAL64: return float(v.v_uint64)
     if typeval == CIM_BOOLEAN: return bool(v.v_boolean)
-#    if typeval == CIM_DATETIME: return "%s-%s-%s %s:%s:%s %s %s"%(v.v_string[0:4],
-#                                                         v.v_string[4:6],
-#                                                         v.v_string[6:8],
-#                                                         v.v_string[8:10],
-#                                                         v.v_string[10:12],
-#                                                         v.v_string[12:14],
-#                                                         v.v_string[15:21],
-#                                                         v.v_string[21:25])
     if typeval in (CIM_STRING, CIM_DATETIME, CIM_REFERENCE):
         return v.v_string
     if typeval == CIM_CHAR16:
@@ -122,24 +118,24 @@ def wbemInstanceWithQualifiersToPython(obj):
     result._class_name = klass.__CLASS
     for j in range(klass.__PROPERTY_COUNT):
         vindex = None
-	values = None
+        values = None
         prop = klass.properties[j]
         value = convert(inst.data[j], prop.desc.contents.cimtype & CIM_TYPEMASK)
         for q in range(prop.desc.contents.qualifiers.count):
-	    qualifier = prop.desc.contents.qualifiers.item[q].contents
-	    qname = qualifier.name
-	    qvalue = convert(qualifier.value, qualifier.cimtype)
+            qualifier = prop.desc.contents.qualifiers.item[q].contents
+            qname = qualifier.name
+            qvalue = convert(qualifier.value, qualifier.cimtype)
             if qname == 'key' and qvalue == True:
-	        kb.append("%s=%s"%(prop.name,
-	                    type(value) is str and '"%s"'%value or value))
-	    elif qname == 'ValueMap':
-	        try:
-	            vindex = qvalue.index(value)
-		except: pass
-	    elif qname == 'Values':
-	        values = qvalue
-	if vindex and values:
-	    value = values[vindex]
+                kb.append("%s=%s"%(prop.name,
+                            type(value) is str and '"%s"'%value or value))
+            elif qname == 'ValueMap':
+                try:
+                    vindex = qvalue.index(value)
+                except: pass
+            elif qname == 'Values':
+                values = qvalue
+        if vindex and values:
+            value = values[vindex]
         if prop.name:
             setattr(result, prop.name.lower(), value)
     result.__path = "%s:%s.%s"%(obj.contents.__NAMESPACE.replace("\\", '/'),
@@ -189,11 +185,11 @@ class QueryResult(object):
             WERR_CHECK(result, self._deviceId, "Retrieve result data.")
 
             result = []
-	    if includeQualifiers:
+            if includeQualifiers:
                 for i in range(count.value):
                     result.append(wbemInstanceWithQualifiersToPython(objs[i]))
                     talloc_free(objs[i])
-	    else:
+            else:
                 for i in range(count.value):
                     result.append(wbemInstanceToPython(objs[i]))
                     talloc_free(objs[i])
@@ -211,7 +207,7 @@ class Query(object):
         self._deviceId = deviceId
         library.com_init_ctx.restype = WERROR
         library.com_init_ctx(byref(self.ctx), eventContext)
-        cred = talloc_zero(self.ctx, cli_credentials)
+        cred = library.cli_credentials_init(self.ctx)
         library.cli_credentials_set_conf(cred)
         library.cli_credentials_parse_string(cred, creds, CRED_SPECIFIED)
         library.dcom_client_init(self.ctx, cred)

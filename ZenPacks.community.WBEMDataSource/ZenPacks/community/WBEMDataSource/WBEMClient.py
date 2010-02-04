@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 1.4 2010/01/17 20:41:23 egor Exp $"""
+$Id: WBEMClient.py,v 1.5 2010/02/04 15:41:23 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -337,5 +337,7 @@ if __name__ == "__main__":
             if len(results) == 1:
                 for var, val in res.items():
                     if var == '__path': continue
+		    if var in properties.values():
+		        var = properties.keys()[properties.values().index(var)]
                     print "%s = %s"%(var, val)
 

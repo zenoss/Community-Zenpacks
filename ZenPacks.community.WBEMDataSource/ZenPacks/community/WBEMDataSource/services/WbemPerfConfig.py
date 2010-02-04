@@ -12,9 +12,9 @@ __doc__="""WbemPerfConfig
 
 Provides Wbem config to zenperfwbem clients.
 
-$Id: WbemPerfConfig.py,v 1.2 2010/01/17 20:16:23 egor Exp $"""
+$Id: WbemPerfConfig.py,v 1.3 2010/02/04 15:46:23 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -71,7 +71,7 @@ def getWbemComponentConfig(transports, comp, queries, datapoints):
                 else:
                     alias = dp.id
                     expr = None
-                properties[alias] = dp.id
+                properties[alias.strip()] = dp.id
                 dpname = dp.name()
                 names.append(dpname)
                 datapoints[qid].append((dp.id,

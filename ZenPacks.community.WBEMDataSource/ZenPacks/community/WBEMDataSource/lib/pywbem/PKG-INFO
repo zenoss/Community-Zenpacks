@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: pywbem
+Version: 0.7.0
+Summary: Python WBEM client library
+Home-page: http://pywbem.sf.net/
+Author: Tim Potter
+Author-email: tpot@hp.com
+License: LGPLv2
+Description: A pure-Python library for performing operations using the WBEM
+        management protocol.
+Platform: any

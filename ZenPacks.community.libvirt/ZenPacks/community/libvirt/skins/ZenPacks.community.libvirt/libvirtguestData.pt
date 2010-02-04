@@ -1,0 +1,51 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:libvirtguestsList;
+    objects here/libvirtguests/objectValuesAll;
+    tabletitle string:libvirt Guest Information;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvDisplayName','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvState','State')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvMaxMemory','MaxMemory')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvNumberVirtCPUs','NumVirtCPUs')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvOSType','OSType')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvUUIDString','UUID')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues">
+        <span tal:content="structure gd/urlLink"/>
+        <span tal:condition="link" tal:omit-tag>
+                 (<span tal:replace="structure gd/managedDeviceLink"/>)
+            </span>
+        </td>
+	<td class="tablevalues" tal:content="gd/lvState"/>
+	<td class="tablevalues" tal:content="gd/lvMaxMemory"/>
+        <td class="tablevalues" tal:content="gd/lvNumberVirtCPUs"/>
+        <td class="tablevalues" tal:content="gd/lvOSType"/>
+        <td class="tablevalues" tal:content="gd/lvUUIDString"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+
+

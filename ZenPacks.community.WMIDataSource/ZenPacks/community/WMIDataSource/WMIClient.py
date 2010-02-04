@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.1 2010/02/03 23:01:23 egor Exp $"""
+$Id: WMIClient.py,v 1.2 2010/02/04 15:34:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -319,5 +319,7 @@ if __name__ == "__main__":
             if len(results) == 1:
                 for var, val in res.items():
                     if var == '__path': continue
+		    if var in properties.values():
+		        var = properties.keys()[properties.values().index(var)]
                     print "%s = %s"%(var, val)
 

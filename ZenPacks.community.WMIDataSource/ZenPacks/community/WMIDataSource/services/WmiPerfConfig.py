@@ -12,9 +12,9 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 2.3 2010/02/03 23:04:23 egor Exp $"""
+$Id: WmiPerfConfig.py,v 2.4 2010/02/04 15:40:23 egor Exp $"""
 
-__version__ = "$Revision: 2.3 $"[11:-2]
+__version__ = "$Revision: 2.4 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -71,7 +71,7 @@ def getWbemComponentConfig(transports, comp, queries, datapoints):
                 else:
                     alias = dp.id
                     expr = None
-                properties[alias] = dp.id
+                properties[alias.strip()] = dp.id
                 dpname = dp.name()
                 names.append(dpname)
                 datapoints[qid].append((dp.id,

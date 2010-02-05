@@ -1,6 +1,6 @@
 <tal:block tal:define="
   objectsTemp python:here.ZenLinkManager.layer2_catalog.searchResults();
-  objects python:[ d for d in objectsTemp if hasattr(d,macaddress) and d.macaddress != '' and d.macaddress.split(':').count('00') != len(d.macaddress.split(':')) ];
+  objects python:[ d for d in objectsTemp if hasattr(d,'macaddress') and d.macaddress != '' and d.macaddress.split(':').count('00') != len(d.macaddress.split(':')) ];
     objects python: (hasattr(request, 'doExport') and list(objects)) or objects;
   tableName string: macsreport;
   batch python:here.ZenTableManager.getBatch(tableName,objects,

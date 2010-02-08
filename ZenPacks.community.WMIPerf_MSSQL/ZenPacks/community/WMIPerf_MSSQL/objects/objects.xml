@@ -64,7 +64,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT CacheHitRatio,CacheUseCountsPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}CacheManager WHERE Name='_Total'
+SELECT CacheHitRatio,CacheUseCountsPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}CacheManager WHERE Name='_Total'
 </property>
 <tomanycont id='datapoints'>
 <object id='CacheHitRatio' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -102,7 +102,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT UserConnections FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}GeneralStatistics
+SELECT UserConnections FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}GeneralStatistics
 </property>
 <tomanycont id='datapoints'>
 <object id='UserConnections' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -132,7 +132,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT FullScansPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}AccessMethods
+SELECT FullScansPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}AccessMethods
 </property>
 <tomanycont id='datapoints'>
 <object id='FullScansPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -162,7 +162,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT LockRequestsPersec,LockTimeoutsPersec,LockWaitTimems,LockWaitsPersec,NumberofDeadLocksPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Locks WHERE Name='_Total'
+SELECT LockRequestsPersec,LockTimeoutsPersec,LockWaitTimems,LockWaitsPersec,NumberofDeadLocksPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Locks WHERE Name='_Total'
 </property>
 <tomanycont id='datapoints'>
 <object id='LockRequestsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -224,7 +224,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT TransactionsPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Databases WHERE Name='_Total'
+SELECT TransactionsPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Databases WHERE Name='_Total'
 </property>
 <tomanycont id='datapoints'>
 <object id='TransactionsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1205,7 +1205,7 @@ True
 <tomanycont id='graphPoints'>
 <object id='DataFilesSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1234,7 +1234,7 @@ AVERAGE
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1569,7 +1569,7 @@ True
 <tomanycont id='graphPoints'>
 <object id='TotalServerMemory' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2077,7 +2077,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT LatchwaitsPersec,LockRequestsPersec,LockWaitsPersec,Totaldeadlocksdeteselect MemoryUsageKB,FilestoreReadsPersec,FilestoreWritesPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Memory
+SELECT MemoryUsageKB,FilestoreReadsPersec,FilestoreWritesPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Memory
 </property>
 <tomanycont id='datapoints'>
 <object id='FilestoreReadsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -2670,7 +2670,7 @@ True
 <tomanycont id='graphPoints'>
 <object id='MemoryUsage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1

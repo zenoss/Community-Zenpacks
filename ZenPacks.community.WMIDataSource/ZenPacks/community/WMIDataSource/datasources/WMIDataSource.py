@@ -13,9 +13,9 @@ __doc__="""WMIDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WMIDataSource.py,v 1.3 2010/01/13 14:39:23 egor Exp $"""
+$Id: WMIDataSource.py,v 1.4 2010/02/09 15:45:33 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -101,9 +101,9 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         else: return (transport, classname, {}, namespace)
         keybindings = {}
         for key in kb.split(','):
-            try: var, val = key.split('=')
+            try: var, val = key.split('=', 1)
             except: continue
-            keybindings[var] = val.strip('"')
+            keybindings[var] = val
         return (transport, classname, keybindings, namespace)
 
 

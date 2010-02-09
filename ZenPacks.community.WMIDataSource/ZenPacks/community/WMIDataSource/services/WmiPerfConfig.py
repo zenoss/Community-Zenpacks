@@ -12,9 +12,9 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 2.4 2010/02/04 15:40:23 egor Exp $"""
+$Id: WmiPerfConfig.py,v 2.5 2010/02/09 15:51:21 egor Exp $"""
 
-__version__ = "$Revision: 2.4 $"[11:-2]
+__version__ = "$Revision: 2.5 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -96,7 +96,7 @@ def getWbemDeviceConfig(trs, device):
     datapoints = {}
     threshs = getWbemComponentConfig(trs, device, queries, datapoints)
     for comp in device.getMonitoredComponents():
-        threshs.extend(getWbemComponentConfig(trs,comp,queries,datapoints))
+        threshs.extend(getWbemComponentConfig(trs, comp, queries, datapoints))
     return queries, datapoints, threshs
 
 

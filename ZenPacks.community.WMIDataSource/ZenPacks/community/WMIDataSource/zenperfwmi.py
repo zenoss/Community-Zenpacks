@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.1 2010/02/03 23:02:23 egor Exp $"""
+$Id: zenperfwmi.py,v 2.2 2010/02/09 13:24:27 egor Exp $"""
 
-__version__ = "$Revision: 2.1 $"[11:-2]
+__version__ = "$Revision: 2.2 $"[11:-2]
 
 import logging
 
@@ -269,8 +269,8 @@ class ZenPerfWmiTask(ObservableMixin):
                         if expr: d[dpname] = rrpn(expr, d[dpname])
                         values.append(d[dpname])
                     if not values: continue
-                    if len(values) == 1: value = values[0]
-                    elif dpname.endswith('_count'): value = len(values)
+                    if dpname.endswith('_count'): value = len(values)
+                    elif len(values) == 1: value = values[0]
                     elif dpname.endswith('_sum'): value = sum(values)
                     elif dpname.endswith('_max'): value = max(values)
                     elif dpname.endswith('_min'): value = min(values)

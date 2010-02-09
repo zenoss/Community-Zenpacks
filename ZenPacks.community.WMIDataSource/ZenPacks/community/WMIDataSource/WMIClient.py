@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.2 2010/02/04 15:34:23 egor Exp $"""
+$Id: WMIClient.py,v 1.3 2010/02/09 15:43:27 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -129,14 +129,17 @@ class WMIClient(BaseClient):
         results = {}
         for instance in instances:
             for kbKey, kbVal in instMap.iteritems():
-                if kbKey == ():
-                    kbIns = ()
-                else:
-                    kbIns = tuple([getattr(instance,
-                                            k.lower(), None) for k in kbKey])
-                    if kbIns not in kbVal: continue
+                kbIns = []
+                if kbKey != ():
+                    for k in kbKey:
+                        val = getattr(instance, k.lower(), None)
+                        if type(val) is str:
+                            kbIns.append('"%s"'%val)
+                        else:
+                            kbIns.append(str(val))
+                    if tuple(kbIns) not in kbVal: continue
                 lastprops = None
-                for table, properties in kbVal[kbIns]:
+                for table, properties in kbVal[tuple(kbIns)]:
                     if properties == lastprops and lastprops is not None:
                         results[table].append(result)
                         continue
@@ -185,8 +188,9 @@ class WMIClient(BaseClient):
                             kb = zip(instMap.keys()[0],
                                     instMap.values()[0].keys()[0])
                             query = "SELECT * FROM %s WHERE %s"%(classname,
-                                    " AND ".join(['%s="%s"'%v for v in kb]))
+                                    " AND ".join(['%s=%s'%v for v in kb]))
                         query = query.replace ("\\", "\\\\")
+                        log.debug("Query: %s", query)
                         yield self._wmipool[namespace].query(query)
                         result = driver.next()
                         instances = []
@@ -264,7 +268,7 @@ def WmiGet(url, query, properties):
             kb = {}
             for key in keys.split(','):
                 var, val = key.split('=')
-                kb[var] = val.strip('"')
+                kb[var] = val
         except:
             cn = query
             kb = {}
@@ -319,7 +323,7 @@ if __name__ == "__main__":
             if len(results) == 1:
                 for var, val in res.items():
                     if var == '__path': continue
-		    if var in properties.values():
-		        var = properties.keys()[properties.values().index(var)]
+                    if var in properties.values():
+                        var = properties.keys()[properties.values().index(var)]
                     print "%s = %s"%(var, val)
 

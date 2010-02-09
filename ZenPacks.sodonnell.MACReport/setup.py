@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = 'ZenPacks.sodonnell.MACReport'
-VERSION = '1.0'
+VERSION = '1.0.1'
 AUTHOR = 'Steven O\'Donnell'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.sodonnell']
 PACKAGES = ['ZenPacks', 'ZenPacks.sodonnell', 'ZenPacks.sodonnell.MACReport']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.2'
+COMPAT_ZENOSS_VERS = '>=2.5'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################

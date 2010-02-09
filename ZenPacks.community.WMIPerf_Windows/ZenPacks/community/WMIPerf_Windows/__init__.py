@@ -15,6 +15,11 @@ class ZenPack(ZenPackBase):
     """ WMIPerf_Windows loader
     """
 
+    packZProperties = [
+            ('zInterfaceMapIgnoreIpAddresses', '', 'string'),
+            ]
+
+
     def install(self, app):
         try:
             dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
@@ -39,7 +44,9 @@ class ZenPack(ZenPackBase):
                         'community.wmi.ProcessorMap',
                         'community.wmi.InterfaceMap',
                         'community.wmi.FileSystemMap',
+                        'community.wmi.ProcessMap',
                         'community.wmi.ProductMap',
+                        'community.wmi.RouteMap',
                     ), type = 'lines')
         ZenPackBase.install(self, app)
 

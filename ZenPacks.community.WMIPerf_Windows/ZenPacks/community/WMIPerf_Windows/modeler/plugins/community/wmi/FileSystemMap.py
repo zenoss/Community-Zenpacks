@@ -28,7 +28,7 @@ class FileSystemMap(WMIPlugin):
     modname = "Products.ZenModel.FileSystem"
     deviceProperties = WMIPlugin.deviceProperties + (
       'zFileSystemMapIgnoreNames', 'zFileSystemMapIgnoreTypes')
-    
+
     tables = {
             "Win32_Volume":
                 (
@@ -39,23 +39,23 @@ class FileSystemMap(WMIPlugin):
                     '__path':'snmpindex',
                     'MaxFileNameLength':'maxNameLen',
                     'Capacity':'totalBlocks',
-		    'BlockSize':'blockSize',
-		    'Name':'mount',
-		    'FileSystem':'type',
-		    }
+                    'BlockSize':'blockSize',
+                    'Name':'mount',
+                    'FileSystem':'type',
+                    }
                 ),
             }
-    
+
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-	instances = results["Win32_Volume"]
-	if not instances: return
+        instances = results["Win32_Volume"]
+        if not instances: return
         skipfsnames = getattr(device, 'zFileSystemMapIgnoreNames', None)
         skipfstypes = getattr(device, 'zFileSystemMapIgnoreTypes', None)
         for instance in instances:
-	    try:
+            try:
                 if skipfsnames and re.search(skipfsnames, instance['mount']):
                     log.info("Skipping %s as it matches zFileSystemMapIgnoreNames.",
                         instance['mount'])
@@ -66,8 +66,8 @@ class FileSystemMap(WMIPlugin):
                     continue
                 om = self.objectMap(instance)
                 om.id = prepId(om.mount)
-		if not om.totalBlocks or not om.blockSize: continue
-		om.totalBlocks = om.totalBlocks / om.blockSize
+                if not om.totalBlocks or not om.blockSize: continue
+                om.totalBlocks = om.totalBlocks / om.blockSize
             except AttributeError:
                 continue
             rm.append(om)

@@ -37,11 +37,11 @@ class DeviceMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
-		    'IdentifyingDescriptions':'snmpDescr',
+                    'IdentifyingDescriptions':'snmpDescr',
                     'Manufacturer':'_manufacturer',
                     'Model':'_model',
                     'DNSHostName':'snmpSysName',
-		    'PrimaryOwnerContact': 'snmpContact',
+                    'PrimaryOwnerContact': 'snmpContact',
                     },
                 ),
             "Win32_OperatingSystem":
@@ -61,8 +61,8 @@ class DeviceMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-	try:
-	    cs = results['Win32_ComputerSystem'][0]
+        try:
+            cs = results['Win32_ComputerSystem'][0]
             if not cs: return
             os = results['Win32_OperatingSystem'][0]
             if not os: return
@@ -71,15 +71,15 @@ class DeviceMap(WMIPlugin):
             om.snmpLocation = ''
             om.snmpOid = ''
             om.setOSProductKey=MultiArgs(os['_name'].split('|')[0],'Microsoft')
-	    om.setHWProductKey = MultiArgs(cs['_model'], cs['_manufacturer'])
+            om.setHWProductKey = MultiArgs(cs['_model'], cs['_manufacturer'])
 #            om.setHWSerialNumber = sn
             maps.append(om)
             maps.append(ObjectMap({"totalMemory": (os['totalMemory'] * 1024)},
-	                                                        compname="hw"))
+                                                                compname="hw"))
             maps.append(ObjectMap({"totalSwap": (os['totalSwap'] * 1024)},
-	                                                        compname="os"))
-	except:
+                                                                compname="os"))
+        except:
             log.warning('processing error')
-	    return
+            return
         return maps
 

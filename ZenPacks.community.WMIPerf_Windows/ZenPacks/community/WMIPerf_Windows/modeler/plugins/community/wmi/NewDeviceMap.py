@@ -58,18 +58,18 @@ class NewDeviceMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-	try:
-	    cs = results['Win32_ComputerSystem'][0]
+        try:
+            cs = results['Win32_ComputerSystem'][0]
             if not cs: return
             os = results['Win32_OperatingSystem'][0]
             if not os: return
             om = self.objectMap()
-	    if cs['_manuf'] in EnterpriseOIDs.values():
-	        om.setHWProductKey = MultiArgs(cs['_model'], cs['_manuf'])
-	    else:
-	        om.setHWProductKey = MultiArgs(cs['_model'], 'Unknown')
+            if cs['_manuf'] in EnterpriseOIDs.values():
+                om.setHWProductKey = MultiArgs(cs['_model'], cs['_manuf'])
+            else:
+                om.setHWProductKey = MultiArgs(cs['_model'], 'Unknown')
             om.setOSProductKey=MultiArgs(os['_name'].split('|')[0],'Microsoft')
-	except:
-	    return
-	return om
+        except:
+            return
+        return om
 

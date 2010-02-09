@@ -20,7 +20,7 @@ __version__ = '$Revision: 1.0 $'[11:-2]
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 
 class RouteMap(WMIPlugin):
-    
+
     maptype = "RouteMap"
     relname = "routes"
     compname = "os"
@@ -42,11 +42,11 @@ class RouteMap(WMIPlugin):
                     'Destination':'id',
                     'Mask':'routemask',
                     'Metric1':'metric1',
-		    'InterfaceIndex':'setInterfaceIndex',
-		    'NextHop':'setNextHopIp',
-		    'Protocol':'routeproto',
-		    'Type':'routetype',
-		    }
+                    'InterfaceIndex':'setInterfaceIndex',
+                    'NextHop':'setNextHopIp',
+                    'Protocol':'routeproto',
+                    'Type':'routetype',
+                    }
                 ),
             }
 
@@ -64,10 +64,10 @@ class RouteMap(WMIPlugin):
             if not hasattr(om, "id"): continue
             if not hasattr(om, "routemask"): continue
             om.routemask = self.maskToBits(om.routemask)
-            
+
             # Workaround for existing but invalid netmasks
             if om.routemask is None: continue
-            
+
             om.setTarget = om.id + "/" + str(om.routemask)
             om.id = om.id + "_" + str(om.routemask)
             if om.routemask == 32: continue
@@ -85,8 +85,8 @@ class RouteMap(WMIPlugin):
                 return 
             rm.append(om)
         return rm
-  
-    
+
+
     def mapSnmpVal(self, value, map):
         if len(map)+1 >= value:
             value = map[value-1]

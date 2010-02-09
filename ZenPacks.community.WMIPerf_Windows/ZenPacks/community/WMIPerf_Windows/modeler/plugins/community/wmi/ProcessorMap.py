@@ -27,7 +27,7 @@ def getManufacturerAndModel(key):
     """
     Attempts to parse accurate manufacturer and model information of a CPU from
     the single product string passed in.
-    
+
     @param key: A product key. Hopefully containing manufacturer and model name.
     @type key: string
     @return: A MultiArgs object containing the model and manufacturer.
@@ -41,7 +41,7 @@ def getManufacturerAndModel(key):
     for manufacturer, regex in cpuDict.items():
         if re.search(regex, key):
             return MultiArgs(key, manufacturer)
-    
+
     # Revert to default behavior if no specific match is found.
     return MultiArgs(key, "Unknown")
 
@@ -52,7 +52,7 @@ class ProcessorMap(WMIPlugin):
     compname = "hw"
     relname = "cpus"
     modname = "Products.ZenModel.CPU"
-    
+
     tables = {
             "Win32_Processor":
                 (
@@ -60,15 +60,15 @@ class ProcessorMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
-		    '__path':'snmpindex',
-		    'DeviceID':'id',
-		    'Name':'_name',
-		    'CurrentVoltage':'voltage',
+                    '__path':'snmpindex',
+                    'DeviceID':'id',
+                    'Name':'_name',
+                    'CurrentVoltage':'voltage',
                     'MaxClockSpeed':'clockspeed',
-		    'ExternalBusClockSpeed':'_extspeed',
-		    'ExtClock':'extspeed',
-		    'SocketDesignation':'socket'
-		    }
+                    'ExternalBusClockSpeed':'_extspeed',
+                    'ExtClock':'extspeed',
+                    'SocketDesignation':'socket'
+                    }
                 ),
             "Win32_CacheMemory":
                 (
@@ -76,9 +76,9 @@ class ProcessorMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
-		    'MaxCacheSize':'maxCacheSize',
-		    'Purpose':'purpose',
-		    }
+                    'MaxCacheSize':'maxCacheSize',
+                    'Purpose':'purpose',
+                    }
                 ),
             }
 
@@ -86,27 +86,27 @@ class ProcessorMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-	cacheMem = {}
-	instances = results["Win32_CacheMemory"]
-	for instance in instances:
-	    try:
-	        purpose = PROCCACHELEVEL.search(instance['purpose']).groups()
-	        if purpose[0] not in cacheMem:
-		    cacheMem[purpose[0]] = {}
-		cacheMem[purpose[0]][purpose[1]] = instance['maxCacheSize']
-	    except: continue
-	instances = results["Win32_Processor"]
-	if not instances: return
+        cacheMem = {}
+        instances = results["Win32_CacheMemory"]
+        for instance in instances:
+            try:
+                purpose = PROCCACHELEVEL.search(instance['purpose']).groups()
+                if purpose[0] not in cacheMem:
+                    cacheMem[purpose[0]] = {}
+                cacheMem[purpose[0]][purpose[1]] = instance['maxCacheSize']
+            except: continue
+        instances = results["Win32_Processor"]
+        if not instances: return
         for instance in instances:
             om = self.objectMap(instance)
-	    try:
+            try:
                 om.id = prepId(om.id)
-	        om.socket = om.id[3:]
-		if not om.extspeed: om.extspeed = om._extspeed
-	        cache = cacheMem.get(om.socket, {})
-		om.cacheSizeL1 = cache.get('1', 0)
-		om.cacheSizeL2 = cache.get('2', 0)
-#		om.cacheSizeL3 = cache.get('3', 0)
+                om.socket = om.id[3:]
+                if not om.extspeed: om.extspeed = om._extspeed
+                cache = cacheMem.get(om.socket, {})
+                om.cacheSizeL1 = cache.get('1', 0)
+                om.cacheSizeL2 = cache.get('2', 0)
+#                om.cacheSizeL3 = cache.get('3', 0)
                 om.setProductKey = getManufacturerAndModel(om._name)
             except AttributeError:
                 continue

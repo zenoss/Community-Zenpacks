@@ -22,7 +22,7 @@ from Products.DataCollector.EnterpriseOIDs import EnterpriseOIDs
 
 
 class ProductMap(WMIPlugin):
-    
+
     maptype = "SoftwareMap"
     modname = "Products.ZenModel.Software"
     relname = "software"
@@ -37,10 +37,10 @@ class ProductMap(WMIPlugin):
                     {
                     'Name':'name',
                     'Description':'description',
-		    'InstallDate2':'setInstallDate',
-		    'Vendor':'_vendor',
+                    'InstallDate2':'setInstallDate',
+                    'Vendor':'_vendor',
                     'Version':'version',
-		    }
+                    }
                 ),
             }
 
@@ -48,15 +48,15 @@ class ProductMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-	instances = results["Win32_CacheMemory"]
+        instances = results["Win32_CacheMemory"]
         rm = self.relMap()
-	for instance in instances:
+        for instance in instances:
             om = self.objectMap(instance)
             om.id = self.prepId(om.name)
-	    om._vendor = om._vendor.split()[0]
-	    if om._vendor not in EnterpriseOIDs.values():
-	        om._vendor = 'Unknown'
-	    om.setProductKey = MultiArgs(om.name, om._vendor)
+            om._vendor = om._vendor.split()[0]
+            if om._vendor not in EnterpriseOIDs.values():
+                om._vendor = 'Unknown'
+            om.setProductKey = MultiArgs(om.name, om._vendor)
             if hasattr(om, 'setInstallDate'):
                 om.setInstallDate = "%d/%02d/%02d %02d:%02d:%02d" % om.setInstallDate[:6]
             rm.append(om)

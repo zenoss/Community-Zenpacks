@@ -1,0 +1,530 @@
+#!/usr/bin/perl
+# Mon Mar  2 14:22:33 EST 2009
+#
+# David Nicklay - get HP blade chassis data
+#
+
+use Net::SNMP;
+use Getopt::Std;
+#use Data::Dumper;
+
+my($Timeout) = 15;
+my($Hostname) = '';
+my($Community) = 'public'; # Default community string
+my($Debug) = 0;
+my($Datatype) = 'cpu'; # default datatype to fetch
+my(@Datatypes) = ('power','product','powersupply','powersupplylist','cpu','fan','fanlist','temp','slot','slotlist','connectorlist','connector');
+my $PresentStates = {
+    '1' => 'other',
+    '2' => 'absent',
+    '3' => 'present'
+};
+my $ConditionStates = {
+    '1' => 'other',
+    '2' => 'ok',
+    '3' => 'degraded',
+    '4' => 'failed'
+};
+my $PowerSupplyStates = {
+    '1'	=> 'noError',
+    '2' => 'generalFailure',
+    '3' => 'bistFailure',
+    '4' => 'fanFailure',
+    '5' => 'tempFailure',
+    '6' => 'interlockOpen',
+    '7' => 'epromFailed',
+    '8' => 'vrefFailed',
+    '9' => 'dacFailed',
+    '10' => 'ramTestFailed',
+    '11' => 'voltageChannelFailed',
+    '12' => 'orringdiodeFailed',
+    '13' => 'brownOut',
+    '14' => 'giveupOnStartup',
+    '15' => 'nvramInvalid',
+    '16' => 'calibrationTableInvalid'
+};
+my $PowerSupplyLineStates = {
+    '1' => 'noError',
+    '2' => 'lineOverVoltage',
+    '3' => 'lineUnderVoltage',
+    '4' => 'lineHit',
+    '5' => 'brownOut',
+    '6' => 'linePowerLoss'
+};
+my $LEDStates = {
+    '1' => 'other',
+    '2' => 'none',
+    '3' => 'ledOn',
+    '4' => 'ledOff'
+};
+my $ConnectorTypes = {
+    '1' => 'other',
+    '2' => 'passive',
+    '3' => 'active'
+};
+
+
+
+sub usage {
+    my($exittype)=@_;
+    print STDERR "Usage: check_hpbladechassis [-d][-h] -H host [-C community] [-l datatype] [-t timeout] [ -s slot ] [ -f fan ] [-p powersupply] [-e enclosure]\n";
+    print STDERR "-l [".join(',',@Datatypes)."] - What data to fetch (default is cpu)\n";
+    print STDERR "-s slotindex                  - Which blade slot to fetch data about\n";
+    print STDERR "-f fanindex                   - Which fan to fetch data about\n";
+    print STDERR "-p powersupplyindex           - Which power supply to fetch data about\n";
+    print STDERR "-e enclosureindex             - Which rack enclosure to fetch data about\n";
+    print STDERR "-c connectorindex             - Which connector to fetch data about\n";
+    print STDERR "-t timeout                    - timeout in seconds for SNMP data request\n";
+    print STDERR "-d                            - debug\n";
+    print STDERR "-h                            - help\n";
+    exit($exittype);
+}
+
+getopts('hdH:t:C:l:s:f:p:e:c:');
+$Hostname = $opt_H if($opt_H);
+$Community = $opt_C if($opt_C);
+$Datatype = $opt_l if($opt_l);
+$Timeout = $opt_t if($opt_t);
+$Debug = 1 if($opt_d);
+$SlotIndex = $opt_s if($opt_s);
+$FanIndex = $opt_f if($opt_f);
+$PowerSupplyIndex = $opt_p if($opt_p);
+$EnclosureIndex = $opt_e if($opt_e);
+$ConnectorIndex = $opt_c if($opt_c);
+&usage(0) if($opt_h);
+if(!length($Hostname)) {
+    print STDERR ("ERROR: No hostname given.\n");
+    &usage(1);
+}
+
+# -----------------------------------------------------------------------
+
+# convert a pair of 32 bit integers to a 64 bit integer
+# --TODO-- Need a cleaner way to do this (maybe using pack/unpack?)
+sub convert32to64 {
+    my($high32,$low32) = @_;
+    $high32 += 1 if($low32 < 0);
+    return ($high32 * (2 ** 32)) + $low32;
+}
+
+# --TODO probably needs to be a little more complete than simply wrapping it in quotes....
+sub quoteString {
+    my($string) = @_;
+    $string =~ s/^(.*)$/"$1"/;
+    return $string;
+}
+
+sub fetchData {
+    my($mibs,$type)=@_;
+    my ($session, $error) = Net::SNMP->session(
+	-hostname  => $Hostname,
+	-community => $Community,
+	-timeout => $Timeout
+    );
+    if (!defined($session)) {
+	printf STDERR ("ERROR: %s.\n", $error);
+	exit 1;
+    }
+    my $result;
+    if(!defined $type) {
+	$result = $session->get_request( -varbindlist => [keys %{ $mibs }]);
+    } elsif($type eq "column") {
+	$result = $session->get_table( -baseoid => $mibs );
+    }
+
+    if (!defined($result)) {
+	printf STDERR ("ERROR: %s.\n", $session->error);
+	$session->close;
+	exit 1;
+    }
+    my $data = {};
+    if($type eq "column") {
+	foreach (keys %{ $result }) {
+	    my $v = $result->{$_};
+	    s/^$mibs\.//;
+	    $data->{$_} = $v;
+	}
+    } else {
+	foreach (keys %{ $result }) {
+	    $data->{$mibs->{$_}} = $result->{$_};
+	}
+    }
+    $session->close;
+    return $data;
+}
+
+sub printData {
+    my($data) = @_;
+    print "|",join(' ',map($_.'='.$data->{$_},keys %{ $data })),"\n";
+}
+
+sub getPower {
+    my $MIBscolumnCurPwr = "1.3.6.1.4.1.232.22.2.5.1.1.1.10";
+    my $MIBsMaxPwr = {
+	"1.3.6.1.4.1.232.22.2.3.3.1.1.8.1" => 'PowerEnclosurePwrFeedMax'
+    };
+    my $maxdata = &fetchData($MIBsMaxPwr);
+    my $curdata = &fetchData($MIBscolumnCurPwr,'column');
+    my $curpwr = 0;
+    map ($curpwr += $_, values %{ $curdata });
+    $data = {
+	'TotalCurPwrOutput',$curpwr,
+	'TotalmaxPwrOutput',$maxdata->{'PowerEnclosurePwrFeedMax'}
+    };
+    &printData($data);
+}
+
+sub getConnector {
+    if(not defined $ConnectorIndex or not ($ConnectorIndex >= 0)) {
+	print STDERR "Missing connector index\n";
+	&usage(1);
+    }
+    my $MIBsbase = "1.3.6.1.4.1.232.22.2.6.1.1.1";
+    my $MIBs = {
+	$MIBsbase.'.1.'.$ConnectorIndex => 'ConnectorRack', # integer
+	$MIBsbase.'.2.'.$ConnectorIndex => 'ConnectorChassis', # integer
+	$MIBsbase.'.3.'.$ConnectorIndex => 'ConnectorIndex', # integer
+	$MIBsbase.'.4.'.$ConnectorIndex => 'ConnectorEnclosureName', # string
+	$MIBsbase.'.5.'.$ConnectorIndex => 'ConnectorName', # string
+	$MIBsbase.'.6.'.$ConnectorIndex => 'ConnectorModel', # string
+	$MIBsbase.'.7.'.$ConnectorIndex => 'ConnectorSerialNum', # string
+	$MIBsbase.'.8.'.$ConnectorIndex => 'ConnectorPartNum', # string
+	$MIBsbase.'.9.'.$ConnectorIndex => 'ConnectorSparePartNum', # string
+	$MIBsbase.'.10.'.$ConnectorIndex => 'ConnectorFWRev', # string
+	$MIBsbase.'.11.'.$ConnectorIndex => 'ConnectorType', # integer (type?)
+	$MIBsbase.'.12.'.$ConnectorIndex => 'ConnectorLocation', # string
+	$MIBsbase.'.13.'.$ConnectorIndex => 'ConnectorPresent', # integer (present state)
+	$MIBsbase.'.14.'.$ConnectorIndex => 'ConnectorHasFuses', # integer
+	$MIBsbase.'.15.'.$ConnectorIndex => 'ConnectorEnclosureSerialNum' # string
+	#$MIBsbase.'.16.'.$ConnectorIndex => 'Connector?', # integer : don't what this one is...
+	#$MIBsbase.'.17.'.$ConnectorIndex => 'Connector?', # integer : don't what this one is...
+    };
+    my $data = &fetchData($MIBs);
+    foreach (
+	'ConnectorEnclosureName',
+	'ConnectorName',
+	'ConnectorModel',
+	'ConnectorSerialNum',
+	'ConnectorPartNum',
+	'ConnectorSparePartNum',
+	'ConnectorFWRev',
+	'ConnectorLocation',
+	'ConnectorEnclosureSerialNum'
+    ) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    $data->{'ConnectorPresentString'} = quoteString($PresentStates->{$data->{'ConnectorPresent'}});
+    $data->{'ConnectorTypeString'} = quoteString($ConnectorTypes->{$data->{'ConnectorType'}});
+    &printData($data);
+}
+
+sub getConnectorList {
+    my $MIBscolumn = "1.3.6.1.4.1.232.22.2.6.1.1.1.13";
+    my $data = &fetchData($MIBscolumn,'column');
+    foreach (keys %{ $data }) {
+	$data->{$_} = quoteString($PresentStates->{$data->{$_}}); # quote these strings
+    }
+    &printData($data);
+}
+
+sub getEnclosureList {
+    my $MIBscolumn = "1.3.6.1.4.1.232.22.2.3.1.1.1.9";
+    my $data = &fetchData($MIBscolumn,'column');
+    foreach (keys %{ $data }) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+sub getCPU {
+    my $MIBsbase = "1.3.6.1.4.1.2021.11";
+    my $MIBs = {
+	$MIBsbase.'.3.0' => 'ssSwapIn', # kB
+	$MIBsbase.'.4.0' => 'ssSwapOut', # kB
+	$MIBsbase.'.5.0' => 'ssIOSent', # blocks/s
+	$MIBsbase.'.6.0' => 'ssIOReceive', # blocks/s
+	$MIBsbase.'.7.0' => 'ssSysInterrupts', # interrupts/s
+	$MIBsbase.'.8.0' => 'ssSysContext', # switches/s
+	$MIBsbase.'.9.0' => 'ssCpuUser',
+	$MIBsbase.'.10.0' => 'ssCpuSystem',
+	$MIBsbase.'.11.0' => 'ssCpuIdle',
+	$MIBsbase.'.50.0' => 'ssCpuRawUser', # counter32
+	$MIBsbase.'.51.0' => 'ssCpuRawNice', # counter32
+	$MIBsbase.'.52.0' => 'ssCpuRawSystem', # counter32
+	$MIBsbase.'.53.0' => 'ssCpuRawIdle' # counter32
+    };
+    my $data = &fetchData($MIBs);
+    &printData($data);
+}
+
+sub getEnclosure {
+    if(not defined $EnclosureIndex or not ($EnclosureIndex >= 0)) {
+	print STDERR "Missing enclosure index\n";
+	&usage(1);
+    }
+    my $MIBsbase = "1.3.6.1.4.1.232.22.2.3.1.1.1";
+    my $MIBs = {
+	$MIBsbase.'.1.'.$EnclosureIndex => 'EnclosureRack', # integer
+	$MIBsbase.'.2.'.$EnclosureIndex => 'EnclosureIndex', # integer
+	$MIBsbase.'.3.'.$EnclosureIndex => 'EnclosureModel', # string
+	$MIBsbase.'.4.'.$EnclosureIndex => 'EnclosureAssetTag', # string
+	$MIBsbase.'.5.'.$EnclosureIndex => 'EnclosurePartNum', # string
+	$MIBsbase.'.6.'.$EnclosureIndex => 'EnclosureSparePartNum', # string
+	$MIBsbase.'.7.'.$EnclosureIndex => 'EnclosureSerialNum', # string
+	$MIBsbase.'.8.'.$EnclosureIndex => 'EnclosureFWRev', # string
+	$MIBsbase.'.9.'.$EnclosureIndex => 'EnclosureName', # string
+	$MIBsbase.'.10.'.$EnclosureIndex => 'EnclosureNeighborNamePrev', # string
+	$MIBsbase.'.11.'.$EnclosureIndex => 'EnclosureNeighborNameNext', # string
+	$MIBsbase.'.12.'.$EnclosureIndex => 'EnclosureHeight', # integer
+	$MIBsbase.'.13.'.$EnclosureIndex => 'EnclosureWidth', # integer
+	$MIBsbase.'.14.'.$EnclosureIndex => 'EnclosureDepth', # integer
+	$MIBsbase.'.15.'.$EnclosureIndex => 'EnclosureTrapSequenceNum', # integer
+	$MIBsbase.'.16.'.$EnclosureIndex => 'EnclosureCondition', # integer (condition state)
+	$MIBsbase.'.17.'.$EnclosureIndex => 'EnclosureHasServerBlades', # integer (1=false, 2=true)
+	$MIBsbase.'.18.'.$EnclosureIndex => 'EnclosureHasPowerSupplies', # integer (1=false, 2=true)
+	$MIBsbase.'.19.'.$EnclosureIndex => 'EnclosureHasNetConnectors', # integer (1=false, 2=true)
+	$MIBsbase.'.20.'.$EnclosureIndex => 'EnclosureHasTempSensors', # integer (1=false, 2=true)
+	$MIBsbase.'.21.'.$EnclosureIndex => 'EnclosureHasFans', # integer (1=false, 2=true)
+	$MIBsbase.'.22.'.$EnclosureIndex => 'EnclosureHasFuses', # integer (1=false, 2=true)
+	$MIBsbase.'.23.'.$EnclosureIndex => 'EnclosureMgmtUID', # integer (LED state)
+	$MIBsbase.'.24.'.$EnclosureIndex => 'EnclosureSerialNumPrev', # string
+	$MIBsbase.'.25.'.$EnclosureIndex => 'EnclosureSerialNumNext', # string
+	$MIBsbase.'.26.'.$EnclosureIndex => 'EnclosureAddress', # integer
+	$MIBsbase.'.27.'.$EnclosureIndex => 'EnclosureProductId', # string
+	$MIBsbase.'.28.'.$EnclosureIndex => 'EnclosureProductIdPrev', # string
+	$MIBsbase.'.29.'.$EnclosureIndex => 'EnclosureProductIdNext', # string
+	$MIBsbase.'.30.'.$EnclosureIndex => 'EnclosureUUID', # string
+	$MIBsbase.'.31.'.$EnclosureIndex => 'EnclosureUUIDPrev', # string
+	$MIBsbase.'.32.'.$EnclosureIndex => 'EnclosureUUIDNext' # string
+	#$MIBsbase.'.33.'.$EnclosureIndex => 'Enclosure???'  # integer : don't know what this one is yet...
+    };
+    my $data = &fetchData($MIBs);
+    foreach (
+	'EnclosureModel',
+	'EnclosureAssetTag',
+	'EnclosurePartNum',
+	'EnclosureSparePartNum',
+	'EnclosureSerialNum',
+	'EnclosureFWRev',
+	'EnclosureName',
+	'EnclosureNeighborNamePrev',
+	'EnclosureNeighborNameNext',
+	'EnclosureSerialNumPrev',
+	'EnclosureSerialNumNext',
+	'EnclosureProductId',
+	'EnclosureProductIdPrev',
+	'EnclosureProductIdNext',
+	'EnclosureUUID',
+	'EnclosureUUIDPrev',
+	'EnclosureUUIDNext'
+    ) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    $data->{'EnclosureConditionString'} = quoteString($ConditionStates->{$data->{'EnclosureCondition'}});
+    $data->{'EnclosureMgmtUIDString'} = quoteString($LEDStates->{$data->{'EnclosureMgmtUID'}});
+    &printData($data);
+}
+
+sub getPowerSupply {
+    if(not defined $PowerSupplyIndex or not ($PowerSupplyIndex >= 0)) {
+	print STDERR "Missing power supply index\n";
+	&usage(1);
+    }
+    my $MIBsbase = "1.3.6.1.4.1.232.22.2.5.1.1.1";
+    my $MIBs = {
+	$MIBsbase.'.1.'.$PowerSupplyIndex => 'PowerSupplyRack', # integer
+	$MIBsbase.'.2.'.$PowerSupplyIndex => 'PowerSupplyChassis', # integer
+	$MIBsbase.'.4.'.$PowerSupplyIndex => 'PowerSupplyEnclosureName', # string
+	$MIBsbase.'.5.'.$PowerSupplyIndex => 'PowerSupplySerialNum', # string
+	$MIBsbase.'.6.'.$PowerSupplyIndex => 'PowerSupplyPartNum', # string
+	$MIBsbase.'.7.'.$PowerSupplyIndex => 'PowerSupplySparePartNum', # string
+	$MIBsbase.'.8.'.$PowerSupplyIndex => 'PowerSupplyFWRev', # string
+	$MIBsbase.'.9.'.$PowerSupplyIndex => 'PowerSupplyMaxPwrOutput', # integer (watts)
+	$MIBsbase.'.10.'.$PowerSupplyIndex => 'PowerSupplyCurPwrOutput', # integer (watts)
+	$MIBsbase.'.11.'.$PowerSupplyIndex => 'PowerSupplyPosition', # integer
+	$MIBsbase.'.12.'.$PowerSupplyIndex => 'PowerSupplyIntakeTemp', # integer (degrees ?)
+	$MIBsbase.'.13.'.$PowerSupplyIndex => 'PowerSupplyExhaustTemp', # integer (degrees ?)
+	$MIBsbase.'.14.'.$PowerSupplyIndex => 'PowerSupplyStatus', # integer state
+	$MIBsbase.'.15.'.$PowerSupplyIndex => 'PowerSupplyInputLineStatus', # integer state
+	$MIBsbase.'.16.'.$PowerSupplyIndex => 'PowerSupplyPresent', # integer (1=other, 2=absent, 3=present)
+	$MIBsbase.'.17.'.$PowerSupplyIndex => 'PowerSupplyCondition', # integer (INTEGER: 1=other, 2=ok, 3=degraded, 4=failed)
+	$MIBsbase.'.18.'.$PowerSupplyIndex => 'PowerSupplyEnclosureSerialNum' # string
+    };
+    my $data = &fetchData($MIBs);
+    foreach (
+	'PowerSupplyEnclosureName',
+	'PowerSupplySerialNum',
+	'PowerSupplyPartNum',
+	'PowerSupplySparePartNum',
+	'PowerSupplyFWRev',
+	'PowerSupplyEnclosureSerialNum'
+    ) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    $data->{'PowerSupplyConditionString'} = quoteString($ConditionStates->{$data->{'PowerSupplyPresent'}});
+    $data->{'PowerSupplyPresentString'} = quoteString($PresentStates->{$data->{'PowerSupplyCondition'}});
+    $data->{'PowerSupplyStatusString'} = quoteString($PowerSupplyStates->{$data->{'PowerSupplyStatus'}});
+    $data->{'PowerSupplyInputLineStatusString'} = quoteString($PowerSupplyLineStates->{$data->{'PowerSupplyInputLineStatus'}});
+    &printData($data);
+}
+
+sub getPowerSupplyList {
+    my $MIBscolumn = "1.3.6.1.4.1.232.22.2.5.1.1.1.16";
+    my $data = &fetchData($MIBscolumn,'column');
+    foreach (keys %{ $data }) {
+	$data->{$_} = $PresentStates->{$data->{$_}};
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+sub getFan {
+    if(not defined $FanIndex or not ($FanIndex >= 0)) {
+	print STDERR "Missing fan index\n";
+	&usage(1);
+    }
+    my $MIBsbase = "1.3.6.1.4.1.232.22.2.3.1.3.1";
+    my $MIBs = {
+	$MIBsbase.'.1.'.$FanIndex => 'FanRack', # integer
+	$MIBsbase.'.2.'.$FanIndex => 'FanChassis', # integer
+	$MIBsbase.'.4.'.$FanIndex => 'FanEnclosureName', # string
+	$MIBsbase.'.5.'.$FanIndex => 'FanLocation', # string
+	$MIBsbase.'.6.'.$FanIndex => 'FanPartNumber', # string
+	$MIBsbase.'.7.'.$FanIndex => 'FanSparePartNumber', # string
+	$MIBsbase.'.8.'.$FanIndex => 'FanPresent', # integer (1=other, 2=absent, 3=present)
+	$MIBsbase.'.9.'.$FanIndex => 'FanRedundant', # integer
+	$MIBsbase.'.10.'.$FanIndex => 'FanRedundantGroupId', # integer
+	$MIBsbase.'.11.'.$FanIndex => 'FanCondition', # integer (INTEGER: 1=other, 2=ok, 3=degraded, 4=failed)
+	$MIBsbase.'.12.'.$FanIndex => 'FanEnclosureSerialNum' # string
+    };
+    my $data = &fetchData($MIBs);
+    foreach ('FanEnclosureName','FanLocation','FanPartNumber','FanSparePartNumber','FanEnclosureSerialNum') {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    $data->{'FanConditionString'} = quoteString($ConditionStates->{$data->{'FanPresent'}});
+    $data->{'FanPresentString'} = quoteString($PresentStates->{$data->{'FanCondition'}});
+    &printData($data);
+}
+
+sub getTemp {
+    print "Not yet implemented datatype=(",$Datatype,")\n";
+    #my $MIBsbase = "";
+    # nothing useful here....
+    #CPQRACK-MIB::cpqRackCommonEnclosureHasTempSensors.1 = INTEGER: true(2)
+    #CPQRACK-MIB::cpqRackPowerSupplyIntakeTemp.1 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyIntakeTemp.2 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyIntakeTemp.3 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyIntakeTemp.4 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyIntakeTemp.5 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyIntakeTemp.6 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyExhaustTemp.1 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyExhaustTemp.2 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyExhaustTemp.3 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyExhaustTemp.4 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyExhaustTemp.5 = INTEGER: -1
+    #CPQRACK-MIB::cpqRackPowerSupplyExhaustTemp.6 = INTEGER: -1
+
+}
+
+sub getFanList {
+    my $MIBscolumn = "1.3.6.1.4.1.232.22.2.3.1.3.1.8";
+    my $data = &fetchData($MIBscolumn,'column');
+    foreach (keys %{ $data }) {
+	$data->{$_} = $PresentStates->{$data->{$_}};
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+sub getSlotList {
+    my $MIBscolumn = "1.3.6.1.4.1.232.22.2.4.1.1.1.4";
+    my $data = &fetchData($MIBscolumn,'column');
+    foreach (keys %{ $data }) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+sub getSlot {
+    if(not defined $SlotIndex or not ($SlotIndex >= 0)) {
+	print STDERR "Missing slot index\n";
+	&usage(1);
+    }
+    my $MIBsbase = "1.3.6.1.4.1.232.22.2.4.1.1.1";
+    my $MIBs = {
+	$MIBsbase.'.1.'.$SlotIndex => 'BladeRack', # integer
+	$MIBsbase.'.2.'.$SlotIndex => 'BladeChassis', # integer
+	$MIBsbase.'.3.'.$SlotIndex => 'BladeIndex', # integer
+	$MIBsbase.'.4.'.$SlotIndex => 'BladeName', # string
+	$MIBsbase.'.5.'.$SlotIndex => 'BladeEnclosureName', # string
+	$MIBsbase.'.6.'.$SlotIndex => 'BladePartNum', # string
+	$MIBsbase.'.7.'.$SlotIndex => 'BladeSparePartNum', # string
+	$MIBsbase.'.8.'.$SlotIndex => 'BladePosition', # integer
+	$MIBsbase.'.9.'.$SlotIndex => 'BladeHeight', # integer
+	$MIBsbase.'.10.'.$SlotIndex => 'BladeWidth', # integer
+	$MIBsbase.'.11.'.$SlotIndex => 'BladeDepth', # integer
+	$MIBsbase.'.12.'.$SlotIndex => 'BladePresent', # integer (1=other, 2=absent, 3=present)
+	$MIBsbase.'.13.'.$SlotIndex => 'BladeHasFuses', # integer (1=false, 2=true)
+	$MIBsbase.'.14.'.$SlotIndex => 'BladeEnclosureSerialNum', # string
+	$MIBsbase.'.15.'.$SlotIndex => 'BladeSlotsUsed', # integer
+	$MIBsbase.'.16.'.$SlotIndex => 'BladeSerialNum', # string
+	$MIBsbase.'.17.'.$SlotIndex => 'BladeProductId', # string
+	$MIBsbase.'.18.'.$SlotIndex => 'BladeUid', # string
+	$MIBsbase.'.19.'.$SlotIndex => 'BladeSlotsUsedX', # integer
+	$MIBsbase.'.18.'.$SlotIndex => 'BladeSlotsUsedY' # integer
+    };
+    my $data = &fetchData($MIBs);
+    foreach (
+	'BladeName',
+	'BladeEnclosureName',
+	'BladePartNum',
+	'BladeSparePartNum',
+	'BladeEnclosureSerialNum',
+	'BladeSerialNum',
+	'BladeProductId',
+	'BladeUid'
+    ) {
+	$data->{$_} = quoteString($data->{$_}); # quote these strings
+    }
+    &printData($data);
+}
+
+
+if($Datatype eq "power") {
+    &getPower();
+} elsif($Datatype eq "cpu") {
+    &getCPU();
+} elsif($Datatype eq "enclosurelist") {
+    &getEnclosureList();
+} elsif($Datatype eq "enclosure") {
+    &getEnclosure();
+} elsif($Datatype eq "connectorlist") {
+    &getConnectorList();
+} elsif($Datatype eq "connector") {
+    &getConnector();
+} elsif($Datatype eq "powersupplylist") {
+    &getPowerSupplyList();
+} elsif($Datatype eq "powersupply") {
+    &getPowerSupply();
+} elsif($Datatype eq "fanlist") {
+    &getFanList();
+} elsif($Datatype eq "fan") {
+    &getFan();
+} elsif($Datatype eq "product") {
+    &getProduct();
+} elsif($Datatype eq "temp") {
+    &getTemp();
+} elsif($Datatype eq "slotlist") {
+    &getSlotList();
+} elsif($Datatype eq "slot") {
+    &getSlot();
+} else {
+    print STDERR "Unrecognized datatype=(",$Datatype,")\n";
+    &usage(1);
+}
+
+exit 0;
+
+
+
+

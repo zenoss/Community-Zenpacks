@@ -1,0 +1,50 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:bladeserverList;
+    objects python:reduce(lambda x, y: x+y,map(lambda x: x.bladeservers(), here.getDmdRoot('Devices').HPBladeChassis.getSubDevices()));
+    tabletitle string:blade server Information;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsDisplayName','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bladechassis','Chassis')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPosition','Position')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsHeight','Height')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsWidth','Width')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsDepth','Depth')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsSlotsUsed','SlotsUsed')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsSerialNum','SerialNum')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsProductId','ProductId')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr>
+        <td class="tablevalues" tal:content="structure python:gd.urlLink()"/>
+        <td class="tablevalues" tal:content="structure python:gd.bladechassis().urlLink()"/>
+        <td class="tablevalues" tal:content="gd/bsPosition"/>
+        <td class="tablevalues" tal:content="gd/bsHeight"/>
+        <td class="tablevalues" tal:content="gd/bsWidth"/>
+        <td class="tablevalues" tal:content="gd/bsDepth"/>
+        <td class="tablevalues" tal:content="gd/bsSlotsUsed"/>
+        <td class="tablevalues" tal:content="gd/bsSerialNum"/>
+        <td class="tablevalues" tal:content="gd/bsProductId"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+</tal:block>
+
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>

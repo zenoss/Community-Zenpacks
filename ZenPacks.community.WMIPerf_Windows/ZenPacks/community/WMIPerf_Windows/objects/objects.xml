@@ -50,11 +50,16 @@ True
 <tomanycont id='aliases'>
 <object id='AvailableKBytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 </object>
-</tomanycont>
+<object id='memoryAvailable__bytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+<property type="string" id="formula" mode="w" >
+1024,*
+</property>
 </object>
 </tomanycont>
 </object>
-<object id='cpuPercentProcessorTime' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
+</tomanycont>
+</object>
+<object id='Processor' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 WMI
 </property>
@@ -74,18 +79,18 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT PercentProcessorTime FROM Win32_PerfRawData_PerfOS_Processor WHERE Name="_Total"
+SELECT LoadPercentage FROM Win32_Processor
 </property>
 <tomanycont id='datapoints'>
-<object id='PercentProcessorTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='LoadPercentage_avg' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-DERIVE
+GAUGE
 </property>
 <property type="boolean" id="isrow" mode="w" >
 True
 </property>
 <tomanycont id='aliases'>
-<object id='PercentProcessorTime' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+<object id='LoadPercentage' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 </object>
 <object id='cpu__pct' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 </object>
@@ -113,7 +118,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-Win32_OperatingSystem
+SELECT LastBootUpTime FROM Win32_OperatingSystem
 </property>
 <tomanycont id='datapoints'>
 <object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -126,7 +131,7 @@ True
 <tomanycont id='aliases'>
 <object id='LastBootUpTime' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 <property type="string" id="formula" mode="w" >
--1,*,now,+
+-100,/,now,+
 </property>
 </object>
 </tomanycont>
@@ -271,7 +276,7 @@ True
 <tomanycont id='thresholds'>
 <object id='CPU Utilization over 90' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['cpuPercentProcessorTime_PercentProcessorTime']
+['Processor_LoadPercentage_avg']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
@@ -311,7 +316,7 @@ False
 0
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+100
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -325,7 +330,7 @@ CPU Utilization over 90
 ${graphPoint/id}
 </property>
 </object>
-<object id='PercentProcessorTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='LoadPercentage_avg' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -342,13 +347,13 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Load
 </property>
 <property type="long" id="limit" mode="w" >
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-cpuPercentProcessorTime_PercentProcessorTime
+Processor_LoadPercentage_avg
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -385,9 +390,9 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
-<object id='Available Memory' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='memoryAvailableKBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -396,10 +401,10 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%0.2lf%s
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Available Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -408,7 +413,7 @@ ${graphPoint/id}
 1024,*
 </property>
 <property type="string" id="dpName" mode="w" >
-PerfOSMemory_AvailableKBytes
+PerfOSMemory_memoryAvailableKBytes
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -481,7 +486,7 @@ AVERAGE
 Filesystem template that uses Win32_Volume Class. Has a 90% threshold.
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+Products.ZenModel.FileSystem
 </property>
 <tomanycont id='datasources'>
 <object id='PerfDisk' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
@@ -555,6 +560,11 @@ True
 <object id='FreeMegabytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 <property type="string" id="formula" mode="w" >
 ${here/totalBlocks},-,${here/blockSize},*,-1048576,/
+</property>
+</object>
+<object id='usedFilesystemSpace__bytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+<property type="string" id="formula" mode="w" >
+${here/blockSize},*
 </property>
 </object>
 </tomanycont>
@@ -890,6 +900,186 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'WBEM', 'Win', 'rrdTemplates', 'HardDisk') -->
+<object id='/zport/dmd/Devices/Server/WBEM/Win/rrdTemplates/HardDisk' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+HardDisk I/O WMI template
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.HardDisk
+</property>
+<tomanycont id='datasources'>
+<object id='PerfDisk' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+WMI
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="namespace" mode="w" >
+root/cimv2
+</property>
+<property type="string" id="wql" mode="w" >
+Win32_PerfRawData_PerfDisk_PhysicalDisk.Name="${here/snmpindex}"
+</property>
+<tomanycont id='datapoints'>
+<object id='DiskReadBytesPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='DiskWriteBytesPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphs'>
+<object id='IO Bytes' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
+<property type="lines" id="dsnames" mode="w" >
+['lDiskDiskReadBytesPerSec_lDiskDiskReadBytesPerSec', 'lDiskDiskWriteBytesPerSec_lDiskDiskWriteBytesPerSec']
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes/sec
+</property>
+<property type="int" id="linewidth" mode="w" >
+1
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="boolean" id="summary" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="lines" id="colors" mode="w" >
+('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='IO Bytes' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='DiskReadBytesPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Read
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+PerfDisk_DiskReadBytesPersec
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='DiskWriteBytesPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Write
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+PerfDisk_DiskWriteBytesPersec
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'WBEM', 'Win', 'rrdTemplates', 'OSProcess') -->
 <object id='/zport/dmd/Devices/Server/WBEM/Win/rrdTemplates/OSProcess' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >
@@ -1166,7 +1356,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Kernel
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1195,7 +1385,7 @@ True
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+User
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1252,7 +1442,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Usage
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1309,7 +1499,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Page Faults
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1366,7 +1556,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Count
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1423,7 +1613,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Threads
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1804,7 +1994,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Receive
+Recive
 </property>
 <property type="long" id="limit" mode="w" >
 -1

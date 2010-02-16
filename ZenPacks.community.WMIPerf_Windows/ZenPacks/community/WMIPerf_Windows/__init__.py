@@ -47,6 +47,7 @@ class ZenPack(ZenPackBase):
                         'community.wmi.ProcessMap',
                         'community.wmi.ProductMap',
                         'community.wmi.RouteMap',
+                        'community.wmi.DiskDriveMap',
                     ), type = 'lines')
         ZenPackBase.install(self, app)
 
@@ -74,7 +75,10 @@ class ZenPack(ZenPackBase):
                         'community.wmi.ProcessorMap',
                         'community.wmi.InterfaceMap',
                         'community.wmi.FileSystemMap',
+                        'community.wmi.ProcessMap',
                         'community.wmi.ProductMap',
+                        'community.wmi.RouteMap',
+                        'community.wmi.DiskDriveMap',
                     ), type = 'lines')
         ZenPackBase.upgrade(self, app)
 

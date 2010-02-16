@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.3 2010/02/09 15:43:27 egor Exp $"""
+$Id: WMIClient.py,v 1.4 2010/02/16 17:24:41 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -27,7 +27,7 @@ from Products.DataCollector.BaseClient import BaseClient
 from ZenPacks.community.WMIDataSource.services.WmiPerfConfig import sortQuery
 
 from twisted.internet import defer, reactor
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, tzinfo
 
 import os
 import socket
@@ -36,7 +36,7 @@ import logging
 log = logging.getLogger("zen.WMIClient")
 
 import re
-DTPAT=re.compile(r'^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.(\d{6})(\d{4})')
+DTPAT=re.compile(r'^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.(\d{6})([+|-])(\d{3})')
 
 
 BaseName = os.path.basename(sys.argv[0])
@@ -54,6 +54,15 @@ def _myname():
 
 def _filename(device):
     return zenPath('var', _myname(), device)
+
+class MinutesFromUTC(tzinfo):
+    """Fixed offset in minutes from UTC."""
+    def __init__(self, offset):
+        self.__offset = timedelta(minutes = offset)
+    def utcoffset(self, dt):
+        return self.__offset
+    def dst(self, dt):
+        return timedelta(0)
 
 class BadCredentials(Exception): pass
 
@@ -158,7 +167,7 @@ class WMIClient(BaseClient):
                         result[aname] = datetime(int(g[0]), int(g[1]), 
                                     int(g[2]), int(g[3]), 
                                     int(g[4]), int(g[5]), 
-                                    int(g[6]), timedelta(minutes = int(g[7])))
+                                    int(g[6]), MinutesFromUTC(int(g[7]+g[8])))
                     if table not in results:
                         results[table] = []
                     results[table].append(result)

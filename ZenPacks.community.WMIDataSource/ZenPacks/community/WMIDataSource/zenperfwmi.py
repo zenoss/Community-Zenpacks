@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the WMIDataSource Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.2 2010/02/09 13:24:27 egor Exp $"""
+$Id: zenperfwmi.py,v 2.3 2010/02/17 10:48:54 egor Exp $"""
 
-__version__ = "$Revision: 2.2 $"[11:-2]
+__version__ = "$Revision: 2.3 $"[11:-2]
 
 import logging
 
@@ -268,9 +268,10 @@ class ZenPerfWmiTask(ObservableMixin):
                             d[dpname] = time.mktime(d[dpname].timetuple()) + mcs
                         if expr: d[dpname] = rrpn(expr, d[dpname])
                         values.append(d[dpname])
-                    if not values: continue
                     if dpname.endswith('_count'): value = len(values)
+                    elif not values: continue
                     elif len(values) == 1: value = values[0]
+                    elif dpname.endswith('_avg'):value = sum(values)/len(values)
                     elif dpname.endswith('_sum'): value = sum(values)
                     elif dpname.endswith('_max'): value = max(values)
                     elif dpname.endswith('_min'): value = min(values)
@@ -283,7 +284,7 @@ class ZenPerfWmiTask(ObservableMixin):
                                                 rrdCreate,
                                                 min=minmax[0],
                                                 max=minmax[1])
-                except: pass
+                except: continue
         return results
 
 

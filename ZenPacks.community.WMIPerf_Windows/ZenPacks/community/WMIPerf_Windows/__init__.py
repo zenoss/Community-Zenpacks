@@ -48,6 +48,8 @@ class ZenPack(ZenPackBase):
                         'community.wmi.ProductMap',
                         'community.wmi.RouteMap',
                         'community.wmi.DiskDriveMap',
+                        'community.wmi.WinServiceMap',
+                        'zenoss.portscan.IpServiceMap',
                     ), type = 'lines')
         ZenPackBase.install(self, app)
 
@@ -79,6 +81,8 @@ class ZenPack(ZenPackBase):
                         'community.wmi.ProductMap',
                         'community.wmi.RouteMap',
                         'community.wmi.DiskDriveMap',
+                        'community.wmi.WinServiceMap',
+                        'zenoss.portscan.IpServiceMap',
                     ), type = 'lines')
         ZenPackBase.upgrade(self, app)
 

@@ -91,31 +91,29 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                                                             self.instance)
         namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
                                                             self.namespace)
-	if self.transport == 'Auto':
+        if self.transport == 'Auto':
             zcp = RRDDataSource.RRDDataSource.getCommand(self, context,
                                                     "${dev/zCollectorPlugins}")
             if 'community.wmi.DeviceMap' in zcp: transport = 'WMI'
             else: transport = 'WBEM'
-	else:
-	    transport = self.transport
+        else:
+            transport = self.transport
         if classname.upper().startswith('SELECT '):
             return (transport, classname, {}, namespace)
         kb = classname.split('.', 1)
-	cn = kb[0].split(':', 1)
-	if len(cn) > 1:
-	    classname = cn[1]
-	    namespace = cn[0]
-	else: classname = cn[0]
-	if len(kb) > 1: kb = kb[1]
-	else: return (transport, classname, {}, namespace)
+        cn = kb[0].split(':', 1)
+        if len(cn) > 1:
+            classname = cn[1]
+            namespace = cn[0]
+        else: classname = cn[0]
+        if len(kb) > 1: kb = kb[1]
+        else: return (transport, classname, {}, namespace)
         keybindings = {}
         for key in kb.split(','):
-            try: var, val = key.split('=')
+            try: var, val = key.split('=', 1)
             except: continue
-            keybindings[var] = val.strip('"')
+            keybindings[var] = val
         return (transport, classname, keybindings, namespace)
-
-
 
 
     security.declareProtected('Change Device', 'manage_testDataSource')
@@ -174,10 +172,10 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             tr, inst, kb, namespace = self.getInstanceInfo(device)
             inst = RRDDataSource.RRDDataSource.getCommand(self, device,
                                                             self.instance)
-	    if inst.startswith("%s:"%namespace): inst = inst[len(namespace)+1:]
-	    properties = dict([(
-	                dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
-			dp.id) for dp in self.getRRDDataPoints()])
+            if inst.startswith("%s:"%namespace): inst = inst[len(namespace)+1:]
+            properties = dict([(
+                        dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
+                        dp.id) for dp in self.getRRDDataPoints()])
             if tr == 'WBEM':
                 url='%s://%%s%s:%s/%s'%(
                                     device.zWbemUseSSL and 'https' or 'http',
@@ -186,16 +184,16 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             else:
                 url='//%%s%s/%s'%(device.zWmiProxy or device.manageIp,namespace)
             write('Get %s Instance %s from %s' % (tr, inst, str(url%'')))
-	    write('')
+            write('')
             creds = '%s:%s@'%(device.zWinUser, device.zWinPassword)
             zp = self.dmd.ZenPackManager.packs._getOb(
                                    'ZenPacks.community.%sDataSource'%tr, None)
-            command = "python %s -c \"%s\" -q '%s' -f \"%s\" -a \"%s\""%(
+            command = "python %s -c \"%s\" -q \'%s\' -f \"%s\" -a \"%s\""%(
                                                 zp.path('%sClient.py'%tr),
                                                 str(url%creds),
                                                 inst,
                                                 " ".join(properties.keys()),
-						" ".join(properties.values()))
+                                                " ".join(properties.values()))
             executeStreamCommand(command, write)
         except:
             import sys

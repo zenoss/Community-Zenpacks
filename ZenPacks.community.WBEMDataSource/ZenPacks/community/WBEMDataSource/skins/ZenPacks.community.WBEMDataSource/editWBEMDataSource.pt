@@ -24,7 +24,7 @@
 
         <tal:block metal:fill-slot="zentablecontents">
         <!-- BEGIN TABLE CONTENTS -->
-            
+
     <tr>
         <td class="tableheader">Name</td>
         <td class="tablevalues" tal:condition="editable">
@@ -36,7 +36,7 @@
     </tr>
     <tr>
       <td class="tableheader">Source Type</td>
-	  <td class="tablevalues" tal:content="here/sourcetype"></td>
+          <td class="tablevalues" tal:content="here/sourcetype"></td>
     </tr>
     <tr>
         <td class="tableheader">Enabled</td>
@@ -106,7 +106,7 @@
         </tal:block>
         </tal:block>
         </tal:block>
-        
+
 
 </form>
 
@@ -133,8 +133,8 @@
 
         <tal:block metal:fill-slot="zentablecontents">
         <!-- BEGIN TABLE CONTENTS -->
-            
-    
+
+
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                     tableName,'getId','Name')"/>
@@ -164,7 +164,7 @@
         </tal:block>
         </tal:block>
         </tal:block>
-        
+
 
 </form>
 

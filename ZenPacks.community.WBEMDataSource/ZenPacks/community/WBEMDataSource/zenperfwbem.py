@@ -12,9 +12,9 @@ __doc__="""zenperfwbem
 
 Gets WBEM performance data and stores it in RRD files.
 
-$Id: zenperfwbem.py,v 2.2 2010/02/03 22:41:23 egor Exp $"""
+$Id: zenperfwbem.py,v 2.3 2010/02/17 16:35:08 egor Exp $"""
 
-__version__ = "$Revision: 2.2 $"[11:-2]
+__version__ = "$Revision: 2.3 $"[11:-2]
 
 import logging
 
@@ -77,7 +77,8 @@ def rrpn(expression, value):
                 if oper:
                     stack.append(OPERATORS[oper](stack.pop(-2), stack.pop()))
                 oper = token
-        return OPERATORS[oper](stack.pop(-2), stack.pop())
+        val = OPERATORS[oper](stack.pop(-2), stack.pop())
+        return val//1
     except:
         return value
 
@@ -223,9 +224,10 @@ class ZenPerfWbemTask(ObservableMixin):
                             d[dpname] = time.mktime(d[dpname].timetuple()) + mcs
                         if expr: d[dpname] = rrpn(expr, d[dpname])
                         values.append(d[dpname])
-                    if not values: continue
-                    if len(values) == 1: value = values[0]
-                    elif dpname.endswith('_count'): value = len(values)
+                    if dpname.endswith('_count'): value = len(values)
+                    elif not values: continue
+                    elif len(values) == 1: value = values[0]
+                    elif dpname.endswith('_avg'):value = sum(values)/len(values)
                     elif dpname.endswith('_sum'): value = sum(values)
                     elif dpname.endswith('_max'): value = max(values)
                     elif dpname.endswith('_min'): value = min(values)
@@ -238,7 +240,7 @@ class ZenPerfWbemTask(ObservableMixin):
                                                 rrdCreate,
                                                 min=minmax[0],
                                                 max=minmax[1])
-                except: pass
+                except: continue
         return results
 
     def _collectData(self):

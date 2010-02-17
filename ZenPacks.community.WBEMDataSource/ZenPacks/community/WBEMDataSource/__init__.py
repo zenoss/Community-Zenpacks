@@ -23,16 +23,16 @@ class ZenPack(ZenPackBase):
             ('zWbemPort', '5989', 'string'),
             ('zWbemProxy', '', 'string'),
             ('zWbemUseSSL', True, 'boolean'),
-	    ]
+            ]
 
     def install(self, app):
         if not hasattr(app.zport.dmd.Devices.Server, 'WBEM'):
             manage_addDeviceClass(app.zport.dmd.Devices.Server, 'WBEM')
         dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM")
-	dc.description = ''
-	dc.devtypes = ['WMI', 'WBEM']
+        dc.description = ''
+        dc.devtypes = ['WMI', 'WBEM']
         if not hasattr(aq_base(dc),'zWbemMonitorIgnore'):
-	    dc._setProperty('zWbemMonitorIgnore', False, 'boolean')
+            dc._setProperty('zWbemMonitorIgnore', False, 'boolean')
         if not hasattr(app.zport.dmd.Events.Status, 'Wbem'):
             app.zport.dmd.Events.createOrganizer("/Status/Wbem")
         ZenPackBase.install(self, app)
@@ -41,10 +41,10 @@ class ZenPack(ZenPackBase):
         if not hasattr(app.zport.dmd.Devices.Server, 'WBEM'):
             manage_addDeviceClass(app.zport.dmd.Devices.Server, 'WBEM')
             dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM")
-	    dc.description = ''
-	    dc.devtypes = ['WMI', 'WBEM']
+            dc.description = ''
+            dc.devtypes = ['WMI', 'WBEM']
             if not hasattr(aq_base(dc),'zWbemMonitorIgnore'):
-	        dc._setProperty('zWbemMonitorIgnore', False, 'boolean')
+                dc._setProperty('zWbemMonitorIgnore', False, 'boolean')
         if not hasattr(app.zport.dmd.Events.Status, 'Wbem'):
             app.zport.dmd.Events.createOrganizer("/Status/Wbem")
         ZenPackBase.upgrade(self, app)
@@ -52,6 +52,6 @@ class ZenPack(ZenPackBase):
     def remove(self, app, leaveObjects=False):
         try:
             dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM")
-	    dc._delProperty('zWbemMonitorIgnore')
-	except: pass
+            dc._delProperty('zWbemMonitorIgnore')
+        except: pass
         ZenPackBase.remove(self, app, leaveObjects)

@@ -12,9 +12,9 @@ __doc__="""WbemPerfConfig
 
 Provides Wbem config to zenperfwbem clients.
 
-$Id: WbemPerfConfig.py,v 1.3 2010/02/04 15:46:23 egor Exp $"""
+$Id: WbemPerfConfig.py,v 1.4 2010/02/17 16:39:40 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -96,7 +96,7 @@ def getWbemDeviceConfig(trs, device):
     datapoints = {}
     threshs = getWbemComponentConfig(trs, device, queries, datapoints)
     for comp in device.getMonitoredComponents():
-        threshs.extend(getWbemComponentConfig(trs,comp,queries,datapoints))
+        threshs.extend(getWbemComponentConfig(trs, comp, queries, datapoints))
     return queries, datapoints, threshs
 
 
@@ -112,6 +112,7 @@ class WbemPerfConfig(CollectorConfigService):
                                  'zWinPassword')
         CollectorConfigService.__init__(self, dmd, instance,
                                                         deviceProxyAttributes)
+
     def _filterDevice(self, device):
         include = CollectorConfigService._filterDevice(self, device)
         zIgnore = 'z%s%sMonitorIgnore'%(self.cimtransport[0][0].upper(),

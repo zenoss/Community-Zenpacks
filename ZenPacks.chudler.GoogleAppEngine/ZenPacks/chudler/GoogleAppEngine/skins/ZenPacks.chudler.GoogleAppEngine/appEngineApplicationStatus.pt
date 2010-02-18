@@ -1,0 +1,228 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+<tal:block metal:define-macro="deviceStatusInfo"
+           tal:define=" tabletitle string:Status;">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable-slidingdoors">
+
+<tal:block metal:fill-slot="title">
+    Device Status
+</tal:block>
+<tal:block metal:fill-slot="body">
+    <div style="padding:5px;border-bottom:1px solid #aaa;
+                background-color:#f8f8f8">
+    <ul class="inline-ul" tal:define="monitored here/monitorDevice">
+    <li> Application Name: <span tal:content="here/titleOrId" class="bigtext"/>
+    <li> Version: <span tal:content="here/version" class="bigtext"/>
+    <li> Status: 
+        <tal:block tal:condition="monitored" tal:define="
+            isup python:here.getStatus()<1;
+            color python:test(isup, 'green', 'red');
+            desc python:test(isup, 'Up', 'Down')">
+
+            <img tal:attributes="src string:img/${color}_dot.png"
+                style="margin-bottom:-3px"/>
+            <span tal:content="desc" class="bigtext"/>
+        </tal:block>
+        <tal:block tal:condition="not:monitored">
+            <img tal:attributes="src string:img/grey_dot.png"
+                style="margin-bottom:-3px"/>
+            <span class="bigtext">Not Monitored</span>
+        </tal:block>
+    </li>
+    </ul>
+    </div>
+    <div class="yui-t1" style="width:100%;">
+        <div class="yui-b yui-z">
+            <div class="zentable-rainbow">
+                <div metal:use-macro="here/rainbows/macros/vertical"></div>
+            </div>
+        </div>
+        <div class="yui-b yui-z2">
+            <dl class="faux-table">
+                <dt class="first">State</dt>
+                    <dd class="first" tal:content="python:here.convertProdState(
+                                                here.productionState)"/>
+                <dt>Priority</dt>
+                    <dd tal:content="python:here.convertPriority(
+                                        here.priority)"/>
+                <dt>Locks</dt>
+                    <dd>
+                    <tal:block tal:condition="python:not
+                    (here.isLockedFromDeletion() and 
+                     here.isLockedFromUpdates() and 
+                     here.sendEventWhenBlocked())">None</tal:block>
+                      <img tal:condition="here/isLockedFromDeletion" 
+                           border="0" src="locked-delete-icon.png"
+                           style="vertical-align:middle">
+                      <img tal:condition="here/isLockedFromUpdates" 
+                           border="0" src="locked-update-icon.png"
+                           style="vertical-align:middle">
+                      <img tal:condition="here/sendEventWhenBlocked" 
+                           border="0" src="locked-sendevent-icon.png"
+                           style="vertical-align:middle">
+                  </dd>
+                <dt>Last Change</dt>
+                    <dd tal:content="here/getLastChangeString"/>
+                <dt>Last Collection</dt>
+                    <dd tal:content="here/getSnmpLastCollectionString"/>
+                <dt>First Seen</dt>
+                    <dd tal:content="here/getCreatedTimeString"/>
+                <dt>Google Link</dt>
+                    <dd>
+                        <a href=_ tal:attributes="href python:'https://appengine.google.com/' + here.url"><span tal:replace="here/titleOrId" /></a>
+                    </dd>
+
+            </dl>
+        </div>
+        <div class="yui-b yui-z3">
+            <div class="yui-skin-sam"
+                 style="height:100%;
+                        overflow-x:hidden;
+                        overflow-y:auto;
+                        background-color: #ccc;
+                        border-left:1px solid #888">
+            <div id="component-event-table"></div>
+            </div>
+            <script tal:define="evsum here/getDeviceComponentEventSummary"
+              tal:content="structure string:
+              var devcompevsum = ${evsum};
+              compevsum = devcompevsum;"
+              tal:on-error="structure python:here.dmd.error_handler(error)"
+            ></script>
+            <script>
+            function makeComponentDataTable() {
+                var columns = compevsum.columns;
+                var data = compevsum.data;
+                var mycolumndefs = map(function(x){
+                    return {key:x,sortable:false,resizeable:true}}, columns);
+                var dataSource = new YAHOO.util.DataSource(data);
+                dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+                dataSource.responseSchema = {fields:columns};
+                oConfigs = {};
+                var myDataTable = new YAHOO.widget.DataTable(
+                    'component-event-table', mycolumndefs, dataSource, oConfigs);
+            }
+            addLoadEvent(function() {
+                var loader = YAHOO.zenoss.getLoader();
+                loader.require(["datatable", "datatablesamskin"]);
+                loader.insert({onSuccess:makeComponentDataTable});
+            });
+            </script>
+        </div>
+    </div>
+    <div
+    style="clear:both;font-size:.000001em;line-height:0pt;margin:0;padding:0">
+    &nbsp;
+    </div>
+
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+<br/>
+
+<tal:block tal:define=" tabletitle string:Device; "
+    metal:define-macro="deviceOverview">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable-slidingdoors">
+<tal:block metal:fill-slot="title">Device Information</tal:block>
+<tal:block metal:fill-slot="body">
+<div class="yui-g zentable-modified">
+    <div class="yui-u first">
+        <div class="zentable-modified-column">
+            Organizers
+            <dl class="faux-table">
+                <dt class="first">Location</dt>
+                <dd class="first">
+                <div tal:content="structure here/getLocationLink"/>
+                </dd>
+                <dt>Groups</dt>
+                <dd>
+                <tal:block tal:repeat="item here/groups/objectValuesAll">
+                <div tal:content="structure item/urlLink"/>
+                </tal:block>
+                <div tal:condition="not:here/groups/objectValuesAll">
+                None
+                </div>
+                </dd>
+                <dt>Systems</dt>
+                <dd>
+                <tal:block tal:repeat="item here/systems/objectValuesAll">
+                <div tal:content="structure item/urlLink"/>
+                </tal:block>
+                <div tal:condition="not: here/systems/objectValuesAll">
+                    None
+                </div>
+                </dd>
+                <dt>Collector</dt>
+                <dd>
+                    <div tal:replace="structure python: 
+                        here.perfServer.getPrimaryLink()">
+                      performance server
+                    </div>
+                    <div tal:condition="not:here/perfServer/getPrimaryLink">
+                        None
+                    </div>
+                </dd>
+
+
+
+                <tal:block tal:condition="python:hasattr(here, 'dhcpservers')">
+                <dt>DHCP Helpers</dt>
+                <dd>
+                    <div tal:repeat="item here/dhcpservers/objectValuesAll">
+                    <tal:block tal:content="structure python:item.urlLink()"/>
+                    </div>
+                </dd>
+                </tal:block>
+                <tal:block tal:condition="python:hasattr(here,'termserver')
+                                                 and here.termserver()">
+                <dt>Terminal Server</dt>
+                <dd>
+                <span tal:content="structure here/termserver/getPrimaryLink"/>
+                <a class="tablevalues" href=_
+                tal:attributes="href python:'telnet:'+
+                                             here.termserver().getId()">
+                (telnet)</a>
+                </dd>
+                </tal:block>
+                <tal:block tal:condition="python:hasattr(here, 
+                                                         'dhcpubrclients')">
+                <dt>UBR Clients</dt>
+                <dd>
+                    <div tal:repeat="item here/dhcpubrclients/objectValuesAll">
+                    <tal:block tal:content="structure python:item.urlLink()"/>
+                </div>
+                </dd>
+                </tal:block>
+            </dl>
+        </div>
+    </div>
+</div>
+<div style="border-top:1px solid #aaa;background-color:#f2f2f2;">
+    <dl class="faux-table">
+    <dt class="first">Description</dt>
+    <dd class="first">
+        <div tal:condition="here/snmpDescr"
+            style="font-size:90%" tal:content="here/snmpDescr">x</div>
+        <div tal:condition="not:here/snmpDescr">&nbsp;</div>
+    </dd>
+    <dt>Comments</dt>
+    <dd><div tal:condition="here/comments"
+    style="font-size:90%" tal:content="here/comments">x</div>
+        <div tal:condition="not:here/comments">&nbsp;</div>
+    </dd>
+    <dt>Links</dt>
+    <dd><div tal:condition="here/getExpandedLinks"
+            style="font-size:90%" tal:content="structure here/getExpandedLinks">
+        x</div>
+        <div tal:condition="not:here/getExpandedLinks">&nbsp;</div>
+        </dd>
+    </dl>
+</div>
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>

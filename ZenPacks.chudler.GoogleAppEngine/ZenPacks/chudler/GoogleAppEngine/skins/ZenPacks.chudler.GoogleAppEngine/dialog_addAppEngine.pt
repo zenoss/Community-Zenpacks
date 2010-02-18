@@ -1,0 +1,44 @@
+<h2>Add Google AppEngine Instance</h2>
+<span id="errmsg" style="color:red;"></span>
+<br/>
+
+<table style="text-align:left;">
+<tr>
+<td><span id="new_id_label">ID:&nbsp;</span></td>
+<td><input id="new_id" name="id">
+<input type="hidden" id="checkValidIdPath" 
+        tal:attributes="value here/absolute_url_path"></td>
+</tr>
+<tr>
+<td>Username:&nbsp;</td><td><input name="username"/></td>
+</tr>
+<tr>
+<td>Password:&nbsp;</td><td><input type="password" name="password"/></td>
+</tr>
+<tr>
+<td>Collector:&nbsp;</td>
+<td align="left">
+      <select name="performanceMonitor"
+                tal:define="
+                monitors python:here.getDmdRoot('Monitors').getPerformanceMonitorNames();"
+                >
+                <option tal:repeat="monitor monitors"
+                        tal:content="monitor" 
+                        tal:attributes="value monitor ; 
+                            selected python:monitor=='localhost'"/>
+      </select>
+</td>
+</tr>
+</table>
+<div id="dialog_buttons">
+<input tal:attributes="id string:dialog_submit;
+        type string:submit;
+        value string:OK;
+        onclick string:return $$('dialog').submit_form_and_check(
+                                                '${here/absolute_url_path}')"
+                        name="manage_addGoogleAppEngineInstance:method" />
+<input tal:attributes="id string:dialog_cancel;
+                        type string:button;
+                        value string:Cancel;
+                        onclick string:$$('dialog').hide()" />
+</div>

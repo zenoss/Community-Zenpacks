@@ -1,0 +1,1360 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'AppEngine') -->
+<object id='/zport/dmd/Devices/AppEngine' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<tomanycont id='zenMenus'>
+<object id='Manage' module='Products.ZenModel.ZenMenu' class='ZenMenu'>
+<tomanycont id='zenMenuItems'>
+<object id='addAppEngine' module='Products.ZenModel.ZenMenuItem' class='ZenMenuItem'>
+<property type="text" id="description" mode="w" >
+Add Google AppEngine Infrastructure...
+</property>
+<property type="text" id="action" mode="w" >
+dialog_addAppEngine
+</property>
+<property type="boolean" id="isglobal" mode="w" >
+True
+</property>
+<property type="lines" id="permissions" mode="w" >
+('Manage DMD',)
+</property>
+<property type="boolean" id="isdialog" mode="w" >
+True
+</property>
+<property type="float" id="ordering" mode="w" >
+1.02
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='rrdTemplates'>
+<object id='AppEngineApplication' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Performance metrics for Applications running under Google AppEngine
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='Admins Emailed' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Admins Emailed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Attachment Data Sent' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Attachment Data Sent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Attachments Sent' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Attachments Sent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='CPU Time_usage' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='CPU Time_quota' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Data Received from API' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Data Received from API' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Data Sent to API' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Data Sent to API' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Datastore API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Datastore API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Datastore CPU Time' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Datastore CPU Time' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Deployments' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Deployments' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Image Manipulation API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Image Manipulation API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Incoming Bandwidth_usage' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Incoming Bandwidth_usage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Invitations Sent' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Invitations Sent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Mail API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Mail API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Memcache API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Memcache API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Message Body Data Sent' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Message Body Data Sent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Outgoing Bandwidth_usage' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Outgoing Bandwidth' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Recipients Emailed' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Recipients Emailed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Recipients Messaged' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Recipients Messaged' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Requests_quota' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Requests_quota' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Requests_usage' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Requests' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Secure Incoming Bandwidth' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Secure Incoming Bandwidth' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Secure Outgoing Bandwidth' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Secure Outgoing Bandwidth' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Secure Requests' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Secure Requests' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Stored Data' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Stored Data' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Task Queue API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Task Queue API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Transformations executed' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='Transformations executed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='UrlFetch API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='UrlFetch API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='UrlFetch Data Received' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='UrlFetch Data Received' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='UrlFetch Data Sent' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='UrlFetch Data Sent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='XMPP API Calls' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='XMPP API Calls' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='XMPP Data Sent' module='ZenPacks.chudler.GoogleAppEngine.datasources.AppEngineDataSource' class='AppEngineDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+AppEngine
+</property>
+<property type="string" id="eventClass" mode="w" >
+/GoogleAppEngine
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="ref" mode="w" >
+${here/ref}
+</property>
+<tomanycont id='datapoints'>
+<object id='XMPP Data Sent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Bandwidth' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='usage_Incoming Bandwidth_usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+-1,*
+</property>
+<property type="string" id="dpName" mode="w" >
+Incoming Bandwidth_usage_Incoming Bandwidth_usage
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='usage_Outgoing Bandwidth' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Outgoing Bandwidth_usage_Outgoing Bandwidth
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='CPU Time' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='usage_CPU Time_quota' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+CPU Time_usage_CPU Time_quota
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Requests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='usage_Requests' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Requests_usage_Requests
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Total Requests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='quota_Requests_quota' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Requests_quota_Requests_quota
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='AppEngineInstance' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'GoogleAppEngine') -->
+<object id='/zport/dmd/Events/GoogleAppEngine' module='Products.ZenEvents.EventClass' class='EventClass'>
+</object>
+<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Google') -->
+<object id='/zport/dmd/Manufacturers/Google' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
+<property type="string" id="url" mode="w" >
+http://www.google.com
+</property>
+<tomanycont id='products'>
+<object id='AppEngine' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+AppEngine
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Google Desktop Search' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+Google Desktop Search
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['Google Desktop Search']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+<object id='Google Toolbar for Internet Explorer' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+Google Toolbar for Internet Explorer
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['Google Toolbar for Internet Explorer']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

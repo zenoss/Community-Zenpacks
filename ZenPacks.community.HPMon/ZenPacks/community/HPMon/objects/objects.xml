@@ -6,7 +6,7 @@
 Fans Status template that requries HP Insight Manager MIB
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.HPFan
 </property>
 <tomanycont id='datasources'>
 <object id='rpm' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -192,7 +192,7 @@ AVERAGE
 Power Supplies Status template that requries HP Insight Manager MIB
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.HPPowerSupply
 </property>
 <tomanycont id='datasources'>
 <object id='CapacityUsed' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -350,7 +350,7 @@ AVERAGE
 Temperature Sensors Status template that requries HP Insight Manager MIB
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.HPTemperatureSensor
 </property>
 <tomanycont id='datasources'>
 <object id='TemperatureCelsius' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -536,7 +536,7 @@ AVERAGE
 Spin Detect Fans Status template that requries HP Insight Manager MIB
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.HPsdFan
 </property>
 <tomanycont id='datasources'>
 <object id='rpm' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -691,7 +691,7 @@ AVERAGE
 DA Controller Status template that requries HP Insight Manager MIB cpqida.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqDaCntlr
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -754,7 +754,7 @@ True
 DA LogicalDisk template that requries HP Insight Manager MIB cpqida.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqDaLogDrv
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -817,7 +817,7 @@ True
 DA HardDisk I/O template that requries HP Insight Manager MIB cpqida.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqDaPhyDrv
 </property>
 <tomanycont id='datasources'>
 <object id='LReads' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -1575,7 +1575,7 @@ AVERAGE
 FCA Controller template that requries HP Insight Manager MIB cpqfca.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqFcaCntlr
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -1638,7 +1638,7 @@ True
 FCA Host Controller template that requries HP Insight Manager MIB cpqfca.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqFcaHostCntlr
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -1701,7 +1701,7 @@ True
 FCA Logical Disk template that requries HP Insight Manager MIB cpqfca.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqFcaLogDrv
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -1764,7 +1764,7 @@ True
 FCA HardDisk I/O template that requries HP Insight Manager MIB cpqfca.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqFcaPhyDrv
 </property>
 <tomanycont id='datasources'>
 <object id='LReads' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -2516,13 +2516,13 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'cpqIdeAtaController') -->
-<object id='/zport/dmd/Devices/Server/rrdTemplates/cpqIdeAtaController' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'cpqIdeController') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/cpqIdeController' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >
 IDE Controller Status template that requries HP Insight Manager MIB cpqide.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqIdeController
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -2563,7 +2563,7 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='cpqIdeAtaController status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
+<object id='cpqIdeController status' module='ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold' class='StatusThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['status_status']
 </property>
@@ -2585,7 +2585,7 @@ True
 IDE ATA Disk Status template that requries HP Insight Manager MIB cpqide.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqIdeAtaDisk
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -2648,7 +2648,7 @@ True
 IDE Logical Disk Status template that requries HP Insight Manager MIB cpqide.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqIdeLogicalDrive
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -2711,7 +2711,7 @@ True
 NIC template that requries HP Insight Manager MIB cpqnic.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqNicIfPhysAdapter
 </property>
 <tomanycont id='datasources'>
 <object id='BadReceives' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3067,7 +3067,7 @@ AVERAGE
 SAS HBA Status template that requries HP Insight Manager MIB cpqscsi.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqSasHba
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3130,7 +3130,7 @@ True
 SAS Logical Drive Status template that requries HP Insight Manager MIB cpqscsi.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqSasLogDrv
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3193,7 +3193,7 @@ True
 SAS HardDisk Status template that requries HP Insight Manager MIB cpqscsi.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqSasPhyDrv
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3256,7 +3256,7 @@ True
 SCSI Controller Status template that requries HP Insight Manager MIB cpqscsi.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqScsiCntlr
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3319,7 +3319,7 @@ True
 SCSI Logical Drive Status template that requries HP Insight Manager MIB cpqscsi.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqScsiLogDrv
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3382,7 +3382,7 @@ True
 SCSI HardDisk I/O template that requries HP Insight Manager MIB cpqscsi.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqScsiPhyDrv
 </property>
 <tomanycont id='datasources'>
 <object id='LReads' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -3971,7 +3971,7 @@ AVERAGE
 Memory Module Status template that requries HP Insight Manager MIB cpqhlth.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqSiMemModule
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -4034,7 +4034,7 @@ True
 iLO Board Status template that requries HP Insight Manager MIB cpqsm2.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqSm2Cntlr
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -4097,7 +4097,7 @@ True
 Storage Chassis Status template that requries HP Insight Manager MIB cpqstsys.mib
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.HPMon.cpqSsChassis
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>

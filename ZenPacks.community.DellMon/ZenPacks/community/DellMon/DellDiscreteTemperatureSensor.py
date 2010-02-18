@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellDiscreteTemperatureSensor
 
 DellDiscreteTemperatureSensor is an abstraction of a temperature sensor or probe.
 
-$Id: DellDiscreteTemperatureSensor.py,v 1.0 2009/06/22 22:39:24 egor Exp $"""
+$Id: DellDiscreteTemperatureSensor.py,v 1.1 2010/02/18 14:45:50 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel.TemperatureSensor import *
 from DellComponent import *
@@ -32,12 +32,6 @@ class DellDiscreteTemperatureSensor(TemperatureSensor, DellComponent):
                  {'id':'threshold', 'type':'int', 'mode':'w'},
                 )    
 
-    def state(self):
-         return self.statusString()
-
-    tempC = self.cacheRRDValue('temperature_celsius', default)
-
-
     def temperatureCelsiusString(self):
         """
         Return the current discrete temperature as a string
@@ -52,5 +46,16 @@ class DellDiscreteTemperatureSensor(TemperatureSensor, DellComponent):
         Return the current discrete temperature as a string
         """
         return self.temperatureCelsiusString()
+
+    def setState(self, value):
+        self.status = 0
+        for intvalue, status in self.statusmap.iteritems():
+            if status[2].upper() != value.upper(): continue 
+            self.status = value
+            break
+        
+    state = property(fget=lambda self: self.statusString(),
+                     fset=lambda self, v: self.setState(v)
+		     )        
 
 InitializeClass(DellDiscreteTemperatureSensor)

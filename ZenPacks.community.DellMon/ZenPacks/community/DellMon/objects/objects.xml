@@ -6,7 +6,7 @@
 Discrete Temperature Sensors template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellDiscreteTemperatureSensor
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -125,7 +125,7 @@ here.threshold
 Expansion Card Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellExpansionCard
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -188,7 +188,7 @@ True
 Fan Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellFan
 </property>
 <tomanycont id='datasources'>
 <object id='rpm' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -374,7 +374,7 @@ AVERAGE
 Hard Disk Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellHardDisk
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -437,7 +437,7 @@ True
 Logical Disk Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellLogicalDisk
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -500,7 +500,7 @@ True
 Memory Module Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellMemoryModule
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -563,7 +563,7 @@ True
 Power Supply Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellPowerSupply
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -626,7 +626,7 @@ True
 Power Supply amperage probe Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellPowerSupply
 </property>
 <tomanycont id='datasources'>
 <object id='ampers' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -729,7 +729,7 @@ AVERAGE
 Power Supply voltage probe Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellPowerSupply
 </property>
 <tomanycont id='datasources'>
 <object id='millivolts' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -832,7 +832,7 @@ AVERAGE
 Storage controller Template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellStorageCntlr
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -895,7 +895,7 @@ True
 Temperature Sensors template for Dell Servers
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.DellMon.DellTemperatureSensor
 </property>
 <tomanycont id='datasources'>
 <object id='status' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -1016,7 +1016,7 @@ here.threshold
 500
 </property>
 <property type="string" id="units" mode="w" >
-°C
+Â°C
 </property>
 <property type="boolean" id="log" mode="w" >
 False

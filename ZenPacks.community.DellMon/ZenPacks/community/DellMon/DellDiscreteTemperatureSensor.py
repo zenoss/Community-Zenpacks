@@ -53,9 +53,9 @@ class DellDiscreteTemperatureSensor(TemperatureSensor, DellComponent):
             if status[2].upper() != value.upper(): continue 
             self.status = value
             break
-        
+
     state = property(fget=lambda self: self.statusString(),
                      fset=lambda self, v: self.setState(v)
-		     )        
+                     )
 
 InitializeClass(DellDiscreteTemperatureSensor)

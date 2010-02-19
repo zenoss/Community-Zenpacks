@@ -21,13 +21,13 @@ from ZenPacks.community.deviceAdvDetail.HWStatus import *
 class DellComponent(HWStatus):
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'Other'),
-	        2: (DOT_GREY, SEV_WARNING, 'Unknown'),
-	        3: (DOT_GREEN, SEV_CLEAN, 'Ok'),
-		4: (DOT_YELLOW, SEV_WARNING, 'Non Critical Upper'),
-		5: (DOT_ORANGE, SEV_ERROR, 'Critical Upper'),
-		6: (DOT_RED, SEV_CRITICAL, 'Non Recoverable Upper'),
-		7: (DOT_YELLOW, SEV_WARNING, 'Non Critical Lower'),
-		8: (DOT_ORANGE, SEV_ERROR, 'Critical Lower'),
-		9: (DOT_RED, SEV_CRITICAL, 'Non Recoverable Lower'),
-		10: (DOT_RED, SEV_CRITICAL, 'Failed'),
-		}
+                2: (DOT_GREY, SEV_WARNING, 'Unknown'),
+                3: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+                4: (DOT_YELLOW, SEV_WARNING, 'Non Critical Upper'),
+                5: (DOT_ORANGE, SEV_ERROR, 'Critical Upper'),
+                6: (DOT_RED, SEV_CRITICAL, 'Non Recoverable Upper'),
+                7: (DOT_YELLOW, SEV_WARNING, 'Non Critical Lower'),
+                8: (DOT_ORANGE, SEV_ERROR, 'Critical Lower'),
+                9: (DOT_RED, SEV_CRITICAL, 'Non Recoverable Lower'),
+                10: (DOT_RED, SEV_CRITICAL, 'Failed'),
+                }

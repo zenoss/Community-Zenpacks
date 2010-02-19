@@ -30,7 +30,7 @@ class DellFan(Fan, DellComponent):
     _properties = Fan._properties + (
                  {'id':'status', 'type':'int', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
-		 )
+                )
 
     def setState(self, value):
         self.status = 0
@@ -38,9 +38,9 @@ class DellFan(Fan, DellComponent):
             if status[2].upper() != value.upper(): continue 
             self.status = value
             break
-        
+
     state = property(fget=lambda self: self.statusString(),
                      fset=lambda self, v: self.setState(v)
-		     )        
+                     )
 
 InitializeClass(DellFan)

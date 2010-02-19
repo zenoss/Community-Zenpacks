@@ -26,7 +26,7 @@ class DellMemoryModule(MemoryModule, DellComponent):
 
     status = 1
     speed = ""
-        
+
     _properties = MemoryModule._properties + (
         {'id':'status', 'type':'int', 'mode':'w'},
         {'id':'speed', 'type':'string', 'mode':'w'},

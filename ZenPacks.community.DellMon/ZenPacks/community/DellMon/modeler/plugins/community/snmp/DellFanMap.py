@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellFanMap
 
 DellFanMap maps the coolingDeviceTable table to fab objects
 
-$Id: DellFanMap.py,v 1.0 2009/05/27 22:01:53 egor Exp $"""
+$Id: DellFanMap.py,v 1.1 2010/02/19 19:58:07 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -29,16 +29,14 @@ class DellFanMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('coolingDeviceTable',
-	            '.1.3.6.1.4.1.674.10892.1.700.12.1',
-		    {
-		        '.1': '_chassis',
-			'.2': 'snmpindex',
-			'.5': 'status',
-			'.7': 'type',
-			'.8': '_locale',
-			'.13': 'threshold',
-		    }
-	),
+                    '.1.3.6.1.4.1.674.10892.1.700.12.1',
+                    {
+                        '.5': 'status',
+                        '.7': 'type',
+                        '.8': '_locale',
+                        '.13': 'threshold',
+                    }
+        ),
     )
 
 
@@ -62,11 +60,11 @@ class DellFanMap(SnmpPlugin):
         getdata, tabledata = results
         rm = self.relMap()
         fantable = tabledata.get('coolingDeviceTable')
-        for fan in fantable.values():
+        for oid, fan in fantable.iteritems():
             try:
                 om = self.objectMap(fan)
-	        om.snmpindex =  "%d.%d" % (om._chassis, om.snmpindex)
-	        om.type = self.typemap.get(getattr(om, 'type', 2), self.typemap[2])
+                om.snmpindex = oid.strip('.')
+                om.type = self.typemap.get(getattr(om, 'type', 2), self.typemap[2])
                 om.id = self.prepId(getattr(om, '_locale', 'Unknown'))
             except AttributeError:
                 continue

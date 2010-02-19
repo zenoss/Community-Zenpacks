@@ -40,6 +40,6 @@ class DellCPU(CPU):
          {'id':'cacheSizeL1', 'type':'int', 'mode':'w'},    #KBytes
          {'id':'cacheSizeL2', 'type':'int', 'mode':'w'},    #KBytes
          {'id':'cacheSizeL3', 'type':'int', 'mode':'w'},    #KBytes
-    )    
+    )
 
 InitializeClass(DellCPU)

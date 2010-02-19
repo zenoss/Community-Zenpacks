@@ -36,12 +36,12 @@ class DellStorageCntlr(DellExpansionCard):
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'Other'),
                 2: (DOT_GREY, SEV_WARNING, 'Unknown'),
-		3: (DOT_GREEN, SEV_CLEAN, 'Ok'),
-		4: (DOT_YELLOW, SEV_WARNING, 'Non-critical'),
-		5: (DOT_ORANGE, SEV_ERROR, 'Critical'),
-		6: (DOT_RED, SEV_CRITICAL, 'Non-recoverable'),
-		}
-		
+                3: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+                4: (DOT_YELLOW, SEV_WARNING, 'Non-critical'),
+                5: (DOT_ORANGE, SEV_ERROR, 'Critical'),
+                6: (DOT_RED, SEV_CRITICAL, 'Non-recoverable'),
+                }
+
     _properties = DellExpansionCard._properties + (
         {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'FWRev', 'type':'string', 'mode':'w'},
@@ -72,7 +72,7 @@ class DellStorageCntlr(DellExpansionCard):
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
                 , 'permissions'   : ("Change Device", )
-                },                
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -88,9 +88,9 @@ class DellStorageCntlr(DellExpansionCard):
         """
         roles = {1: 'Enables',
                 2: 'Disabled',
-	        3: 'Active',
-	        99: 'Not Applicable',
-	        }
+                3: 'Active',
+                99: 'Not Applicable',
+                }
         return roles.get(self.role, roles[99])
 
     def cacheSizeString(self):

@@ -30,7 +30,7 @@ class DellTemperatureSensor(TemperatureSensor, DellComponent):
     _properties = TemperatureSensor._properties + (
                  {'id':'status', 'type':'int', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
-                )    
+                )
 
     def temperatureCelsius(self, default=None):
         """
@@ -48,9 +48,9 @@ class DellTemperatureSensor(TemperatureSensor, DellComponent):
             if status[2].upper() != value.upper(): continue 
             self.status = value
             break
-        
+
     state = property(fget=lambda self: self.statusString(),
                      fset=lambda self, v: self.setState(v)
-		     )        
+                    )
 
 InitializeClass(DellTemperatureSensor)

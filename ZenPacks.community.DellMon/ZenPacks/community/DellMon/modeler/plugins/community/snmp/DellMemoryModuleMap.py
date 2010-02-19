@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellMemoryModuleMap
 
 DellMemoryModuleMap maps the memoryDeviceTable table to DellMemoryModule objects
 
-$Id: DellMemoryModuleMap.py,v 1.0 2009/06/23 22:16:53 egor Exp $"""
+$Id: DellMemoryModuleMap.py,v 1.1 2010/02/19 20:09:25 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -29,72 +29,70 @@ class DellMemoryModuleMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('memoryDeviceTable',
-	            '.1.3.6.1.4.1.674.10892.1.1100.50.1',
-		    {
-		        '.1': '_chassis',
-			'.2': 'snmpindex',
-			'.5': 'status',
-			'.7': 'moduletype',
-			'.8': '_location',
-			'.14': 'size',
-			'.21': '_manuf',
-			'.22': '_pnumber',
-			'.23': 'serialNumber',
-			'.25': 'speed',
-		    }
-	),
+                    '.1.3.6.1.4.1.674.10892.1.1100.50.1',
+                    {
+                        '.5': 'status',
+                        '.7': 'moduletype',
+                        '.8': '_location',
+                        '.14': 'size',
+                        '.21': '_manuf',
+                        '.22': '_pnumber',
+                        '.23': 'serialNumber',
+                        '.25': 'speed',
+                    }
+        ),
     )
 
     moduletypes = {1: 'Other',
-		    2: 'Unknown',
-		    3: 'DRAM',
-		    4: 'EDRAM',
-		    5: 'VRAM',
-		    6: 'SRAM',
-		    7: 'RAM',
-		    8: 'ROM',
-		    9: 'FLASH',
-		    10: 'EEPROM',
-		    11: 'FEPROM',
-		    12: 'EPROM',
-		    13: 'CDROM',
-		    14: '3DRAM',
-		    15: 'SDRAM',
-		    16: 'SGRAM',
-		    17: 'RDRAM',
-		    18: 'DDR',
-		    19: 'DDR2',
-		    20: 'DDR3',
-		    }
+                    2: 'Unknown',
+                    3: 'DRAM',
+                    4: 'EDRAM',
+                    5: 'VRAM',
+                    6: 'SRAM',
+                    7: 'RAM',
+                    8: 'ROM',
+                    9: 'FLASH',
+                    10: 'EEPROM',
+                    11: 'FEPROM',
+                    12: 'EPROM',
+                    13: 'CDROM',
+                    14: '3DRAM',
+                    15: 'SDRAM',
+                    16: 'SGRAM',
+                    17: 'RDRAM',
+                    18: 'DDR',
+                    19: 'DDR2',
+                    20: 'DDR3',
+                    }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('memoryDeviceTable')
+        cardtable = tabledata.get('memoryDeviceTable')
         rm = self.relMap()
-        for card in cardtable.values():
+        for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = "%d.%d" % (om._chassis, om.snmpindex)
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId(getattr(om, '_location', 'Unknown').strip())
-		if hasattr(om, 'size'):
-		    om.size = om.size * 1024
-		om.moduletype = self.moduletypes.get(getattr(om, 'moduletype', 1), '%s (%d)' % (self.moduletypes[1], om.moduletype))
-		if om.size > 0:
-		    model = []
-		    om._manuf = getattr(om, '_manuf', 'Unknown').split('(')[0].strip()
-		    if not om._manuf: om._manuf = 'Unknown'
-		    model.append(om._manuf)
+                if hasattr(om, 'size'):
+                    om.size = om.size * 1024
+                om.moduletype = self.moduletypes.get(getattr(om, 'moduletype', 1), '%s (%d)' % (self.moduletypes[1], om.moduletype))
+                if om.size > 0:
+                    model = []
+                    om._manuf = getattr(om, '_manuf', 'Unknown').split('(')[0].strip()
+                    if not om._manuf: om._manuf = 'Unknown'
+                    model.append(om._manuf)
                     model.append(om.moduletype)
                     model.append(convToUnits(om.size))
-		    if getattr(om, 'frequency', 0) > 0:
-		        model.append("%sMHz" % getattr(om, 'frequency', 0))
+                    if getattr(om, 'frequency', 0) > 0:
+                        model.append("%sMHz" % getattr(om, 'frequency', 0))
                     om.setProductKey = "%s" % " ".join(model)
-		else:
-		    om.monitor = False
+                else:
+                    om.monitor = False
             except AttributeError:
                 continue
             rm.append(om)
-	return rm
+        return rm
 

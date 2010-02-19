@@ -33,7 +33,7 @@ class DellPowerSupply(PowerSupply, DellComponent):
     apsnmpindex = ""
     aptype = 0
     __snmpindex = ""
-            
+
     _properties = PowerSupply._properties + (
         {'id':'status', 'type':'int', 'mode':'w'},
         {'id':'volts', 'type':'int', 'mode':'w'},
@@ -115,7 +115,7 @@ class DellPowerSupply(PowerSupply, DellComponent):
             templ = self.getRRDTemplateByName(tname)
             if templ: templates.append(templ)
         return templates
-    
+
     def _getSnmpIndex(self):
         snmpindex = self.__snmpindex
         frame = inspect.currentframe(2)
@@ -131,7 +131,7 @@ class DellPowerSupply(PowerSupply, DellComponent):
 
     def _setSnmpIndex(self, value):
         self.__snmpindex = value
-    
+
     snmpindex = property(fget=lambda self: self._getSnmpIndex(),
                         fset=lambda self, v: self._setSnmpIndex(v)
                         )
@@ -142,9 +142,9 @@ class DellPowerSupply(PowerSupply, DellComponent):
             if status[2].upper() != value.upper(): continue 
             self.status = value
             break
-        
+
     state = property(fget=lambda self: self.statusString(),
                      fset=lambda self, v: self.setState(v)
-		     )        
+                     )
 
 InitializeClass(DellPowerSupply)

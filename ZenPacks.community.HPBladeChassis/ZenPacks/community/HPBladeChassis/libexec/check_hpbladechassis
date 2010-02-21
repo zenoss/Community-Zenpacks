@@ -1,9 +1,14 @@
 #!/usr/bin/perl
+#
 # Mon Mar  2 14:22:33 EST 2009
 #
 # David Nicklay - get HP blade chassis data
 #
+# This can fetch data from the HP blade chassis via SNMP and the HTTPS XML data
+#
 
+use LWP;
+use XML::Simple;
 use Net::SNMP;
 use Getopt::Std;
 #use Data::Dumper;
@@ -13,7 +18,7 @@ my($Hostname) = '';
 my($Community) = 'public'; # Default community string
 my($Debug) = 0;
 my($Datatype) = 'cpu'; # default datatype to fetch
-my(@Datatypes) = ('power','product','powersupply','powersupplylist','cpu','fan','fanlist','temp','slot','slotlist','connectorlist','connector');
+my(@Datatypes) = ('power','product','powersupply','powersupplylist','cpu','fan','fanlist','temp','slot','slotlist','connectorlist','connector','baylist','bay','baydetails','chassisdetails');
 my $PresentStates = {
     '1' => 'other',
     '2' => 'absent',
@@ -69,7 +74,7 @@ sub usage {
     my($exittype)=@_;
     print STDERR "Usage: check_hpbladechassis [-d][-h] -H host [-C community] [-l datatype] [-t timeout] [ -s slot ] [ -f fan ] [-p powersupply] [-e enclosure]\n";
     print STDERR "-l [".join(',',@Datatypes)."] - What data to fetch (default is cpu)\n";
-    print STDERR "-s slotindex                  - Which blade slot to fetch data about\n";
+    print STDERR "-s slotindex                  - Which blade/bay slot to fetch data about\n";
     print STDERR "-f fanindex                   - Which fan to fetch data about\n";
     print STDERR "-p powersupplyindex           - Which power supply to fetch data about\n";
     print STDERR "-e enclosureindex             - Which rack enclosure to fetch data about\n";
@@ -112,6 +117,20 @@ sub quoteString {
     my($string) = @_;
     $string =~ s/^(.*)$/"$1"/;
     return $string;
+}
+
+sub fetchXMLData {
+    my $ua = LWP::UserAgent->new;
+    $ua->timeout($Timeout);
+    my $res = $ua->get('https://'.$Hostname.'/xmldata?item=all');
+    if( !$res->is_success) {
+	printf STDERR ("ERROR: %s\n",$res->status_line);
+    }
+    #print $res->content;
+    my $ref = XMLin($res->content);
+    #use Data::Dumper;
+    #print Dumper($ref);
+    return $ref;
 }
 
 sub fetchData {
@@ -169,7 +188,7 @@ sub getPower {
     map ($curpwr += $_, values %{ $curdata });
     $data = {
 	'TotalCurPwrOutput',$curpwr,
-	'TotalmaxPwrOutput',$maxdata->{'PowerEnclosurePwrFeedMax'}
+	'TotalMaxPwrOutput',$maxdata->{'PowerEnclosurePwrFeedMax'}
     };
     &printData($data);
 }
@@ -235,6 +254,78 @@ sub getEnclosureList {
     }
     &printData($data);
 }
+
+# This gets the same numbers as SNMP provides....
+sub getBayList {
+    my $ref = &fetchXMLData();
+    my $bladearr = $ref->{'INFRA2'}->{'BLADES'}->{'BLADE'};
+    my $data = {};
+    foreach $blade (@{ $bladearr }) {
+	$data->{$blade->{'BAY'}->{'CONNECTION'}} = 1;
+    }
+    &printData($data);
+}
+
+sub getBay {
+    if(not defined $SlotIndex or not ($SlotIndex >= 0)) {
+	print STDERR "Missing bay slot index\n";
+	&usage(1);
+    }
+    my $ref = &fetchXMLData();
+    my $bladearr = $ref->{'INFRA2'}->{'BLADES'}->{'BLADE'};
+    my $data = {};
+    foreach $blade (@{ $bladearr }) {
+	if ($SlotIndex == $blade->{'BAY'}->{'CONNECTION'}) {
+	    $data->{'power_consumed'} = $blade->{'POWER'}->{'POWER_CONSUMED'};
+	    $data->{'temp_C'} = &formatTemp($blade->{'TEMPS'});
+	}
+    }
+    &printData($data);
+}
+
+# format xml simple data in reference to a nagios format temperature
+sub formatTemp {
+    my $xmlref = shift;
+    my $temp = $xmlref->{'TEMP'};
+    my $thresh = $temp->{'THRESHOLD'};
+    my $temp_crit;
+    my $temp_caut;
+    foreach (@{ $thresh }) {
+	$temp_caut = $_->{'C'} if($_->{'DESC'} eq 'CAUTION');
+	$temp_crit = $_->{'C'} if($_->{'DESC'} eq 'CRITICAL');
+    }
+    return $temp->{'C'}.';'.$temp_caut.';'.$temp_crit;
+}
+
+sub getChassis {
+    my $ref = &fetchXMLData();
+    my $inf = $ref->{'INFRA2'};
+    my $data = {};
+    $data->{'power_capacity'} = $inf->{'POWER'}->{'CAPACITY'};
+    $data->{'power_output'} = $inf->{'POWER'}->{'OUTPUT_POWER'};
+    $data->{'power_consumed'} = $inf->{'POWER'}->{'POWER_CONSUMED'};
+    $data->{'power_redundant_capacity'} = $inf->{'POWER'}->{'REDUNDANT_CAPACITY'};
+    $data->{'temp_C'} = &formatTemp($inf->{'TEMPS'});
+    &printData($data);
+}
+
+sub getBayDetails {
+    if(not defined $SlotIndex or not ($SlotIndex >= 0)) {
+	print STDERR "Missing bay slot index\n";
+	&usage(1);
+    }
+    my $ref = &fetchXMLData();
+    my $bladearr = $ref->{'INFRA2'}->{'BLADES'}->{'BLADE'};
+    my $data = {};
+    foreach $blade (@{ $bladearr }) {
+	if ($SlotIndex == $blade->{'BAY'}->{'CONNECTION'}) {
+	    $data->{'temp_c'} = $blade->{'TEMPS'}->{'TEMP'}->{'C'};
+	    $data->{'power'} = $blade->{'POWER'}->{'POWER_CONSUMED'};
+	}
+    }
+    &printData($data);
+}
+
 
 sub getCPU {
     my $MIBsbase = "1.3.6.1.4.1.2021.11";
@@ -498,6 +589,10 @@ if($Datatype eq "power") {
     &getEnclosureList();
 } elsif($Datatype eq "enclosure") {
     &getEnclosure();
+} elsif($Datatype eq "chassis") {
+    &getChassis();
+} elsif($Datatype eq "chassisdetails") {
+    &getChassisDetails();
 } elsif($Datatype eq "connectorlist") {
     &getConnectorList();
 } elsif($Datatype eq "connector") {
@@ -510,6 +605,12 @@ if($Datatype eq "power") {
     &getFanList();
 } elsif($Datatype eq "fan") {
     &getFan();
+} elsif($Datatype eq "baylist") {
+    &getBayList();
+} elsif($Datatype eq "bay") {
+    &getBay();
+} elsif($Datatype eq "baydetails") {
+    &getBayDetails();
 } elsif($Datatype eq "product") {
     &getProduct();
 } elsif($Datatype eq "temp") {
@@ -524,7 +625,5 @@ if($Datatype eq "power") {
 }
 
 exit 0;
-
-
 
 

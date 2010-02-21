@@ -48,7 +48,7 @@ class ProductMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-        instances = results["Win32_CacheMemory"]
+        instances = results["Win32_Product"]
         rm = self.relMap()
         for instance in instances:
             om = self.objectMap(instance)

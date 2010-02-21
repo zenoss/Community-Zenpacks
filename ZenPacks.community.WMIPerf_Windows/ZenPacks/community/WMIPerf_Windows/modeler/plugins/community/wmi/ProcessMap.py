@@ -61,8 +61,7 @@ class ProcessMap(WMIPlugin):
             rm.append(om)
 
         if not rm:
-            log.warning("No process information from hrSWRunEntry %s",
-                        HRSWRUNENTRY)
+            log.warning("No process information from Win32_Process")
             return None
 
         return rm

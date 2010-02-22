@@ -12,9 +12,9 @@ __doc__="""WBEMPlugin
 
 wrapper for PythonPlugin
 
-$Id: WBEMPlugin.py,v 1.1 2009/12/20 20:30:23 egor Exp $"""
+$Id: WBEMPlugin.py,v 1.2 2010/02/22 11:14:43 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
@@ -37,11 +37,12 @@ class WBEMPlugin(CollectorPlugin):
 
     tables = {}
 
-    def queries(self):
+    def queries(self, device):
         return self.tables
 
     def collect(self, device, log):
-        return WBEMClient(device).query(self.queries(), includeQualifiers=True)
+        return WBEMClient(device).query(self.queries(device),
+                                                    includeQualifiers = True)
 
     def preprocess(self, results, log):
         newres = {}

@@ -23,6 +23,7 @@ class ZenPack(ZenPackBase):
             ('zWbemPort', '5989', 'string'),
             ('zWbemProxy', '', 'string'),
             ('zWbemUseSSL', True, 'boolean'),
+            ('zWbemNamespace', 'root/cimv2', 'string'),
             ]
 
     def install(self, app):

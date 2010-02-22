@@ -13,9 +13,9 @@ __doc__="""WBEMDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WBEMDataSource.py,v 1.4 2010/01/13 13:48:23 egor Exp $"""
+$Id: WBEMDataSource.py,v 1.5 2010/02/22 12:49:33 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -92,9 +92,9 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
                                                             self.namespace)
         if self.transport == 'Auto':
-            zcp = RRDDataSource.RRDDataSource.getCommand(self, context,
-                                                    "${dev/zCollectorPlugins}")
-            if 'community.wmi.DeviceMap' in zcp: transport = 'WMI'
+            wbemIgnore = RRDDataSource.RRDDataSource.getCommand(self, context,
+                                                    "${dev/zWbemMonitorIgnore}")
+            if wbemIgnore: transport = 'WMI'
             else: transport = 'WBEM'
         else:
             transport = self.transport

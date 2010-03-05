@@ -3,7 +3,7 @@
 
 <tal:block 
     tal:define="tableName string:libvirtguestsList;
-    objects python:reduce(lambda x, y: x+y,map(lambda x: x.libvirtguests(), here.getDmdRoot('Devices').Server.libvirtHost.getSubDevices()));
+    objects python:reduce(lambda x, y: x+y,map(lambda x: x.libvirtguests(), here.getDmdRoot('Devices').Server.libvirtHost.getSubDevices()),[]);
     tabletitle string:libvirt Guest Information;
     batch python:here.ZenTableManager.getBatch(tableName,objects)">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">

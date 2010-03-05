@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.3 2010/02/17 10:48:54 egor Exp $"""
+$Id: zenperfwmi.py,v 2.4 2010/03/05 17:04:32 egor Exp $"""
 
-__version__ = "$Revision: 2.3 $"[11:-2]
+__version__ = "$Revision: 2.4 $"[11:-2]
 
 import logging
 
@@ -97,7 +97,7 @@ class ZenPerfWmiPreferences(object):
 
     def __init__(self):
         """
-        Construct a new ZenWinPreferences instance and provide default
+        Construct a new ZenPerfWmiPreferences instance and provide default
         values for needed attributes.
         """
         self.collectorName = "zenperfwmi"
@@ -170,7 +170,8 @@ class ZenPerfWmiTask(ObservableMixin):
 
         self.name = taskName
         self.configId = deviceId
-        self.interval = scheduleIntervalSeconds
+#        self.interval = scheduleIntervalSeconds
+        self.interval = 300
         self.state = TaskStates.STATE_IDLE
 
         self._taskConfig = taskConfig

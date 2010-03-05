@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.4 2010/02/16 17:24:41 egor Exp $"""
+$Id: WMIClient.py,v 1.5 2010/03/04 13:53:15 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -232,9 +232,9 @@ class WMIClient(BaseClient):
                 for plugin in self.plugins:
                     pluginName = plugin.name()
                     log.debug("Sending queries for plugin: %s", pluginName)
-                    log.debug("Queries: %s" % str(plugin.queries()))
+                    log.debug("Queries: %s" % str(plugin.queries(self.device)))
                     try:
-                        yield self.query(plugin.queries())
+                        yield self.query(plugin.queries(self.device))
                         self.results.append((plugin, driver.next()))
                     except Exception, ex:
                         self.results.append((plugin, ex))

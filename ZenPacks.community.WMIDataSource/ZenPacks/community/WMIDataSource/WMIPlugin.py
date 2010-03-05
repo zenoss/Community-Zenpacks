@@ -12,9 +12,9 @@ __doc__="""WMIPlugin
 
 wrapper for PythonPlugin
 
-$Id: WMIPlugin.py,v 1.0 2009/12/28 13:12:23 egor Exp $"""
+$Id: WMIPlugin.py,v 1.1 2010/02/22 11:14:03 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
 from WMIClient import WMIClient, CError
@@ -34,11 +34,12 @@ class WMIPlugin(CollectorPlugin):
 
     tables = {}
 
-    def queries(self):
+    def queries(self, device = None):
         return self.tables
 
     def collect(self, device, log):
-        return WMIClient(device).query(self.queries(), includeQualifiers=True)
+        return WMIClient(device).query(self.queries(device),
+                                                    includeQualifiers = True)
 
     def preprocess(self, results, log):
         newres = {}

@@ -12,7 +12,7 @@
 
 . $ZENHOME/bin/zenfunctions
 
-MYPATH=`python -c "import os.path; print os.path.realpath('$0')"`
+MYPATH=`readlink -f $0`
 THISDIR=`dirname $MYPATH`
 PRGHOME=`dirname $THISDIR`
 PRGNAME=zenperfwmi.py

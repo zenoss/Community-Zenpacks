@@ -12,9 +12,9 @@ __doc__="""FileSystemMap
 
 FileSystemMap maps the CIM_FileSystem class to filesystems objects
 
-$Id: FileSystemMap.py,v 1.0 2010/01/03 14:47:53 egor Exp $"""
+$Id: FileSystemMap.py,v 1.1 2010/02/22 14:57:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 import re
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -30,15 +30,14 @@ class FileSystemMap(WMIPlugin):
       'zFileSystemMapIgnoreNames', 'zFileSystemMapIgnoreTypes')
 
     tables = {
-            "Win32_Volume":
+            "Win32_LogicalDisk":
                 (
-                "Win32_Volume",
+                "Win32_LogicalDisk",
                 None,
                 "root/cimv2",
                     {
-                    '__path':'snmpindex',
-                    'MaxFileNameLength':'maxNameLen',
-                    'Capacity':'totalBlocks',
+                    'MaximumComponentLenght':'maxNameLen',
+                    'Size':'totalBlocks',
                     'BlockSize':'blockSize',
                     'Name':'mount',
                     'FileSystem':'type',
@@ -50,7 +49,7 @@ class FileSystemMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-        instances = results["Win32_Volume"]
+        instances = results["Win32_LogicalDisk"]
         if not instances: return
         skipfsnames = getattr(device, 'zFileSystemMapIgnoreNames', None)
         skipfstypes = getattr(device, 'zFileSystemMapIgnoreTypes', None)
@@ -66,7 +65,10 @@ class FileSystemMap(WMIPlugin):
                     continue
                 om = self.objectMap(instance)
                 om.id = prepId(om.mount)
-                if not om.totalBlocks or not om.blockSize: continue
+                om.snmpindex = om.id
+                if getattr(om, 'blockSize', None) or om.blockSize == 0:
+                    om.blockSize = 512
+                if not om.totalBlocks: continue
                 om.totalBlocks = om.totalBlocks / om.blockSize
             except AttributeError:
                 continue

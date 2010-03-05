@@ -15,80 +15,78 @@ class ZenPack(ZenPackBase):
     """ WMIPerf_Windows loader
     """
 
-    packZProperties = [
-            ('zInterfaceMapIgnoreIpAddresses', '', 'string'),
-            ]
+    dcProperties = {
+        '/Server/WBEM/Win': {
+            'description': ('', 'string'),
+            'devtypes': (['WMI', 'WBEM'], 'lines'),
+            'zCollectorPlugins': (
+                (
+                'community.wmi.NewDeviceMap',
+                'community.wmi.DeviceMap',
+                'community.wmi.ProcessorMap',
+                'community.wmi.InterfaceMap',
+                'community.wmi.FileSystemMap',
+                'community.wmi.ProcessMap',
+                'community.wmi.ProductMap',
+                'community.wmi.RouteMap',
+                'community.wmi.DiskDriveMap',
+                'community.wmi.WinServiceMap',
+                'zenoss.portscan.IpServiceMap',
+                ),
+                'lines',
+            ),
+            'zWmiMonitorIgnore': (False, 'boolean'),
+        },
+        '/Server/WBEM/Win2K': {
+            'description': ('', 'string'),
+            'devtypes': (['WMI', 'WBEM'], 'lines'),
+            'zCollectorPlugins': (
+                (
+                'community.wmi.NewDeviceMap',
+                'community.wmi.DeviceMap',
+                'community.wmi.ProcessorMap',
+                'community.wmi.InterfaceMap',
+                'community.wmi.FileSystemMap',
+                'community.wmi.ProcessMap',
+                'community.wmi.ProductMap',
+                'community.wmi.DiskDriveMap',
+                'community.wmi.WinServiceMap',
+                'zenoss.portscan.IpServiceMap',
+                ),
+                'lines',
+            ),
+            'zWmiMonitorIgnore': (False, 'boolean'),
+        },
+    }
 
+    def addDeviceClass(self, app, dcp, properties):
+        try:
+            dc = app.zport.dmd.Devices.getOrganizer(dcp)
+        except:
+            dcp, newdcp = dcp.rsplit('/', 1)
+            dc = self.addDeviceClass(app, dcp, self.dcProperties.get(dcp, {}))
+            manage_addDeviceClass(dc, newdcp)
+            dc = app.zport.dmd.Devices.getOrganizer("%s/%s"%(dcp, newdcp))
+            dc.description = ''
+        for prop, value in properties.iteritems():
+            if not hasattr(aq_base(dc), prop):
+                dc._setProperty(prop, value[0], type = value[1])
+        return dc
 
     def install(self, app):
-        try:
-            dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-        except:
-            if not hasattr(app.zport.dmd.Devices.Server, 'WBEM'):
-                manage_addDeviceClass(app.zport.dmd.Devices.Server, 'WBEM')
-                dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM")
-                dc.description = ''
-                dc.devtypes = ['WMI', 'WBEM']
-            if not hasattr(app.zport.dmd.Devices.Server.WBEM, 'Win'):
-                manage_addDeviceClass(app.zport.dmd.Devices.Server.WBEM, 'Win')
-                dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-                dc.description = ''
-                dc.devtypes = ['WMI', 'WBEM']
-            else:
-                dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-        if not hasattr(aq_base(dc),'zCollectorPlugins'):
-            dc._setProperty("zCollectorPlugins", 
-                    (
-                        'community.wmi.NewDeviceMap',
-                        'community.wmi.DeviceMap',
-                        'community.wmi.ProcessorMap',
-                        'community.wmi.InterfaceMap',
-                        'community.wmi.FileSystemMap',
-                        'community.wmi.ProcessMap',
-                        'community.wmi.ProductMap',
-                        'community.wmi.RouteMap',
-                        'community.wmi.DiskDriveMap',
-                        'community.wmi.WinServiceMap',
-                        'zenoss.portscan.IpServiceMap',
-                    ), type = 'lines')
+        for devClass, properties in self.dcProperties.iteritems():
+            self.addDeviceClass(app, devClass, properties)
         ZenPackBase.install(self, app)
 
     def upgrade(self, app):
-        try:
-            dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-        except:
-            if not hasattr(app.zport.dmd.Devices.Server, 'WBEM'):
-                manage_addDeviceClass(app.zport.dmd.Devices.Server, 'WBEM')
-                dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM")
-                dc.description = ''
-                dc.devtypes = ['WMI', 'WBEM']
-            if not hasattr(app.zport.dmd.Devices.Server.WBEM, 'Win'):
-                manage_addDeviceClass(app.zport.dmd.Devices.Server.WBEM, 'Win')
-                dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-                dc.description = ''
-                dc.devtypes = ['WMI', 'WBEM']
-            else:
-                dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-        if not hasattr(aq_base(dc),'zCollectorPlugins'):
-            dc._setProperty("zCollectorPlugins", 
-                    (
-                        'community.wmi.NewDeviceMap',
-                        'community.wmi.DeviceMap',
-                        'community.wmi.ProcessorMap',
-                        'community.wmi.InterfaceMap',
-                        'community.wmi.FileSystemMap',
-                        'community.wmi.ProcessMap',
-                        'community.wmi.ProductMap',
-                        'community.wmi.RouteMap',
-                        'community.wmi.DiskDriveMap',
-                        'community.wmi.WinServiceMap',
-                        'zenoss.portscan.IpServiceMap',
-                    ), type = 'lines')
+        for devClass, properties in self.dcProperties.iteritems():
+            self.addDeviceClass(app, devClass, properties)
         ZenPackBase.upgrade(self, app)
 
     def remove(self, app, leaveObjects=False):
-        try:
-            dc = app.zport.dmd.Devices.getOrganizer("/Server/WBEM/Win")
-            dc._delProperty('zCollectorPlugins')
-        except: pass
+        for dcp in self.dcProperties.keys():
+            try:
+                dc = app.zport.dmd.Devices.getOrganizer(dcp)
+                dc._delProperty('zCollectorPlugins')
+            except: continue
         ZenPackBase.remove(self, app, leaveObjects)

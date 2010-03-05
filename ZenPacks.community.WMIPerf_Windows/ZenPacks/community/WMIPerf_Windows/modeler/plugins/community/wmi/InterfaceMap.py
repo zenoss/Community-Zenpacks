@@ -13,13 +13,39 @@ __doc__ = """InterfaceMap
 Gather IP network interface information from WMI, and 
 create DMD interface objects
 
-$Id: InterfaceMap.py,v 1.0 2010/01/14 10:55:53 egor Exp $"""
+$Id: InterfaceMap.py,v 1.1 2010/03/02 18:30:24 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 import re
+import types
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
-from Products.ZenUtils.Utils import prepId
+#from Products.ZenUtils.Utils import prepId
+
+def prepId(id, subchar='_'):
+    """
+    Make an id with valid url characters. Subs [^a-zA-Z0-9-_,.$\(\) ]
+    with subchar.  If id then starts with subchar it is removed.
+
+    @param id: user-supplied id
+    @type id: string
+    @return: valid id
+    @rtype: string
+    """
+    _prepId = re.compile(r'[^a-zA-Z0-9-_,.$ ]').sub
+    _cleanend = re.compile(r"%s+$" % subchar).sub
+    if id is None: 
+        raise ValueError('Ids can not be None')
+    if type(id) not in types.StringTypes:
+        id = str(id)
+    id = _prepId(subchar, id)
+    while id.startswith(subchar):
+        if len(id) > 1: id = id[1:]
+        else: id = "-"
+    id = _cleanend("",id)
+    id = id.strip()
+    return str(id)
+
 
 class InterfaceMap(WMIPlugin):
     """
@@ -56,7 +82,8 @@ class InterfaceMap(WMIPlugin):
                 "root/cimv2",
                     {
                     'AdapterType':'type',
-                    'InterfaceIndex':'ifindex',
+                    'DeviceID':'snmpindex',
+#                    'InterfaceIndex':'ifindex',
                     'MACAddress':'macaddress',
                     'MaxSpeed':'speed',
                     'NetConnectionStatus':'operStatus',
@@ -70,7 +97,6 @@ class InterfaceMap(WMIPlugin):
                 "root/cimv2",
                     {
                     'CurrentBandwidth':'speed',
-                    '__path':'snmpindex',
                     'Name':'Name',
                     }
                 ),
@@ -87,10 +113,9 @@ class InterfaceMap(WMIPlugin):
         if (dontCollectIpAddresses and re.search(dontCollectIpAddresses,
                                 device.manageIp)):
             om = self.objectMap()
-            om.id = "MSCS IP Address"
+            om.id = self.prepId("Virtual IP Address")
             om.title = om.id
             om.interfaceName = om.id
-            om.id = self.prepId(om.interfaceName)
             om.type = "softwareLoopback"
             om.speed = 1000000000
             om.mtu = 1500
@@ -108,22 +133,22 @@ class InterfaceMap(WMIPlugin):
             for instance in instances:
                 try:
                     key = prepId(instance['Name'])
-                    interfaceStat[key] = instance['snmpindex']
+                    interfaceStat[key] = instance['Name']
                     interfaceSpeed[key] = instance['speed']
                 except: continue
         interfaceConf = {}
         instances = results["Win32_NetworkAdapter"]
         if instances:
             for instance in instances:
-                key = instance.pop('ifindex')
-                try: interfaceConf[key] = instance
+                key = instance.pop('snmpindex')
+                try: interfaceConf[int(key)] = instance
                 except: continue
         instances = results["Win32_NetworkAdapterConfiguration"]
         if not instances: return
         for instance in instances:
             if not instance['_ipenabled']: continue
             try:
-                instance.update(interfaceConf.get(instance['ifindex'],{}))
+                instance.update(interfaceConf.get(instance['snmpindex'],{}))
                 om = self.objectMap(instance)
                 if dontCollectIntNames and re.search(dontCollectIntNames,
                                                             om.interfaceName):
@@ -136,16 +161,18 @@ class InterfaceMap(WMIPlugin):
                                 om.interfaceName, om.type, getattr(device, 'zInterfaceMapIgnoreTypes')))
                     continue
                 om.id = prepId(om.interfaceName)
+                om.interfaceName = interfaceStat.get(om.id, None) or om.interfaceName
                 om.setIpAddresses = []
                 for ip in om._setIpAddresses:
                     if (dontCollectIpAddresses
                         and re.search(dontCollectIpAddresses, ip)):
-                    continue
+                        continue
                     om.setIpAddresses.append(ip)
+                if not om.ifindex: om.ifindex = om.snmpindex
                 if om.speed == 0: om.speed = interfaceSpeed.get(om.id, 0)
-                if om.operStatus == 2 or om.operStatus == 9: om.operStatus = 1
+                if om.operStatus in [None, 2, 9]: om.operStatus = 1
                 else: om.operStatus = 2
-                if om.adminStatus == 2 or om.adminStatus == 0: om.adminStatus = 1
+                if om.adminStatus in [0, 2]: om.adminStatus = 1
                 else:om.adminStatus = 2
             except AttributeError:
                 continue

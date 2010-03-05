@@ -13,9 +13,9 @@ __doc__="""DeviceMap
 DeviceMap maps CIM_ComputerSystem and CIM_OperationSystem classes to get hw and
 os products.
 
-$Id: DeviceMap.py,v 1.0 2010/01/03 14:09:53 egor Exp $"""
+$Id: DeviceMap.py,v 1.1 2010/02/22 11:21:00 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -29,8 +29,7 @@ class DeviceMap(WMIPlugin):
 
     maptype = "DeviceMap" 
 
-    def queries(self):
-        return {
+    tables = {
             "Win32_ComputerSystem":
                 (
                 "Win32_ComputerSystem",

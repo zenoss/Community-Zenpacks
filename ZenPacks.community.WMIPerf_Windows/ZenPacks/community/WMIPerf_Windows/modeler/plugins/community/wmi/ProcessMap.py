@@ -12,7 +12,7 @@ __doc__="""ProcessMap
 
 ProcessMap finds various software packages installed on a device.
 
-$Id: ProcessMap.py,v 1.0 2010/02/09 17:18:53 egor Exp $"""
+$Id: ProcessMap.py,v 1.1 2010/03/03 13:48:13 egor Exp $"""
 
 __version__ = '$Revision: 1.0 $'[11:-2]
 
@@ -52,16 +52,15 @@ class ProcessMap(WMIPlugin):
                 log.warn("Skipping process with no name")
                 continue
             parameters = getattr(om, 'parameters', None)
-            if parameters is None: continue
+            if parameters is None: parameters = om.procName
             parameters = parameters.split(' ', 1)
             if len(parameters) > 1:
-                om.parameters = parameters[1]
+                 om.parameters = parameters[1]
             else:
                 om.parameters = ''
             rm.append(om)
 
         if not rm:
-            log.warning("No process information from Win32_Process")
+            log.warning("No process information from Win32_Process class")
             return None
-
         return rm

@@ -11,7 +11,7 @@ class libvirtPlugin(PythonPlugin):
 
     relname = "libvirtguests"
     modname = 'ZenPacks.community.libvirt.libvirtGuest'
-    deviceProperties = ('zLibvirtUsername','zLibvirtConnectType')
+    deviceProperties = ('zLibvirtUsername','zLibvirtConnectType','zLibvirtPassword')
 
     def collect(self, device, log):
 	log.info('libvirt: %s' % device.id)
@@ -25,17 +25,19 @@ class libvirtPlugin(PythonPlugin):
 	#username = device.zLibvirtUsername # doesn't work
 	#connecttype = device.zLibvirtConnectType # doesn't work
         username = getattr(device, 'zLibvirtUsername', None)
+        password = getattr(device, 'zLibvirtPassword', None)
         connecttype = getattr(device, 'zLibvirtConnectType', None)
-	log.info('libvirt: username=' + username)
-	log.info('libvirt: connecttype=' + connecttype)
+	log.info('libvirt: username=' + username + ' connecttype=' + connecttype)
 	command = pathtocheckscript
 	args = ' -H ' + device.id + ' -c ' + connecttype + ' -u ' + username + ' -l modeler'
-	log.info('libvirt: command = "%s"' % command)
-	log.info('libvirt: args = "%s"' % args)
+	if password != '' and connecttype == 'esx://':
+	    args += ' -p ' + password
+	#log.info('libvirt: command = "%s"' % command)
+	#log.info('libvirt: args = "%s"' % args)
 	output = Popen(command + args, stdout=PIPE, shell=True, env={"PATH": "/usr/bin"}).communicate()[0] # have to reset the environment or zenoss overrides python values....
 	if output is None or output == '':
 	    return None # unable to connect or denied access --TODO-- need some more error checking
-	log.info('libvirt: output = %s' % output)
+	#log.info('libvirt: output = %s' % output)
 	results = pickle.loads(output.rstrip('\n'))
 	log.info('libvirt: results = '+' '.join(dir(results)))
 	return results

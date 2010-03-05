@@ -27,5 +27,6 @@ class ZenPack(ZenPackBase):
     packZProperties = [
             ('zLibvirtConnectType', 'qemu+ssh://', 'string'),
             ('zLibvirtUsername', 'zenoss', 'string'),
+            ('zLibvirtPassword', 'password', 'string'),
             ]
 

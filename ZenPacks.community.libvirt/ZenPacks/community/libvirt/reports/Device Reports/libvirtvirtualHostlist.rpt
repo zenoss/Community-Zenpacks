@@ -13,9 +13,10 @@
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvDisplayName','Name')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'libvirthost','Host')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'HostType','HostType')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvState','State')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvMaxMemory','MaxMemory')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvNumberVirtCPUs','NumVirtCPUs')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvNumberVirtCPUs','VirtCPUs')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvOSType','OSType')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvUUIDString','UUID')"/>
     </tr>
@@ -23,7 +24,8 @@
     <tr>
         <td class="tablevalues" tal:content="structure python:gd.urlLink()"/>
         <td class="tablevalues" tal:content="structure python:gd.libvirthost().urlLink()"/>
-        <td class="tablevalues" tal:content="gd/lvState"/>
+        <td class="tablevalues" tal:content="structure python:gd.libvirthost.getVirtHostType()"/>
+        <td class="tablevalues" tal:content="structure python:gd.getStateString()"/>
         <td class="tablevalues" tal:content="gd/lvMaxMemory"/>
         <td class="tablevalues" tal:content="gd/lvNumberVirtCPUs"/>
         <td class="tablevalues" tal:content="gd/lvOSType"/>

@@ -26,11 +26,12 @@ except ImportError:
 
 
 args = sys.argv[1:]
-shortopt='c:l:u:H:d:i:n:g:s:hvr'
+shortopt='c:l:u:p:H:d:i:n:g:s:hvr'
 longopts=['help']
 connecttype = 'qemu+ssh://'
 socket = '/var/run/libvirt/libvirt-sock-ro'
 username = 'zenoss'
+password = ''
 hostname = 'localhost'
 datatype = 'list'
 domain = -1
@@ -39,20 +40,24 @@ disk = ''
 interface = ''
 verbose = 0
 humanreadable = 0
+version = 0
+remoteversion = 0
 
 
 def help(status=0):
     print "check_libvirt.py [-u username] [-c connecttype] [-H hostname] [-l datatype] [-h] [-v]"
     print "-c connecttype   (see the libvirt docs for more info about connecturi format)"
     print "-r		    print in human readable format instead of default NAGIOS format"
-    print "-l datatype	    type of data to lookup"
-    print "			(list, domain, interface, interfacelist, disk, disklist, memory, cpu, all, modeler)"
+    print "-l dataorcmdtype type of data to lookup or command to run"
+    print "                   data = (list, domain, interface, interfacelist, disk, disklist, memory, cpu, all, modeler)"
+    print "                   commands = (save, resume, destroy, create, undefine, startup, shutdown, autostart)"
     print "-s socket        path to the readonly libvirt socket on the remote host"
     print "-g domain ID#    the ID number of the domain to query"
     print "-n domain name   the name of the domain to query - can be used instead of -g" 
     print "-d disk-device   the device name of the disk to gets stats for (e.g. vda, hda, .etc.)"
     print "-i net-interface the interface name to get stats for (e.g. vnet1, vnet2, etc.)"
-    print "-u username	    username to connect as to the remote libvirt host"
+    print "-u username	    username to connect as to the remote libvirt host (or to ESX)"
+    print "-p password      password to use to connect to remote host (used for ESX)"
     print "-H hostname	    hostname of the remote libvirt host"
     print "-v		    enable verbose mode"
     sys.exit(status)
@@ -111,6 +116,13 @@ def get_data_domain(conn,domain,domainname):
     data['memory']=info[2]
     data['nrvirtcpu']=info[3]
     data['cputime']=info[4]
+    if connecttype != 'esx://': # not supported for disk stats yet
+	data['autostart']=dom.autostart()
+    if version >= 7005 and remoteversion >= 7005 and connecttype != 'esx://':
+	mem_stats=dom.memoryStats()
+	if mem_stats is not None:
+	    for stat in mem_stats.keys():
+		data['mem_' + stat] = mem_stats[stat]
     ifdevs = get_interface_devices(dom)
     dps = ('rxbytes','rxpackets','rxerrs','rxdrops','txbytes','txpackets','txerrs','txdrops')
     for dp in dps:
@@ -119,7 +131,7 @@ def get_data_domain(conn,domain,domainname):
 	if data['state'] == 1:
 	    if_stats=dom.interfaceStats(ifdev)
 	i = 0
-        for dp in dps:
+	for dp in dps:
 	    if data['state'] == 1:
 		data['if_' + ifdev + '_' + dp] = if_stats[i]
 		data['if_total_' + dp] += if_stats[i]
@@ -131,17 +143,71 @@ def get_data_domain(conn,domain,domainname):
     for dp in dps:
 	data['disk_total_' + dp]=0
     for disk in diskdevs:
-	if data['state'] == 1:
-	    disk_stats=dom.blockStats(disk)
-	i = 0
-	for dp in dps:
+	if connecttype != 'esx://': # block stats is not supported for esx yet
 	    if data['state'] == 1:
-		data['disk_' + disk + '_' + dp]=disk_stats[i]
-		data['disk_total_' + dp]+=disk_stats[i]
-	    else:
-		data['disk_' + disk + '_' + dp]=0
-	    i += 1
+		    disk_stats=dom.blockStats(disk)
+	    i = 0
+	    for dp in dps:
+		if data['state'] == 1:
+		    data['disk_' + disk + '_' + dp]=disk_stats[i]
+		    data['disk_total_' + dp]+=disk_stats[i]
+		else:
+		    data['disk_' + disk + '_' + dp]=0
+		i += 1
     print_data(data)
+
+def get_dom_handle(conn,domain,domainname):
+    if domain > 0:
+	dom=conn.lookupByID(domain)
+    else:
+	dom=conn.lookupByName(domainname)
+    return dom
+
+
+def set_destroy(conn,domain,domainname):
+    """Set the domain to destroy"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.autostart()
+
+def set_autostart(conn,domain,domainname):
+    """Set the domain to autostart"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.autostart()
+
+def set_save(conn,domain,domainname):
+    """Set the domain to save"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.save()
+
+def set_resume(conn,domain,domainname):
+    """Set the domain to resume"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.resume()
+
+def set_reboot(conn,domain,domainname):
+    """Set the domain to reboot"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.reboot()
+
+def set_shutdown(conn,domain,domainname):
+    """Set the domain to shutdown"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.shutdown()
+
+def set_suspend(conn,domain,domainname):
+    """Set the domain to suspend"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.suspend()
+
+def set_undefine(conn,domain,domainname):
+    """Set the domain to undefine"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.undefine()
+
+def set_create(conn,domain,domainname):
+    """Set the domain to create"""
+    dom = get_dom_handle(conn,domain,domainname)
+    dom.create()
 
 def get_data_disklist(conn,domain,domainname):
     """Get a list of disks for this domain"""
@@ -172,16 +238,6 @@ def get_data_disk(conn,domain,domainname,disk):
     data['writerequests']=disk_stats[2]
     data['writebytes']=disk_stats[3]
     print_data(data)
-
-def get_data_memory(conn,domain,domainname):
-    """Get memory stats on this domain"""
-    print "Not implemented yet - not available until at least libvirt 0.7.5"
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
-    #mem_stats=dom.memoryStats()
-    exit(1)
 
 def get_data_cpu(conn,domain,domainname):
     """Get data on CPU"""
@@ -262,6 +318,20 @@ def get_data_modeler(conn):
     print pickle.dumps(data)
     #print pickle.loads(pickle.dumps(data))
 
+
+def request_credentials(credentials, user_data):
+    for credential in credentials:
+	if credential[0] == libvirt.VIR_CRED_AUTHNAME:
+	    credential[4] = user_data[0]
+	    if len(credential[4]) == 0:
+		credential[4] = credential[3]
+	elif credential[0] == libvirt.VIR_CRED_NOECHOPROMPT:
+	    credential[4] = user_data[1]
+	else:
+	    return -1
+	return 0
+
+
 def get_data_all(conn):
     """Print all data for all domains"""
     print 'Listing running domains'
@@ -319,6 +389,8 @@ if __name__=='__main__':
 	    hostname = opt[1]
 	elif opt[0] == "-u":
 	    username = opt[1]
+	elif opt[0] == "-p":
+	    password = opt[1]
 	elif opt[0] == "-c":
 	    connecttype = opt[1]
 	elif opt[0] == "-l":
@@ -338,11 +410,48 @@ if __name__=='__main__':
 	elif opt[0] == "-r":
 	    humanreadable = 1
 
+    version = libvirt.getVersion() # needed to know what features we support
+	# memory stats work with libvirt 0.7.5
+	# ESX works properly with 0.7.5
+	# getLibVersion only works in 0.7.5 and up
+
     #conn=libvirt.openReadOnly('qemu+ssh://test8virt3/')
     #conn=libvirt.openReadOnly('remote://test8virt3/')
     #conn=libvirt.openReadOnly('qemu://test8virt3/system')
-    conn=libvirt.openReadOnly(connecttype+username+'@'+hostname+'/system'+'?socket='+socket)
+    
+    # See: http://libvirt.org/uri.html
+    # And: http://libvirt.org/remote.html
+    if connecttype == 'qemu+ssh://':
+	conn=libvirt.openReadOnly(connecttype+username+'@'+hostname+'/system'+'?socket='+socket)
+    elif connecttype == 'qemu://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname+'/system'+'?socket='+socket)
+    elif connecttype == 'esx://': # partially implemented.
+	if version < 7000:
+	    print "The ESX connect type only works correctly in libvirt 0.7.0 and newer with ESX compiled in"
+	    help(1)
+	auth = [[libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_NOECHOPROMPT], request_credentials, [username,password]]
+	uri = connecttype+hostname+'/?no_verify=1'
+	conn=libvirt.openAuth(uri, auth, 0)
+    elif connecttype == 'xen://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname)
+    elif connecttype == 'xen+ssh://': # untested
+	conn=libvirt.openReadOnly(connecttype+username+'@'+hostname+'/?socket='+socket)
+    elif connecttype == 'openvz://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname)
+    elif connecttype == 'opennebula://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname)
+    elif connecttype == 'vbox://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname)
+    elif connecttype == 'uml://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname)
+    elif connecttype == 'lxc://': # untested
+	conn=libvirt.openReadOnly(connecttype+hostname)
+    else:
+	print "Unsupported libvirt connect type:",connecttype
+	help(1)
 
+    if version >= 7005:
+	remoteversion = conn.getLibVersion()
 
     if datatype == 'list':
 	get_data_list(conn)
@@ -354,8 +463,6 @@ if __name__=='__main__':
 	get_data_disk(conn,domain,domainname,disk)
     elif datatype == 'disklist':
 	get_data_disklist(conn,domain,domainname)
-    elif datatype == 'memory':
-	get_data_memory(conn,domain,domainname)
     elif datatype == 'cpu':
 	get_data_cpu(conn,domain,domainname)
     elif datatype == 'domain':
@@ -364,6 +471,22 @@ if __name__=='__main__':
 	get_data_interface(conn,domain,domainname,interface)
     elif datatype == 'interfacelist':
 	get_data_interfacelist(conn,domain,domainname)
+    elif datatype == 'shutdown':
+	set_shutdown(conn,domain,domainname)
+    elif datatype == 'startup':
+	set_startup(conn,domain,domainname)
+    elif datatype == 'autostart':
+	set_autostart(conn,domain,domainname)
+    elif datatype == 'undefine':
+	set_undefine(conn,domain,domainname)
+    elif datatype == 'create':
+	set_create(conn,domain,domainname)
+    elif datatype == 'resume':
+	set_resume(conn,domain,domainname)
+    elif datatype == 'save':
+	set_save(conn,domain,domainname)
+    elif datatype == 'destroy':
+	set_destroy(conn,domain,domainname)
     else:
 	print "Unrecognized datatype:",datatype
 	help(1)

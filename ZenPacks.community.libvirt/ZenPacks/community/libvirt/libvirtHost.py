@@ -55,4 +55,14 @@ class libvirtHost(Device):
 	},
     )
 
+    def getVirtHostType(self):
+	typemap = ['qemu','xen','openvz','esx','opennebula','lxc','vbox','uml']
+	type = 'unknown'
+	for t in typemap:
+	    if self.zLibvirtConnectType.startswith(t):
+		type = t
+	if type == 'qemu':
+	    type = 'qemu/kvm'
+	return type
+
 InitializeClass(libvirtHost)

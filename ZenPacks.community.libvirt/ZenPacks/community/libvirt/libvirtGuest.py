@@ -71,4 +71,13 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
 	    return ZenModelRM.urlLink(d, 'link')
 	return None
 
+    def getStateString(self):
+        statestrmap = ['NoState', 'Running', 'Blocked', 'Paused', 'Shutdown', 'Shutoff', 'Crashed']
+        state = self.getRRDValue('state')
+        if state == None:
+	    state = self.lvState
+	if state == None or state == '':
+	    return "Unknown"
+        return statestrmap[int(state)]
+
 InitializeClass(libvirtGuest)

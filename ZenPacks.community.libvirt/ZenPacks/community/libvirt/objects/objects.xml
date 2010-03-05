@@ -2,21 +2,133 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'libvirtHost') -->
 <object id='/zport/dmd/Devices/Server/libvirtHost' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<object id='QEMU' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for QEMU
+
+This uses SSH for monitoring by default.
+You will want to set the Username:
+zLibvirtUsername=zenoss (default)
+You will also need a passwordless ssh key installed on the virtualization host for that user.
+</property>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+qemu+ssh://
+</property>
+</object>
+<object id='KVM' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for KVM
+
+This uses SSH for monitoring by default.
+You will want to set the Username:
+zLibvirtUsername=zenoss (default)
+You will also need a passwordless ssh key installed on the virtualization host for that user.
+</property>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+qemu+ssh://
+</property>
+</object>
+<object id='XEN' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for XEN
+
+(This libvirt driver has not yet been tested with this zenpack, but the support is here for it.)
+</property>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+xen+ssh://
+</property>
+</object>
+<object id='ESX' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+esx://
+</property>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for ESX
+
+(Note that this requires at least libvirt 0.7.0 and ESX compiled in [--with-esx])
+
+Some settings For ESX:
+zLibvirtConnectType=esx://
+zLibvirtUsername
+zLibvirtPassword
+
+The libvirt API uses HTTPS to talk directly to the ESX host itself.   You will need
+a working username/password pair to query the ESX host.
+</property>
+<property visible="True" type="string" id="zLibvirtUsername" >
+root
+</property>
+<property visible="True" type="string" id="zLibvirtPassword" >
+password
+</property>
+</object>
+<object id='OpenVZ' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+openvz://
+</property>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for OpenVZ
+
+(This libvirt driver has not yet been tested with this zenpack, but the support is here for it.)
+</property>
+</object>
+<object id='OpenNebula' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+opennebula://
+</property>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for OpenNebula
+
+(This libvirt driver has not yet been tested with this zenpack, but the support is here for it.)
+</property>
+</object>
+<object id='VirtualBox' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for VirtualBox
+
+(This libvirt driver has not yet been tested with this zenpack, but the support is here for it.)
+</property>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+vbox://
+</property>
+</object>
+<object id='LXC' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for Linux Containers
+
+(This libvirt driver has not yet been tested with this zenpack, but the support is here for it.)
+</property>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+lxc://
+</property>
+</object>
+<object id='UML' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+libvirt API based monitoring of virtualization servers for User Mode Linux
+
+(This libvirt driver has not yet been tested with this zenpack, but the support is here for it.)
+</property>
+<property visible="True" type="string" id="zLibvirtConnectType" >
+uml://
+</property>
+</object>
 <property type="string" id="description" mode="w" >
 libvirt API based monitoring of virtualization servers (e.g. XEN, KVM, etc...)
 You need libvirt installed along with the python API
-This module is tested using ssh as a transport for the libvirt API, however it could in theory
-be made to use TLS or TCP.
+This module is tested using ssh as a transport for the libvirt API, however it could
+be made to use the other transports available (TLS/TCP/etc.).
 
-The libvirt versions packaged with Redhat 5.4 and Ubuntu 9.10 (libvirt 0.70) seem to work well.
-Earlier 5.x versions of Redhat have very old versions of libvirt.  libvirt 0.75 has support
-for memory stats, but I do not have it running anywhere yet.
+The libvirt versions packaged with Redhat 5.4 (0.6.5) and Ubuntu 9.10 (libvirt 0.7.0) seem to work well.
+Earlier 5.x versions of Redhat have very old versions of libvirt.  libvirt 0.7.5 has support
+for memory stats, but is untested in this zenpack as of yet.
 
-You will need to setup an ssh account on the remote libvirtd host with automatic login from the
-zenoss user on the monitoring host.
+For QEMU/KVM/XEN (via ssh)
+For KVM/QEMU/XEN over TLS: The support for the TLS method is in the check script, but has not been tested.
+For ESX (via HTTPS): You will need a copy of libvirt 0.7.0 installed with ESX compiled in
+For OpenVZ/Linux Containers/User Mode Linux/VirtualBox: Support is in the zenpack but Untested
 
 You can set zLibvirtUsername and zLibvirtConnectType to customize access to the hosts, though
-only qemu+ssh:// is tested at the moment.
+qemu+ssh:// is the default at the moment (which works for both QEMU and KVM)
 
 See these docs for more details:
     http://libvirt.org/python.html
@@ -38,10 +150,10 @@ True
 <tomanycont id='rrdTemplates'>
 <object id='libvirtGuest' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >
-Template for monitoring libvirt  based Virtual Machines
+Template for monitoring Virtual Machines using the libvirt API
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-ZenPacks.zenoss.libvirt.libvirtGuest
+ZenPacks.community.libvirt.libvirtGuest
 </property>
 <tomanycont id='datasources'>
 <object id='domainstats' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -175,6 +287,22 @@ True
 </property>
 </object>
 <object id='memory' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='autostart' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='state' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>

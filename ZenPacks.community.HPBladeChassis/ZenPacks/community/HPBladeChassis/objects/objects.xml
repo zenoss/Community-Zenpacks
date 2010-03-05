@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'HPBladeChassis') -->
-<object id='/zport/dmd/Devices/HPBladeChassis' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'BladeChassis', 'HPBladeChassis') -->
+<object id='/zport/dmd/Devices/BladeChassis/HPBladeChassis' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
 <property type="string" id="description" mode="w" >
 HP Blade Chassis Monitoring
 </property>
@@ -576,29 +576,5 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'bladeserverlist') -->
 <object id='/zport/dmd/Reports/Device Reports/bladeserverlist' module='Products.ZenModel.Report' class='Report'>
-</object>
-<!-- ('', 'zport', 'dmd', 'zenMenus', 'More', 'zenMenuItems', 'bladeserverData') -->
-<object id='/zport/dmd/zenMenus/More/zenMenuItems/bladeserverData' module='Products.ZenModel.ZenMenuItem' class='ZenMenuItem'>
-<property type="text" id="description" mode="w" >
-Blades
-</property>
-<property type="text" id="action" mode="w" >
-bladeserverData
-</property>
-<property type="boolean" id="isglobal" mode="w" >
-True
-</property>
-<property type="lines" id="permissions" mode="w" >
-('View',)
-</property>
-<property type="lines" id="allowed_classes" mode="w" >
-['BladeChassis']
-</property>
-<property type="boolean" id="isdialog" mode="w" >
-False
-</property>
-<property type="float" id="ordering" mode="w" >
-5.0
-</property>
 </object>
 </objects>

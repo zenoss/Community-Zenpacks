@@ -18,7 +18,25 @@ my($Hostname) = '';
 my($Community) = 'public'; # Default community string
 my($Debug) = 0;
 my($Datatype) = 'cpu'; # default datatype to fetch
-my(@Datatypes) = ('power','product','powersupply','powersupplylist','cpu','fan','fanlist','temp','slot','slotlist','connectorlist','connector','baylist','bay','baydetails','chassisdetails');
+my(@Datatypes) = (
+    'power',
+    'product',
+    'powersupply',
+    'powersupplylist',
+    'cpu',
+    'fan',
+    'fanlist',
+    'temp',
+    'slot',
+    'slotlist',
+    'connectorlist',
+    'connector',
+    'baylist',
+    'bay',
+    'baydetails',
+    'chassisdetails',
+    'fanperformance'
+);
 my $PresentStates = {
     '1' => 'other',
     '2' => 'absent',
@@ -119,6 +137,7 @@ sub quoteString {
     return $string;
 }
 
+# --TODO-- This really needs to be cached once per zencommand cycle
 sub fetchXMLData {
     my $ua = LWP::UserAgent->new;
     $ua->timeout($Timeout);
@@ -494,6 +513,38 @@ sub getFan {
     }
     $data->{'FanConditionString'} = quoteString($ConditionStates->{$data->{'FanPresent'}});
     $data->{'FanPresentString'} = quoteString($PresentStates->{$data->{'FanCondition'}});
+    my $ref = &fetchXMLData();
+    my $fanbayarr = $ref->{'INFRA2'}->{'FANS'}->{'BAYS'}->{'BAY'};
+    foreach (@{ $fanbayarr }) {
+	if($_->{'NAME'} eq $FanIndex) {
+	    $data->{'side'} = quoteString($_->{'SIDE'});
+	}
+	$data->{'mmHeight'} = $_->{'mmHeight'};
+	$data->{'mmWidth'} = $_->{'mmWidth'};
+	$data->{'mmDepth'} = $_->{'mmDepth'};
+	$data->{'mmXOffset'} = $_->{'mmXOffset'};
+	$data->{'mmYOffset'} = $_->{'mmYOffset'};
+    }
+    &printData($data);
+}
+
+sub getFanPerformance {
+    if(not defined $FanIndex or not ($FanIndex >= 0)) {
+        print STDERR "Missing fan index\n";
+        &usage(1);
+    }
+    my $ref = &fetchXMLData();
+    my $fanarr = $ref->{'INFRA2'}->{'FANS'}->{'FAN'};
+    my $data = {};
+    foreach $fan (@{ $fanarr }) {
+        if ($FanIndex == $fan->{'BAY'}->{'CONNECTION'}) {
+	    # $status = $fan->{'STATUS'};
+	    $data->{'power_used'} = $fan->{'PWR_USED'};
+	    $data->{'rpm_current'} = $fan->{'RPM_CUR'}.';;;'.$fan->{'RPM_MIN'}.';'.$fan->{'RPM_MAX'};
+	    $data->{'rpm_min'} = $fan->{'RPM_MIN'};
+	    $data->{'rpm_max'} = $fan->{'RPM_MAX'};
+        }
+    }
     &printData($data);
 }
 
@@ -605,6 +656,8 @@ if($Datatype eq "power") {
     &getFanList();
 } elsif($Datatype eq "fan") {
     &getFan();
+} elsif($Datatype eq "fanperf") {
+    &getFanPerformance();
 } elsif($Datatype eq "baylist") {
     &getBayList();
 } elsif($Datatype eq "bay") {

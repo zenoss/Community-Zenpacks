@@ -17,6 +17,9 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvNumberVirtCPUs','VirtCPUs')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvOSType','OSType')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'lvUUIDString','UUID')"/>
+<!--
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'Commands','Commands')"/>
+-->
     </tr>
     <tal:block tal:repeat="gd batch">
     <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
@@ -32,6 +35,15 @@
         <td class="tablevalues" tal:content="gd/lvNumberVirtCPUs"/>
         <td class="tablevalues" tal:content="gd/lvOSType"/>
         <td class="tablevalues" tal:content="gd/lvUUIDString"/>
+<!--
+        <td class="tablevalues" >
+            <a tal:attributes="href python:gd.dolibvirtCommand('save')" tal:content="string:'save'">command</a>,
+            <a tal:attributes="href python:gd.dolibvirtCommand('resume')" tal:content="string:'resume'">command</a>,
+            <a tal:attributes="href python:gd.dolibvirtCommand('startup')" tal:content="string:'startup'">command</a>,
+            <a tal:attributes="href python:gd.dolibvirtCommand('shutdown')" tal:content="string:'shutdown'">command</a>,
+            <a tal:attributes="href python:gd.dolibvirtCommand('destroy')" tal:content="string:'destroy'">command</a>
+        </td>
+-->
     </tr>
     </tal:block>
     <tr>

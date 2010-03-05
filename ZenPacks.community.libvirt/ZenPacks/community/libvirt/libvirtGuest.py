@@ -8,6 +8,10 @@ from Products.ZenUtils.Utils import convToUnits
 
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_SETTINGS
 
+# for external sets...
+from subprocess import *
+import os
+
 _kw = dict(mode='w')
 
 class libvirtGuest(DeviceComponent, ManagedEntity):
@@ -80,4 +84,30 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
 	    return "Unknown"
         return statestrmap[int(state)]
 
+    def dolibvirtSave(self):
+	self.dolibvirtCommand('save')
+
+    def dolibvirtResume(self):
+	self.dolibvirtCommand('resume')
+
+    def dolibvirtStartup(self):
+	self.dolibvirtCommand('startup')
+
+    def dolibvirtShutdown(self):
+	self.dolibvirtCommand('shutdown')
+
+    def dolibvirtDestroy(self):
+	self.dolibvirtCommand('destroy')
+
+
+    def dolibvirtCommand(self,libvirtcommand):
+	libvirtpath = self.pack().path()
+	command = os.path.join(libvirtpath,'libexec','check_libvirt.py')
+        args = ' -H ' + self.libvirthost().id + ' -c ' + self.zLibvirtConnectType + ' -u ' + self.zLibvirtUsername + ' -l ' + libvirtcommand
+        if self.zLibvirtPassword != '' and self.zLibvirtConnectType == 'esx://':
+            args += ' -p ' + self.zLibvirtPassword
+        output = Popen(command + args, stdout=PIPE, shell=True, env={"PATH": "/usr/bin"}).communicate()[0] # have to reset the environment or zenoss overrides python values....
+	return output
+
 InitializeClass(libvirtGuest)
+

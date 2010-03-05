@@ -99,16 +99,12 @@ def get_data_domain(conn,domain,domainname):
     """Get data specific to this domain
        --TODO-- I am totaling up the interface and disk totals since I don't have dynamic datapoint support in the zenoss modeler plugin yet....
     """
-    try:
-	if domain > 0:
-	    dom=conn.lookupByID(domain)
-	else:
-	    dom=conn.lookupByName(domainname)
-    except :
-	print '|'
+    data = dict()
+    dom = get_dom_handle(conn,domain,domainname)
+    if dom is None:
+	print_data(data)
 	return
     info = dom.info()
-    data = dict()
     data['ostype']=dom.OSType()
     data['uuidstring']=dom.UUIDString()
     data['state']=info[0]
@@ -157,10 +153,14 @@ def get_data_domain(conn,domain,domainname):
     print_data(data)
 
 def get_dom_handle(conn,domain,domainname):
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
+    dom = None
+    try:
+	if domain > 0:
+	    dom=conn.lookupByID(domain)
+	else:
+	    dom=conn.lookupByName(domainname)
+    except:
+	return None
     return dom
 
 
@@ -211,11 +211,11 @@ def set_create(conn,domain,domainname):
 
 def get_data_disklist(conn,domain,domainname):
     """Get a list of disks for this domain"""
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
     data = dict()
+    dom = get_dom_handle(conn,domain,domainname)
+    if dom is None:
+	print_data(data)
+	return
     for dev in get_disk_devices(dom):
 	data[dev] = dev
     print_data(data)
@@ -227,12 +227,12 @@ def get_data_disk(conn,domain,domainname,disk):
       domain will be a number returned by get_data_list
       disk will be something like vda, hda, etc...
     """
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
-    disk_stats=dom.blockStats(disk)
     data = dict()
+    dom = get_dom_handle(conn,domain,domainname)
+    if dom is None:
+	print_data(data)
+	return
+    disk_stats=dom.blockStats(disk)
     data['readrequests']=disk_stats[0]
     data['readbytes']=disk_stats[1]
     data['writerequests']=disk_stats[2]
@@ -240,23 +240,23 @@ def get_data_disk(conn,domain,domainname,disk):
     print_data(data)
 
 def get_data_cpu(conn,domain,domainname):
-    """Get data on CPU"""
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
+    """Get detailed data on virtual CPUs"""
     data = dict()
+    dom = get_dom_handle(conn,domain,domainname)
+    if dom is None:
+	print_data(data)
+	return
     data['vcpus']=dom.vcpus()
     print_data(data)
 
 def get_data_interface(conn,domain,domainname,interface):
     """Get stats on this interface for this domain"""
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
-    if_stats=dom.interfaceStats(interface)
     data = dict()
+    dom = get_dom_handle(conn,domain,domainname)
+    if dom is None:
+	print_data(data)
+	return
+    if_stats=dom.interfaceStats(interface)
     data['rxbytes'] = if_stats[0]
     data['rxpackets'] = if_stats[1]
     data['rxerrs'] = if_stats[2]
@@ -269,11 +269,11 @@ def get_data_interface(conn,domain,domainname,interface):
 
 def get_data_interfacelist(conn,domain,domainname):
     """List all interfaces on this domain"""
-    if domain > 0:
-	dom=conn.lookupByID(domain)
-    else:
-	dom=conn.lookupByName(domainname)
     data = dict()
+    dom = get_dom_handle(conn,domain,domainname)
+    if dom is None:
+	print_data(data)
+	return
     for dev in get_interface_devices(dom):
 	data[dev] = dev
     print_data(data)
@@ -411,9 +411,6 @@ if __name__=='__main__':
 	    humanreadable = 1
 
     version = libvirt.getVersion() # needed to know what features we support
-	# memory stats work with libvirt 0.7.5
-	# ESX works properly with 0.7.5
-	# getLibVersion only works in 0.7.5 and up
 
     #conn=libvirt.openReadOnly('qemu+ssh://test8virt3/')
     #conn=libvirt.openReadOnly('remote://test8virt3/')
@@ -425,7 +422,7 @@ if __name__=='__main__':
 	conn=libvirt.openReadOnly(connecttype+username+'@'+hostname+'/system'+'?socket='+socket)
     elif connecttype == 'qemu://': # untested
 	conn=libvirt.openReadOnly(connecttype+hostname+'/system'+'?socket='+socket)
-    elif connecttype == 'esx://': # partially implemented.
+    elif connecttype == 'esx://': # partially implemented. (not all stats work)
 	if version < 7000:
 	    print "The ESX connect type only works correctly in libvirt 0.7.0 and newer with ESX compiled in"
 	    help(1)

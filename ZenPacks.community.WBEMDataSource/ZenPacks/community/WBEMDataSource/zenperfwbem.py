@@ -12,9 +12,9 @@ __doc__="""zenperfwbem
 
 Gets WBEM performance data and stores it in RRD files.
 
-$Id: zenperfwbem.py,v 2.3 2010/02/17 16:35:08 egor Exp $"""
+$Id: zenperfwbem.py,v 2.4 2010/03/05 17:14:02 egor Exp $"""
 
-__version__ = "$Revision: 2.3 $"[11:-2]
+__version__ = "$Revision: 2.4 $"[11:-2]
 
 import logging
 
@@ -55,14 +55,14 @@ log = logging.getLogger("zen.zenperfwbem")
 # RPN reverse calculation
 #
 import operator
- 
+
 OPERATORS = {
     '-': operator.add,
     '+': operator.sub,
     '/': operator.mul,
     '*': operator.truediv,
 }
- 
+
 def rrpn(expression, value):
     oper = None
     try:
@@ -142,7 +142,8 @@ class ZenPerfWbemTask(ObservableMixin):
 
         self.name = taskName
         self.configId = deviceId
-        self.interval = scheduleIntervalSeconds
+#        self.interval = scheduleIntervalSeconds
+        self.interval = 300
         self.state = TaskStates.STATE_IDLE
 
         self._taskConfig = taskConfig

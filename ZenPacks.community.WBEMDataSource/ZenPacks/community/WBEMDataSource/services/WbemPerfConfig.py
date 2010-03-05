@@ -12,9 +12,9 @@ __doc__="""WbemPerfConfig
 
 Provides Wbem config to zenperfwbem clients.
 
-$Id: WbemPerfConfig.py,v 1.4 2010/02/17 16:39:40 egor Exp $"""
+$Id: WbemPerfConfig.py,v 1.5 2010/03/05 17:28:43 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -129,7 +129,7 @@ class WbemPerfConfig(CollectorConfigService):
         # the collector's winCycleInterval configuration which is typically
         # located at dmd.Monitors.Performance._getOb('localhost').
         # TODO: create a zProperty that allows for individual device schedules
-        proxy.configCycleInterval = self._prefs.winCycleInterval
+        proxy.configCycleInterval = self._prefs.perfsnmpCycleInterval
         proxy.queries, proxy.datapoints, proxy.thresholds = getWbemDeviceConfig(
                                                             self.cimtransport,
                                                             device)

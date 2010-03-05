@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 1.6 2010/02/17 16:32:56 egor Exp $"""
+$Id: WBEMClient.py,v 1.7 2010/03/04 14:48:17 egor Exp $"""
 
-__version__ = "$Revision: 1.6 $"[11:-2]
+__version__ = "$Revision: 1.7 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -237,9 +237,9 @@ class WBEMClient(BaseClient):
                 for plugin in self.plugins:
                     pluginName = plugin.name()
                     log.debug("Sending queries for plugin: %s", pluginName)
-                    log.debug("Queries: %s" % str(plugin.queries()))
+                    log.debug("Queries: %s" % str(plugin.queries(self.device)))
                     try:
-                        yield self.query(plugin.queries())
+                        yield self.query(plugin.queries(self.device))
                         self.results.append((plugin, driver.next()))
                     except Exception, ex:
                         self.results.append((plugin, ex))

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'VMware', 'ESXi') -->
+<object id='/zport/dmd/Devices/Server/VMware/ESXi' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="boolean" id="zSnmpMonitorIgnore" >
+True
+</property>
+<property visible="True" type="string" id="zWinPassword" >
+3jewunaw
+</property>
+<property visible="True" type="string" id="zWinUser" >
+root
+</property>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['VMwareESXi', 'Device']
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='VMwareESXi' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Monitors basic health for VMware products
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='CheckESXi Hardware' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/HW
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.dnalley.VMwareESXi/path}/check_esx_wbmem.py https://${dev/manageIp}:5989 ${dev/zCommandUsername} ${dev/zCommandPassword}
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</objects>

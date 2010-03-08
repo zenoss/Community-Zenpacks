@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<objects>
+<object id='/zport/dmd/Devices/Server/PuppetMaster' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="string" id="description" mode="w" >
+ssh based puppet client status checker.
+
+You will need to setup the ssh user in order to connect to a user who can query data via
+puppetca and puppetlast on the puppet master.  There is a report in Device Reports which
+gives the status of all puppet clients
+</property>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.HPDeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'zenoss.snmp.IpServiceMap', 'zenoss.snmp.HRSWInstalledMap', 'zenoss.snmp.HRSWRunMap', 'zenoss.snmp.CpuMap', 'zenoss.snmp.HPCPUMap', 'PuppetModeler']
+</property>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.community.puppet.PuppetMaster
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='PuppetClient' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Template for monitoring puppet client status
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.puppet.PuppetClient
+</property>
+<tomanycont id='datasources'>
+<object id='puppetlast' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+/usr/bin/puppetlast
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+True
+</property>
+<property type="string" id="parser" mode="w" >
+ZenPacks.community.puppet.parsers.linux.puppetlast
+</property>
+<tomanycont id='datapoints'>
+<object id='pcState' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='pcLastUpdateTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'App', 'puppetd') -->
+<object id='/zport/dmd/Events/App/puppetd' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='puppetd_zenoss_commands' module='Products.ZenEvents.EventClassInst' class='EventClassInst'> 
+<property type="text" id="transform" mode="w" > 
+if evt.zenosscommand == 'addserver': 
+    dmd.DeviceLoader.loadDevice(evt.zenossargs, '/Server/Linux') 
+ 
+ 
+ 
+</property> 
+<property type="string" id="eventClassKey" mode="w" > 
+puppetd 
+</property> 
+<property type="int" id="sequence" mode="w" > 
+7 
+</property> 
+<property type="string" id="regex" mode="w" > 
+Zenoss (?P&lt;zenosscommand&gt;\S+) (?P&lt;zenossargs&gt;.*) 
+</property> 
+</object> 
+</tomanycont> 
+</object> 
+<object id='/zport/dmd/Reports/Device Reports/PuppetClientList' module='Products.ZenModel.Report' class='Report'>
+</object>
+</objects>

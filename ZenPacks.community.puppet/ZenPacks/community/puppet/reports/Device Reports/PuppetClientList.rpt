@@ -1,0 +1,42 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:puppetclientsList;
+    objects python:reduce(lambda x, y: x+y,map(lambda x: x.puppetclients(), here.getDmdRoot('Devices').Server.PuppetMaster.getSubDevices()));
+    tabletitle string:Puppet Client Information;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'pcDisplayName','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'puppetmaster','PuppetMaster')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'pcSigned','Signed')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'pcState','State')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'pcLastUpdateTime','LastUpdateTime')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr>
+        <td class="tablevalues" tal:content="structure python:gd.urlLink()"/>
+        <td class="tablevalues" tal:content="structure python:gd.puppetmaster().urlLink()"/>
+        <td class="tablevalues" tal:content="gd/pcSigned"/>
+        <td class="tablevalues" tal:content="gd/pcState"/>
+        <td class="tablevalues" tal:content="structure python:gd.getRRDValue('pcLastUpdateTime')"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+</tal:block>
+
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+

@@ -68,6 +68,9 @@ class pyOdbcClient:
             result = txn.fetchall()
             if result:
                 try:
+                    # Strip column names so they can be mapped.
+                    output = [ (x.strip(), y) for x, y in output ]
+
                     r = dict(result)
                     values = {}
                     for field in fields:

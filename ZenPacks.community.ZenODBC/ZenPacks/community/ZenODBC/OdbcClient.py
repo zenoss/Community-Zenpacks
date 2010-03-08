@@ -69,7 +69,7 @@ class pyOdbcClient:
             if result:
                 try:
                     # Strip column names so they can be mapped.
-                    output = [ (x.strip(), y) for x, y in output ]
+                    result = [ (x.strip(), y) for x, y in result ]
 
                     r = dict(result)
                     values = {}

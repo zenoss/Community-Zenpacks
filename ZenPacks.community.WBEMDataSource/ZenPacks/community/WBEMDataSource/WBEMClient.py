@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 1.7 2010/03/04 14:48:17 egor Exp $"""
+$Id: WBEMClient.py,v 1.8 2010/03/09 22:58:37 egor Exp $"""
 
-__version__ = "$Revision: 1.7 $"[11:-2]
+__version__ = "$Revision: 1.8 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -189,8 +189,8 @@ class WBEMClient(BaseClient):
                 results[table] = result
             return results
 
-        keybindings = dict(zip(instMap.keys()[0],
-                               instMap.values()[0].keys()[0]))
+        keybindings = dict([(var, val.strip('"')) for var, val in zip(
+                            instMap.keys()[0], instMap.values()[0].keys()[0])])
         instancename = pywbem.CIMInstanceName(classname, keybindings,
                                                     namespace=namespace)
         d = defer.maybeDeferred(self._wbem.GetInstance, instancename,

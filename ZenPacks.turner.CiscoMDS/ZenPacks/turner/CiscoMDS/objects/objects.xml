@@ -31,7 +31,7 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-check_ciscomds ${here/zSnmpCommunity} ${device/manageIp}
+${here/ZenPackManager/packs/ZenPacks.turner.CiscoMDS/path}/libexec/check_ciscomds ${here/zSnmpCommunity} ${device/manageIp}
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 1.8 2010/03/09 22:58:37 egor Exp $"""
+$Id: WBEMClient.py,v 1.9 2010/03/15 21:35:32 egor Exp $"""
 
-__version__ = "$Revision: 1.8 $"[11:-2]
+__version__ = "$Revision: 1.9 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -144,11 +144,25 @@ class WBEMClient(BaseClient):
                         results[table].append(result)
             return results
 
+        plst = set()
+        for keyprops, insts in instMap.iteritems():
+	    for tables in insts.values():
+                for (table, props) in tables:
+                    if props == {}:
+                        plst = []
+                        break
+                    plst = plst.union(props.keys())
+                if plst == []: break
+            if plst == []: break
+	    plst = plst.union(keyprops)
+	try: plst.remove('__path')
+	except: pass
         d = defer.maybeDeferred(self._wbem.EnumerateInstances,
                                                     classname,
                                                     namespace=namespace,
-                                                    includeQualifiers=qualifier,
-                                                    localOnly=False)
+                                                    IncludeQualifiers=qualifier,
+                                                    PropertyList=list(plst),
+                                                    LocalOnly=False)
         d.addCallback(parse)
         d.addErrback(self.parseError, classname, instMap)
         return d
@@ -191,11 +205,15 @@ class WBEMClient(BaseClient):
 
         keybindings = dict([(var, val.strip('"')) for var, val in zip(
                             instMap.keys()[0], instMap.values()[0].keys()[0])])
+        plst = instMap.values()[0].values()[0][0][1].keys()
+	try: plst.remove('__path')
+	except: pass
         instancename = pywbem.CIMInstanceName(classname, keybindings,
                                                     namespace=namespace)
         d = defer.maybeDeferred(self._wbem.GetInstance, instancename,
-                                                    includeQualifiers=qualifier,
-                                                    localOnly=False)
+                                                    IncludeQualifiers=qualifier,
+                                                    PropertyList=plst,
+                                                    LocalOnly=False)
         d.addCallback(parse)
         d.addErrback(self.parseError, classname, instMap)
         return d
@@ -217,7 +235,8 @@ class WBEMClient(BaseClient):
                         if classname.upper().startswith('SELECT '):
                             yield self._wbemExecQuery(classname, namespace,
                                                     instMap, includeQualifiers)
-                        elif () in instMap or len(instMap.values()[0]) > 1:
+                        elif () in instMap or len(instMap) > 1 or \
+			                        len(instMap.values()[0]) > 1:
                             yield self._wbemEnumerateInstances(classname,
                                         namespace, instMap, includeQualifiers)
                         else:

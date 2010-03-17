@@ -12,9 +12,9 @@ __doc__="""zenperfwbem
 
 Gets WBEM performance data and stores it in RRD files.
 
-$Id: zenperfwbem.py,v 2.4 2010/03/05 17:14:02 egor Exp $"""
+$Id: zenperfwbem.py,v 2.5 2010/03/15 21:09:00 egor Exp $"""
 
-__version__ = "$Revision: 2.4 $"[11:-2]
+__version__ = "$Revision: 2.5 $"[11:-2]
 
 import logging
 
@@ -117,6 +117,9 @@ class ZenPerfWbemPreferences(object):
 class ZenPerfWbemTask(ObservableMixin):
     zope.interface.implements(IScheduledTask)
 
+    #counter to keep track of total queries sent
+    QUERIES = 0
+
     STATE_WBEMC_CONNECT = 'WBEMC_CONNECT'
     STATE_WBEMC_QUERY = 'WBEMC_QUERY'
     STATE_WBEMC_PROCESS = 'WBEMC_PROCESS'
@@ -142,8 +145,7 @@ class ZenPerfWbemTask(ObservableMixin):
 
         self.name = taskName
         self.configId = deviceId
-#        self.interval = scheduleIntervalSeconds
-        self.interval = 300
+        self.interval = scheduleIntervalSeconds
         self.state = TaskStates.STATE_IDLE
 
         self._taskConfig = taskConfig
@@ -157,7 +159,6 @@ class ZenPerfWbemTask(ObservableMixin):
         self._eventService = zope.component.queryUtility(IEventService)
         self._preferences = zope.component.queryUtility(ICollectorPreferences,
                                                         "zenperfwbem")
-        self._wbemc = None
 
     def _finished(self, result):
         """
@@ -209,6 +210,9 @@ class ZenPerfWbemTask(ObservableMixin):
         log.debug("Successful collection from %s [%s], results=%s",
                   self._devId, self._manageIp, results)
 
+        for classes in self._queries.values():
+	    ZenPerfWbemTask.QUERIES += len(classes)
+
         if not results: return results
         for tableName, data in results.iteritems():
             for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
@@ -220,6 +224,7 @@ class ZenPerfWbemTask(ObservableMixin):
                         if isinstance(d, CError):
                             self._failure(d, comp)
                             continue
+                        if type(d[dpname]) is list: d[dpname] = d[dpname][0]
                         if isinstance(d[dpname], datetime.datetime):
                             mcs = float(d[dpname].microsecond * 1e-6)
                             d[dpname] = time.mktime(d[dpname].timetuple()) + mcs

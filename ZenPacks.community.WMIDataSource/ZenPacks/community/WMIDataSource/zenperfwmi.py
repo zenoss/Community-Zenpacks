@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.4 2010/03/05 17:04:32 egor Exp $"""
+$Id: zenperfwmi.py,v 2.5 2010/03/15 21:07:25 egor Exp $"""
 
-__version__ = "$Revision: 2.4 $"[11:-2]
+__version__ = "$Revision: 2.5 $"[11:-2]
 
 import logging
 
@@ -145,6 +145,9 @@ class ZenPerfWmiPreferences(object):
 class ZenPerfWmiTask(ObservableMixin):
     zope.interface.implements(IScheduledTask)
 
+    #counter to keep track of total queries sent
+    QUERIES = 0
+
     STATE_WMIC_CONNECT = 'WMIC_CONNECT'
     STATE_WMIC_QUERY = 'WMIC_QUERY'
     STATE_WMIC_PROCESS = 'WMIC_PROCESS'
@@ -170,8 +173,7 @@ class ZenPerfWmiTask(ObservableMixin):
 
         self.name = taskName
         self.configId = deviceId
-#        self.interval = scheduleIntervalSeconds
-        self.interval = 300
+        self.interval = scheduleIntervalSeconds
         self.state = TaskStates.STATE_IDLE
 
         self._taskConfig = taskConfig
@@ -187,27 +189,12 @@ class ZenPerfWmiTask(ObservableMixin):
         self._preferences = zope.component.queryUtility(ICollectorPreferences,
                                                         "zenperfwmi")
 
-        self._wmic = {} # the WMIClient
-        self._reset()
-
-    def _reset(self):
-        """
-        Reset the WMI client and notification query watcher connection to the
-        device, if they are presently active.
-        """
-        for namespace in self._namespaces:
-            if namespace in self._wmic:
-                self._wmic[namespace].close()
-            self._wmic[namespace] = None
-        self._wmic = {}
 
     def _finished(self, result):
         """
         Callback activated when the task is complete so that final statistics
         on the collection can be displayed.
         """
-
-        self._reset()
 
         if not isinstance(result, Failure):
             log.debug("Device %s [%s] scanned successfully",
@@ -253,6 +240,9 @@ class ZenPerfWmiTask(ObservableMixin):
         log.debug("Successful collection from %s [%s], results=%s",
                   self._devId, self._manageIp, results)
 
+        for classes in self._queries.values():
+	    ZenPerfWmiTask.QUERIES += len(classes)
+
         if not results: return None
         for tableName, data in results.iteritems():
             for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
@@ -264,6 +254,7 @@ class ZenPerfWmiTask(ObservableMixin):
                         if isinstance(d, CError):
                             self._failure(d, comp)
                             continue
+                        if type(d[dpname]) is list: d[dpname] = d[dpname][0]
                         if isinstance(d[dpname], datetime.datetime):
                             mcs = float(d[dpname].microsecond * 1e-6)
                             d[dpname] = time.mktime(d[dpname].timetuple()) + mcs

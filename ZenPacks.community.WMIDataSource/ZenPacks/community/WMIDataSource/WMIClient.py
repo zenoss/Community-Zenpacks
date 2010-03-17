@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.5 2010/03/04 13:53:15 egor Exp $"""
+$Id: WMIClient.py,v 1.6 2010/03/15 21:03:22 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -189,14 +189,27 @@ class WMIClient(BaseClient):
                     yield self.connect(namespace=namespace)
                     driver.next()
                     for classname, instMap in classes.iteritems():
+                        plst = set()
+                        for keyprops, insts in instMap.iteritems():
+			    for tables in insts.values():
+                                for (table, props) in tables:
+                                    if props == {}:
+                                        plst = ['*']
+                                        break
+                                    plst = plst.union(props.keys())
+                                if plst == ['*']: break
+                            if plst == ['*']: break
+			    plst = plst.union(keyprops)
                         if classname.upper().startswith('SELECT '):
                             query = classname
-                        elif () in instMap or len(instMap.values()[0]) > 1:
-                            query = "SELECT * FROM %s"%classname
+                        elif () in instMap or len(instMap) > 1 or \
+			                        len(instMap.values()[0]) > 1:
+                            query="SELECT %s FROM %s"%(','.join(plst),classname)
                         else:
                             kb = zip(instMap.keys()[0],
                                     instMap.values()[0].keys()[0])
-                            query = "SELECT * FROM %s WHERE %s"%(classname,
+                            query="SELECT %s FROM %s WHERE %s"%(','.join(plst),
+                                    classname,
                                     " AND ".join(['%s=%s'%v for v in kb]))
                         query = query.replace ("\\", "\\\\")
                         log.debug("Query: %s", query)

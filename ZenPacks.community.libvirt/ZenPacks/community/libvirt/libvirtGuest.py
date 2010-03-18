@@ -25,6 +25,7 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
     lvOSType = ""
     lvUUIDString = ""
     lvState = -1
+    lvVolumes = []
 
     _properties = (
 	dict(id='lvDisplayName', type='string',  **_kw),
@@ -33,6 +34,7 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
 	dict(id='lvNumberVirtCPUs', type='int',  **_kw),
 	dict(id='lvOSType',	type='string',  **_kw),
 	dict(id='lvUUIDString',	type='string',  **_kw),
+	dict(id='lvVolumes',	type='lines',  **_kw), # The list of volume names (which are stored under the host)
     )
 
     _relations = (
@@ -103,7 +105,7 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
     def dolibvirtCommand(self,libvirtcommand):
 	libvirtpath = self.pack().path()
 	command = os.path.join(libvirtpath,'libexec','check_libvirt.py')
-        args = ' -H ' + self.libvirthost().id + ' -c ' + self.zLibvirtConnectType + ' -u ' + self.zLibvirtUsername + ' -l ' + libvirtcommand
+        args = ' -H ' + self.libvirthost().id + ' -c ' + self.zLibvirtConnectType + ' -u ' + self.zLibvirtUsername + ' -l ' + libvirtcommand + ' -n ' + self.lvDisplayName
         if self.zLibvirtPassword != '' and self.zLibvirtConnectType == 'esx://':
             args += ' -p ' + self.zLibvirtPassword
         output = Popen(command + args, stdout=PIPE, shell=True, env={"PATH": "/usr/bin"}).communicate()[0] # have to reset the environment or zenoss overrides python values....

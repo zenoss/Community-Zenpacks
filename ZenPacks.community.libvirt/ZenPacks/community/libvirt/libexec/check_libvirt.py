@@ -51,6 +51,7 @@ def help(status=0):
     print "-l dataorcmdtype type of data to lookup or command to run"
     print "                   data = (list, domain, interface, interfacelist, disk, disklist, memory, cpu, all, modeler)"
     print "                   commands = (save, resume, destroy, create, undefine, startup, shutdown, autostart)"
+    print "-n nameofdp      The name of the datapoint we need to lookup (domain,volumepath,poolname,etc.)"
     print "-s socket        path to the readonly libvirt socket on the remote host"
     print "-g domain ID#    the ID number of the domain to query"
     print "-n domain name   the name of the domain to query - can be used instead of -g" 
@@ -286,37 +287,91 @@ def get_data_list(conn):
 	data[id]=dom.name()
     print_data(data)
 
+def get_data_pool(conn,poolname):
+    """Get data specific to a particular pool using the pool name to look it up"""
+    pooldata = dict()
+    pool = conn.storagePoolLookupByName(poolname)
+    poolinfo = pool.info()
+    [state,capacity,allocation,available] = poolinfo
+    pooldata['allocation'] = capacity
+    print_data(pooldata)
+
+
 def get_data_modeler(conn):
-    """List all domains on this host"""
+    """List all domains/pool/volumes on this host and spit it out in a pickle format for use by the modeling plugin later """
+    poolstates = ['Inactive','Building','Running','Degraded']
+    volumetypes = ['File','Block']
     data = dict()
+    domains = dict()
     for name in conn.listDefinedDomains():
 	dom=conn.lookupByName(name)
-	data[name]=dict()
-	data[name]['name'] = dom.name()
-	data[name]['ostype'] = dom.OSType()
-	data[name]['uuidstring'] = dom.UUIDString()
-	data[name]['maxmemory'] = dom.maxMemory()
+	domains[name]=dict()
+	domains[name]['name'] = dom.name()
+	domains[name]['ostype'] = dom.OSType()
+	domains[name]['uuidstring'] = dom.UUIDString()
+	domains[name]['maxmemory'] = dom.maxMemory()
 	#data[name]['vcpus'] = dom.vcpus()
 	info = dom.info()
-	data[name]['state'] = info[0]
-	data[name]['nrvirtcpus'] = info[3]
-	data[name]['disks'] = get_disk_devices(dom)
-	data[name]['interfaces'] = get_interface_devices(dom)
+	domains[name]['state'] = info[0]
+	domains[name]['nrvirtcpus'] = info[3]
+	domains[name]['disks'] = get_disk_devices(dom)
+	domains[name]['interfaces'] = get_interface_devices(dom)
     for id in conn.listDomainsID():
 	dom=conn.lookupByID(id)
-	data[id]=dict()
-	data[id]['name'] = dom.name()
-	data[id]['ostype'] = dom.OSType()
-	data[id]['uuidstring'] = dom.UUIDString()
-	data[id]['maxmemory'] = dom.maxMemory()
+	domains[id]=dict()
+	domains[id]['name'] = dom.name()
+	domains[id]['ostype'] = dom.OSType()
+	domains[id]['uuidstring'] = dom.UUIDString()
+	domains[id]['maxmemory'] = dom.maxMemory()
 	#data[id]['vcpus'] = dom.vcpus()
 	info = dom.info()
-	data[id]['state'] = info[0]
-	data[id]['nrvirtcpus'] = info[3]
-	data[id]['disks'] = get_disk_devices(dom)
-	data[id]['interfaces'] = get_interface_devices(dom)
-    print pickle.dumps(data)
-    #print pickle.loads(pickle.dumps(data))
+	domains[id]['state'] = info[0]
+	domains[id]['nrvirtcpus'] = info[3]
+	domains[id]['disks'] = get_disk_devices(dom)
+	domains[id]['interfaces'] = get_interface_devices(dom)
+    data['domains'] = domains
+    pools = dict()
+    volumes = dict()
+    poolnames = []
+    for name in conn.listStoragePools():
+	poolnames += [name]
+    for name in conn.listDefinedStoragePools():
+	poolnames += [name]
+    for name in poolnames:
+	pooldata = dict()
+	pool = conn.storagePoolLookupByName(name)
+	poolinfo = pool.info()
+	[state,capacity,allocation,available] = poolinfo
+	if verbose:
+	    print "Pool:",poolstates[state],capacity,allocation,available,name
+	pooldata['state'] = poolstates[state]
+	pooldata['capacity'] = capacity
+	# we don't assign allocation here, since we do it in RRD instead.
+	pooldata['name'] = name
+	pooldata['volumes'] = []
+	if state: # Make sure the pool is active
+	    for volumepath in pool.listVolumes():
+		voldata = dict()
+		volume = pool.storageVolLookupByName(volumepath)
+		volinfo = volume.info()
+		[type,capacity,allocation] = volinfo
+		if verbose:
+		    print "Volume: ",volumetypes[type],capacity,allocation,volume.name(),volume.key(),volume.path()
+		voldata['type'] = volumetypes[type]
+		voldata['capacity'] = capacity
+		voldata['name'] = volume.name()
+		voldata['key'] = volume.key()
+		voldata['path'] = volume.path()
+		# we don't assign allocation here, since we do it in RRD instead....
+		volumes[volume.key()] = voldata
+		pooldata['volumes'] += [volume.key()]
+	pools[name] = pooldata
+    data['pools'] = pools
+    data['volumes'] = volumes
+    if humanreadable:
+	print data
+    else:
+	print pickle.dumps(data)
 
 
 def request_credentials(credentials, user_data):
@@ -464,6 +519,14 @@ if __name__=='__main__':
 	get_data_cpu(conn,domain,domainname)
     elif datatype == 'domain':
 	get_data_domain(conn,domain,domainname)
+    elif datatype == 'volumelist':
+	get_data_volumelist(conn)
+    elif datatype == 'volume':
+	get_data_volume(conn,volumepath)
+    elif datatype == 'poollist':
+	get_data_poollist(conn)
+    elif datatype == 'pool':
+	get_data_pool(conn,poolname)
     elif datatype == 'interface':
 	get_data_interface(conn,domain,domainname,interface)
     elif datatype == 'interfacelist':

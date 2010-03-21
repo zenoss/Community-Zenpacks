@@ -50,17 +50,6 @@
             tal:content="here/enabled"/>
     </tr>
     <tr>
-        <td class="tableheader">Transport</td>
-        <td class="tablevalues" tal:condition="editable">
-        <select class="tablevalues" name="transport:string">
-            <option tal:repeat="t python:('Auto','WBEM', 'WMI')" tal:content="t"
-                    tal:attributes="value t; selected python:t==here.transport"/>
-        </select>
-        </td>
-        <td class="tablevalues" tal:condition="not:editable" 
-            tal:content="here/transport"/>
-    </tr>
-    <tr>
         <td class="tableheader">Namespace</td>
         <td class="tablevalues" tal:condition="editable">
         <input class="tablevalues" type="text" name="namespace:text" size="80"

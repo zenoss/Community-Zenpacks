@@ -13,9 +13,9 @@ __doc__="""WBEMDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WBEMDataSource.py,v 1.5 2010/02/22 12:49:33 egor Exp $"""
+$Id: WBEMDataSource.py,v 1.6 2010/03/19 15:46:41 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -31,12 +31,10 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
     sourcetypes = ('WBEM',)
     sourcetype = 'WBEM'
-    transport = 'Auto'
     namespace = 'root/cimv2'
     instance = ''
 
     _properties = RRDDataSource.RRDDataSource._properties + (
-        {'id':'transport', 'type':'string', 'mode':'w'},
         {'id':'namespace', 'type':'string', 'mode':'w'},
         {'id':'instance', 'type':'string', 'mode':'w'},
         )
@@ -80,7 +78,6 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
     def zmanage_editProperties(self, REQUEST=None):
         'add some validation'
         if REQUEST:
-            self.transport = REQUEST.get('transport', '')
             self.namespace = REQUEST.get('namespace', '')
             self.instance = REQUEST.get('instance', '')
         return RRDDataSource.RRDDataSource.zmanage_editProperties(
@@ -91,13 +88,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                                                             self.instance)
         namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
                                                             self.namespace)
-        if self.transport == 'Auto':
-            wbemIgnore = RRDDataSource.RRDDataSource.getCommand(self, context,
-                                                    "${dev/zWbemMonitorIgnore}")
-            if wbemIgnore: transport = 'WMI'
-            else: transport = 'WBEM'
-        else:
-            transport = self.transport
+        transport = self.sourcetype
         if classname.upper().startswith('SELECT '):
             return (transport, classname, {}, namespace)
         kb = classname.split('.', 1)
@@ -176,13 +167,9 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             properties = dict([(
                         dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
                         dp.id) for dp in self.getRRDDataPoints()])
-            if tr == 'WBEM':
-                url='%s://%%s%s:%s/%s'%(
-                                    device.zWbemUseSSL and 'https' or 'http',
+            url='%s://%%s%s:%s/%s'%(device.zWbemUseSSL and 'https' or 'http',
                                     device.zWbemProxy or device.manageIp,
                                     device.zWbemPort, namespace)
-            else:
-                url='//%%s%s/%s'%(device.zWmiProxy or device.manageIp,namespace)
             write('Get %s Instance %s from %s' % (tr, inst, str(url%'')))
             write('')
             creds = '%s:%s@'%(device.zWinUser, device.zWinPassword)

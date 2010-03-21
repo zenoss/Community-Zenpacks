@@ -12,9 +12,9 @@ __doc__="""WbemPerfConfig
 
 Provides Wbem config to zenperfwbem clients.
 
-$Id: WbemPerfConfig.py,v 1.5 2010/03/05 17:28:43 egor Exp $"""
+$Id: WbemPerfConfig.py,v 1.6 2010/03/19 16:49:43 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -103,7 +103,7 @@ def getWbemDeviceConfig(trs, device):
 class WbemPerfConfig(CollectorConfigService):
 
     def __init__(self, dmd, instance):
-        self.cimtransport = ['WBEM',]
+        self.cimtransport = ['WBEM', 'CIM']
         deviceProxyAttributes = ('zWbemMonitorIgnore',
                                  'zWbemUseSSL',
                                  'zWbemPort',

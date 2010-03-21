@@ -16,7 +16,7 @@ class ZenPack(ZenPackBase):
     """
 
     dcProperties = {
-        '/Server/WBEM/Win': {
+        '/CIM/WMI': {
             'description': ('', 'string'),
             'devtypes': (['WMI', 'WBEM'], 'lines'),
             'zCollectorPlugins': (
@@ -37,7 +37,7 @@ class ZenPack(ZenPackBase):
             ),
             'zWmiMonitorIgnore': (False, 'boolean'),
         },
-        '/Server/WBEM/Win2K': {
+        '/CIM/WMI/Win2000': {
             'description': ('', 'string'),
             'devtypes': (['WMI', 'WBEM'], 'lines'),
             'zCollectorPlugins': (

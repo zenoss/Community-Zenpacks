@@ -12,9 +12,9 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 2.6 2010/03/05 17:05:23 egor Exp $"""
+$Id: WmiPerfConfig.py,v 2.7 2010/03/19 15:08:21 egor Exp $"""
 
-__version__ = "$Revision: 2.6 $"[11:-2]
+__version__ = "$Revision: 2.7 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -103,7 +103,7 @@ def getWbemDeviceConfig(trs, device):
 class WmiPerfConfig(CollectorConfigService):
 
     def __init__(self, dmd, instance):
-        self.cimtransport = ['WMI', 'WBEM']
+        self.cimtransport = ['WMI', 'CIM']
         deviceProxyAttributes = ('zWmiMonitorIgnore',
                                  'zWmiProxy',
                                  'zWinUser',

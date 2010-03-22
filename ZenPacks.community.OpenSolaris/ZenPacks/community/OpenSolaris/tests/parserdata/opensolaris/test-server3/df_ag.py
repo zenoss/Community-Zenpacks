@@ -1,7 +1,7 @@
 {
  'export_home': dict(
     availBlocks=8146535,
-    usedBlocks=12368281,
+    usedBlocks=6184141,
     totalBlocks=20514816,
     availInodes=8146535,
     totalInodes=8146543,
@@ -10,7 +10,7 @@
     ) ,
  'export_home_edgarej': dict(
     availBlocks=8146535,
-    usedBlocks=12368281,
+    usedBlocks=6184141,
     totalBlocks=20514816,
     availInodes=8146535,
     totalInodes=8146711,

@@ -8,7 +8,7 @@ class ifconfig(SolarisCommandPlugin):
     ifconfig maps a solaris ifconfig command to the interfaces relation.
     """
     # echo __COMMAND__ is used to delimit the results
-    command = '/sbin/ifconfig -a && echo __COMMAND__ && /usr/sbin/dladm show-ether && echo __COMMAND__ && /usr/sbin/arp -a'
+    command = '/sbin/ifconfig -a && echo __COMMAND__ && /usr/sbin/dladm show-ether && echo __COMMAND__ && /usr/sbin/arp -an'
     compname = "os"
     relname = "interfaces"
     modname = "Products.ZenModel.IpInterface"
@@ -20,6 +20,7 @@ class ifconfig(SolarisCommandPlugin):
         log.info('Collecting interfaces for device %s' % device.id)
         ifconfig, dladm, arp = results.split('__COMMAND__\n')
         relMap = self.parseIfconfig(ifconfig, arp, dladm, self.relMap())
+        print relMap
         return relMap
 
     def parsearp(self, arpstring):
@@ -52,9 +53,17 @@ class ifconfig(SolarisCommandPlugin):
         for dladmline in dladmdata.split('\n'):
             dladmcolumns=dladmline.split()
             if len(dladmcolumns) == 6:
-                speed, duplex = dladmcolumns[4].split('-')
-                speed=SPEED_CONVERSION.get(speed,100000000)
-                results[ dladmcolumns[0] ]= (speed,duplex)
+                if '-' in dladmcolumns[4]:
+                    speed, duplex = dladmcolumns[4].split('-')
+                    speed=SPEED_CONVERSION.get(speed,100000000)
+                    results[ dladmcolumns[0] ]= (speed,duplex)
+                else:
+                    # Set a dummy speed and conversion on a downed interface
+                    speed='1G'
+                    duplex='f'
+                    speed=SPEED_CONVERSION.get(speed,100000000)
+                    results[ dladmcolumns[0] ]= (speed,duplex)
+
         return results
 
     def parseIfconfig(self, ifconfig, arpstring,dladmstring, relMap):
@@ -104,7 +113,6 @@ class ifconfig(SolarisCommandPlugin):
                 iface.macaddress=arpdict[ "%s_%s" % ( iface.interfaceName,ip ) ]
                 iface.speed=dladmdict[ iface.interfaceName][0]
                 iface.duplex=dladmdict[ iface.interfaceName][1]
-
         print relMap
         return relMap
 

@@ -37,10 +37,10 @@ class mpstat_a(CommandParser):
                 sscpuidl.append(data[15])
 
         if len( sscpuint) == 1:
-            result.values.append( (dps['ssCpuInterrupt'], sscpuint[1] ) )
-            result.values.append( (dps['ssCpuUser'],  sscpuusr[1] ) )
-            result.values.append( (dps['ssCpuSystem'],  sscpusys[1] ) )
-            result.values.append( (dps['ssCpuIdle'],  sscpuidl[1] ) )
+            result.values.append( (dps['ssCpuInterrupt'], int(sscpuint[0]) ) )
+            result.values.append( (dps['ssCpuUser'],  int(sscpuusr[0]) ) )
+            result.values.append( (dps['ssCpuSystem'],  int(sscpusys[0]) ) )
+            result.values.append( (dps['ssCpuIdle'],  int(sscpuidl[0]) ) )
         else:
             # Skip the first value as it usually is erroneous to system averages
             sscpuint=sscpuint[1:]

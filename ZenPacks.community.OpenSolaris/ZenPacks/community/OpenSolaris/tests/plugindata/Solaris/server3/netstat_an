@@ -1,0 +1,487 @@
+/usr/bin/netstat -an
+
+UDP: IPv4
+   Local Address        Remote Address      State
+-------------------- -------------------- ----------
+      *.68                                Idle
+      *.546                               Idle
+192.168.31.133.68                         Idle
+      *.111                               Idle
+      *.*                                 Unbound
+      *.40452                             Idle
+      *.111                               Idle
+      *.*                                 Unbound
+      *.64675                             Idle
+      *.*                                 Unbound
+      *.44181                             Idle
+      *.49137                             Idle
+      *.5353                              Idle
+      *.5353                              Idle
+      *.*                                 Unbound
+
+UDP: IPv6
+   Local Address                     Remote Address                   State      If
+--------------------------------- --------------------------------- ---------- -----
+      *.546                                                         Idle       
+      *.111                                                         Idle       
+      *.*                                                           Unbound    
+      *.40452                                                       Idle       
+      *.*                                                           Unbound    
+      *.49137                                                       Idle       
+      *.5353                                                        Idle       
+
+TCP: IPv4
+   Local Address        Remote Address    Swind Send-Q Rwind Recv-Q    State
+-------------------- -------------------- ----- ------ ----- ------ -----------
+      *.*                  *.*                0      0 49152      0 IDLE
+127.0.0.1.4999             *.*                0      0 49152      0 LISTEN
+      *.111                *.*                0      0 49152      0 LISTEN
+      *.*                  *.*                0      0 49152      0 IDLE
+      *.111                *.*                0      0 49152      0 LISTEN
+      *.*                  *.*                0      0 49152      0 IDLE
+127.0.0.1.25               *.*                0      0 49152      0 LISTEN
+127.0.0.1.587              *.*                0      0 49152      0 LISTEN
+      *.22                 *.*                0      0 49152      0 LISTEN
+      *.51640              *.*                0      0 49152      0 LISTEN
+127.0.0.1.60628            *.*                0      0 49152      0 LISTEN
+192.168.31.133.22    192.168.31.1.2781    65275     51 49640      0 ESTABLISHED
+127.0.0.1.52276            *.*                0      0 49152      0 LISTEN
+127.0.0.1.64590            *.*                0      0 49152      0 LISTEN
+127.0.0.1.52610            *.*                0      0 49152      0 LISTEN
+127.0.0.1.52583            *.*                0      0 49152      0 LISTEN
+127.0.0.1.40722            *.*                0      0 49152      0 LISTEN
+127.0.0.1.45512            *.*                0      0 49152      0 LISTEN
+127.0.0.1.47495            *.*                0      0 49152      0 LISTEN
+127.0.0.1.47660            *.*                0      0 49152      0 LISTEN
+127.0.0.1.43942            *.*                0      0 49152      0 LISTEN
+127.0.0.1.33296            *.*                0      0 49152      0 LISTEN
+127.0.0.1.46421            *.*                0      0 49152      0 LISTEN
+127.0.0.1.52426            *.*                0      0 49152      0 LISTEN
+127.0.0.1.35485            *.*                0      0 49152      0 LISTEN
+127.0.0.1.60166            *.*                0      0 49152      0 LISTEN
+127.0.0.1.40206            *.*                0      0 49152      0 LISTEN
+127.0.0.1.36250            *.*                0      0 49152      0 LISTEN
+127.0.0.1.52985            *.*                0      0 49152      0 LISTEN
+127.0.0.1.45775            *.*                0      0 49152      0 LISTEN
+127.0.0.1.52869            *.*                0      0 49152      0 LISTEN
+127.0.0.1.51388            *.*                0      0 49152      0 LISTEN
+127.0.0.1.54985            *.*                0      0 49152      0 LISTEN
+
+TCP: IPv6
+   Local Address                     Remote Address                 Swind Send-Q Rwind Recv-Q   State      If
+--------------------------------- --------------------------------- ----- ------ ----- ------ ----------- -----
+      *.*                               *.*                             0      0 49152      0 IDLE        
+      *.111                             *.*                             0      0 49152      0 LISTEN      
+      *.*                               *.*                             0      0 49152      0 IDLE        
+::1.25                                  *.*                             0      0 49152      0 LISTEN      
+      *.22                              *.*                             0      0 49152      0 LISTEN      
+      *.33397                           *.*                             0      0 49152      0 LISTEN      
+
+SCTP:
+        Local Address                   Remote Address          Swind  Send-Q Rwind  Recv-Q StrsI/O  State
+------------------------------- ------------------------------- ------ ------ ------ ------ ------- -----------
+0.0.0.0                         0.0.0.0                              0      0 102400      0  32/32  CLOSED
+
+Active UNIX domain sockets
+Address  Type          Vnode     Conn  Local Addr      Remote Addr
+ffffff00d6981d08 stream-ord 00000000 ffffff00d5d48440                /tmp/.iiim-edgarej/:0.0 
+ffffff014cd9e050 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff014cd9e220 stream-ord 00000000 00000000 /tmp/.iiim-edgarej/:0.0                
+ffffff014cd9e3f0 stream-ord 00000000 00000000                               
+ffffff014cd9e5c0 stream-ord 00000000 00000000                               
+ffffff014cd9e790 stream-ord 00000000 00000000 /tmp/.iiim-edgarej/:0.0                
+ffffff014cd9e960 stream-ord 00000000 ffffff00d5d48440                /tmp/.iiim-edgarej/:0.0 
+ffffff014cd9eb30 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff014cd9ed00 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff014cd39048 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff014cd39218 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39f-0-4a3443f8df1f0                
+ffffff014cd393e8 stream-ord 00000000 ffffff014cd38e40                /var/tmp/orbit-edgarej/linc-39f-0-4a3443f8df1f0 
+ffffff014cd395b8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff014cd39788 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff014cd39958 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39f-0-4a3443f8df1f0                
+ffffff014cd39b28 stream-ord 00000000 ffffff014cd38e40                /var/tmp/orbit-edgarej/linc-39f-0-4a3443f8df1f0 
+ffffff014cd39cf8 stream-ord ffffff014cd38e40 00000000 /var/tmp/orbit-edgarej/linc-39f-0-4a3443f8df1f0                
+ffffff014cd40040 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff014cd40210 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff014cd403e0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff014cd405b0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff014cd40780 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff014cd40950 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff014cd40b20 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff014cd40cf0 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d66e4038 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d66e4208 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d66e43d8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d66e45a8 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d66e4778 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370                
+ffffff00d66e4948 stream-ord 00000000 ffffff00d665d040                /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370 
+ffffff00d66e4b18 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d66e4ce8 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d6644030 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370                
+ffffff00d6644200 stream-ord 00000000 ffffff00d665d040                /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370 
+ffffff00d66443d0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d66445a0 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d6644770 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d6644940 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d6644b10 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474                
+ffffff00d6644ce0 stream-ord 00000000 ffffff00d65f5840                /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474 
+ffffff00d6650028 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370                
+ffffff00d66501f8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d66503c8 stream-ord 00000000 ffffff00d665d040                /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370 
+ffffff00d6650598 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d6650768 stream-ord ffffff00d665d040 00000000 /var/tmp/orbit-edgarej/linc-395-0-4a345aefec370                
+ffffff00d6650938 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d6650b08 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d6650cd8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6615020 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d66151f0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d66153c0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6615590 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995                
+ffffff00d6615760 stream-ord 00000000 ffffff00d6628e00                /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995 
+ffffff00d6615930 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d6615b00 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d6615cd0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995                
+ffffff00d6627018 stream-ord 00000000 ffffff00d6628e00                /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995 
+ffffff00d66271e8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d66273b8 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d6627588 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa                
+ffffff00d6627758 stream-ord 00000000 ffffff00d64cc840                /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa 
+ffffff00d6627928 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d6627af8 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d6627cc8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995                
+ffffff00d65dc010 stream-ord 00000000 ffffff00d6628e00                /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995 
+ffffff00d65dc1e0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474                
+ffffff00d65dc3b0 stream-ord 00000000 ffffff00d65f5840                /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474 
+ffffff00d65dc580 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d65dc750 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d65dc920 stream-ord ffffff00d6628e00 00000000 /var/tmp/orbit-edgarej/linc-398-0-4a341c2911995                
+ffffff00d65dcaf0 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d65dccc0 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d65ed008 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d65ed1d8 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d65ed3a8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d65ed578 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d65ed748 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d65ed918 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d65edae8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474                
+ffffff00d65edcb8 stream-ord 00000000 ffffff00d65f5840                /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474 
+ffffff00d65ba000 stream-ord ffffff00d65f5840 00000000 /var/tmp/orbit-edgarej/linc-39a-0-4a341c36b0474                
+ffffff00d65ba1d0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d65ba3a0 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d65ba570 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d65ba740 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d65ba910 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d65baae0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d65bacb0 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d652e138 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d652e308 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa                
+ffffff00d652e4d8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d652e6a8 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d652e878 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d652ea48 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d652ec18 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa                
+ffffff00d652ede8 stream-ord 00000000 ffffff00d64cc840                /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa 
+ffffff00d6381130 stream-ord ffffff00d64cc840 00000000 /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa                
+ffffff00d6381300 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d63814d0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d63816a0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6381870 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6381a40 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d6381c10 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6381de0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d62e5128 stream-ord 00000000 ffffff00d632eb00                /var/tmp/orbit-edgarej/linc-362-0-4a340ef989399 
+ffffff00d62e52f8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d62e54c8 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d62e5698 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d62e5868 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d62e5a38 stream-ord 00000000 ffffff00d5d48440                /tmp/.iiim-edgarej/:0.0 
+ffffff00d62e5c08 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d62e5dd8 stream-ord ffffff00d632eb00 00000000 /var/tmp/orbit-edgarej/linc-362-0-4a340ef989399                
+ffffff00d6268118 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-uowYkRtF/socket1                
+ffffff00d62682e8 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-uowYkRtF/socket2                
+ffffff00d62684b8 stream-ord 00000000 ffffff00d62eec80                /var/tmp/gvfs-edgarej-uowYkRtF/socket2 
+ffffff00d6268688 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-362-0-4a340ef989399                
+ffffff00d6268858 stream-ord 00000000 ffffff00d64cc840                /var/tmp/orbit-edgarej/linc-39b-0-4a345e7ca64fa 
+ffffff00d6268a28 stream-ord 00000000 ffffff00d62eee80                /var/tmp/gvfs-edgarej-uowYkRtF/socket1 
+ffffff00d6268bf8 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-fRipUbTy/socket2                
+ffffff00d6267120 stream-ord 00000000 ffffff00d62bf340                /var/tmp/gvfs-edgarej-fRipUbTy/socket1 
+ffffff00d62672f0 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-fRipUbTy/socket1                
+ffffff00d62674c0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6267690 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6267860 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d6267a30 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d6267c00 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb                
+ffffff00d6268dc8 stream-ord 00000000 ffffff00d626fc80                /var/tmp/gvfs-edgarej-NYALaJwY/socket1 
+ffffff00d6267dd0 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-NYALaJwY/socket2                
+ffffff00d627d110 stream-ord 00000000 ffffff00d626fa80                /var/tmp/gvfs-edgarej-NYALaJwY/socket2 
+ffffff00d627d2e0 stream-ord 00000000 00000000 /tmp/.iiim-edgarej/:0.0                
+ffffff00d627d4b0 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-NYALaJwY/socket1                
+ffffff00d627d680 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-BNPB1iaI/socket1                
+ffffff00d627d850 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-BNPB1iaI/socket2                
+ffffff00d627da20 stream-ord 00000000 ffffff00d627c540                /var/tmp/gvfs-edgarej-BNPB1iaI/socket2 
+ffffff00d627dbf0 stream-ord 00000000 ffffff00d627c840                /var/tmp/gvfs-edgarej-BNPB1iaI/socket1 
+ffffff00d627ddc0 stream-ord 00000000 ffffff00d62bf140                /var/tmp/gvfs-edgarej-fRipUbTy/socket2 
+ffffff00d6241108 stream-ord 00000000 ffffff00d6103600                /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb 
+ffffff00d62412d8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d62414a8 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d6241678 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6241848 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6241a18 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10                
+ffffff00d6241be8 stream-ord 00000000 ffffff00d6196380                /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10 
+ffffff00d6241db8 stream-ord 00000000 ffffff00d5d48440                /tmp/.iiim-edgarej/:0.0 
+ffffff00d617f100 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10                
+ffffff00d617f2d0 stream-ord 00000000 ffffff00d6196380                /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10 
+ffffff00d617f4a0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d617f670 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d617f840 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-391-0-4a34544e75673                
+ffffff00d617fa10 stream-ord 00000000 ffffff00d617dd40                /var/tmp/orbit-edgarej/linc-391-0-4a34544e75673 
+ffffff00d617fbe0 stream-ord ffffff00d617dd40 00000000 /var/tmp/orbit-edgarej/linc-391-0-4a34544e75673                
+ffffff00d617fdb0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d618c0f8 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d618c2c8 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d618c498 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d618c668 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d618c838 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d618ca08 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10                
+ffffff00d618cbd8 stream-ord 00000000 ffffff00d6196380                /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10 
+ffffff00d618cda8 stream-ord ffffff00d6196380 00000000 /var/tmp/orbit-edgarej/linc-389-0-4a34618148f10                
+ffffff00d61470f0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d61472c0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d6147490 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6147660 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6147830 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6147a00 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6147bd0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6147da0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d61570e8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d61572b8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d6157488 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d6157658 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d6157828 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb                
+ffffff00d61579f8 stream-ord 00000000 ffffff00d6103600                /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb 
+ffffff00d6157bc8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d6157d98 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d61140e0 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d61142b0 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d6114480 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb                
+ffffff00d6114650 stream-ord 00000000 ffffff00d6103600                /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb 
+ffffff00d6114820 stream-ord ffffff00d6103600 00000000 /var/tmp/orbit-edgarej/linc-38c-0-4a3423ce2dbbb                
+ffffff00d61149f0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d6114bc0 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d6114d90 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d60ac0d8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d60ac2a8 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d60ac478 stream-ord 00000000 00000000 /tmp/.iiim-edgarej/:0.0                
+ffffff00d60ac648 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d60ac818 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d60ac9e8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d60acbb8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d60acd88 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d600c0d0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-384-0-4a342f62c6c3b                
+ffffff00d600c2a0 stream-ord 00000000 ffffff00d60c3400                /var/tmp/orbit-edgarej/linc-384-0-4a342f62c6c3b 
+ffffff00d600c470 stream-ord ffffff00d60c3400 00000000 /var/tmp/orbit-edgarej/linc-384-0-4a342f62c6c3b                
+ffffff00d600c640 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d600c810 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d600c9e0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d600cbb0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d600cd80 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5fdc0c8 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5fdc298 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-NjT7MtBe/socket2                
+ffffff00d5fdc468 stream-ord 00000000 ffffff00d6026b40                /var/tmp/gvfs-edgarej-NjT7MtBe/socket1 
+ffffff00d5fdc638 stream-ord 00000000 ffffff00d6026940                /var/tmp/gvfs-edgarej-NjT7MtBe/socket2 
+ffffff00d5fdc808 stream-ord 00000000 00000000 /var/tmp/gvfs-edgarej-NjT7MtBe/socket1                
+ffffff00d5fdc9d8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5fdcba8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5fdcd78 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5faa0c0 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d5faa290 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d5faa460 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-36b-0-4a345740e0963                
+ffffff00d5faa630 stream-ord 00000000 ffffff00d5fab380                /var/tmp/orbit-edgarej/linc-36b-0-4a345740e0963 
+ffffff00d5faa800 stream-ord ffffff00d5fab380 00000000 /var/tmp/orbit-edgarej/linc-36b-0-4a345740e0963                
+ffffff00d5faa9d0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5faaba0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5faad70 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5fb10b8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5fb1288 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5fb1458 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5fb1628 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5fb17f8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5fb19c8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5fb1b98 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5fb1d68 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d5edb0b0 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d5edb280 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d5edb450 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d5edb620 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5edb7f0 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5edb9c0 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5edbb90 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5edbd60 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5dde0a8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5dde278 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5dde448 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35d-0-4a34375fb87c4                
+ffffff00d5dde618 stream-ord 00000000 ffffff00d5d07d40                /var/tmp/orbit-edgarej/linc-35d-0-4a34375fb87c4 
+ffffff00d5dde7e8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d5dde9b8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5ddeb88 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5dded58 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d970a0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d97270 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d97440 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d97610 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d5d977e0 stream-ord ffffff00d5da5300 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d5d979b0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d97b80 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d5d97d50 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d5d49098 stream-ord 00000000 ffffff00d5da5300                /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5 
+ffffff00d5d49268 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d5d49438 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d5d49608 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35f-0-4a3403dd7b8a5                
+ffffff00d5d497d8 stream-ord ffffff00d5d48440 00000000 /tmp/.iiim-edgarej/:0.0                
+ffffff00d5d499a8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d49b78 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5d49d48 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d5d5c090 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-364-0-4a344e7586871                
+ffffff00d5d5c260 stream-ord 00000000 ffffff00d5d54b00                /var/tmp/orbit-edgarej/linc-364-0-4a344e7586871 
+ffffff00d5d5c430 stream-ord ffffff00d5d54b00 00000000 /var/tmp/orbit-edgarej/linc-364-0-4a344e7586871                
+ffffff00d5d5c600 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5d5c7d0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5d5c9a0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5d5cb70 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-368-0-4a3471b2ec00f                
+ffffff00d5d5cd40 stream-ord 00000000 ffffff00d5d07040                /var/tmp/orbit-edgarej/linc-368-0-4a3471b2ec00f 
+ffffff00d5d05088 stream-ord ffffff00d5d07040 00000000 /var/tmp/orbit-edgarej/linc-368-0-4a3471b2ec00f                
+ffffff00d5d05258 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5d05428 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5d055f8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d057c8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5d05998 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d05b68 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5d05d38 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d5d0d080 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35d-0-4a34375fb87c4                
+ffffff00d5d0d250 stream-ord 00000000 ffffff00d5d07d40                /var/tmp/orbit-edgarej/linc-35d-0-4a34375fb87c4 
+ffffff00d5d0d420 stream-ord ffffff00d5d07d40 00000000 /var/tmp/orbit-edgarej/linc-35d-0-4a34375fb87c4                
+ffffff00d5d0d5f0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5d0d7c0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5d0d990 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5d0db60 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5d0dd30 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d5cc6078 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d5cc6248 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-366-0-4a344e742e81e                
+ffffff00d5cc6418 stream-ord 00000000 ffffff00d5cc2380                /var/tmp/orbit-edgarej/linc-366-0-4a344e742e81e 
+ffffff00d5cc65e8 stream-ord ffffff00d5cc2380 00000000 /var/tmp/orbit-edgarej/linc-366-0-4a344e742e81e                
+ffffff00d5cc67b8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5cc6988 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5cc6b58 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5cc6d28 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5a8c070 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d5a8c240 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5a8c410 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5a8c5e0 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d5a8c7b0 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5a8c980 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5a8cb50 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5a8cd20 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5573068 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5573238 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5573408 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d55735d8 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d55737a8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5573978 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5573b48 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5573d18 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5525060 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d5525230 stream-ord 00000000 ffffff00d5578a80                /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891 
+ffffff00d5525400 stream-ord ffffff00d5578a80 00000000 /var/tmp/orbit-edgarej/linc-35a-0-4a34766b9b891                
+ffffff00d55255d0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d55257a0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5525970 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5525b40 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5525d10 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d5505058 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5505228 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d55053f8 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d55055c8 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d5505798 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d5505968 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d5505b38 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d5505d08 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d54e8050 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d54e8220 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-358-0-4a343e54db120                
+ffffff00d54e83f0 stream-ord 00000000 ffffff00d54ea500                /var/tmp/orbit-edgarej/linc-358-0-4a343e54db120 
+ffffff00d54e85c0 stream-ord ffffff00d54ea500 00000000 /var/tmp/orbit-edgarej/linc-358-0-4a343e54db120                
+ffffff00d54e8790 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d54e8960 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d54e8b30 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d54e8d00 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d54cd048 stream-ord ffffff00d54d2800 00000000 /var/tmp/keyring-7lGzFZ/socket.pkcs11                
+ffffff00d54cd218 stream-ord ffffff00d54d2a00 00000000 /var/tmp/keyring-7lGzFZ/ssh                
+ffffff00d54cd3e8 stream-ord ffffff00d54d2c00 00000000 /var/tmp/keyring-7lGzFZ/socket                
+ffffff00d54cd5b8 stream-ord 00000000 00000000 /tmp/.ICE-unix/827                
+ffffff00d54cd788 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d54cd958 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-356-0-4a347e86a8c93                
+ffffff00d54cdb28 stream-ord ffffff00d54d3480 00000000 /var/tmp/orbit-edgarej/linc-355-0-4a344857a9d38                
+ffffff00d54cdcf8 stream-ord 00000000 ffffff00d54d3780                /var/tmp/orbit-edgarej/linc-356-0-4a347e86a8c93 
+ffffff00d5483040 stream-ord ffffff00d54d3780 00000000 /var/tmp/orbit-edgarej/linc-356-0-4a347e86a8c93                
+ffffff00d5483210 stream-ord 00000000 ffffff00d5418280                /tmp/.ICE-unix/827 
+ffffff00d54833e0 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d54835b0 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d5483780 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d5483950 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d5483b20 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d5483cf0 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d53fc038 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d53fc208 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d53fc3d8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d53fc5a8 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d53fc778 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d53fc948 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d53fcb18 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d53fcce8 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-33b-0-4a3458c86052                
+ffffff00d540e030 stream-ord ffffff00d53fec40 00000000 /var/tmp/orbit-edgarej/linc-33b-0-4a3458c86052                
+ffffff00d540e200 stream-ord 00000000 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d540e3d0 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d540e5a0 stream-ord 00000000 ffffff00d5409a00                /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91 
+ffffff00d540e770 stream-ord 00000000 ffffff00d53fec40                /var/tmp/orbit-edgarej/linc-33b-0-4a3458c86052 
+ffffff00d540e940 stream-ord ffffff00d5409a00 00000000 /var/tmp/orbit-edgarej/linc-351-0-4a345552bef91                
+ffffff00d540eb10 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d540ece0 stream-ord ffffff00d5418280 00000000 /tmp/.ICE-unix/827                
+ffffff00d34be028 stream-ord 00000000 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00d34be1f8 stream-ord 00000000 ffffff00d53ee500                /tmp/dbus-ujyOpJAOXz 
+ffffff00d34be3c8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d34be598 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00d34be768 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00d34be938 stream-ord 00000000 00000000                               
+ffffff00d34beb08 stream-ord 00000000 00000000                               
+ffffff00d34becd8 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00c8a88020 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00c8a881f0 stream-ord ffffff00d53ee500 00000000 /tmp/dbus-ujyOpJAOXz                
+ffffff00c8a883c0 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00c8a88590 stream-ord 00000000 00000000 /tmp/.X11-unix/X0                
+ffffff00c8a88760 stream-ord 00000000 ffffff00c9366900                /tmp/.X11-unix/X0 
+ffffff00c8a88930 stream-ord 00000000 00000000                               
+ffffff00c8a88b00 stream-ord 00000000 00000000                               
+ffffff00c8a88cd0 stream-ord ffffff00c9383d40 00000000 /var/run/gdm_socket                
+ffffff00d1676018 stream-ord ffffff00c8a90c80 00000000 /tmp/dbus-wY5sOmD6AF                
+ffffff00d16761e8 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d16763b8 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d1676588 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d1676758 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d1676928 stream-ord 00000000 ffffff00cf12a140                /var/run/dbus/system_bus_socket 
+ffffff00d1676af8 dgram      ffffff00d1e9d100 00000000 /var/run/in.ndpd_mib                
+ffffff00d1676cc8 stream-ord ffffff00c9366900 00000000 /tmp/.X11-unix/X0                
+ffffff00d124c010 stream-ord ffffff00d2db3c80 00000000 /var/run/mDNSResponder                
+ffffff00d124c1e0 stream-ord 00000000 00000000 /var/run/dbus/system_bus_socket                
+ffffff00d124c3b0 stream-ord ffffff00d2d5a180 00000000 /var/run/.inetd.uds                
+ffffff00d124c580 stream-ord 00000000 00000000 /var/run/hald/dbus-fc0YQjmmCr                
+ffffff00d124c750 stream-ord 00000000 00000000 /var/run/hald/dbus-fc0YQjmmCr                
+ffffff00d124c920 stream-ord 00000000 ffffff00d0660540                /var/run/hald/dbus-fc0YQjmmCr 
+ffffff00d124caf0 stream-ord 00000000 ffffff00d0660540                /var/run/hald/dbus-fc0YQjmmCr 
+ffffff00d124ccc0 stream-ord 00000000 00000000 /var/run/hald/dbus-fc0YQjmmCr                
+ffffff00cf120008 stream-ord 00000000 ffffff00d0660540                /var/run/hald/dbus-fc0YQjmmCr 
+ffffff00cf1201d8 stream-ord 00000000 00000000 /var/run/hald/dbus-DC2DM54FdH                
+ffffff00cf1203a8 stream-ord ffffff00d07ef680 00000000 /var/run/hald/dbus-DC2DM54FdH                
+ffffff00cf120578 stream-ord ffffff00d0660540 00000000 /var/run/hald/dbus-fc0YQjmmCr                
+ffffff00cf120748 stream-ord 00000000 00000000                               
+ffffff00cf120918 stream-ord 00000000 00000000                               
+ffffff00cf120ae8 stream-ord 00000000 ffffff00d07ef680                /var/run/hald/dbus-DC2DM54FdH 
+ffffff00cf120cb8 stream-ord ffffff00cf12a140 00000000 /var/run/dbus/system_bus_socket                

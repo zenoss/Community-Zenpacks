@@ -66,7 +66,7 @@ class df_ag(CommandPlugin):
         for part in parts:
             #print part
             # find the component match
-            match = re.search('^(?P<component>[\w\/]+)\s*', part)
+            match = re.search('^(?P<component>[\w\/-]+)\s*', part)
             if not match: continue
             component = match.groupdict()['component'].strip()
             #print component

@@ -1,0 +1,3 @@
+/usr/sbin/prtconf|grep Memory && /usr/sbin/swap -l|tail -1
+Memory size: 1024 Megabytes
+/dev/zvol/dsk/rpool/swap 182,2         8  1048568  1048568

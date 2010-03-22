@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.turner.CiscoMDS'
-VERSION = '1.2'
+VERSION = '1.2.1'
 AUTHOR = 'David Nicklay'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.turner']

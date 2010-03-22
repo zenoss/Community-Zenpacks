@@ -36,6 +36,8 @@ hostname = 'localhost'
 datatype = 'list'
 domain = -1
 domainname = ''
+poolname = ''
+volumepath = ''
 disk = ''
 interface = ''
 verbose = 0
@@ -51,10 +53,9 @@ def help(status=0):
     print "-l dataorcmdtype type of data to lookup or command to run"
     print "                   data = (list, domain, interface, interfacelist, disk, disklist, memory, cpu, all, modeler)"
     print "                   commands = (save, resume, destroy, create, undefine, startup, shutdown, autostart)"
-    print "-n nameofdp      The name of the datapoint we need to lookup (domain,volumepath,poolname,etc.)"
+    print "-n nameofdp      The value of the datapoint we need to lookup (this could be the domain, volumepath, pool ,etc.)"
     print "-s socket        path to the readonly libvirt socket on the remote host"
-    print "-g domain ID#    the ID number of the domain to query"
-    print "-n domain name   the name of the domain to query - can be used instead of -g" 
+    print "-g domain ID#    the ID number of the domain to query" # can be used in place of -n
     print "-d disk-device   the device name of the disk to gets stats for (e.g. vda, hda, .etc.)"
     print "-i net-interface the interface name to get stats for (e.g. vnet1, vnet2, etc.)"
     print "-u username	    username to connect as to the remote libvirt host (or to ESX)"
@@ -296,6 +297,13 @@ def get_data_pool(conn,poolname):
     pooldata['allocation'] = capacity
     print_data(pooldata)
 
+def get_data_volume(conn,volumepath):
+    voldata = dict()
+    volume = conn.storageVolLookupByPath(volumepath)
+    volinfo = volume.info()
+    [type,capacity,allocation] = volinfo
+    voldata['allocation'] = allocation
+    print_data(voldata)
 
 def get_data_modeler(conn):
     """List all domains/pool/volumes on this host and spit it out in a pickle format for use by the modeling plugin later """
@@ -333,10 +341,11 @@ def get_data_modeler(conn):
     pools = dict()
     volumes = dict()
     poolnames = []
-    for name in conn.listStoragePools():
-	poolnames += [name]
-    for name in conn.listDefinedStoragePools():
-	poolnames += [name]
+    if connecttype != 'esx://': # Not working for ESX as of libvirt version 0.7.5
+	for name in conn.listStoragePools():
+	    poolnames += [name]
+	for name in conn.listDefinedStoragePools():
+	    poolnames += [name]
     for name in poolnames:
 	pooldata = dict()
 	pool = conn.storagePoolLookupByName(name)
@@ -453,7 +462,10 @@ if __name__=='__main__':
 	elif opt[0] == "-g":
 	    domain = int(opt[1])
 	elif opt[0] == "-n":
+	    # We don't know which it will be, so just set them all:
 	    domainname = opt[1]
+	    volumepath = opt[1]
+	    poolname = opt[1]
         elif opt[0] == "-2":
             socket = opt[1]
 	elif opt[0] == "-i":
@@ -519,18 +531,14 @@ if __name__=='__main__':
 	get_data_cpu(conn,domain,domainname)
     elif datatype == 'domain':
 	get_data_domain(conn,domain,domainname)
-    elif datatype == 'volumelist':
-	get_data_volumelist(conn)
-    elif datatype == 'volume':
-	get_data_volume(conn,volumepath)
-    elif datatype == 'poollist':
-	get_data_poollist(conn)
-    elif datatype == 'pool':
-	get_data_pool(conn,poolname)
     elif datatype == 'interface':
 	get_data_interface(conn,domain,domainname,interface)
     elif datatype == 'interfacelist':
 	get_data_interfacelist(conn,domain,domainname)
+    elif datatype == 'volume':
+	get_data_volume(conn,volumepath)
+    elif datatype == 'pool':
+	get_data_pool(conn,poolname)
     elif datatype == 'shutdown':
 	set_shutdown(conn,domain,domainname)
     elif datatype == 'startup':

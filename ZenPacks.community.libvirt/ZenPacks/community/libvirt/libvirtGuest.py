@@ -34,7 +34,7 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
 	dict(id='lvNumberVirtCPUs', type='int',  **_kw),
 	dict(id='lvOSType',	type='string',  **_kw),
 	dict(id='lvUUIDString',	type='string',  **_kw),
-	dict(id='lvVolumes',	type='lines',  **_kw), # The list of volume names (which are stored under the host)
+	dict(id='lvVolumes',	type='lines',  **_kw), # The list of volume keys (which are stored under the host)
     )
 
     _relations = (

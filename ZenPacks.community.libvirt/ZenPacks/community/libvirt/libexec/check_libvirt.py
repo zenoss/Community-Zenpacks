@@ -371,6 +371,7 @@ def get_data_modeler(conn):
 		voldata['name'] = volume.name()
 		voldata['key'] = volume.key()
 		voldata['path'] = volume.path()
+		voldata['pool'] = pooldata['name']
 		# we don't assign allocation here, since we do it in RRD instead....
 		volumes[volume.key()] = voldata
 		pooldata['volumes'] += [volume.key()]

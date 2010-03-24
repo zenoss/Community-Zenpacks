@@ -45,9 +45,9 @@ class libvirtPlugin(PythonPlugin):
 	# ============ Guests =================
 	relname = "libvirtguests" # we redefine this each time we call relMap()
 	rmdomains = self.relMap()
-	for id in results.keys():
-            guest = results[id]
-            log.info("libvirt: domain name=%s" % guest['name'])
+	for domid in results['domains'].keys():
+            log.info("libvirt: domain name=%s" % domid)
+            guest = results['domains'][domid]
 	    info = dict()
 	    info['lvDisplayName']=guest['name']
 	    info['lvState']=guest['state']
@@ -89,7 +89,7 @@ class libvirtPlugin(PythonPlugin):
 	    info['lvPool']=volume['pool']
 	    om = self.objectMap(info)
 	    om.id = self.prepId(om.lvDisplayName)
-	    rmpools.append(om)
+	    rmvolumes.append(om)
 	return [rmdomains,rmpools,rmvolumes]
 
 

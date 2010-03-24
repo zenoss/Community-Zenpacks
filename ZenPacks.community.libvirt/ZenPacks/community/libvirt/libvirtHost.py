@@ -67,6 +67,10 @@ class libvirtHost(Device):
 	},
     )
 
+    def __init__(self, *args, **kw):
+        Device.__init__(self, *args, **kw)
+        self.buildRelations()
+
     def getVirtHostType(self):
 	typemap = ['qemu','xen','openvz','esx','opennebula','lxc','vbox','uml']
 	type = 'unknown'

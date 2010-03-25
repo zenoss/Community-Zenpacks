@@ -13,6 +13,7 @@ if os.path.isdir(skinsDir):
 from Products.ZenModel.ZenPack import ZenPackBase
 
 import ZenPacks.community.libvirt
+
 def initialize(registrar):
     registrar.registerClass(
     libvirtGuest.libvirtGuest,

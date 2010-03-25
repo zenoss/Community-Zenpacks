@@ -10,8 +10,8 @@ class libvirtHost(Device):
 
     _relations = Device._relations + (
 	('libvirtguests', ToManyCont(ToOne, "ZenPacks.community.libvirt.libvirtGuest", "libvirthost")),
-	('libvirtpools', ToManyCont(ToOne, "ZenPacks.community.libvirt.libvirtPool", "libvirtpool")),
-	('libvirtvolumes', ToManyCont(ToOne, "ZenPacks.community.libvirt.libvirtVolume", "libvirtvolume")),
+	('libvirtpools', ToManyCont(ToOne, "ZenPacks.community.libvirt.libvirtPool", "libvirthost")),
+	('libvirtvolumes', ToManyCont(ToOne, "ZenPacks.community.libvirt.libvirtVolume", "libvirthost")),
     )
     
     factory_type_information = (

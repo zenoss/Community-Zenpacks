@@ -68,10 +68,10 @@ class libvirtPool(DeviceComponent, ManagedEntity):
 
     def getStateString(self):
         statestrmap = ['Inactive','Building','Running','Degraded']
-        state = self.getRRDValue('state')
-        if state == None:
+        state = self.cacheRRDValue('state')
+        if state == None or state == 'Unknown':
 	    state = self.lvState
-	if state == None or state == '':
+	if state == None or state == '' or state == -1:
 	    return "Unknown"
         return statestrmap[int(state)]
 

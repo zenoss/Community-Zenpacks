@@ -79,10 +79,10 @@ class libvirtGuest(DeviceComponent, ManagedEntity):
 
     def getStateString(self):
         statestrmap = ['NoState', 'Running', 'Blocked', 'Paused', 'Shutdown', 'Shutoff', 'Crashed']
-        state = self.getRRDValue('state')
+        state = self.cacheRRDValue('state')
         if state == None:
 	    state = self.lvState
-	if state == None or state == '':
+	if state == None or state == '' or state == -1:
 	    return "Unknown"
         return statestrmap[int(state)]
 

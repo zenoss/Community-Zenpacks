@@ -8,7 +8,6 @@ from Products.DataCollector.plugins.DataMaps import ObjectMap
 
 class libvirtPlugin(PythonPlugin):
 
-    modname = 'ZenPacks.community.libvirt.libvirtGuest'
     deviceProperties = ('zLibvirtUsername','zLibvirtConnectType','zLibvirtPassword')
 
     def collect(self, device, log):
@@ -43,7 +42,8 @@ class libvirtPlugin(PythonPlugin):
 	log.info('libvirt: processing %s for device %s', self.name(), device.id)
 	log.info("libvirt: Host results: %r", results)
 	# ============ Guests =================
-	relname = "libvirtguests" # we redefine this each time we call relMap()
+	self.modname = 'ZenPacks.community.libvirt.libvirtGuest'
+	self.relname = "libvirtguests" # we redefine this each time we call relMap()
 	rmdomains = self.relMap()
 	for domid in results['domains'].keys():
             log.info("libvirt: domain name=%s" % domid)
@@ -61,7 +61,9 @@ class libvirtPlugin(PythonPlugin):
 	    om.id = self.prepId(om.lvDisplayName)
 	    rmdomains.append(om)
 	# ============ Pools =================
-	relname = "libvirtpools" # we redefine this each time we call relMap()
+	self.modname = 'ZenPacks.community.libvirt.libvirtPool'
+	self.relname = "libvirtpools" # we redefine this each time we call relMap()
+	self.classname = "libvirtPool"
 	rmpools = self.relMap()
 	for poolid in results['pools'].keys():
             log.info("libvirt: pool name=%s" % poolid)
@@ -75,7 +77,9 @@ class libvirtPlugin(PythonPlugin):
 	    om.id = self.prepId(om.lvDisplayName)
 	    rmpools.append(om)
 	# ============ Volumes =================
-	relname = "libvirtvolumes" # we redefine this each time we call relMap()
+	self.modname = 'ZenPacks.community.libvirt.libvirtVolume'
+	self.relname = "libvirtvolumes" # we redefine this each time we call relMap()
+	self.classname = "libvirtVolume"
 	rmvolumes = self.relMap()
 	for volid in results['volumes']:
             log.info("libvirt: volume name=%s" % volid)

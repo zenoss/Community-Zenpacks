@@ -353,7 +353,7 @@ def get_data_modeler(conn):
 	[state,capacity,allocation,available] = poolinfo
 	if verbose:
 	    print "Pool:",poolstates[state],capacity,allocation,available,name
-	pooldata['state'] = poolstates[state]
+	pooldata['state'] = state
 	pooldata['capacity'] = capacity
 	# we don't assign allocation here, since we do it in RRD instead.
 	pooldata['name'] = name

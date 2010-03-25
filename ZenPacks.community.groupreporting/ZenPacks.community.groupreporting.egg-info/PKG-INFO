@@ -1,0 +1,10 @@
+Metadata-Version: 1.1
+Name: ZenPacks.community.groupreporting
+Version: 1.10
+Summary: Group Reporting of Server Resources
+Home-page: UNKNOWN
+Author: David Nicklay
+Author-email: david.nicklay@turner.com
+License: GPLv2
+Description: This modules does reporting of Server Resources by Group or System tags
+Platform: UNKNOWN

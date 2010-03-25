@@ -1,0 +1,43 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:allResourceByGroupReport;
+    objects python:here.ReportServer.plugin('allResources', here.REQUEST);
+    tabletitle string:Group Resource Information;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'Group','Group')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'Memory','Memory (MB)')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'DiskSpaceUsed','Disk - Used (GB)')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'DiskSpaceTotal','Disk - Total (GB)')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'CPUSpeed','CPU Speed (MHz)')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'Devices','Devices')"/>
+    </tr>
+    <tal:block tal:repeat="r batch">
+    <tr>
+        <td class="tablevalues" tal:content="structure python:r.group.urlLink()"/>
+        <td class="tablevalues" tal:content="structure python:r.tmem"/>
+        <td class="tablevalues" tal:content="structure python:r.tdiskused"/>
+        <td class="tablevalues" tal:content="structure python:r.tdisktotal"/>
+        <td class="tablevalues" tal:content="structure python:r.tcpuspeed"/>
+        <td class="tablevalues" tal:content="structure python:r.tdevices"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+</tal:block>
+
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>

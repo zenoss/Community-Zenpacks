@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.groupreporting = ZenPacks.community.groupreporting
+

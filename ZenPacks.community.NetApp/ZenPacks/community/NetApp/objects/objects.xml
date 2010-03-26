@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Storage') -->
-<object id="/zport/dmd/Devices/Storage" module="Products.ZenModel.DeviceClass" class="DeviceClass">
-<object id="NetApp" module="Products.ZenModel.DeviceClass" class="DeviceClass">
+<!-- ('', 'zport', 'dmd', 'Devices', 'Storage', 'NetApp') -->
+<object id="/zport/dmd/Devices/Storage/NetApp" module="Products.ZenModel.DeviceClass" class="DeviceClass">
+<property type="string" id="description" mode="w" >
+Network Appliance Monitoring
+</property>
 <property visible="True" type="lines" id="zCollectorPlugins">
 ['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'NetAppFileSystemMap']
 </property>
@@ -2076,7 +2078,6 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
-</object>
 </object>
 <!-- ('', 'zport', 'dmd', 'Mibs', 'Storage', 'mibs', 'NETWORK-APPLIANCE-MIB') -->
 <object id="/zport/dmd/Mibs/Storage/mibs/NETWORK-APPLIANCE-MIB" module="Products.ZenModel.MibModule" class="MibModule">

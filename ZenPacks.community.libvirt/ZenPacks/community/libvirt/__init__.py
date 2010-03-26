@@ -15,10 +15,9 @@ from Products.ZenModel.ZenPack import ZenPackBase
 import ZenPacks.community.libvirt
 
 def initialize(registrar):
-    registrar.registerClass(
-    libvirtGuest.libvirtGuest,
-    permission='Add DMD Objects',
-    )
+    registrar.registerClass( libvirtGuest.libvirtGuest, permission='Add DMD Objects' )
+    registrar.registerClass( libvirtPool.libvirtPool, permission='Add DMD Objects' )
+    registrar.registerClass( libvirtVolume.libvirtVolume, permission='Add DMD Objects' )
 
 
 class ZenPack(ZenPackBase):

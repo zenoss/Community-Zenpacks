@@ -9,7 +9,7 @@ All Events by severity
 Products.ZenModel.Device
 </property>
 <tomanycont id='datasources'>
-<object id='Severity_AllEvents_0' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<object id='AllEvents' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 COMMAND
 </property>
@@ -17,13 +17,13 @@ COMMAND
 True
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Perf
+/Status
 </property>
 <property type="int" id="severity" mode="w" >
 2
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev_all.sh -S 0
+${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_all.py
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -32,10 +32,10 @@ ${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libex
 False
 </property>
 <property type="string" id="parser" mode="w" >
-Auto
+Nagios
 </property>
 <tomanycont id='datapoints'>
-<object id='AllEvents_0' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='EventSev0' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -57,35 +57,7 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_AllEvents_1' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-2
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev_all.sh -S 1
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='AllEvents_1' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='EventSev1' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -107,35 +79,7 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_AllEvents_2' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-2
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev_all.sh -S 2
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='AllEvents_2' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='EventSev2' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -157,35 +101,7 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_AllEvents_3' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-2
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev_all.sh -S 3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='AllEvents_3' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='EventSev3' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -207,35 +123,7 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_AllEvents_4' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-2
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev_all.sh -S 4
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='AllEvents_4' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='EventSev4' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -257,35 +145,7 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_AllEvents_5' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-2
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev_all.sh -S 5
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='AllEvents_5' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='EventSev5' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -336,6 +196,9 @@ False
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <tomanycont id='graphPoints'>
 <object id='CLEAR' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="string" id="color" mode="w" >
@@ -360,7 +223,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_AllEvents_0_AllEvents_0
+AllEvents_EventSev0
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -392,7 +255,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_AllEvents_5_AllEvents_5
+AllEvents_EventSev5
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -424,7 +287,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_AllEvents_1_AllEvents_1
+AllEvents_EventSev1
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -456,7 +319,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_AllEvents_4_AllEvents_4
+AllEvents_EventSev4
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -488,7 +351,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_AllEvents_2_AllEvents_2
+AllEvents_EventSev2
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -520,7 +383,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_AllEvents_3_AllEvents_3
+AllEvents_EventSev3
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -539,7 +402,7 @@ Device Events by severity
 Products.ZenModel.Device
 </property>
 <tomanycont id='datasources'>
-<object id='Severity_EventSev0' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<object id='Device Events' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 COMMAND
 </property>
@@ -547,13 +410,13 @@ COMMAND
 True
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Perf
+/Status
 </property>
 <property type="int" id="severity" mode="w" >
 2
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev.sh -H $devname -S 0
+${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_device.py $devname
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -562,7 +425,7 @@ ${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libex
 False
 </property>
 <property type="string" id="parser" mode="w" >
-Auto
+Nagios
 </property>
 <tomanycont id='datapoints'>
 <object id='EventSev0' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -587,34 +450,6 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_EventSev1' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-0
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev.sh -H $devname -S 1
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
 <object id='EventSev1' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -637,34 +472,6 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_EventSev2' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-0
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev.sh -H $devname -S 2
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
 <object id='EventSev2' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -687,34 +494,6 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_EventSev3' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-0
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev.sh -H $devname -S 3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
 <object id='EventSev3' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -737,34 +516,6 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_EventSev4' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-0
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev.sh -H $devname -S 4
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
 <object id='EventSev4' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -787,34 +538,6 @@ RRA:LAST:0.5:288:600
 True
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Severity_EventSev5' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf
-</property>
-<property type="int" id="severity" mode="w" >
-0
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.EventGraph.BySeverity/path}/libexec/query_by_sev.sh -H $devname -S 5
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
 <object id='EventSev5' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -866,6 +589,9 @@ False
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <tomanycont id='graphPoints'>
 <object id='CLEAR' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="string" id="color" mode="w" >
@@ -890,7 +616,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_EventSev0_EventSev0
+Device Events_EventSev0
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -922,7 +648,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_EventSev5_EventSev5
+Device Events_EventSev5
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -954,7 +680,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_EventSev1_EventSev1
+Device Events_EventSev1
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -986,7 +712,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_EventSev4_EventSev4
+Device Events_EventSev4
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -1018,7 +744,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_EventSev2_EventSev2
+Device Events_EventSev2
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX
@@ -1050,7 +776,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Severity_EventSev3_EventSev3
+Device Events_EventSev3
 </property>
 <property type="string" id="cFunc" mode="w" >
 MAX

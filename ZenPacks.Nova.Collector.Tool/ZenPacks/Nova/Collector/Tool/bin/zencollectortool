@@ -1,0 +1,304 @@
+#!/bin/bash
+
+if [[ $USER != "zenoss" ]]
+then
+	echo "zencollectortool must be run as the zenoss user."
+	exit
+fi
+
+while [[ $choice != "Q" ]] && [[ $choice != "q" ]]
+do
+	echo -e "\n\tzencollectortool"
+	echo -e "\n1) Configure master"
+	echo "2) Configure collector"
+	echo "3) Revert master"
+	echo "4) Revert collector"
+	echo "Q) Quit zencollectortool"
+
+	echo -e "\nSelection: \c"
+	read choice
+
+	case "$choice" in
+		1)
+		echo -e "\nYou have selected to configure this server as a master for a Zenoss collector setup.  Do you wish to continue? (y/n): \c"
+		read choice
+		case "$choice" in
+			"Y"|"y")
+			echo -e "\nOK! Let's get started!"
+			echo -e "\nEditing $ZENHOME/bin/zenoss to activate zenrender daemon..."
+			sed -i 's/#C="$C zenrender"/C="$C zenrender"/g' $ZENHOME/bin/zenoss
+			daemonstxtcheck=$(ls $ZENHOME/etc/ | grep DAEMONS_TXT_ONLY | wc -l)
+			if [ $daemonstxtcheck == 1 ]
+			then
+				echo -e "\nFound $ZENHOME/etc/DAEMONS_TXT_ONLY, adding entry to $ZENHOME/etc/daemons.txt..."
+				echo zenrender >> $ZENHOME/etc/daemons.txt
+			fi
+			echo -e "\nStarting zenrender daemon: \c"
+			zenrender start
+			echo -e "\nMaster server configuration has been completed."
+			;;
+
+			*)
+			;;
+		esac
+		;;
+
+		2)
+		echo -e "\nNOTE: All ZenPacks that are installed on the master Zenoss server should be installed on the collector before proceeding!"
+		echo -e "\nYou have selected to configure this server as a collector for a Zenoss collector setup.  Do you wish to continue? (y/n): \c"
+		read choice
+		case "$choice" in
+			"Y"|"y")
+			echo -e "\nOK! Let's get started!"
+			echo -e "\nEnter the IP or hostname of the master server: \c"
+			read master
+			echo -e "\nEnter the IP or hostname of the collector (do not use \"127.0.0.1\" or \"localhost\"): \c"
+			read collector
+			echo -e "\nMaking sure Zenoss is stopped...\n"
+			zenoss stop
+			sleep 3
+
+			zenperfwmicheck=$(ls $ZENHOME/bin | grep zenperfwmi | wc -l)
+			if [ $zenperfwmicheck == 1 ]
+			then
+				echo -e "\nThe WMI Data Source ZenPack has been detected..."
+			fi
+
+			echo -e "\nCreating $ZENHOME/etc/DAEMONS_TXT_ONLY..."
+			rm $ZENHOME/etc/DAEMONS_TXT_ONLY 2>/dev/null
+			touch $ZENHOME/etc/DAEMONS_TXT_ONLY
+			echo -e "\nCreating and populating $ZENHOME/etc/daemons.txt..."
+			echo zenping > $ZENHOME/etc/daemons.txt
+			echo zensyslog >> $ZENHOME/etc/daemons.txt
+			echo zenstatus >> $ZENHOME/etc/daemons.txt
+			echo zentrap >> $ZENHOME/etc/daemons.txt
+			echo zenrender >> $ZENHOME/etc/daemons.txt
+			echo zenperfsnmp >> $ZENHOME/etc/daemons.txt
+			echo zencommand >> $ZENHOME/etc/daemons.txt
+			echo zenprocess >> $ZENHOME/etc/daemons.txt
+			echo zenwin >> $ZENHOME/etc/daemons.txt
+			echo zeneventlog >> $ZENHOME/etc/daemons.txt
+			if [ $zenperfwmicheck == 1 ]
+			then
+				echo zenperfwmi >> $ZENHOME/etc/daemons.txt
+				files=( "$ZENHOME/etc/zenping.conf" "$ZENHOME/etc/zensyslog.conf" \
+				"$ZENHOME/etc/zenstatus.conf" "$ZENHOME/etc/zentrap.conf" \
+				"$ZENHOME/etc/zenrender.conf" "$ZENHOME/etc/zenperfsnmp.conf" "$ZENHOME/etc/zencommand.conf" \
+				"$ZENHOME/etc/zenprocess.conf" "$ZENHOME/etc/zenwin.conf" "$ZENHOME/etc/zeneventlog.conf" \
+				"$ZENHOME/etc/zenperfwmi.conf" )
+			else
+				files=( "$ZENHOME/etc/zenping.conf" "$ZENHOME/etc/zensyslog.conf" \
+					"$ZENHOME/etc/zenstatus.conf" "$ZENHOME/etc/zentrap.conf" \ 
+					"$ZENHOME/etc/zenrender.conf" "$ZENHOME/etc/zenperfsnmp.conf" "$ZENHOME/etc/zencommand.conf" \
+					"$ZENHOME/etc/zenprocess.conf" "$ZENHOME/etc/zenwin.conf" "$ZENHOME/etc/zeneventlog.conf" )
+			fi
+
+			echo -e "\nThe following files will be updated:\n"
+			printf "%s\n" "${files[@]}"
+			echo "$ZENHOME/etc/zope.conf"
+			for f in "${files[@]}"
+			do
+				monitorcheck=$(grep monitor $f 2>/dev/null | wc -l)
+				hubhostcheck=$(grep hubhost $f 2>/dev/null | wc -l)
+				
+				echo -e "\nModifying configuration options in $f:\n"
+				echo "monitor $collector"
+				echo "hubhost $master"
+
+				if [ $monitorcheck == 1 ]
+				then
+					sed -i 's/^.*monitor.*$/monitor '$collector'/g' $f
+				else
+					if [ $monitorcheck > 1 ]
+					then
+						sed -i '/^.*monitor.*$/d' $f
+					fi
+					echo "monitor $collector" >> $f
+				fi
+
+				if [ $hubhostcheck == 1 ]
+				then
+					sed -i 's/^.*hubhost.*$/hubhost '$master'/g' $f
+				else
+					if [ $monitorcheck > 1 ]
+					then
+						sed -i '/^.*hubhost.*$/d' $f
+					fi
+					echo "hubhost $master" >> $f
+				fi
+			done
+
+			echo -e "\nModifying configuration options in $ZENHOME/etc/zope.conf:\n"
+			zopeport=$(grep "    server" $ZENHOME/etc/zope.conf | cut -d ':' -f 2)
+			echo -e "server $master:$zopeport"
+			sed -i 's/    server.*$/    server '$master':'$zopeport'/g' $ZENHOME/etc/zope.conf
+
+			mysqlstackcheck=$(ls $ZENHOME/../ | grep ctlscript.sh | wc -l)
+			if [ $mysqlstackcheck == 1 ]
+			then
+				mysqlactivecheck=$(grep "### $MYSQL_SCRIPT" $ZENHOME/../ctlscript.sh | wc -l)
+				if [ $mysqlactivecheck == 0 ]
+				then
+					echo -e "\nDisabling MySQL to maximize collector performance..."
+					echo -e "\nEnter the root password..."
+					su root -c "sed -i 's/\$MYSQL_SCRIPT start/### \$MYSQL_SCRIPT start/g' $ZENHOME/../ctlscript.sh && sed -i 's/\$MYSQL_SCRIPT stop/### \$MYSQL_SCRIPT stop/g' $ZENHOME/../ctlscript.sh && /usr/local/zenoss/mysql/scripts/ctl.sh stop"
+					echo -e "\nIf no errors were encountered, MySQL has been disabled."
+				else
+					echo -e "\nMySQL is already disabled."
+				fi
+			else
+				echo -e "\nNOTE: MySQL is still running on the server.  You may wish to disable it to improve performance."
+				echo -e "\nIf you are running an RPM install it can be disabled with the following commands (as root):"
+				echo -e "\nchkconfig mysqld off"
+				echo "service mysqld stop"
+			fi
+			
+			echo -e "\nCollector server configuration has been completed."
+			echo -e "\nPerform the following steps on the master Zenoss server:"
+			echo -e "\n1. From the UI, navigate to Collectors and select Add Monitor from the drop-down menu."
+			echo "2. Name the monitor \"$collector\"."
+			echo "3. Edit the newly created collector and change the Render URL to: \"http://$master:8090/$collector\"."
+			echo "4. If you plan to move devices from the existing collector to the newly created remote collector you will need to transfer the RRD performance data over to the new server (Example: \"$master# scp -Cr $ZENHOME/perf/Devices/* $collector:$ZENHOME/perf/Devices\")."
+			echo "5. Execute \"zenoss restart\" to restart Zenoss."
+			echo "6. Execute \"zenoss status\" to ensure that all of the daemons are running."
+			echo -e "\nPerform the following steps on the collector:"
+			echo -e "\n1. Execute \"zenoss start\" to start the collector daemons."
+			echo "2. Execute \"zenoss status\" to ensure that all of the daemons are running."
+			echo -e "\nYou're done!"
+			;;
+
+			*)
+			;;
+		esac
+		;;
+
+		3)
+		echo -e "\nYou have selected to revert a Zenoss server which is currently configured as a master to it's default configuration.  Do you wish to continue? (y/n): \c"
+		read choice
+		case "$choice" in
+			"Y"|"y")
+			echo -e "\nOK! Let's get started!"
+			echo -e "\nEditing $ZENHOME/bin/zenoss to disable zenrender daemon..."
+			sed -i 's/C="$C zenrender"/#C="$C zenrender"/g' $ZENHOME/bin/zenoss
+			daemonstxtcheck=$(ls $ZENHOME/etc/ | grep DAEMONS_TXT_ONLY | wc -l)
+			if [ $daemonstxtcheck == 1 ]
+			then
+				echo -e "\nFound $ZENHOME/etc/DAEMONS_TXT_ONLY, removing entry from $ZENHOME/etc/daemons.txt..."
+				sed -i "/zenrender/d" $ZENHOME/etc/daemons.txt
+			fi	
+			echo -e "\nStopping zenrender daemon: \c"
+			zenrender stop
+			echo -e "\nReversion has been completed."
+			;;
+
+			*)
+			;;
+		esac
+		;;
+
+		4)
+		echo -e "\nYou have selected to revert a Zenoss server which is currently configured as a collector to it's default configuration.  Do you wish to continue? (y/n): \c"
+		read choice
+		case "$choice" in
+			"Y"|"y")
+			echo -e "\nOK! Let's get started!"
+			echo -e "\nMaking sure Zenoss is stopped...\n"
+			zenoss stop
+			sleep 3
+
+			zenperfwmicheck=$(ls $ZENHOME/bin | grep zenperfwmi | wc -l)
+			if [ $zenperfwmicheck == 1 ]
+			then
+				echo -e "\nThe WMI Data Source ZenPack has been detected..."
+			fi
+
+			echo -e "\nRemoving $ZENHOME/etc/DAEMONS_TXT_ONLY..."
+			rm $ZENHOME/etc/DAEMONS_TXT_ONLY 2>/dev/null
+			echo -e "\nRemoving $ZENHOME/etc/daemons.txt"
+			rm $ZENHOME/etc/daemons.txt
+			if [ $zenperfwmicheck == 1 ]
+			then
+				files=( "$ZENHOME/etc/zenping.conf" "$ZENHOME/etc/zensyslog.conf" \
+				"$ZENHOME/etc/zenstatus.conf" "$ZENHOME/etc/zentrap.conf" \
+				"$ZENHOME/etc/zenrender.conf" "$ZENHOME/etc/zenperfsnmp.conf" "$ZENHOME/etc/zencommand.conf" \
+				"$ZENHOME/etc/zenprocess.conf" "$ZENHOME/etc/zenwin.conf" "$ZENHOME/etc/zeneventlog.conf" \
+				"$ZENHOME/etc/zenperfwmi.conf" )
+			else
+				files=( "$ZENHOME/etc/zenping.conf" "$ZENHOME/etc/zensyslog.conf" \
+					"$ZENHOME/etc/zenstatus.conf" "$ZENHOME/etc/zentrap.conf" \ 
+					"$ZENHOME/etc/zenrender.conf" "$ZENHOME/etc/zenperfsnmp.conf" "$ZENHOME/etc/zencommand.conf" \
+					"$ZENHOME/etc/zenprocess.conf" "$ZENHOME/etc/zenwin.conf" "$ZENHOME/etc/zeneventlog.conf" )
+			fi
+
+			echo -e "\nThe following files will be updated:\n"
+			printf "%s\n" "${files[@]}"
+			echo "$ZENHOME/etc/zope.conf"
+			for f in "${files[@]}"
+			do
+				monitorcheck=$(grep monitor $f 2>/dev/null | wc -l)
+				hubhostcheck=$(grep hubhost $f 2>/dev/null | wc -l)
+				
+				echo -e "\nModifying configuration options in $f:\n"
+				echo "monitor localhost"
+				echo "hubhost localhost"
+
+				if [ $monitorcheck == 1 ]
+				then
+					sed -i 's/^.*monitor.*$/monitor localhost/g' $f
+				else
+					if [ $monitorcheck > 1 ]
+					then
+						sed -i '/^.*monitor.*$/d' $f
+					fi
+					echo "monitor localhost" >> $f
+				fi
+
+				if [ $hubhostcheck == 1 ]
+				then
+					sed -i 's/^.*hubhost.*$/hubhost localhost/g' $f
+				else
+					if [ $monitorcheck > 1 ]
+					then
+						sed -i '/^.*hubhost.*$/d' $f
+					fi
+					echo "hubhost localhost" >> $f
+				fi
+			done
+
+			echo -e "\nModifying configuration options in $ZENHOME/etc/zope.conf:\n"
+			zopeport=$(grep "    server" $ZENHOME/etc/zope.conf | cut -d ':' -f 2)
+			echo -e "server localhost:$zopeport"
+			sed -i 's/    server.*$/    server localhost:'$zopeport'/g' $ZENHOME/etc/zope.conf
+
+			mysqlstackcheck=$(ls $ZENHOME/../ | grep ctlscript.sh | wc -l)
+			if [ $mysqlstackcheck == 1 ]
+			then
+				echo -e "\nEnabling MySQL..."
+				echo -e "\nEnter the root password..."
+				su root -c "sed -i 's/### \$MYSQL_SCRIPT start/\$MYSQL_SCRIPT start/g' $ZENHOME/../ctlscript.sh && sed -i 's/### \$MYSQL_SCRIPT stop/\$MYSQL_SCRIPT stop/g' $ZENHOME/../ctlscript.sh && /usr/local/zenoss/mysql/scripts/ctl.sh start"
+				echo -e "\nIf no error was encountered, MySQL has been enabled."
+			else
+				echo -e "\nNOTE: If you manually disabled MySQL previously you will need to enable it."
+				echo -e "\nIf you are running an RPM install it can be enabled with the following commands \(as root\):"
+				echo -e "\nchkconfig mysqld on"
+				echo "service mysqld start"
+			fi
+			
+			echo -e "\nReversion has been completed."
+			;;
+
+			*)
+			;;
+		esac
+		;;
+
+		*)
+		if [[ $choice != "Q" ]] && [[ $choice != "q" ]]
+		then
+			echo -e "\nYou entered an invalid option."
+			sleep 1
+		fi
+		;;
+
+	esac
+done

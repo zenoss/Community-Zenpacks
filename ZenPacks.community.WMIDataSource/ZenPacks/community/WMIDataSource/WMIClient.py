@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.6 2010/03/15 21:03:22 egor Exp $"""
+$Id: WMIClient.py,v 1.7 2010/04/01 07:15:59 egor Exp $"""
 
-__version__ = "$Revision: 1.6 $"[11:-2]
+__version__ = "$Revision: 1.7 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -142,7 +142,7 @@ class WMIClient(BaseClient):
                 if kbKey != ():
                     for k in kbKey:
                         val = getattr(instance, k.lower(), None)
-                        if type(val) is str:
+                        if type(val) in [str, unicode]:
                             kbIns.append('"%s"'%val)
                         else:
                             kbIns.append(str(val))
@@ -191,7 +191,7 @@ class WMIClient(BaseClient):
                     for classname, instMap in classes.iteritems():
                         plst = set()
                         for keyprops, insts in instMap.iteritems():
-			    for tables in insts.values():
+                            for tables in insts.values():
                                 for (table, props) in tables:
                                     if props == {}:
                                         plst = ['*']
@@ -199,11 +199,12 @@ class WMIClient(BaseClient):
                                     plst = plst.union(props.keys())
                                 if plst == ['*']: break
                             if plst == ['*']: break
-			    plst = plst.union(keyprops)
+                            plst = plst.union(keyprops)
+                        if includeQualifiers: plst = ['*']
                         if classname.upper().startswith('SELECT '):
                             query = classname
                         elif () in instMap or len(instMap) > 1 or \
-			                        len(instMap.values()[0]) > 1:
+                                                len(instMap.values()[0]) > 1:
                             query="SELECT %s FROM %s"%(','.join(plst),classname)
                         else:
                             kb = zip(instMap.keys()[0],
@@ -273,13 +274,13 @@ def WmiGet(url, query, properties):
     from Products.DataCollector.DeviceProxy import DeviceProxy
     from WMIPlugin import WMIPlugin
 
-    url  = url.split('/', 3)
+    url  = url.rsplit('@', 1)
     device = DeviceProxy()
-    url[2], device.zWmiProxy = url[2].split('@')
-    device.zWinUser, device.zWinPassword = url[2].split(':')
+    device.zWmiProxy, ns = url[1].split('/', 1)
     device.id = device.zWmiProxy
     device.manageIp = device.zWmiProxy
-    ns = url[3]
+    url  = url[0].split('//', 1)
+    device.zWinUser, device.zWinPassword = url[1].split(':', 1)
 
     if query.upper().startswith('SELECT '):
         cn = query

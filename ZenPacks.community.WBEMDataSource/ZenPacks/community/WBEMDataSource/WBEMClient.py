@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 1.9 2010/03/15 21:35:32 egor Exp $"""
+$Id: WBEMClient.py,v 2.0 2010/04/01 13:53:32 egor Exp $"""
 
-__version__ = "$Revision: 1.9 $"[11:-2]
+__version__ = "$Revision: 2.0 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -124,18 +124,17 @@ class WBEMClient(BaseClient):
             results = {}
             for instance in instances:
                 for kbKey, kbVal in instMap.iteritems():
-                    kb = []
-                    if kbKey == ():
-                        tp = kbVal[()]
-                    else:
-                        try:
-                            kbIns=tuple([instance[k] for k in kbKey])
-                            if kbIns not in kbVal: continue
-                        except: continue
-                        tp = kbVal[kbIns]
-                    result = None
+                    kbIns = []
+                    if kbKey != ():
+                        for k in kbKey:
+                            val = instance[k.lower()]
+                            if type(val) in [str, unicode]:
+                                kbIns.append('"%s"'%val)
+                            else:
+                                kbIns.append(str(val))
+                        if tuple(kbIns) not in kbVal: continue
                     lastprops = None
-                    for table, props in tp:
+                    for table, props in kbVal[tuple(kbIns)]:
                         if table not in results:
                             results[table] = []
                         if props != lastprops or lastprops is None:
@@ -146,7 +145,7 @@ class WBEMClient(BaseClient):
 
         plst = set()
         for keyprops, insts in instMap.iteritems():
-	    for tables in insts.values():
+            for tables in insts.values():
                 for (table, props) in tables:
                     if props == {}:
                         plst = []
@@ -154,9 +153,9 @@ class WBEMClient(BaseClient):
                     plst = plst.union(props.keys())
                 if plst == []: break
             if plst == []: break
-	    plst = plst.union(keyprops)
-	try: plst.remove('__path')
-	except: pass
+            plst = plst.union(keyprops)
+        try: plst.remove('__path')
+        except: pass
         d = defer.maybeDeferred(self._wbem.EnumerateInstances,
                                                     classname,
                                                     namespace=namespace,
@@ -236,7 +235,7 @@ class WBEMClient(BaseClient):
                             yield self._wbemExecQuery(classname, namespace,
                                                     instMap, includeQualifiers)
                         elif () in instMap or len(instMap) > 1 or \
-			                        len(instMap.values()[0]) > 1:
+                                                len(instMap.values()[0]) > 1:
                             yield self._wbemEnumerateInstances(classname,
                                         namespace, instMap, includeQualifiers)
                         else:
@@ -283,14 +282,14 @@ def WbemGet(url, query, properties):
     from Products.DataCollector.DeviceProxy import DeviceProxy
     from WBEMPlugin import WBEMPlugin
 
-    url  = url.split('/', 3)
+    url  = url.rsplit('@', 1)
     device = DeviceProxy()
-    device.zWbemUseSSL = True and url[0].lower() == 'https:' or False
-    device.zWinUser, url[2], device.zWbemPort = url[2].split(':')
-    device.zWinPassword, device.zWbemProxy = url[2].split('@')
+    device.zWbemProxy, ns = url[1].split('/', 1)
     device.id = device.zWbemProxy
     device.manageIp = device.zWbemProxy
-    ns = url[3]
+    url  = url[0].split('//', 1)
+    device.zWinUser, device.zWinPassword = url[1].split(':', 1)
+    device.zWbemUseSSL = True and url[0] == 'https:' or False
 
     if query.upper().startswith('SELECT '):
         cn = query

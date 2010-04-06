@@ -11,28 +11,29 @@
 <tal:block metal:fill-slot="zentablecontents">
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
-
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsDisplayName','Name')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bladechassis','Chassis')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPosition','Position')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsHeight','Height')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsWidth','Width')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsDepth','Depth')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsSlotsUsed','SlotsUsed')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsSerialNum','SerialNum')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsProductId','ProductId')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPosition', 'Position')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsDisplayName','Name', 'nocase')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsProductId','Product Id')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsSerialNum','Serial #')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsCPUType','CPU Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsCPUCount','CPUs')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsInstalledRam','RAM')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPartNumber','Part Number')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsIloFirmwareVersion','ILO Firmware')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsIloIp','ILO Ip Address')"/>
     </tr>
     <tal:block tal:repeat="gd batch">
     <tr>
-        <td class="tablevalues" tal:content="structure python:gd.urlLink()"/>
-        <td class="tablevalues" tal:content="structure python:gd.bladechassis().urlLink()"/>
         <td class="tablevalues" tal:content="gd/bsPosition"/>
-        <td class="tablevalues" tal:content="gd/bsHeight"/>
-        <td class="tablevalues" tal:content="gd/bsWidth"/>
-        <td class="tablevalues" tal:content="gd/bsDepth"/>
-        <td class="tablevalues" tal:content="gd/bsSlotsUsed"/>
-        <td class="tablevalues" tal:content="gd/bsSerialNum"/>
+        <td class="tablevalues" tal:content="gd/bsDisplayName"/>
         <td class="tablevalues" tal:content="gd/bsProductId"/>
+        <td class="tablevalues" tal:content="gd/bsSerialNum"/>
+        <td class="tablevalues" tal:content="gd/bsCPUType"/>
+        <td class="tablevalues" tal:content="gd/bsCPUCount"/>
+        <td class="tablevalues" tal:content="gd/bsInstalledRam"/>
+        <td class="tablevalues" tal:content="gd/bsPartNumber"/>
+        <td class="tablevalues" tal:content="gd/bsIloFirmwareVersion"/>
+        <td class="tablevalues" tal:content="gd/bsIloIp"/>
     </tr>
     </tal:block>
     <tr>

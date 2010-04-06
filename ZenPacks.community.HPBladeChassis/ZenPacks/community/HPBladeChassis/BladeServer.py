@@ -23,6 +23,15 @@ class BladeServer(DeviceComponent, ManagedEntity):
     bsSlotsUsed = -1
     bsSerialNum = ""
     bsProductId = ""
+    bsPartNumber = ""
+    bsSystemBoardPartNum = ""
+    bsCPUType = ""
+    bsCPUCount = 0
+    bsNic1Mac = ""
+    bsNic2Mac = ""
+    bsIloIp = ""
+    bsInstalledRam = -1
+    bsIloFirmwareVersion = ""
     snmpindex = -1
 
     _properties = (
@@ -33,7 +42,16 @@ class BladeServer(DeviceComponent, ManagedEntity):
 	dict(id='bsDepth',	type='int',  **_kw),
 	dict(id='bsSlotsUsed',type='int',  **_kw),
 	dict(id='bsSerialNum', type='string',	**_kw),
-	dict(id='bsProductId', type='string',	**_kw)
+	dict(id='bsProductId', type='string',	**_kw),
+	dict(id='bsPartNumber', type='string',	**_kw),
+	dict(id='bsSystemBoardPartNum', type='string',	**_kw),
+	dict(id='bsCPUType', type='string',	**_kw),
+	dict(id='bsCPUCount', type='int',	**_kw),
+	dict(id='bsNic1Mac', type='string',	**_kw),
+	dict(id='bsNic2Mac', type='string',	**_kw),
+	dict(id='bsIloIp', type='string',	**_kw),
+	dict(id='bsIloFirmwareVersion', type='string',	**_kw),
+	dict(id='bsInstalledRam', type='int',	**_kw)
     )
 
     _relations = (

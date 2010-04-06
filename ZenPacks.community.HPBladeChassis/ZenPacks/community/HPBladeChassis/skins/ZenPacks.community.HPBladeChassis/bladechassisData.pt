@@ -1,0 +1,137 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<!-- BEGIN FAN TABLE -->
+<tal:block 
+    tal:define="tableName string:bladechassisfansList;
+    objects here/bladechassisfans/objectValuesAll;
+    tabletitle string:Chassis Fans;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                        sortedHeader = 'bcfNumber')">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+	    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcfNumber', 'Fan')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcfProductName','Product Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcfStatus','Status')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcfPartNumber','Part Num')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcfSparePartNumber','Spare Part Num')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcfProductVersion','Version')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" tal:content="gd/bcfNumber"/>
+        <td class="tablevalues" tal:content="gd/bcfProductName"/>
+        <td class="tablevalues" tal:content="gd/bcfStatus"/>
+        <td class="tablevalues" tal:content="gd/bcfPartNumber"/>
+        <td class="tablevalues" tal:content="gd/bcfSparePartNumber"/>
+        <td class="tablevalues" tal:content="gd/bcfProductVersion"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END FAN TABLE -->
+<!-- BEGIN PSU TABLE -->
+<tal:block 
+    tal:define="tableName string:bladechassispsusList;
+    objects here/bladechassispsus/objectValuesAll;
+    tabletitle string:Chassis PSUs;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                        sortedHeader = 'bcpNumber')">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+	    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpNumber', 'PSU')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpProductName','Product Name', 'nocase')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpStatus','Status')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpSerialNum','Serial Number')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpCapacity','Capacity')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpPartNumber','Part Num')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpSparePartNumber','Spare Part Num')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bcpProductVersion','Version')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" tal:content="gd/bcpNumber"/>
+        <td class="tablevalues" tal:content="gd/bcpProductName"/>
+        <td class="tablevalues" tal:content="gd/bcpStatus"/>
+        <td class="tablevalues" tal:content="gd/bcpSerialNum"/>
+        <td class="tablevalues" tal:content="gd/bcpCapacity"/>
+        <td class="tablevalues" tal:content="gd/bcpPartNumber"/>
+        <td class="tablevalues" tal:content="gd/bcpSparePartNumber"/>
+        <td class="tablevalues" tal:content="gd/bcpProductVersion"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END PSU TABLE -->
+<!-- BEGIN INTERCONNECT TABLE -->
+<tal:block 
+    tal:define="tableName string:bladechassisinterconnectsList;
+    objects here/bladechassisinterconnects/objectValuesAll;
+    tabletitle string:Blade Chassis Interconnects;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                        sortedHeader = 'bciNumber')">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+	    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciNumber', 'Bay')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciType','Type', 'nocase')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciProductName','Product Name', 'nocase')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciMgmtIp','Management IP')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciSerialNum','Serial Number')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciPartNumber','Part Num')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bciSparePartNumber','Spare Part Num')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues" tal:content="gd/bciNumber"/>
+        <td class="tablevalues" tal:content="gd/bciType"/>
+        <td class="tablevalues" tal:content="gd/bciProductName"/>
+        <td class="tablevalues" tal:content="gd/bciMgmtIp"/>
+        <td class="tablevalues" tal:content="gd/bciSerialNum"/>
+        <td class="tablevalues" tal:content="gd/bciPartNumber"/>
+        <td class="tablevalues" tal:content="gd/bciSparePartNumber"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END INTERCONNECT TABLE -->
+
+</tal:block>
+</tal:block>
+
+

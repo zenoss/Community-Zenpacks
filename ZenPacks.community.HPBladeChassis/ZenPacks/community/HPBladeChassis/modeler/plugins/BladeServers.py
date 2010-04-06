@@ -1,52 +1,131 @@
-import Globals
-from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
-from Products.DataCollector.plugins.DataMaps import ObjectMap
+# This program is part of Zenoss Core, an open source monitoring platform.
+# Copyright (C) 2007, Zenoss Inc.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2 as published by
+# the Free Software Foundation.
+#
+# For complete information please visit: http://www.zenoss.com/oss/
+#
+# Created By  :  Wouter D'Haeseleer
+# Created On  :  05-11-2007
+# Company     :  Imas NV
+#
+###########################################################################
 
-class BladeServers(SnmpPlugin):
+import re
 
-    #maptype = "bladeserverBladeServersMap" # no longer used
+from Products.DataCollector.plugins.CollectorPlugin import CommandPlugin
+
+class BladeServers(CommandPlugin):
+    """
+    Run show server info all on the OA to get details about the blade.
+    """
+    command = 'SHOW SERVER INFO ALL'
     relname = "bladeservers"
     modname = 'ZenPacks.community.HPBladeChassis.BladeServer'
-    
-    columns = {
-	'.3': 'snmpindex',
-	'.4': 'bsDisplayName',
-	'.8': 'bsPosition',
-	'.9': 'bsHeight',
-	'.10': 'bsWidth',
-	'.11': 'bsDepth',
-	'.15': 'bsSlotsUsed',
-	'.16': 'bsSerialNum',
-	'.17': 'bsProductId',
-    }
-    
-    snmpGetTableMaps = (
-	GetTableMap('bladeinfo', '.1.3.6.1.4.1.232.22.2.4.1.1.1', columns),
-    )
 
     def process(self, device, results, log):
-	"""collect snmp information from this blade server"""
-	
-	# log that we are processing device
-	log.info('processing %s for device %s', self.name(), device.id)
-	log.debug("BladeServer results: %r", results)
-	getdata, tabledata = results
-	table = tabledata.get("bladeinfo")
-	rm = self.relMap()
-	for info in table.values():
-	    #verify column exists
-	    #if not self.checkColumns(info, self.columns, log): continue
-	   
-            # Verify blade actually takes up a spot (removes Unknowns)
-            if info['bsSlotsUsed'] == 0:
-		log.debug("Skipping blade %s due to Slots: %s" % (info['bsDisplayName'],info['bsSlotsUsed']))
-                continue
-                
-            log.info("Found HP Blade: %s at position %s" % (info['bsDisplayName'], info['bsPosition']))
-	    # create the object map which puts our snmp stat into
-	    # the BladeServer object
-	    om = self.objectMap(info)
-	    om.id = self.prepId(om.bsDisplayName)
-	    rm.append(om)
-	return [rm]
+        rm = self.relMap()
+        log.info('Collecting Blade Servers for device %s' % device.id)
 
+        bladeCount = 0 # keep track of what we've seen for various reasons
+
+
+        resultslines = results.split("\n")
+        for line in resultslines:
+            match = re.match('^Server.Blade.#([0-9]+).Information:$', line.strip())
+            if match:
+                # First line of a blade detail section, create object and get started
+                # If this isn't the first blade, we want to save the last one
+                if bladeCount > 0:
+                    rm.append(om)
+                    # Save the hostname, so that if next blade is a storage blade
+                    # We can tag it with it's host
+                    oldHostName = om.bsDisplayName
+                # Now create the new object and initalise it some
+                # We set the snmpindex so that the collector is happy
+                om = self.objectMap()
+                om.bsPosition = int(match.groups()[0])
+                om.snmpindex = om.bsPosition
+                om.id = self.prepId(om.bsPosition)
+                om.bsInstalledRam = 0
+                om.bsCPUCount = 0
+                bladeCount = bladeCount + 1
+                log.debug("Found a blade header, processing blade %d with position %s" % (bladeCount, om.bsPosition))
+                continue
+
+            # Now look for the information we want, etc
+
+            # First check, is the next line "no blade here"
+            match = re.match('^Server.Blade.Type:.No.Server.Blade.Installed$', line.strip())
+            if match:
+                # We need to set a bunch of default values for "no blade here" and continue
+                om.bsDisplayName = "Empty Slot"
+                om.id = self.prepId(om.bsDisplayName)
+                continue
+            match = re.match('^Type:.((Server|Storage|Unknown).*)$',line.strip())
+            if match:
+                if "Storage" in match.groups()[0]:
+                    om.bsDisplayName = oldHostName + " Storage Blade"
+                    om.id = self.prepId(om.bsDisplayName)
+                if "Unknown" in match.groups()[0]:
+                    om.bsDisplayName = "ERROR - Unrecognized Blade"
+                    om.id = self.prepId(om.bsDisplayName)
+                continue
+            match = re.match('^Product.Name:.(.*)$',line.strip())
+            if match:
+                # We set displayname to the product name, so that storage blades
+                # turn up okay, for server blades Server Name will overwrite this
+                om.bsProductId = match.groups()[0]
+                continue
+            match = re.match('^Part.Number:.(.*)$',line.strip())
+            if match:
+                om.bsPartNumber = match.groups()[0]
+                continue
+            match = re.match('^System.Board.Spare.Part.Number:.(.*)$',line.strip())
+            if match:
+                om.bsSystemBoardPartNum = match.groups()[0]
+                continue
+            match = re.match('^Serial Number:.(.*)$',line.strip())
+            if match:
+                om.bsSerialNum = match.groups()[0]
+                continue
+            match = re.match('^Server.Name:.(.*)$',line.strip())
+            if match:
+                om.bsDisplayName = match.groups()[0]
+                om.id = self.prepId(om.bsDisplayName)
+                continue
+            match = re.match('^CPU.[0-9]:.(.*)$',line.strip())
+            if match:
+                om.bsCPUCount = om.bsCPUCount + 1
+                om.bsCPUType = match.groups()[0]
+                continue
+            match = re.match('^Memory:.(.*).MB$',line.strip())
+            if match:
+                om.bsInstalledRam = int(match.groups()[0])
+                continue
+            match = re.match('^NIC.1.MAC.Address:.(.*)$',line.strip())
+            if match:
+                om.bsNic1Mac = match.groups()[0]
+                continue
+            match = re.match('^NIC.2.MAC.Address:.(.*)$',line.strip())
+            if match:
+                om.bsNic2Mac = match.groups()[0]
+                continue
+            match = re.match('^Firmware.Version:.(.*)$',line.strip())
+            if match:
+                om.bsIloFirmwareVersion = match.groups()[0]
+                continue
+            match = re.match('^IP Address:.(.*)$',line.strip())
+            if match:
+                om.bsIloIp = match.groups()[0]
+                continue
+
+        # append last object at end of loop
+        if bladeCount > 0:
+            rm.append(om)
+
+        log.info("Finished processing results, %d blades found" % bladeCount)
+
+        return rm

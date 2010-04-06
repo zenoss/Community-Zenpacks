@@ -10,7 +10,15 @@ class BladeChassis(Device):
 
     _relations = Device._relations + (
 	('bladeservers', ToManyCont(ToOne, "ZenPacks.community.HPBladeChassis.BladeServer", "bladechassis")),
-    )
+    ) + (
+	('bladechassisfans', ToManyCont(ToOne, "ZenPacks.community.HPBladeChassis.BladeChassisFan", "bladechassis")),
+    ) + (
+	('bladechassisinterconnects', ToManyCont(ToOne, "ZenPacks.community.HPBladeChassis.BladeChassisInterconnect", "bladechassis")),
+    ) + (
+	('bladechassispsus', ToManyCont(ToOne, "ZenPacks.community.HPBladeChassis.BladeChassisPsu", "bladechassis")),
+    ) 
+    
+
     
     factory_type_information = (
 	{
@@ -21,20 +29,15 @@ class BladeChassis(Device):
 		, 'action'        : 'deviceStatus'
 		, 'permissions'   : (ZEN_VIEW, )
 		},
-		{ 'id'            : 'osdetail'
-		, 'name'          : 'OS'
-		, 'action'        : 'deviceOsDetail'
-		, 'permissions'   : (ZEN_VIEW, )
+		{ 'id'            : 'bladechassisData'
+		, 'name'          : 'Chassis Details'
+		, 'action'        : 'bladechassisData'
+		, 'permissions'   : (ZEN_VIEW,)
 		},
 		{ 'id'            : 'bladeserverData'
 		, 'name'          : 'Blades'
 		, 'action'        : 'bladeserverData'
 		, 'permissions'   : (ZEN_VIEW,)
-		},
-		{ 'id'            : 'hwdetail'
-		, 'name'          : 'Hardware'
-		, 'action'        : 'deviceHardwareDetail'
-		, 'permissions'   : (ZEN_VIEW, )
 		},
 		{ 'id'            : 'events'
 		, 'name'          : 'Events'

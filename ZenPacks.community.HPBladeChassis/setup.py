@@ -3,8 +3,8 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.HPBladeChassis"
-VERSION = "1.27"
-AUTHOR = "David Nicklay"
+VERSION = "1.28"
+AUTHOR = "David Nicklay and Simon Helson"
 LICENSE = "GPLv2"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.HPBladeChassis']

@@ -9,7 +9,7 @@ HP Blade Chassis Monitoring
 ZenPacks.community.HPBladeChassis.BladeChassis
 </property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['BladeServers', 'zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.HPDeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'zenoss.snmp.IpServiceMap', 'zenoss.snmp.HRFileSystemMap', 'zenoss.snmp.HRSWInstalledMap', 'zenoss.snmp.HRSWRunMap', 'zenoss.snmp.CpuMap', 'zenoss.snmp.HPCPUMap']
+['BladeServers', 'BladeChassisFans', 'BladeChassisPsus', 'BladeChassisInterconnects', 'zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.HPDeviceMap', 'zenoss.snmp.HPCPUMap']
 </property>
 <property visible="True" type="lines" id="zDeviceTemplates" >
 ['BladeChassis', 'Device']

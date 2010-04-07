@@ -44,14 +44,9 @@ class BladeChassisPsus(CommandPlugin):
                         rm.append(om)
                 except:
                     log.debug("Not adding an empty PSU entry")
-                if psuCount > 0:
-                    rm.append(om)
                 # Now create the new object and initalise it some
                 # We set the snmpindex so that the collector is happy
-                # Look here for empty interconenct bays
-                if "<absent>" in match.groups()[0]:
-                    om = None
-                    continue
+
                 om = self.objectMap()
                 om.bcpNumber = int(match.groups()[0])
                 om.snmpindex = om.bcpNumber
@@ -64,7 +59,11 @@ class BladeChassisPsus(CommandPlugin):
 
             match = re.match('^Status:.(.*)$',line.strip())
             if match:
-                om.bcpStatus = match.groups()[0]
+                if "Power Supply Bay Empty" in match.groups()[0]:
+                    # don't do anything with this
+                    om = None
+                else:
+                    om.bcpStatus = match.groups()[0]
                 continue
             match = re.match('^Capacity:.(.*)$',line.strip())
             if match:

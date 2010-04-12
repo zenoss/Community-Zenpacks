@@ -225,7 +225,7 @@ do
 				"$ZENHOME/etc/zenperfwmi.conf" )
 			else
 				files=( "$ZENHOME/etc/zenping.conf" "$ZENHOME/etc/zensyslog.conf" \
-					"$ZENHOME/etc/zenstatus.conf" "$ZENHOME/etc/zentrap.conf" \ 
+					"$ZENHOME/etc/zenstatus.conf" "$ZENHOME/etc/zentrap.conf" \
 					"$ZENHOME/etc/zenrender.conf" "$ZENHOME/etc/zenperfsnmp.conf" "$ZENHOME/etc/zencommand.conf" \
 					"$ZENHOME/etc/zenprocess.conf" "$ZENHOME/etc/zenwin.conf" "$ZENHOME/etc/zeneventlog.conf" )
 			fi

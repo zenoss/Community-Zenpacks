@@ -12,9 +12,9 @@ __doc__="""ProcessorMap
 
 ProcessorMap maps the CIM_Processor class to cpus objects
 
-$Id: ProcessorMap.py,v 1.0 2010/01/14 09:35:53 egor Exp $"""
+$Id: ProcessorMap.py,v 1.1 2010/04/13 16:48:02 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -61,12 +61,14 @@ class ProcessorMap(WMIPlugin):
                 "root/cimv2",
                     {
                     '__path':'snmpindex',
+                    'CpuStatus':'_status',
                     'DeviceID':'id',
                     'Name':'_name',
                     'CurrentVoltage':'voltage',
                     'MaxClockSpeed':'clockspeed',
                     'ExternalBusClockSpeed':'_extspeed',
                     'ExtClock':'extspeed',
+                    'NumberOfCores':'_cores',
                     'SocketDesignation':'socket'
                     }
                 ),
@@ -76,37 +78,54 @@ class ProcessorMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
-                    'MaxCacheSize':'maxCacheSize',
-                    'Purpose':'purpose',
+                    'BlockSize':'BlockSize',
+                    'Level':'level',
+                    'NumberOfBlocks':'Blocks',
                     }
                 ),
             }
+
+    def processCacheMemory(self, instances):
+        """processing CacheMemory table"""
+        cache = {1:0, 2:0, 3:0}
+        for inst in instances:
+            try:
+                level = int(inst['level']) - 2
+                cache[level]=inst['BlockSize']*inst['Blocks']/1024+cache[level]
+            except: continue
+        return cache
+
 
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-        cacheMem = {}
-        instances = results["Win32_CacheMemory"]
-        for instance in instances:
-            try:
-                purpose = PROCCACHELEVEL.search(instance['purpose']).groups()
-                if purpose[0] not in cacheMem:
-                    cacheMem[purpose[0]] = {}
-                cacheMem[purpose[0]][purpose[1]] = instance['maxCacheSize']
-            except: continue
+        cache = self.processCacheMemory(results.get("Win32_CacheMemory", None))
         instances = results["Win32_Processor"]
         if not instances: return
+        cores = 1
+        sockets = []
+        if not instances[0]['_cores']:
+            for instance in instances:
+                if instance['socket'] in sockets: continue
+                sockets.append(instance['socket'])
+            sockets = len(sockets)
+            for level in (1, 2, 3): cache[level] = cache[level] / sockets
+            cores = len(instances) / sockets
+        sockets = []
         for instance in instances:
+            if instance['socket'] in sockets: continue
+            sockets.append(instance['socket'])
+            if not instance['_cores']: instance['_cores'] = cores
             om = self.objectMap(instance)
+            if om._status == 0: continue
             try:
                 om.id = prepId(om.id)
                 om.socket = om.id[3:]
                 if not om.extspeed: om.extspeed = om._extspeed
-                cache = cacheMem.get(om.socket, {})
-                om.cacheSizeL1 = cache.get('1', 0)
-                om.cacheSizeL2 = cache.get('2', 0)
-#                om.cacheSizeL3 = cache.get('3', 0)
+                om.cacheSizeL1 = cache.get(1, 0)
+                om.cacheSizeL2 = cache.get(2, 0)
+#                om.cacheSizeL3 = cache.get(3, 0)
                 om.setProductKey = getManufacturerAndModel(om._name)
             except AttributeError:
                 continue

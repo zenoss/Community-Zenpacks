@@ -18,7 +18,7 @@ class ZenPack(ZenPackBase):
     dcProperties = {
         '/CIM/WMI': {
             'description': ('', 'string'),
-            'devtypes': (['WMI', 'WBEM'], 'lines'),
+#            'devtypes': (['WMI', 'WBEM'], 'lines'),
             'zCollectorPlugins': (
                 (
                 'community.wmi.NewDeviceMap',
@@ -39,7 +39,7 @@ class ZenPack(ZenPackBase):
         },
         '/CIM/WMI/Win2000': {
             'description': ('', 'string'),
-            'devtypes': (['WMI', 'WBEM'], 'lines'),
+#            'devtypes': (['WMI', 'WBEM'], 'lines'),
             'zCollectorPlugins': (
                 (
                 'community.wmi.NewDeviceMap',

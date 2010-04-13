@@ -12,14 +12,14 @@ __doc__="""ProductMap
 
 ProductMap finds various software packages installed on a device.
 
-$Id: ProductMap.py,v 1.1 2010/02/22 13:38:23 egor Exp $"""
+$Id: ProductMap.py,v 1.2 2010/04/13 13:29:24 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
 from Products.DataCollector.EnterpriseOIDs import EnterpriseOIDs
-
+from datetime import datetime
 
 class ProductMap(WMIPlugin):
 
@@ -52,19 +52,20 @@ class ProductMap(WMIPlugin):
         instances = results["Win32_Product"]
         rm = self.relMap()
         for instance in instances:
+            if isinstance(instance['setInstallDate'], datetime):
+                instance['setInstallDate']='%d/%02d/%02d %02d:%02d:%02d'%(
+                                instance['setInstallDate'].utctimetuple()[:6])
+            elif instance['_setInstallDate']:
+                instance['setInstallDate'] = '%s/%s/%s 00:00:00' % (
+                                            instance['_setInstallDate'][:4],
+                                            instance['_setInstallDate'][4:6],
+                                            instance['_setInstallDate'][6:8])
+            else: instance['setInstallDate'] = '1968/01/08 00:00:00'
             om = self.objectMap(instance)
             om.id = self.prepId(om.setProductKey)
-            om._vendor = om._vendor.split()[0]
+            if om._vendor: om._vendor = om._vendor.split()[0]
             if om._vendor not in EnterpriseOIDs.values():
                 om._vendor = 'Unknown'
             om.setProductKey = MultiArgs(om.setProductKey, om._vendor)
-            if getattr(om, 'setInstallDate', None):
-                om.setInstallDate = "%d/%02d/%02d %02d:%02d:%02d" % (
-                                                        om.setInstallDate[:6])
-            elif getattr(om, '_setInstallDate', None):
-                om.setInstallDate = "%s/%s/%s 00:00:00" % (
-                                                        om._setInstallDate[:4],
-                                                        om._setInstallDate[4:6],
-                                                        om._setInstallDate[6:8])
             rm.append(om)
         return rm

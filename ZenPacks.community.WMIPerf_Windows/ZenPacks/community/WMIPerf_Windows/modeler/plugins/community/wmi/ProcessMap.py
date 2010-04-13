@@ -12,9 +12,9 @@ __doc__="""ProcessMap
 
 ProcessMap finds various software packages installed on a device.
 
-$Id: ProcessMap.py,v 1.1 2010/03/03 13:48:13 egor Exp $"""
+$Id: ProcessMap.py,v 1.2 2010/04/13 16:10:14 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 
@@ -49,15 +49,17 @@ class ProcessMap(WMIPlugin):
         for instance in instances:
             om = self.objectMap(instance)
             if not getattr(om, 'procName', False): 
-                log.warn("Skipping process with no name")
+                log.warning("Skipping process with no name")
                 continue
             parameters = getattr(om, 'parameters', None)
             if parameters is None: parameters = om.procName
-            parameters = parameters.split(' ', 1)
-            if len(parameters) > 1:
-                 om.parameters = parameters[1]
+            om.parameters = ''
+            if parameters.startswith('"'):
+                parameters = parameters.split('"', 2)
+                if len(parameters) > 2: om.parameters = parameters[2]
             else:
-                om.parameters = ''
+                parameters = parameters.split(' ', 1)
+                if len(parameters) > 1: om.parameters = parameters[1]
             rm.append(om)
 
         if not rm:

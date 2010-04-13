@@ -13,9 +13,9 @@ __doc__ = """InterfaceMap
 Gather IP network interface information from WMI, and 
 create DMD interface objects
 
-$Id: InterfaceMap.py,v 1.1 2010/03/02 18:30:24 egor Exp $"""
+$Id: InterfaceMap.py,v 1.2 2010/04/13 13:28:24 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 import re
 import types
@@ -148,7 +148,8 @@ class InterfaceMap(WMIPlugin):
         for instance in instances:
             if not instance['_ipenabled']: continue
             try:
-                instance.update(interfaceConf.get(instance['snmpindex'],{}))
+                instance.update(interfaceConf.get(int(instance['snmpindex']),{}))
+                if not instance.get('type', None): continue
                 om = self.objectMap(instance)
                 if dontCollectIntNames and re.search(dontCollectIntNames,
                                                             om.interfaceName):
@@ -167,6 +168,8 @@ class InterfaceMap(WMIPlugin):
                     if (dontCollectIpAddresses
                         and re.search(dontCollectIpAddresses, ip)):
                         continue
+                    # ignore IPv6 Addresses
+                    if ip.__contains__(':'): continue
                     om.setIpAddresses.append(ip)
                 if not om.ifindex: om.ifindex = om.snmpindex
                 if om.speed == 0: om.speed = interfaceSpeed.get(om.id, 0)

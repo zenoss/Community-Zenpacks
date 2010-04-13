@@ -36,13 +36,13 @@ class WinServiceMap(WMIPlugin):
                     {
                     'AcceptPause':'acceptPause',
                     'AcceptStop':'acceptStop',
-                    'Caption':'description',
+                    'Caption':'_description',
                     'Name':'_name',
                     'PathName':'pathName',
                     'ServiceType':'serviceType',
                     'StartMode':'startMode',
                     'StartName':'startName',
-                    'State':'state',
+                    'State':'_state',
                     }
                 ),
             }
@@ -58,7 +58,7 @@ class WinServiceMap(WMIPlugin):
         for instance in instances:
             om = self.objectMap(instance)
             om.id = prepId(om._name)
-            om.setServiceClass = {'name':om._name, 'description':om.description}
+            om.setServiceClass = {'name':om._name, 'description':om._description}
             rm.append(om)
         return rm
 

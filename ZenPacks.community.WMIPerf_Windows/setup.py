@@ -3,12 +3,12 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.WMIPerf_Windows"
-VERSION = "1.98"
+VERSION = "1.99"
 AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.WMIPerf_Windows']
-INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=2.1']
+INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=2.3']
 COMPAT_ZENOSS_VERS = ">=2.5"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS

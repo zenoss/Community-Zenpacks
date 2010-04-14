@@ -1378,7 +1378,7 @@ True
 root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-Win32_Process.Name="${here/procName}"
+python:here.osProcessClass().ignoreParameters and "Win32_Process.Name=\"%s\""%here.procName or "Win32_Process.CommandLine=\"%s\""%here.parameters
 </property>
 <tomanycont id='datapoints'>
 <object id='Handle_count' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1414,6 +1414,18 @@ True
 </property>
 <tomanycont id='aliases'>
 <object id='PageFaults' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+<object id='PageFileUsage_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<tomanycont id='aliases'>
+<object id='PageFileUsage' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 </object>
 </tomanycont>
 </object>
@@ -1596,7 +1608,7 @@ True
 500
 </property>
 <property type="string" id="units" mode="w" >
-percentage
+100ns units
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1614,7 +1626,7 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='KernelModeTime_sum' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='KernelModeTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -1640,7 +1652,7 @@ Process_KernelModeTime_sum
 AVERAGE
 </property>
 </object>
-<object id='UserModeTime_sum' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='UserModeTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -1679,19 +1691,19 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-bytes
+percentage
 </property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
 <property type="boolean" id="base" mode="w" >
-True
+False
 </property>
 <property type="int" id="miny" mode="w" >
 0
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+100
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -1700,7 +1712,7 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
-<object id='VirtualSize_sum' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='PageFileUsage_sum' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1711,16 +1723,19 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
-Usage
+Used
 </property>
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+1024,*,${dev/hw/totalMemory},/,100,*
+</property>
 <property type="string" id="dpName" mode="w" >
-Process_VirtualSize_sum
+Process_PageFileUsage_sum
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1828,7 +1843,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Count
+Processes
 </property>
 <property type="long" id="limit" mode="w" >
 -1

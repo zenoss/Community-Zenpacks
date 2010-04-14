@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.0 2010/04/01 13:53:32 egor Exp $"""
+$Id: WBEMClient.py,v 2.1 2010/04/14 20:06:32 egor Exp $"""
 
-__version__ = "$Revision: 2.0 $"[11:-2]
+__version__ = "$Revision: 2.1 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -25,7 +25,7 @@ from ZenPacks.community.WBEMDataSource.services.WbemPerfConfig import sortQuery
 from twisted.internet import defer, reactor
 import socket
 
-import time
+from DateTime import DateTime
 import logging
 log = logging.getLogger("zen.WBEMClient")
 
@@ -93,7 +93,7 @@ class WBEMClient(BaseClient):
         if isinstance(value, pywbem.Sint64): return int(value)
         if isinstance(value, pywbem.Real32): return float(value)
         if isinstance(value, pywbem.Real64): return float(value)
-        if isinstance(value, pywbem.CIMDateTime): return value.datetime
+        if isinstance(value, pywbem.CIMDateTime):return DateTime(value.datetime)
         return value
 
 
@@ -205,8 +205,8 @@ class WBEMClient(BaseClient):
         keybindings = dict([(var, val.strip('"')) for var, val in zip(
                             instMap.keys()[0], instMap.values()[0].keys()[0])])
         plst = instMap.values()[0].values()[0][0][1].keys()
-	try: plst.remove('__path')
-	except: pass
+        try: plst.remove('__path')
+        except: pass
         instancename = pywbem.CIMInstanceName(classname, keybindings,
                                                     namespace=namespace)
         d = defer.maybeDeferred(self._wbem.GetInstance, instancename,

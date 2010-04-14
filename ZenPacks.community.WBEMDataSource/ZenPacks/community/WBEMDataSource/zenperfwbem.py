@@ -12,17 +12,16 @@ __doc__="""zenperfwbem
 
 Gets WBEM performance data and stores it in RRD files.
 
-$Id: zenperfwbem.py,v 2.5 2010/03/15 21:09:00 egor Exp $"""
+$Id: zenperfwbem.py,v 2.6 2010/04/14 20:07:44 egor Exp $"""
 
-__version__ = "$Revision: 2.5 $"[11:-2]
+__version__ = "$Revision: 2.6 $"[11:-2]
 
 import logging
 
 import Globals
 import zope.component
 import zope.interface
-import time
-import datetime
+from DateTime import DateTime
 
 from twisted.internet import defer, reactor
 from twisted.python.failure import Failure
@@ -70,7 +69,7 @@ def rrpn(expression, value):
         tokens = expression.split(',')
         tokens.reverse()
         for token in tokens:
-            if token == 'now': token = time.time()
+            if token == 'now': token = DateTime()._t
             try:
                 stack.append(float(token))
             except ValueError:
@@ -211,7 +210,7 @@ class ZenPerfWbemTask(ObservableMixin):
                   self._devId, self._manageIp, results)
 
         for classes in self._queries.values():
-	    ZenPerfWbemTask.QUERIES += len(classes)
+            ZenPerfWbemTask.QUERIES += len(classes)
 
         if not results: return results
         for tableName, data in results.iteritems():
@@ -225,9 +224,7 @@ class ZenPerfWbemTask(ObservableMixin):
                             self._failure(d, comp)
                             continue
                         if type(d[dpname]) is list: d[dpname] = d[dpname][0]
-                        if isinstance(d[dpname], datetime.datetime):
-                            mcs = float(d[dpname].microsecond * 1e-6)
-                            d[dpname] = time.mktime(d[dpname].timetuple()) + mcs
+                        if isinstance(d[dpname],DateTime):d[dpname]=d[dpname]._t
                         if expr: d[dpname] = rrpn(expr, d[dpname])
                         values.append(d[dpname])
                     if dpname.endswith('_count'): value = len(values)

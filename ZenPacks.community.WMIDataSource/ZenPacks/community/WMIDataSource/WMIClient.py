@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.7 2010/04/01 07:15:59 egor Exp $"""
+$Id: WMIClient.py,v 1.8 2010/04/14 20:11:35 egor Exp $"""
 
-__version__ = "$Revision: 1.7 $"[11:-2]
+__version__ = "$Revision: 1.8 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -27,7 +27,7 @@ from Products.DataCollector.BaseClient import BaseClient
 from ZenPacks.community.WMIDataSource.services.WmiPerfConfig import sortQuery
 
 from twisted.internet import defer, reactor
-from datetime import datetime, timedelta, tzinfo
+from DateTime import DateTime
 
 import os
 import socket
@@ -37,7 +37,6 @@ log = logging.getLogger("zen.WMIClient")
 
 import re
 DTPAT=re.compile(r'^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.(\d{6})([+|-])(\d{3})')
-
 
 BaseName = os.path.basename(sys.argv[0])
 MyName = None
@@ -55,14 +54,6 @@ def _myname():
 def _filename(device):
     return zenPath('var', _myname(), device)
 
-class MinutesFromUTC(tzinfo):
-    """Fixed offset in minutes from UTC."""
-    def __init__(self, offset):
-        self.__offset = timedelta(minutes = offset)
-    def utcoffset(self, dt):
-        return self.__offset
-    def dst(self, dt):
-        return timedelta(0)
 
 class BadCredentials(Exception): pass
 
@@ -164,10 +155,9 @@ class WMIClient(BaseClient):
                         r = DTPAT.search(result[aname])
                         if not r: continue
                         g = r.groups()
-                        result[aname] = datetime(int(g[0]), int(g[1]), 
-                                    int(g[2]), int(g[3]), 
-                                    int(g[4]), int(g[5]), 
-                                    int(g[6]), MinutesFromUTC(int(g[7]+g[8])))
+                        result[aname] = DateTime(int(g[0]),int(g[1]),int(g[2]),
+                                int(g[3]),int(g[4]),float('%s.%s'%(g[5],g[6])),
+                                'GMT%s0%s'%(g[8]=='000' and '+' or g[7], g[8]))
                     if table not in results:
                         results[table] = []
                     results[table].append(result)

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the WBEMDataSource Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""WBEMPlugin
 
 wrapper for PythonPlugin
 
-$Id: WBEMPlugin.py,v 1.2 2010/02/22 11:14:43 egor Exp $"""
+$Id: WBEMPlugin.py,v 1.3 2010/04/15 20:01:43 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
@@ -47,9 +47,10 @@ class WBEMPlugin(CollectorPlugin):
     def preprocess(self, results, log):
         newres = {}
         for table, value in results.iteritems():
-            if isinstance(value[0], CError):
-                log.error(value[0].getErrorMessage())
-                continue
+            if value != []:
+                if isinstance(value[0], CError):
+                    log.error(value[0].getErrorMessage())
+                    continue
             newres[table] = value
         return newres
 

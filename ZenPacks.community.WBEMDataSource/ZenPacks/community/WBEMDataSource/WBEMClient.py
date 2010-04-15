@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.1 2010/04/14 20:06:32 egor Exp $"""
+$Id: WBEMClient.py,v 2.2 2010/04/15 20:00:08 egor Exp $"""
 
-__version__ = "$Revision: 2.1 $"[11:-2]
+__version__ = "$Revision: 2.2 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -122,6 +122,10 @@ class WBEMClient(BaseClient):
     def _wbemEnumerateInstances(self, classname, namespace, instMap, qualifier):
         def parse(instances):
             results = {}
+            for insts in instMap.values():
+                for tables in insts.values():
+                    for table, props in tables:
+                        results[table] = []
             for instance in instances:
                 for kbKey, kbVal in instMap.iteritems():
                     kbIns = []
@@ -135,8 +139,6 @@ class WBEMClient(BaseClient):
                         if tuple(kbIns) not in kbVal: continue
                     lastprops = None
                     for table, props in kbVal[tuple(kbIns)]:
-                        if table not in results:
-                            results[table] = []
                         if props != lastprops or lastprops is None:
                             result = self.parseInstance(instance, props)
                             lastprops = props

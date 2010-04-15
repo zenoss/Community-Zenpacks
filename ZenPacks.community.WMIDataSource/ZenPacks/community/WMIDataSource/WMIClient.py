@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.8 2010/04/14 20:11:35 egor Exp $"""
+$Id: WMIClient.py,v 1.9 2010/04/15 20:08:38 egor Exp $"""
 
-__version__ = "$Revision: 1.8 $"[11:-2]
+__version__ = "$Revision: 1.9 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -127,6 +127,10 @@ class WMIClient(BaseClient):
 
     def parseResults(self, instances, instMap):
         results = {}
+        for insts in instMap.values():
+            for tables in insts.values():
+                for table, props in tables:
+                    results[table] = []
         for instance in instances:
             for kbKey, kbVal in instMap.iteritems():
                 kbIns = []
@@ -155,11 +159,13 @@ class WMIClient(BaseClient):
                         r = DTPAT.search(result[aname])
                         if not r: continue
                         g = r.groups()
+                        if g[8] == '000':
+                            tz = 'GMT'
+                        else:
+                            tz = divmod(int(g[8]), 60)
+                            tz = 'GMT%s%02d%02d' % (g[7], tz[0], tz[1]*60)
                         result[aname] = DateTime(int(g[0]),int(g[1]),int(g[2]),
-                                int(g[3]),int(g[4]),float('%s.%s'%(g[5],g[6])),
-                                'GMT%s0%s'%(g[8]=='000' and '+' or g[7], g[8]))
-                    if table not in results:
-                        results[table] = []
+                            int(g[3]),int(g[4]),float('%s.%s'%(g[5],g[6])),tz)
                     results[table].append(result)
         return results
 
@@ -179,18 +185,19 @@ class WMIClient(BaseClient):
                     yield self.connect(namespace=namespace)
                     driver.next()
                     for classname, instMap in classes.iteritems():
-                        plst = set()
-                        for keyprops, insts in instMap.iteritems():
-                            for tables in insts.values():
-                                for (table, props) in tables:
-                                    if props == {}:
-                                        plst = ['*']
-                                        break
-                                    plst = plst.union(props.keys())
-                                if plst == ['*']: break
-                            if plst == ['*']: break
-                            plst = plst.union(keyprops)
-                        if includeQualifiers: plst = ['*']
+#                        plst = set()
+#                        for keyprops, insts in instMap.iteritems():
+#                            for tables in insts.values():
+#                                for (table, props) in tables:
+#                                    if props == {}:
+#                                        plst = ['*']
+#                                        break
+#                                    plst = plst.union(props.keys())
+#                                if plst == ['*']: break
+#                            if plst == ['*']: break
+#                            plst = plst.union(keyprops)
+#                        if includeQualifiers:
+                        plst = ['*']
                         if classname.upper().startswith('SELECT '):
                             query = classname
                         elif () in instMap or len(instMap) > 1 or \

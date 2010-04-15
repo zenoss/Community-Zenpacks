@@ -12,9 +12,9 @@ __doc__="""WMIPlugin
 
 wrapper for PythonPlugin
 
-$Id: WMIPlugin.py,v 1.1 2010/02/22 11:14:03 egor Exp $"""
+$Id: WMIPlugin.py,v 1.2 2010/04/15 19:51:19 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
 from WMIClient import WMIClient, CError
@@ -44,9 +44,10 @@ class WMIPlugin(CollectorPlugin):
     def preprocess(self, results, log):
         newres = {}
         for table, value in results.iteritems():
-            if isinstance(value[0], CError):
-                log.error(value[0].getErrorMessage())
-                continue
+            if value != []:
+                if isinstance(value[0], CError):
+                    log.error(value[0].getErrorMessage())
+                    continue
             newres[table] = value
         return newres
 

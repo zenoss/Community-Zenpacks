@@ -1599,6 +1599,28 @@ True
 </property>
 </object>
 </tomanycont>
+<tomanycont id='thresholds'>
+<object id='process  count' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['Process_Handle_count']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+1
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/OSProcess
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
 <tomanycont id='graphDefs'>
 <object id='CPU Utilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
@@ -1608,7 +1630,7 @@ True
 500
 </property>
 <property type="string" id="units" mode="w" >
-100ns units
+percentage
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1620,7 +1642,7 @@ False
 0
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+100
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -1637,13 +1659,16 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 Kernel
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 Process_KernelModeTime_sum
@@ -1666,13 +1691,16 @@ AREA
 True
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 User
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 Process_UserModeTime_sum

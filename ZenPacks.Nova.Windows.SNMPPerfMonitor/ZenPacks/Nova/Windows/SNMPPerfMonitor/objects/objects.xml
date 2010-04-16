@@ -148,35 +148,15 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='CPU1' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
-['CPU_CPU1']
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="maxval" mode="w" >
-90
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Perf/CPU
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
-</property>
-</object>
 <object id='Memory' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['Memory_PercentMemoryUsed']
+['Memory_MemoryUsed']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
-90
+here.getRRDValue('MemoryTotal') * 0.9
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Memory
@@ -236,49 +216,20 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='CPU1' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf
-</property>
-<property type="string" id="legend" mode="w" >
-CPU1
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-CPU_CPU1
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<object id='CPU Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
 <property type="string" id="threshId" mode="w" >
 Total CPU Usage
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+CPU Threshold
 </property>
 </object>
-<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total CPU Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -312,7 +263,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-megabytes
+bytes
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -333,7 +284,18 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
+<object id='Memory' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Memory
+</property>
+<property type="string" id="legend" mode="w" >
+Memory Threshold
+</property>
+</object>
 <object id='MemoryTotal' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -344,10 +306,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Total
+Total Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -361,10 +323,10 @@ AVERAGE
 </object>
 <object id='MemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -373,10 +335,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Used
+Memory Utilization
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -390,7 +352,7 @@ AVERAGE
 </object>
 <object id='PercentMemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1013,13 +975,13 @@ True
 </object>
 <object id='Memory' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['Memory_PercentMemoryUsed']
+['Memory_MemoryUsed']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
-90
+here.getRRDValue('MemoryTotal') * 0.9
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Memory
@@ -1079,12 +1041,20 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
+<object id='CPU Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Total CPU Usage
+</property>
+<property type="string" id="legend" mode="w" >
+CPU Threshold
+</property>
+</object>
 <object id='CPU1' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1113,7 +1083,7 @@ AVERAGE
 10
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1142,7 +1112,7 @@ AVERAGE
 11
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1171,7 +1141,7 @@ AVERAGE
 12
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1200,7 +1170,7 @@ AVERAGE
 13
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1229,7 +1199,7 @@ AVERAGE
 14
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1258,7 +1228,7 @@ AVERAGE
 15
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1287,7 +1257,7 @@ AVERAGE
 16
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1316,7 +1286,7 @@ AVERAGE
 2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1345,7 +1315,7 @@ AVERAGE
 3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1374,7 +1344,7 @@ AVERAGE
 4
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1403,7 +1373,7 @@ AVERAGE
 5
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1432,7 +1402,7 @@ AVERAGE
 6
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1461,7 +1431,7 @@ AVERAGE
 7
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1490,7 +1460,7 @@ AVERAGE
 8
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1519,7 +1489,7 @@ AVERAGE
 9
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1543,20 +1513,12 @@ CPU_CPU9
 AVERAGE
 </property>
 </object>
-<object id='Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
-<property type="string" id="threshId" mode="w" >
-Total CPU Usage
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-</object>
-<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total CPU Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 17
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1590,7 +1552,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-megabytes
+bytes
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1611,7 +1573,18 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
+<object id='Memory' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Memory
+</property>
+<property type="string" id="legend" mode="w" >
+Memory Threshold
+</property>
+</object>
 <object id='MemoryTotal' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1622,10 +1595,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Total
+Total Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1639,10 +1612,10 @@ AVERAGE
 </object>
 <object id='MemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1651,10 +1624,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Used
+Memory Utilization
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -1668,7 +1641,7 @@ AVERAGE
 </object>
 <object id='PercentMemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1899,13 +1872,13 @@ True
 </object>
 <object id='Memory' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['Memory_PercentMemoryUsed']
+['Memory_MemoryUsed']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
-90
+here.getRRDValue('MemoryTotal') * 0.9
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Memory
@@ -1965,12 +1938,20 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
+<object id='CPU Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Total CPU Usage
+</property>
+<property type="string" id="legend" mode="w" >
+CPU Threshold
+</property>
+</object>
 <object id='CPU1' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1999,7 +1980,7 @@ AVERAGE
 2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2023,20 +2004,12 @@ CPU_CPU2
 AVERAGE
 </property>
 </object>
-<object id='Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
-<property type="string" id="threshId" mode="w" >
-Total CPU Usage
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-</object>
-<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total CPU Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2070,7 +2043,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-megabytes
+bytes
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -2091,7 +2064,18 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
+<object id='Memory' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Memory
+</property>
+<property type="string" id="legend" mode="w" >
+Memory Threshold
+</property>
+</object>
 <object id='MemoryTotal' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2102,10 +2086,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Total
+Total Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2119,10 +2103,10 @@ AVERAGE
 </object>
 <object id='MemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2131,10 +2115,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Used
+Memory Utilization
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2148,7 +2132,7 @@ AVERAGE
 </object>
 <object id='PercentMemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -2435,13 +2419,13 @@ True
 </object>
 <object id='Memory' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['Memory_PercentMemoryUsed']
+['Memory_MemoryUsed']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
-90
+here.getRRDValue('MemoryTotal') * 0.9
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Memory
@@ -2501,12 +2485,20 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
+<object id='CPU Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Total CPU Usage
+</property>
+<property type="string" id="legend" mode="w" >
+CPU Threshold
+</property>
+</object>
 <object id='CPU1' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2535,7 +2527,7 @@ AVERAGE
 2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2564,7 +2556,7 @@ AVERAGE
 3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2593,7 +2585,7 @@ AVERAGE
 4
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2617,20 +2609,12 @@ CPU_CPU4
 AVERAGE
 </property>
 </object>
-<object id='Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
-<property type="string" id="threshId" mode="w" >
-Total CPU Usage
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-</object>
-<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total CPU Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 5
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2664,7 +2648,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-megabytes
+bytes
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -2685,7 +2669,18 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
+<object id='Memory' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Memory
+</property>
+<property type="string" id="legend" mode="w" >
+Memory Threshold
+</property>
+</object>
 <object id='MemoryTotal' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2696,10 +2691,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Total
+Total Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2713,10 +2708,10 @@ AVERAGE
 </object>
 <object id='MemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2725,10 +2720,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Used
+Memory Utilization
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2742,7 +2737,7 @@ AVERAGE
 </object>
 <object id='PercentMemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -3141,13 +3136,13 @@ True
 </object>
 <object id='Memory' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
-['Memory_PercentMemoryUsed']
+['Memory_MemoryUsed']
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
-90
+here.getRRDValue('MemoryTotal') * 0.9
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/Memory
@@ -3207,12 +3202,20 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
+<object id='CPU Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Total CPU Usage
+</property>
+<property type="string" id="legend" mode="w" >
+CPU Threshold
+</property>
+</object>
 <object id='CPU1' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3241,7 +3244,7 @@ AVERAGE
 2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3270,7 +3273,7 @@ AVERAGE
 3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3299,7 +3302,7 @@ AVERAGE
 4
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3328,7 +3331,7 @@ AVERAGE
 5
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3357,7 +3360,7 @@ AVERAGE
 6
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3386,7 +3389,7 @@ AVERAGE
 7
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3415,7 +3418,7 @@ AVERAGE
 8
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3439,20 +3442,12 @@ CPU_CPU8
 AVERAGE
 </property>
 </object>
-<object id='Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
-<property type="string" id="threshId" mode="w" >
-Total CPU Usage
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-</object>
-<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total CPU Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 9
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3486,7 +3481,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-megabytes
+bytes
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -3507,7 +3502,18 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
+<object id='Memory' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Memory
+</property>
+<property type="string" id="legend" mode="w" >
+Memory Threshold
+</property>
+</object>
 <object id='MemoryTotal' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -3518,10 +3524,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Total
+Total Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3535,10 +3541,10 @@ AVERAGE
 </object>
 <object id='MemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3547,10 +3553,10 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf
+%5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Used
+Memory Utilization
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3564,7 +3570,7 @@ AVERAGE
 </object>
 <object id='PercentMemoryUsed' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE

@@ -11,8 +11,8 @@ units=$(snmpwalk -v1 -c $2 $1 .1.3.6.1.2.1.25.2.3.1.4.$oidnum 2>/dev/null | cut 
 if [ -n "$usage" ]
 then
         percent=$(echo "($usage / $total * 100)" | bc -l 2>/dev/null | xargs printf "%1.0f")
-        total=$(echo "($total * $units / 1024)" | bc -l 2>/dev/null | xargs printf "%1.0f")
-        usage=$(echo "($usage * $units / 1024)" | bc -l 2>/dev/null | xargs printf "%1.0f")
+        total=$(echo "($total * $units / 1.024)" | bc -l 2>/dev/null | xargs printf "%1.0f")
+        usage=$(echo "($usage * $units / 1.024)" | bc -l 2>/dev/null | xargs printf "%1.0f")
 
         echo "OK|MemoryTotal=$total MemoryUsed=$usage PercentMemoryUsed=$percent"
 

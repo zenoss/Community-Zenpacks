@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'EmailPing') -->
+<object id='/zport/dmd/Events/Status/EmailPing' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='epAccountReceiveClear' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epAccountReceiveClear
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='epAccountReceiveFailure' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epAccountReceiveFailure
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+3
+</property>
+<property visible="True" type="lines" id="zEventClearClasses" >
+['epAccountReceiveClear']
+</property>
+</object>
+<object id='epPopConnectionClear' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epPopConnectionClear
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='epPopConnectionFailure' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epPopConnectionFailure
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="lines" id="zEventClearClasses" >
+['epPopConnectionClear']
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+4
+</property>
+</object>
+<object id='epPopReceiveClear' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epPopReceiveClear
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='epPopReceiveFailure' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epPopReceiveFailure
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="lines" id="zEventClearClasses" >
+['epPopReceiveClear']
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+4
+</property>
+</object>
+<object id='epSendClear' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epSendClear
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='epSendFailure' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+epSendFailure
+</property>
+<property type="int" id="sequence" mode="w" >
+17
+</property>
+<property visible="True" type="lines" id="zEventClearClasses" >
+['epSendClear']
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+3
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

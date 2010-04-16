@@ -1,0 +1,26 @@
+#! /usr/bin/env bash
+#############################################################################
+# This program is part of Zenoss Core, an open source monitoring platform.
+# Copyright (C) 2007, Zenoss Inc.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2 as published by
+# the Free Software Foundation.
+#
+# For complete information please visit: http://www.zenoss.com/oss/
+#############################################################################
+
+. $ZENHOME/bin/zenfunctions
+
+THIS_FILE_PATH=`python -c "import os.path; print os.path.realpath('$0')"`
+DAEMON_NAME=`basename $THIS_FILE_PATH`
+DAEMON_DIR=`dirname $THIS_FILE_PATH`
+ZENPACK_DIR=`dirname $DAEMON_DIR`
+PRGHOME=$ZENPACK_DIR
+CFGDIR=$ZENPACK_DIR/etc
+
+PRGNAME=$DAEMON_NAME.py
+CFGFILE=$CFGDIR/$DAEMON_NAME.conf
+
+generic "$@"
+

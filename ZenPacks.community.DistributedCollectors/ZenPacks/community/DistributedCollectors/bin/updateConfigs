@@ -1,0 +1,56 @@
+#!/bin/sh
+################################################################################
+#
+# This program is part of the DistributedCollectors Zenpack for Zenoss.
+# Copyright (C) 2010 Egor Puzanov.
+#
+# This program can be used under the GNU General Public License version 2
+# You can find full information here: http://www.zenoss.com/oss
+#
+################################################################################
+
+if [ $USER != "zenoss" ]
+then
+    exit
+fi
+
+master=$1
+collector=$2
+if [ -f $ZENHOME/ZenPacks/daemons.txt ]
+then
+    mv -f $ZENHOME/ZenPacks/daemons.txt $ZENHOME/etc/daemons.txt
+fi
+if [ ! -f $ZENHOME/etc/daemons.txt ]
+then
+    exit
+fi
+cat $ZENHOME/etc/daemons.txt | while read f
+do
+    echo "Update $f configuration"
+    if [ -f $ZENHOME/etc/$f.conf ]
+    then
+        sed -i '/^monitor .*$/d' $ZENHOME/etc/$f.conf
+        sed -i '/^hubhost .*$/d' $ZENHOME/etc/$f.conf
+    fi
+    echo "monitor         $collector" >> $ZENHOME/etc/$f.conf
+    echo "hubhost         $master" >> $ZENHOME/etc/$f.conf
+    if [ ! -f $ZENHOME/bin/$f ]
+    then
+        if [ -L $ZENHOME/bin/$f -a $master = "localhost" ]
+        then
+            rm $ZENHOME/bin/$f 2>/dev/null
+            rm $ZENHOME/etc/$f.conf 2>/dev/null
+        else
+            find $ZENHOME/ZenPacks -name $f -type f -path */daemons/$f -exec ln -fs {} $ZENHOME/bin/$f \;
+        fi
+    fi
+done
+echo "Update zope.conf"
+sed -i 's/server .*\:/server '$master'\:/g' $ZENHOME/etc/zope.conf
+if [ $master = "localhost" ]
+then
+    rm $ZENHOME/etc/daemons.txt 2>/dev/null
+    rm $ZENHOME/etc/DAEMONS_TXT_ONLY 2>/dev/null
+else
+    touch $ZENHOME/etc/DAEMONS_TXT_ONLY 2>/dev/null
+fi

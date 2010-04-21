@@ -12,9 +12,9 @@ __doc__="""ProductMap
 
 ProductMap finds various software packages installed on a device.
 
-$Id: ProductMap.py,v 1.3 2010/04/14 20:20:45 egor Exp $"""
+$Id: ProductMap.py,v 1.4 2010/04/21 18:57:31 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -51,19 +51,22 @@ class ProductMap(WMIPlugin):
         instances = results["Win32_Product"]
         rm = self.relMap()
         for instance in instances:
-            if instance['setInstallDate']:
-                instance['setInstallDate'] = str(instance['setInstallDate'])
-            elif instance['_setInstallDate']:
-                instance['setInstallDate'] = '%s/%s/%s 00:00:00' % (
+            try:
+                if instance['setInstallDate']:
+                    instance['setInstallDate'] = str(instance['setInstallDate'])
+                elif instance['_setInstallDate']:
+                    instance['setInstallDate'] = '%s/%s/%s 00:00:00' % (
                                                 instance['_setInstallDate'][:4],
                                                 instance['_setInstallDate'][4:6],
                                                 instance['_setInstallDate'][6:8])
-            else: instance['setInstallDate'] = '1968/01/08 00:00:00'
-            om = self.objectMap(instance)
-            om.id = self.prepId(om.setProductKey)
-            if om._vendor: om._vendor = om._vendor.split()[0]
-            if om._vendor not in EnterpriseOIDs.values():
-                om._vendor = 'Unknown'
-            om.setProductKey = MultiArgs(om.setProductKey, om._vendor)
-            rm.append(om)
+                else: instance['setInstallDate'] = '1968/01/08 00:00:00'
+                om = self.objectMap(instance)
+                om.id = self.prepId(om.setProductKey)
+                if om._vendor: om._vendor = om._vendor.split()[0]
+                if om._vendor not in EnterpriseOIDs.values():
+                    om._vendor = 'Unknown'
+                om.setProductKey = MultiArgs(om.setProductKey, om._vendor)
+                rm.append(om)
+            except AttributeError:
+                continue
         return rm

@@ -12,9 +12,9 @@ __doc__="""ProcessorMap
 
 ProcessorMap maps the CIM_Processor class to cpus objects
 
-$Id: ProcessorMap.py,v 1.1 2010/04/13 16:48:02 egor Exp $"""
+$Id: ProcessorMap.py,v 1.2 2010/04/21 18:53:05 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -51,7 +51,7 @@ class ProcessorMap(WMIPlugin):
     maptype = "ProcessorMap"
     compname = "hw"
     relname = "cpus"
-    modname = "Products.ZenModel.CPU"
+    modname = "ZenPacks.community.WMIPerf_Windows.Win32Processor"
 
     tables = {
             "Win32_Processor":
@@ -68,7 +68,7 @@ class ProcessorMap(WMIPlugin):
                     'MaxClockSpeed':'clockspeed',
                     'ExternalBusClockSpeed':'_extspeed',
                     'ExtClock':'extspeed',
-                    'NumberOfCores':'_cores',
+                    'NumberOfCores':'core',
                     'SocketDesignation':'socket'
                     }
                 ),
@@ -105,7 +105,7 @@ class ProcessorMap(WMIPlugin):
         if not instances: return
         cores = 1
         sockets = []
-        if not instances[0]['_cores']:
+        if not instances[0]['core']:
             for instance in instances:
                 if instance['socket'] in sockets: continue
                 sockets.append(instance['socket'])
@@ -116,7 +116,7 @@ class ProcessorMap(WMIPlugin):
         for instance in instances:
             if instance['socket'] in sockets: continue
             sockets.append(instance['socket'])
-            if not instance['_cores']: instance['_cores'] = cores
+            if not instance['core']: instance['core'] = cores
             om = self.objectMap(instance)
             if om._status == 0: continue
             try:

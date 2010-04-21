@@ -12,9 +12,9 @@ __doc__="""DiskDriveMap
 
 DiskDriveMap maps Win32_DiskDrive class to HardDisk class.
 
-$Id: DeviceMap.py,v 1.1 2010/02/22 11:21:31 egor Exp $"""
+$Id: DiskDriveMap.py,v 1.2 2010/04/21 18:52:31 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -26,7 +26,7 @@ class DiskDriveMap(WMIPlugin):
     """Map Win32_DiskDrive class to HardDisk"""
 
     maptype = "HardDiskMap"
-    modname = "Products.ZenModel.HardDisk"
+    modname = "ZenPacks.community.WMIPerf_Windows.Win32DiskDrive"
     relname = "harddisks"
     compname = "hw"
 
@@ -37,11 +37,15 @@ class DiskDriveMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
+                    '__path':'snmpindex',
                     'Caption':'description',
                     'Index':'id',
+                    'InterfaceType':'diskType',
                     'Manufacturer':'_manuf',
                     'MediaType':'_mediatype',
                     'Model':'_model',
+                    'SCSITargetId':'bay',
+                    'Size':'size',
                     },
                 ),
             "Win32_PerfRawData_PerfDisk_PhysicalDisk":
@@ -50,7 +54,8 @@ class DiskDriveMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
-                    'Name':'_name',
+                    '__path':'snmpindex',
+                    'Name':'name',
                     },
                 ),
             }
@@ -63,22 +68,22 @@ class DiskDriveMap(WMIPlugin):
         instances = results["Win32_PerfRawData_PerfDisk_PhysicalDisk"]
         if instances:
             for instance in instances:
-                perfnames[instance['_name'].split()[0]] = instance['_name']
+                perfnames[instance['name'].split()[0]] = instance['snmpindex']
         instances = results["Win32_DiskDrive"]
         if not instances: return
         for instance in instances:
             om = self.objectMap(instance)
-            om.id = self.prepId(om.id)
+            om.id = self.prepId('PHYSICALDRIVE%s'%om.id)
+            om.state = 'OK'
             try:
                 if not om._mediatype or not om._mediatype.startswith('Fixed'):
                     continue
-                om.snmpindex = perfnames.get(om.id, None)
-                if not om.snmpindex: continue
-                if om._manuf not in EnterpriseOIDs.values():
-                    om._manuf = 'Unknown'
-                if om._model:
-                    om.setProductKey = MultiArgs(om._model, om._manuf)
+                om.perfindex = perfnames.get(str(instance['id']), None)
+                if not om.perfindex: continue
+                if om._model and not om._manuf: om._manuf = om._model.split()[0]
+                if om._manuf not in EnterpriseOIDs.values(): om._manuf='Unknown'
+                if om._model: om.setProductKey = MultiArgs(om._model, om._manuf)
             except AttributeError:
-                continue
+                raise
             rm.append(om)
         return rm

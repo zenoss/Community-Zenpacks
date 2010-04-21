@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.6 2010/04/14 20:12:14 egor Exp $"""
+$Id: zenperfwmi.py,v 2.7 2010/04/21 18:40:54 egor Exp $"""
 
-__version__ = "$Revision: 2.6 $"[11:-2]
+__version__ = "$Revision: 2.7 $"[11:-2]
 
 import logging
 
@@ -42,7 +42,7 @@ from Products.ZenCollector.tasks import SimpleTaskFactory,\
                                         TaskStates
 from Products.ZenEvents.ZenEventClasses import Error, Clear
 from Products.ZenUtils.observable import ObservableMixin
-from WMIClient import WMIClient, CError
+from WMIClient import WMIClient
 from Products.ZenWin.utils import addNTLMv2Option, setNTLMv2Auth
 
 # We retrieve our configuration data remotely via a Twisted PerspectiveBroker
@@ -212,7 +212,7 @@ class ZenPerfWmiTask(ObservableMixin):
         request.
         """
         err = result.getErrorMessage()
-        log.error("Unable to scan device %s: %s", self._devId, err)
+        log.error("Device %s: %s", self._devId, err)
         collectorName = self._preferences.collectorName
         summary = "Could not get %s Instance (%s)." % (
                                                 collectorName[7:].upper(), err)
@@ -249,13 +249,23 @@ class ZenPerfWmiTask(ObservableMixin):
                 values = []
                 try:
                     for d in data:
-                        if len(d) == 0: continue
-                        if isinstance(d, CError):
+                        if isinstance(d, Failure):
                             self._failure(d, comp)
                             continue
-                        if type(d[dpname]) is list: d[dpname] = d[dpname][0]
-                        if isinstance(d[dpname],DateTime):d[dpname]=d[dpname]._t
-                        if expr: d[dpname] = rrpn(expr, d[dpname])
+                        if len(d) == 0: continue
+                        elif type(d[dpname]) is list:
+                            d[dpname] = d[dpname][0]
+                        elif isinstance(d[dpname], DateTime):
+                            d[dpname] = d[dpname]._t
+                        if expr:
+                            if expr.__contains__(':'):
+                                for vmap in expr.split(','):
+                                    var, val = vmap.split(':')
+                                    if var.strip('"') != d[dpname]: continue
+                                    d[dpname] = int(val)
+                                    break
+                            else:
+                                d[dpname] = rrpn(expr, d[dpname])
                         values.append(d[dpname])
                     if dpname.endswith('_count'): value = len(values)
                     elif not values: continue

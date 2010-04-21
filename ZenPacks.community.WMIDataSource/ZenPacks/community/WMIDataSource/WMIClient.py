@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 1.9 2010/04/15 20:08:38 egor Exp $"""
+$Id: WMIClient.py,v 2.0 2010/04/21 18:34:38 egor Exp $"""
 
-__version__ = "$Revision: 1.9 $"[11:-2]
+__version__ = "$Revision: 2.0 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -27,6 +27,7 @@ from Products.DataCollector.BaseClient import BaseClient
 from ZenPacks.community.WMIDataSource.services.WmiPerfConfig import sortQuery
 
 from twisted.internet import defer, reactor
+from twisted.python.failure import Failure
 from DateTime import DateTime
 
 import os
@@ -57,15 +58,6 @@ def _filename(device):
 
 class BadCredentials(Exception): pass
 
-class CError:
-
-    errormsg = ''
-
-    def __init__(self, errormsg):
-        self.errormsg = errormsg
-
-    def getErrorMessage(self):
-        return self.errormsg
 
 class WMIClient(BaseClient):
 
@@ -114,14 +106,14 @@ class WMIClient(BaseClient):
 
 
     def parseError(self, err, query, instMap):
-        msg = 'Received %s from query: %s'%(err, query)
-        err = CError(msg)
-        log.error(msg)
+        err = Failure(err)
+        err.value = 'Received %s from query: %s'%(err.value, query)
+        log.error(err.getErrorMessage())
         results = {}
         for instances in instMap.values():
             for tables in instances.values():
                 for table, props in tables:
-                    results[table] = [err]
+                    results[table] = [err,]
         return results
 
 
@@ -185,19 +177,18 @@ class WMIClient(BaseClient):
                     yield self.connect(namespace=namespace)
                     driver.next()
                     for classname, instMap in classes.iteritems():
-#                        plst = set()
-#                        for keyprops, insts in instMap.iteritems():
-#                            for tables in insts.values():
-#                                for (table, props) in tables:
-#                                    if props == {}:
-#                                        plst = ['*']
-#                                        break
-#                                    plst = plst.union(props.keys())
-#                                if plst == ['*']: break
-#                            if plst == ['*']: break
-#                            plst = plst.union(keyprops)
-#                        if includeQualifiers:
-                        plst = ['*']
+                        plst = set()
+                        for keyprops, insts in instMap.iteritems():
+                            for tables in insts.values():
+                                for (table, props) in tables:
+                                    if props == {}:
+                                        plst = ['*']
+                                        break
+                                    plst = plst.union(props.keys())
+                                if plst == ['*']: break
+                            if plst == ['*']: break
+                            plst = plst.union(keyprops)
+                        if includeQualifiers: plst = ['*']
                         if classname.upper().startswith('SELECT '):
                             query = classname
                         elif () in instMap or len(instMap) > 1 or \
@@ -336,7 +327,7 @@ if __name__ == "__main__":
         if results is not None: print results
         sys.exit(1)
     for res in results:
-        if isinstance(res, CError):
+        if isinstance(res, Failure):
             print res.getErrorMessage()
         else:
             print "InstanceName: %s"%res['__path']

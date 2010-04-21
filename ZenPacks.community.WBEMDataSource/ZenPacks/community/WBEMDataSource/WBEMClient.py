@@ -12,36 +12,45 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.2 2010/04/15 20:00:08 egor Exp $"""
+$Id: WBEMClient.py,v 2.3 2010/04/21 18:03:25 egor Exp $"""
 
-__version__ = "$Revision: 2.2 $"[11:-2]
+__version__ = "$Revision: 2.3 $"[11:-2]
 
 import Globals
+from Products.ZenUtils.Utils import zenPath
 from Products.ZenUtils.Driver import drive
 from Products.DataCollector.BaseClient import BaseClient
 from ZenPacks.community.WBEMDataSource.lib import pywbem
 from ZenPacks.community.WBEMDataSource.services.WbemPerfConfig import sortQuery
 
 from twisted.internet import defer, reactor
-import socket
-
+from twisted.python.failure import Failure
 from DateTime import DateTime
+
+import os
+import socket
+import sys
 import logging
 log = logging.getLogger("zen.WBEMClient")
 
+BaseName = os.path.basename(sys.argv[0])
+MyName = None
+
+def _myname():
+    global MyName
+    if not MyName:
+        MyName = BaseName.split('.')[0]
+        try:
+            os.mkdir(zenPath('var', _myname()))
+        except os.error:
+            pass
+    return MyName
+
+def _filename(device):
+    return zenPath('var', _myname(), device)
+
 
 class BadCredentials(Exception): pass
-
-
-class CError:
-
-    errormsg = ''
-
-    def __init__(self, errormsg):
-        self.errormsg = errormsg
-
-    def getErrorMessage(self):
-        return self.errormsg
 
 
 class WBEMClient(BaseClient):
@@ -71,11 +80,12 @@ class WBEMClient(BaseClient):
 
     def parseError(self, err, query, instMap):
         if str(err.type).rsplit('.', 1)[1] == 'AuthError':
-            msg = "AuthError: Please set zWinUser and zWinPassword zProperties"
+            msg = 'AuthError: Please set zWinUser and zWinPassword zProperties'
         else:
-            msg = 'Error (%s) received from query: %s'%(err.value[1], query)
-        err = CError(msg)
-#        log.error(msg)
+            msg = 'Received %s from query: %s'%(err.value[1], query)
+        err = Failure(err)
+        err.value = msg
+        log.error(err.getErrorMessage())
         results = {}
         for instances in instMap.values():
             for tables in instances.values():
@@ -287,6 +297,7 @@ def WbemGet(url, query, properties):
     url  = url.rsplit('@', 1)
     device = DeviceProxy()
     device.zWbemProxy, ns = url[1].split('/', 1)
+    device.zWbemProxy, device.zWbemPort = device.zWbemProxy.split(':')
     device.id = device.zWbemProxy
     device.manageIp = device.zWbemProxy
     url  = url[0].split('//', 1)
@@ -350,7 +361,7 @@ if __name__ == "__main__":
         print results
         sys.exit(1)
     for res in results:
-        if isinstance(res, CError):
+        if isinstance(res, Failure):
             print res.getErrorMessage()
         else:
             print "InstanceName: %s"%res['__path']

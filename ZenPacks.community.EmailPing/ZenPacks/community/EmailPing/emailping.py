@@ -42,6 +42,8 @@ TRANSIT_TIME_GRAPH_NAME = 'EmailPing Transit Times'
 MAX_EMAIL_CHUNK = 10
 MAX_INT = sys.maxint
     
+    
+    
 class ToAddress( object ):
     
     def __init__( self, address ):
@@ -51,7 +53,9 @@ class ToAddress( object ):
         self.sendFailure = False
         self.subjects = []
         self.transitTimes = {}
-        
+
+
+
 class EmailPing( PBDaemon ):
     """
     EmailPing is designed to monitor the state of an email server and/or
@@ -124,7 +128,7 @@ class EmailPing( PBDaemon ):
         # deferred.addBoth(lambda unused: self.stop())
     
     def validateOptions( self ):
-        
+    
         if not self.options.toaddress:
             msg = 'Attempting to start EmailPing without ' \
                   'defining --toaddress option.'
@@ -221,7 +225,8 @@ class EmailPing( PBDaemon ):
         return datasource
         
     def configureDataPoints( self, datasource ):
-    
+        usedDataPoints = ['cycleTime']
+        
         if 'cycleTime' not in datasource.datapoints.objectIds():
             datasource.manage_addRRDDataPoint( 'cycleTime' )
             msg = 'Added data point cycleTime to data source %s' % self.name
@@ -230,15 +235,25 @@ class EmailPing( PBDaemon ):
 
         for address in self.toAddresses:
             name = '%s_ql' % address
+            usedDataPoints.append( name )
             if name not in datasource.datapoints.objectIds():
                 datasource.manage_addRRDDataPoint( name )
                 msg = 'Added data point %s to data source %s' % ( name, self.name )
                 self.log.info( msg )
                 self.changedZope = True
             name = '%s_tt' % address
+            usedDataPoints.append( name )
             if name not in datasource.datapoints.objectIds():
                 datasource.manage_addRRDDataPoint( name )
                 msg = 'Added data point %s to data source %s' % ( name, self.name )
+                self.log.info( msg )
+                self.changedZope = True
+                
+        # remove unused data points
+        for datapoint in datasource.datapoints.objectIds():
+            if datapoint not in usedDataPoints:
+                datasource.datapoints._delObject( datapoint )
+                msg = 'Removed datapoint %s from datasource %s' % ( datapoint, self.name )
                 self.log.info( msg )
                 self.changedZope = True
                 
@@ -261,7 +276,7 @@ class EmailPing( PBDaemon ):
         if not self.name in graph.graphPoints.objectIds():
             graphPoint = graph.createGraphPoint( DataPointGraphPoint, self.name )
             graphPoint.dpName = '%s_cycleTime' % self.name
-            self.log.info( 'Added graph point %s to graph \'Cycle Times\'' )
+            self.log.info( 'Added graph point %s to graph \'Cycle Times\'' % self.name )
             self.changedZope = True
         
         graphQL = template.graphDefs._getOb( QUEUE_LENGTH_GRAPH_NAME )
@@ -270,16 +285,36 @@ class EmailPing( PBDaemon ):
             if not address in graphQL.graphPoints.objectIds():
                 graphPoint = graphQL.createGraphPoint( DataPointGraphPoint, address )
                 graphPoint.dpName = '%s_%s_ql' % ( self.name, address )
-                msg = 'Added graph point %s to graph \'EmailPing Queue Lengths\'' % address
+                msg = 'Added graph point %s to graph %s' % \
+                    ( address, QUEUE_LENGTH_GRAPH_NAME )
                 self.log.info( msg )
                 self.changedZope = True
                 
             if not address in graphTT.graphPoints.objectIds():
                 graphPoint = graphTT.createGraphPoint( DataPointGraphPoint, address )
                 graphPoint.dpName = '%s_%s_tt' % ( self.name, address )
-                msg = 'Added graph point %s to graph \'EmailPing Transit Times\'' % address
+                msg = 'Added graph point %s to graph %s' % \
+                    ( address, TRANSIT_TIME_GRAPH_NAME )
                 self.log.info( msg )
                 self.changedZope = True
+        
+        # remove unused graph points 
+        for graphPoint in graphQL.graphPoints.objectIds():
+            if graphPoint not in self.toAddresses:
+                graphQL.graphPoints._delObject( graphPoint )
+                msg = 'Removed graphpoint %s from graph %s' % \
+                    ( graphPoint, QUEUE_LENGTH_GRAPH_NAME )
+                self.log.info( msg )
+                self.changedZope = True
+                
+        for graphPoint in graphTT.graphPoints.objectIds():
+            if graphPoint not in self.toAddresses:
+                graphTT.graphPoints._delObject( graphPoint )
+                msg = 'Removed graphpoint %s from graph %s' % \
+                    ( graphPoint, TRANSIT_TIME_GRAPH_NAME )
+                self.log.info( msg )
+                self.changedZope = True
+                
                 
     def logError( self, error ):
     
@@ -434,7 +469,7 @@ class EmailPing( PBDaemon ):
             # Check to see if this "to" address queue is full. If so,
             # delete the oldest from the queue
             if len( self.toAddresses[address].subjects ) == \
-                    self.options.queuesize:
+                    self.options.emailqueuelength:
                 self.log.warning( 'Email queue %s full.' % address )
                 del self.toAddresses[address].subjects[0]
             
@@ -824,12 +859,12 @@ class EmailPing( PBDaemon ):
         self.parser.set_defaults( toaddress=None )
         
         self.parser.add_option(
-            '--queuesize',
-            dest='queuesize',
+            '--emailqueuelength',
+            dest='emailqueuelength',
             type='int',
             help='Maximum number of emails (per address) to store in ' \
                  'memory for comparison to Inbox' )
-        self.parser.set_defaults( queuesize=5 )
+        self.parser.set_defaults( emailqueuelength=5 )
         
         self.parser.add_option(
             '--pophost',
@@ -861,15 +896,15 @@ class EmailPing( PBDaemon ):
             dest='popport',
             type='int',
             help='Port number to use for logging into pop server. ' \
-                 'Value 0 uses default port for selected poplogintype' )
+                 'Value 0 uses default port for selected poplogintype ' \
+                 '(cleartext=110, ssl=995)' )
         self.parser.set_defaults( popport=0 )
 
         self.parser.add_option(
             '--emailcycleinterval',
             dest='emailcycleinterval',
             type='int',
-            help='Number of seconds between sending/checking emails. ' \
-                 'Default = 180 seconds' )
+            help='Number of seconds between sending/checking emails. ' )
         self.parser.set_defaults( emailcycleinterval = 180 )
 
         #TODO: Allow emailping to run multiple instances

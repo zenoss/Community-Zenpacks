@@ -20,7 +20,6 @@ __version__ = '$Revision: 1.2 $'[11:-2]
 import re
 import types
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
-#from Products.ZenUtils.Utils import prepId
 
 def prepId(id, subchar='_'):
     """

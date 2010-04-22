@@ -12,9 +12,9 @@ __doc__="""DiskDriveMap
 
 DiskDriveMap maps Win32_DiskDrive class to HardDisk class.
 
-$Id: DiskDriveMap.py,v 1.2 2010/04/21 18:52:31 egor Exp $"""
+$Id: DiskDriveMap.py,v 1.3 2010/04/22 13:57:58 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -44,7 +44,7 @@ class DiskDriveMap(WMIPlugin):
                     'Manufacturer':'_manuf',
                     'MediaType':'_mediatype',
                     'Model':'_model',
-                    'SCSITargetId':'bay',
+                    'SCSILogicalUnit':'bay',
                     'Size':'size',
                     },
                 ),

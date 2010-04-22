@@ -12,9 +12,9 @@ __doc__="""ProcessorMap
 
 ProcessorMap maps the CIM_Processor class to cpus objects
 
-$Id: ProcessorMap.py,v 1.2 2010/04/21 18:53:05 egor Exp $"""
+$Id: ProcessorMap.py,v 1.3 2010/04/22 11:21:18 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -69,7 +69,8 @@ class ProcessorMap(WMIPlugin):
                     'ExternalBusClockSpeed':'_extspeed',
                     'ExtClock':'extspeed',
                     'NumberOfCores':'core',
-                    'SocketDesignation':'socket'
+                    'SocketDesignation':'socket',
+                    'VoltageCaps':'_voltage',
                     }
                 ),
             "Win32_CacheMemory":
@@ -85,14 +86,18 @@ class ProcessorMap(WMIPlugin):
                 ),
             }
 
-    def processCacheMemory(self, instances):
+    def processCacheMemory(self, instances, cpus):
         """processing CacheMemory table"""
         cache = {1:0, 2:0, 3:0}
+        caches = 0
         for inst in instances:
             try:
                 level = int(inst['level']) - 2
+                if level == 2: caches = caches + 1
                 cache[level]=inst['BlockSize']*inst['Blocks']/1024+cache[level]
             except: continue
+        if caches < cpus: return cache
+        for level in (1, 2, 3): cache[level] = cache[level] / cpus
         return cache
 
 
@@ -100,18 +105,18 @@ class ProcessorMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-        cache = self.processCacheMemory(results.get("Win32_CacheMemory", None))
         instances = results["Win32_Processor"]
         if not instances: return
         cores = 1
         sockets = []
         if not instances[0]['core']:
-            for instance in instances:
-                if instance['socket'] in sockets: continue
-                sockets.append(instance['socket'])
+            for inst in instances:
+                if inst['socket'] in sockets or inst['_status'] == 0: continue
+                sockets.append(inst['socket'])
             sockets = len(sockets)
-            for level in (1, 2, 3): cache[level] = cache[level] / sockets
             cores = len(instances) / sockets
+        cache = self.processCacheMemory(results.get("Win32_CacheMemory", []) ,
+                                                                        sockets)
         sockets = []
         for instance in instances:
             if instance['socket'] in sockets: continue
@@ -123,6 +128,9 @@ class ProcessorMap(WMIPlugin):
                 om.id = prepId(om.id)
                 om.socket = om.id[3:]
                 if not om.extspeed: om.extspeed = om._extspeed
+                om.voltage = om.voltage * 100
+                if om._voltage in (1, 2, 4):
+                    om.voltage = {1:5000, 2:3300, 4:2900}.get(om._voltage)
                 om.cacheSizeL1 = cache.get(1, 0)
                 om.cacheSizeL2 = cache.get(2, 0)
 #                om.cacheSizeL3 = cache.get(3, 0)

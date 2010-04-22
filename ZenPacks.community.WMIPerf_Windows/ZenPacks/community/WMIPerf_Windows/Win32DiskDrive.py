@@ -16,8 +16,10 @@ $Id: Win32DiskDrive.py,v 1.0 2010/04/21 18:50:10 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
+from Globals import InitializeClass
+from Products.ZenModel.ZenossSecurity import *
 from Products.ZenUtils.Utils import convToUnits
-from Products.ZenModel.HardDisk import *
+from Products.ZenModel.HardDisk import HardDisk
 
 class Win32DiskDrive(HardDisk):
     """HardDisk object"""
@@ -58,12 +60,12 @@ class Win32DiskDrive(HardDisk):
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewWin32DiskDrive'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'

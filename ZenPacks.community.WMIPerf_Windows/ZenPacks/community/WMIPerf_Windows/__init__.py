@@ -10,6 +10,13 @@ if os.path.isdir(skinsDir):
 from Acquisition import aq_base
 from Products.ZenModel.ZenPack import ZenPackBase
 from Products.ZenModel.DeviceClass import manage_addDeviceClass
+from Products.ZenModel.OperatingSystem import OperatingSystem
+
+def logicalProcessors(self):
+    return round(self.device().cacheRRDValue('LoadPercentage_count', 1))
+
+if not hasattr(OperatingSystem, 'logicalProcessors'):
+    OperatingSystem.logicalProcessors = logicalProcessors
 
 class ZenPack(ZenPackBase):
     """ WMIPerf_Windows loader

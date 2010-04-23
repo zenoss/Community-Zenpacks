@@ -8,47 +8,13 @@ from Products.CMFCore.DirectoryView import registerDirectory
 if os.path.isdir(skinsDir):
     registerDirectory(skinsDir, globals())
 
-# Create a simlink to the configuration file. This is so the config can be 
-# accessed from the Settings > Daemons page
-from Products.ZenUtils.Utils import zenPath
-import sys
-
-# The full path to emailping.py is passed as sys.argv[0]. First, we use the
-# filename to see if the symlink exists
-epFileName = os.path.basename( sys.argv[0] )
-
-# strip '.py' add '.conf'
-configFileName = epFileName[:-3] + '.conf'
-configFilePath = zenPath( 'etc', configFileName )
-
-# if the file doesn't exist, create it
-if not os.path.exists( configFilePath ):
-    file = open( configFilePath, 'a' )
-    file.close()
-    # zenpackRootDir = os.path.dirname( sys.argv[0] )
-    # configFile = os.path.join( zenpackRootDir, 'etc', configFileName )
-    # if os.path.exists( configFile ):
-        # try:
-            # cmd = 'ln -s %s %s' % ( configFile, linkFile )
-            # os.system( cmd )
-        # except:
-            # pass
-
-
-
 from Products.ZenModel.ZenPack import ZenPackBase
-class ZenPack(ZenPackBase):
-    
-    def install( self, app ):
-    
-        # create the config file when the zenpack is installed
-        super( ZenPack, self ).install( app )
-        configFileName = zenPath( 'etc', 'emailping.conf' )
-        file = open( configFileName, 'a' )
-        file.close()
-    
-    def remove(self, app, leaveObjects=False):
+from Products.ZenUtils.Utils import zenPath
 
+class ZenPack(ZenPackBase):
+        
+    def remove(self, app, leaveObjects=False):
+        
         super( ZenPack, self ).remove( app, leaveObjects )
         if not leaveObjects:
             self.removeEmailPingObjects()        
@@ -116,9 +82,8 @@ class ZenPack(ZenPackBase):
         Stop all the daemons provided by this pack.
         Called before an upgrade or a removal of the pack.
         """
-        for d in self.getDaemonNames():
-            self.About.doDaemonAction(d, 'stop')
-
+        for daemon in self.getDaemonNames():
+            self.About.doDaemonAction(daemon, 'stop')
 
     def startDaemons(self):
         """

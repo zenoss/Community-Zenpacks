@@ -32,13 +32,13 @@ class NWDeviceMap(SnmpPlugin):
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
-	import re
+        import re
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
         om = self.objectMap(getdata)
-	om.totalSwap = om.totalSwap * 4096
+        om.totalSwap = om.totalSwap * 4096
         maps = []
-	if om.totalMemory > 0:
+        if om.totalMemory > 0:
             maps.append(ObjectMap({"totalMemory": long(om.totalMemory)}, compname="hw"))
         maps.append(ObjectMap({"totalSwap": om.totalSwap}, compname="os"))
         return maps

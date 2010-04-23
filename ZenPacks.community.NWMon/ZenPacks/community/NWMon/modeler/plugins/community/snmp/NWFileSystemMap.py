@@ -30,24 +30,24 @@ class NWFileSystemMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('nwFSVolTable',
-	            '.1.3.6.1.4.1.23.2.28.2.14.1',
+                    '.1.3.6.1.4.1.23.2.28.2.14.1',
                     {
                          '.1': 'snmpindex',
                          '.2': 'mount',
                          '.3': 'totalBlocks',
                          '.7': 'blockSize',
                          '.11': 'totalFiles',
-	                 '.15': 'maxNameLen',
+                         '.15': 'maxNameLen',
                          '.16': 'type',
                     }
-	),
+        ),
     )
 
     fsMaxNameLen = [ 0, 0, 0, 80, 256, 256] 
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
-	import re
+        import re
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
         fstable = tabledata.get("nwFSVolTable")
@@ -57,7 +57,7 @@ class NWFileSystemMap(SnmpPlugin):
             if not fs.has_key("totalBlocks"): continue
             if not (not skipfsnames or re.search(skipfsnames,fs['mount'])): continue
             om = self.objectMap(fs)
-	    om.maxNameLen = self.fsMaxNameLen[om.maxNameLen]
+            om.maxNameLen = self.fsMaxNameLen[om.maxNameLen]
             om.totalBlocks = om.totalBlocks * 1024 / om.blockSize
             om.id = self.prepId(om.mount)
             rm.append(om)

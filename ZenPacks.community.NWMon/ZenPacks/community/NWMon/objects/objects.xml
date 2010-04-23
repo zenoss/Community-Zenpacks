@@ -1244,6 +1244,13 @@ GAUGE
 <property type="boolean" id="isrow" mode="w" >
 True
 </property>
+<tomanycont id='aliases'>
+<object id='usedFilesystemSpace__bytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+<property type="string" id="formula" mode="w" >
+-1024,*,${here/blockSize},${here/totalBlocks},*,+
+</property>
+</object>
+</tomanycont>
 </object>
 </tomanycont>
 </object>
@@ -1310,6 +1317,42 @@ Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='nonFreeableKBytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='totalKBytes' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.23.2.28.2.14.1.3
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='totalKBytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -1503,7 +1546,7 @@ percentage
 False
 </property>
 <property type="boolean" id="base" mode="w" >
-False
+True
 </property>
 <property type="int" id="miny" mode="w" >
 0
@@ -1515,9 +1558,12 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='freeableBlocks' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='freeableBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+5
+</property>
+<property type="string" id="color" mode="w" >
+00FFFF
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
@@ -1529,7 +1575,7 @@ AREA
 True
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -1538,7 +1584,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="rpn" mode="w" >
-1024,*,${here/blockSize},/,${here/totalBlocks},/,100,*
+1024,*,totalBytes,/,100,*
 </property>
 <property type="string" id="dpName" mode="w" >
 freeableKBytes_freeableKBytes
@@ -1547,9 +1593,44 @@ freeableKBytes_freeableKBytes
 AVERAGE
 </property>
 </object>
-<object id='nonFreeableBlocks' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='freeableKBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
+2
+</property>
+<property type="string" id="color" mode="w" >
+00CC00
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+DONTDRAW
+</property>
+<property type="long" id="lineWidth" mode="w" >
 1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+freeableKBytes_freeableKBytes
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='nonFreeableBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<property type="string" id="color" mode="w" >
+0000FF
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
@@ -1561,7 +1642,7 @@ AREA
 True
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -1570,7 +1651,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="rpn" mode="w" >
-1024,*,${here/blockSize},/,${here/totalBlocks},/,100,*
+1024,*,totalBytes,/,100,*
 </property>
 <property type="string" id="dpName" mode="w" >
 nonFreeableKBytes_nonFreeableKBytes
@@ -1579,9 +1660,44 @@ nonFreeableKBytes_nonFreeableKBytes
 AVERAGE
 </property>
 </object>
-<object id='usedBlocks' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='nonFreeableKBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="color" mode="w" >
+00CC00
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+DONTDRAW
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+nonFreeableKBytes_nonFreeableKBytes
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='totalBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+000000
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+DONTDRAW
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1599,7 +1715,42 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="rpn" mode="w" >
-0,*,${here/usedBytes},+,${here/blockSize},/,${here/totalBlocks},/,100,*
+UN,${here/blockSize},${here/totalBlocks},*,totalBytes-raw,1024,*,IF
+</property>
+<property type="string" id="dpName" mode="w" >
+totalKBytes_totalKBytes
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='usedBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property type="string" id="color" mode="w" >
+00CC00
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.1lf%%
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+freeableKBytes-raw,+,nonFreeableKBytes-raw,+,-1024,*,totalBytes,+,totalBytes,/,100,*
 </property>
 <property type="string" id="dpName" mode="w" >
 availKBytes_availKBytes

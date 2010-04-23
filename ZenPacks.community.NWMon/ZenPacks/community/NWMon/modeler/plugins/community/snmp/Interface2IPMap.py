@@ -23,21 +23,21 @@ class Interface2IPMap(InterfaceMap):
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-	rm = self.relMap()
-	om = self.objectMap()
-	om.id = "Novell Second IP Address"
-	om.title = om.id
-	om.interfaceName = om.id
-	om.id = self.prepId(om.interfaceName)
-	om.type = "softwareLoopback"
-	om.speed = 1000000000
-	om.mtu = 1500
-	om.ifindex = "1"
-	om.adminStatus = 1
-	om.operStatus = 1
-	om.monitor = False
+        rm = self.relMap()
+        om = self.objectMap()
+        om.id = "Novell Second IP Address"
+        om.title = om.id
+        om.interfaceName = om.id
+        om.id = self.prepId(om.interfaceName)
+        om.type = "softwareLoopback"
+        om.speed = 1000000000
+        om.mtu = 1500
+        om.ifindex = "1"
+        om.adminStatus = 1
+        om.operStatus = 1
+        om.monitor = False
         om.setIpAddresses = [device.manageIp, ]
-	rm.append(om)
+        rm.append(om)
         return rm
 
 

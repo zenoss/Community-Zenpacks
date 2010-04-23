@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Virtual Machine Host', 'ESX') -->
+<object id='/zport/dmd/Devices/Server/Virtual Machine Host/ESX' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.Esx', 'zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.DellDeviceMap', 'zenoss.snmp.HPDeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'zenoss.snmp.IpServiceMap', 'zenoss.snmp.HRFileSystemMap', 'zenoss.snmp.HRSWInstalledMap', 'zenoss.snmp.HRSWRunMap', 'zenoss.snmp.CpuMap', 'zenoss.snmp.DellCPUMap', 'zenoss.snmp.HPCPUMap', 'zenoss.snmp.DellPCIMap']
+</property>
+<property visible="True" type="string" id="zLinks" >
+&lt;a href="https://${here/getManageIp}/ui"&gt;Admin&lt;/a&gt;
+</property>
+<property visible="True" type="string" id="zSnmpVer" >
+v2c
+</property>
+<property visible="True" type="float" id="zSnmpTimeout" >
+60.0
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='VirtualMachine' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Performance Template for a ESX Virtual Machine component.
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.zenoss.ZenossVirtualHostMonitor.VirtualMachine
+</property>
+<tomanycont id='datasources'>
+<object id='CPU Seconds' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.6876.3.1.2.1.3
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='CPU Seconds' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Current Memory' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.6876.3.2.4.1.4
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='Current Memory' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='CPU' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='CPU Seconds' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+CPU Seconds_CPU Seconds
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Memory Usage' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='Current Memory' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+1024,*
+</property>
+<property type="string" id="dpName" mode="w" >
+Current Memory_Current Memory
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'VMware') -->
+<object id='/zport/dmd/Events/VMware' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='vmHBDetected' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.component = 'unknown'
+if hasattr(evt, 'vmConfigFile'):
+    evt.component = evt.vmConfigFile.split('/')[-2]
+evt.summary = 'Virtual machine %s heartbeat detected' % evt.component
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+vmHBDetected
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="string" id="regex" mode="w" >
+snmp trap vmHBDetected from
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap vmHBDetected from esx2.zenoss.loc
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='vmHBLost' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.component = 'unknown'
+if hasattr(evt, 'vmConfigFile'):
+    evt.component = evt.vmConfigFile.split('/')[-2]
+evt.summary = 'Virtual machine %s heartbeat lost' % evt.component
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+vmHBLost
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="string" id="regex" mode="w" >
+snmp trap vmHBLost from
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap vmHBLost from esx2.zenoss.loc
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+4
+</property>
+</object>
+<object id='vmPoweredOff' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.component = 'unknown'
+if hasattr(evt, 'vmConfigFile'):
+    evt.component = evt.vmConfigFile.split('/')[-2]
+evt.summary = 'Virtual machine %s powered off' % evt.component
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+vmPoweredOff
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="string" id="regex" mode="w" >
+snmp trap vmPoweredOff
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap vmPoweredOff from esx2.zenoss.loc
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+4
+</property>
+</object>
+<object id='vmPoweredOn' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.component = 'unknown'
+if hasattr(evt, 'vmConfigFile'):
+    evt.component = evt.vmConfigFile.split('/')[-2]
+evt.summary = 'Virtual machine %s powered on' % evt.component
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+vmPoweredOn
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="string" id="regex" mode="w" >
+snmp trap vmPoweredOn
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap vmPoweredOn from esx2.zenoss.loc
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='vmSuspended' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.component = 'unknown'
+devname = ""
+if hasattr(evt, 'vmConfigFile'):
+    devname = evt.vmConfigFile.split('/')[-2]
+    evt.component = devname
+evt.summary = 'Virtual machine %s suspended' % devname
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+vmSuspended
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="string" id="regex" mode="w" >
+snmp trap vmSuspended from
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap vmSuspended from esx2.zenoss.loc
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+3
+</property>
+</object>
+</tomanycont>
+<object id='MigrateAcquire' module='Products.ZenEvents.EventClass' class='EventClass'>
+</object>
+<object id='MigrateRelease' module='Products.ZenEvents.EventClass' class='EventClass'>
+</object>
+</object>
+</objects>

@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = 'ZenPacks.community.HPUXMonitor'
-VERSION = '2.1.2'
+VERSION = '2.2'
 AUTHOR = 'Mike Albon'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.HPUXMonitor']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.2'
+COMPAT_ZENOSS_VERS = '>=2.4'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################

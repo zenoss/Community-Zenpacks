@@ -8,7 +8,7 @@ __version__ = '$Revision: 1.2 $'[11:-2]
 
 import re
 
-from CollectorPlugin import SnmpPlugin, GetTableMap
+from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 from Products.DataCollector.plugins.DataMaps import ObjectMap
 import Globals
 

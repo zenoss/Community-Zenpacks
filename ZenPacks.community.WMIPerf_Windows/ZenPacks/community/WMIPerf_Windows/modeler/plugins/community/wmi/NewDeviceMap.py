@@ -13,15 +13,14 @@ __doc__="""NewDeviceMap
 DeviceMap maps CIM_ComputerSystem and CIM_OperationSystem classes to get hw and
 os products.
 
-$Id: DeviceMap.py,v 1.1 2010/02/22 11:24:21 egor Exp $"""
+$Id: NewDeviceMap.py,v 1.2 2010/04/23 07:43:25 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import ObjectMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
-from Products.DataCollector.EnterpriseOIDs import EnterpriseOIDs
 
 class NewDeviceMap(WMIPlugin):
     """
@@ -51,6 +50,15 @@ class NewDeviceMap(WMIPlugin):
                     'Name':'_name',
                     },
                 ),
+            "Win32_SystemEnclosure":
+                (
+                "Win32_SystemEnclosure",
+                None,
+                "root/cimv2",
+                    {
+                    'SerialNumber':'sn',
+                    },
+                ),
             }
 
 
@@ -62,12 +70,11 @@ class NewDeviceMap(WMIPlugin):
             if not cs: return
             os = results['Win32_OperatingSystem'][0]
             if not os: return
+            sn = results.get('Win32_SystemEnclosure',({'sn':None},))[0]['sn']
             om = self.objectMap()
-            if cs['_manuf'] in EnterpriseOIDs.values():
-                om.setHWProductKey = MultiArgs(cs['_model'], cs['_manuf'])
-            else:
-                om.setHWProductKey = MultiArgs(cs['_model'], 'Unknown')
+            om.setHWProductKey = MultiArgs(cs['_model'], cs['_manuf'])
             om.setOSProductKey=MultiArgs(os['_name'].split('|')[0],'Microsoft')
+            if str(sn) != 'None': om.setHWSerialNumber = sn
         except:
             return
         return om

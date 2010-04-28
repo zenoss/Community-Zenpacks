@@ -74,7 +74,6 @@ class DiskDriveMap(WMIPlugin):
         for instance in instances:
             om = self.objectMap(instance)
             om.id = self.prepId('PHYSICALDRIVE%s'%om.id)
-            om.state = 'OK'
             try:
                 if not om._mediatype or not om._mediatype.startswith('Fixed'):
                     continue

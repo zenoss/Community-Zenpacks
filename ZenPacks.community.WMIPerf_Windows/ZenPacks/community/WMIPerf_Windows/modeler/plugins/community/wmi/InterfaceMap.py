@@ -13,9 +13,9 @@ __doc__ = """InterfaceMap
 Gather IP network interface information from WMI, and 
 create DMD interface objects
 
-$Id: InterfaceMap.py,v 1.2 2010/04/13 13:28:24 egor Exp $"""
+$Id: InterfaceMap.py,v 1.3 2010/04/28 19:05:39 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 import re
 import types

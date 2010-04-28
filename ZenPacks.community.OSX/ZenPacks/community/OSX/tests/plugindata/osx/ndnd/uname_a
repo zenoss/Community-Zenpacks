@@ -1,0 +1,5 @@
+uname -a && system_profiler SPHardwareDataType | grep 'Serial Number (system)' && system_profiler -detailLevel mini | grep 'Model Identifier' && system_profiler -detailLevel mini SPSoftwareDataType | grep 'System Version'
+Darwin Ndnd.local 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386
+      Serial Number (system): W9922J5F0P0
+      Model Identifier: MacBook4,1
+      System Version: Mac OS X 10.5.8 (9L31a)

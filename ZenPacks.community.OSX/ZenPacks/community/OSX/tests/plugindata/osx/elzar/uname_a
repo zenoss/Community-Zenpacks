@@ -1,0 +1,5 @@
+uname -a && system_profiler SPHardwareDataType | grep 'Serial Number (system)' && system_profiler -detailLevel mini | grep 'Model Identifier' && system_profiler -detailLevel mini SPSoftwareDataType | grep 'System Version'
+Darwin elzar.local 10.3.0 Darwin Kernel Version 10.3.0: Fri Feb 26 11:58:09 PST 2010; root:xnu-1504.3.12~1/RELEASE_I386 i386
+      Serial Number (system): W99114EYYJX
+      Model Identifier: MacBookPro4,1
+      System Version: Mac OS X 10.6.3 (10D573)

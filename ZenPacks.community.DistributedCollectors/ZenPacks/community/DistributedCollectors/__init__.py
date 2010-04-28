@@ -24,8 +24,10 @@ from Products.ZenWidgets import messaging
 from Products.ZenUtils.Utils import monkeypatch
 from Products.ZenUtils.Utils import zenPath
 from Products.ZenUtils.Utils import executeStreamCommand
+from Products.ZenModel.PerformanceConf import performancePath
 
 zpDir = zenPath('ZenPacks')
+updConfZenBin = zenPath('bin/updateConfigs')
 updConfBin = os.path.join(os.path.dirname(__file__), 'bin/updateConfigs')
 masterdaemons=['zeoctl','zopectl','zenhub','zenjobs','zenactions','zenmodeler']
 
@@ -59,14 +61,13 @@ def setupRemoteMonitors(ids, templ, REQUEST=None, install=None, remove=None):
         if remove:
             write('Revert Remote Collector configuration')
             executeStreamCommand('ssh %s %s localhost localhost'%(id,
-                                                updConfBin), write, timeout=240)
+                                            updConfZenBin), write, timeout=240)
         write('Remove ZenPacks files from Remote Collector')
         executeStreamCommand('ssh %s rm -fr %s'%(id, zpDir), write, timeout=240)
         if install:
             write('Copy ZenPacks files to Remote Collector')
 #  Copy ZenPacks files with scp
 #            executeStreamCommand('scp -r %s %s:%s'%(zpDir, id, zpDir), write,
-#
 #                                                                timeout=240)
 #  Copy ZenPacks files with cpio compression
             executeStreamCommand('find %s -print | cpio -oc | ssh -C %s "cd / && cpio -ic 2>/dev/null"'%(
@@ -78,6 +79,55 @@ def setupRemoteMonitors(ids, templ, REQUEST=None, install=None, remove=None):
         executeStreamCommand('ssh %s "zenoss start"'%id, write, timeout=240)
         write('Finish')
     out.write(str(footer))
+
+
+@monkeypatch('Products.ZenModel.Device.Device')
+def setPerformanceMonitor(self, performanceMonitor,
+                            newPerformanceMonitor=None, REQUEST=None):
+    """
+    Set the performance monitor for this device.
+    If newPerformanceMonitor is passed in create it
+
+    @permission: ZEN_CHANGE_DEVICE
+    """
+    if newPerformanceMonitor:
+        #self.dmd.RenderServer.moveRRDFiles(self.id,
+        #    newPerformanceMonitor, performanceMonitor, REQUEST)
+        performanceMonitor = newPerformanceMonitor
+
+    obj = self.getDmdRoot("Monitors").getPerformanceMonitor(
+                                                    performanceMonitor)
+    try:
+        if self.getPerformanceServerName() == performanceMonitor: raise
+        if self.getPerformanceServer().renderurl == '/zport/RenderServer':
+            self.dmd.RenderServer.packageRRDFiles(self.id)
+            self.dmd.RenderServer.deleteRRDFiles(self.id)
+        else:
+            os.system('ssh %s tar -C%s -czf - . > %s/%s.tgz'%(
+                                    self.getPerformanceServer().id,
+                                    performancePath('/Devices/%s'%self.id),
+                                    self.dmd.RenderServer.tmpdir, self.id))
+            os.system('ssh %s rm -fr %s'%(self.getPerformanceServer().id,
+                                    performancePath('/Devices/%s'%self.id)))
+        if obj.renderurl == '/zport/RenderServer':
+            self.dmd.RenderServer.unpackageRRDFiles(self.id)
+        else:
+            os.system('cat %s/%s.tgz | ssh %s "(mkdir -p %s && tar -C%s -xzf - )"'%(
+                                    self.dmd.RenderServer.tmpdir,self.id,obj.id,
+                                    performancePath('/Devices/%s'%self.id),
+                                    performancePath('/Devices/%s'%self.id)))
+        os.unlink('%s/%s.tgz'%(self.dmd.RenderServer.tmpdir, self.id))
+    except:
+        pass
+    self.addRelation("perfServer", obj)
+    self.setLastChange()
+
+    if REQUEST:
+        messaging.IMessageSender(self).sendToBrowser(
+            'Monitor Changed',
+            'Performance monitor has been set to %s.' % performanceMonitor
+        )
+        return self.callZenScreen(REQUEST)
 
 
 @monkeypatch('Products.ZenModel.MonitorClass.MonitorClass')

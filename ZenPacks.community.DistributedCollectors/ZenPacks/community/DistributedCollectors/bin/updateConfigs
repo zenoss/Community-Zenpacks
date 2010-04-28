@@ -51,6 +51,8 @@ if [ $master = "localhost" ]
 then
     rm $ZENHOME/etc/daemons.txt 2>/dev/null
     rm $ZENHOME/etc/DAEMONS_TXT_ONLY 2>/dev/null
+    rm $ZENHOME/bin/updateConfigs
 else
     touch $ZENHOME/etc/DAEMONS_TXT_ONLY 2>/dev/null
+    ln -fs $0 $ZENHOME/bin/updateConfigs
 fi

@@ -25,21 +25,21 @@ class ZenPack(ZenPackBase):
         dc.devtypes = ['SNMP',]
         dc.zIcon = '/zport/dmd/server-netware.png'
         dc.zLinks = "<a href='https://${here/manageIp}:8009' target='_'>Novell Remote Manager</a> <a href='https://${here/manageIp}/nps' target='_'>iManager</a>"
-        dc.zCollectorPlugins = self.dmd.Devices.Server.zCollectorPlugins + [
+        dc.zCollectorPlugins = tuple(self.dmd.Devices.Server.zCollectorPlugins) + (
                                                             'community.snmp.NWDeviceMap',
-                                                            'community.snmp.NWFileSystemMap']
+                                                            'community.snmp.NWFileSystemMap')
         if not hasattr(self.dmd.Devices.Server.NetWare, 'NCS'):
             manage_addDeviceClass(self.dmd.Devices.Server.NetWare, 'NCS')
         nwcs = self.dmd.Devices.Server.NetWare.NCS
         nwcs.description = 'Novell Cluster Virtual Resources'
         nwcs.devtypes = ['SNMP',]
-        nwcs.zCollectorPlugins = ['zenoss.snmp.NewDeviceMap',
+        nwcs.zCollectorPlugins = ('zenoss.snmp.NewDeviceMap',
                                 'zenoss.snmp.DeviceMap',
                                 'zenoss.snmp.IpServiceMap',
                                 'zenoss.snmp.HRSWRunMap',
                                 'community.snmp.Interface2IPMap',
                                 'community.snmp.NWFileSystemMap',
-                                ]
+                                )
         ZenPackBase.install(self, app)
         dc.zNWFileSystemMapIncludeNames = '^SYS'
         nwcs.zNWFileSystemMapIncludeNames = '^VOLUME_NAME'

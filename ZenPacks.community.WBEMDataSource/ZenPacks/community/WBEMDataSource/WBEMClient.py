@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.3 2010/04/21 18:03:25 egor Exp $"""
+$Id: WBEMClient.py,v 2.4 2010/05/04 19:50:54 egor Exp $"""
 
-__version__ = "$Revision: 2.3 $"[11:-2]
+__version__ = "$Revision: 2.4 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -95,9 +95,11 @@ class WBEMClient(BaseClient):
 
 
     def parseValue(self, value):
+        if isinstance(value, pywbem.Uint8): return int(value)
         if isinstance(value, pywbem.Uint16): return int(value)
         if isinstance(value, pywbem.Uint32): return int(value)
         if isinstance(value, pywbem.Uint64): return int(value)
+        if isinstance(value, pywbem.Sint8): return int(value)
         if isinstance(value, pywbem.Sint16): return int(value)
         if isinstance(value, pywbem.Sint32): return int(value)
         if isinstance(value, pywbem.Sint64): return int(value)

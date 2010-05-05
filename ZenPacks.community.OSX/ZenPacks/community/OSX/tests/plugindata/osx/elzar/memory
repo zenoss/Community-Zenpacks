@@ -1,0 +1,2 @@
+system_profiler -detailLevel mini SPHardwareDataType | grep Memory
+      Memory: 4 GB

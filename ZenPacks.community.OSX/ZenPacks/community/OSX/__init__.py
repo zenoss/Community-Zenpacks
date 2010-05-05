@@ -20,5 +20,7 @@ class ZenPack(ZenPackBase):
 
         plugins=[]
         plugins.append('zenoss.cmd.osx.uname_a')
+        plugins.append('zenoss.cmd.osx.memory')
+        plugins.append('zenoss.cmd.osx.cpu')
         osx.setZenProperty( 'zCollectorPlugins', plugins )
 

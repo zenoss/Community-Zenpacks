@@ -1,0 +1,18 @@
+system_profiler -detailLevel mini SPHardwareDataType
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: MacBook
+      Model Identifier: MacBook4,1
+      Processor Name: Intel Core 2 Duo
+      Processor Speed: 2.1 GHz
+      Number Of Processors: 1
+      Total Number Of Cores: 2
+      L2 Cache: 3 MB
+      Memory: 4 GB
+      Bus Speed: 800 MHz
+      Boot ROM Version: MB41.00C1.B00
+      SMC Version (system): 1.31f0
+      Sudden Motion Sensor:
+          State: Enabled

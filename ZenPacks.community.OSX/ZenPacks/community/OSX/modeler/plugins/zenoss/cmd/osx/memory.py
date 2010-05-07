@@ -36,6 +36,6 @@ class memory(CommandPlugin):
         mem_size = int(mem_value) * MULTIPLIER.get(unit, 1)
 
         maps.append(ObjectMap({"totalMemory": mem_size}, compname="hw"))
-        log.info("memory output %s" % maps)
+        log.debug(maps)
         return maps
 

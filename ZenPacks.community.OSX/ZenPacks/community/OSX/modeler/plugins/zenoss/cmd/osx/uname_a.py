@@ -54,4 +54,5 @@ class uname_a(CommandPlugin):
         #using "Apple" instead of "Darwin" for clarity
         om.setOSProductKey = MultiArgs(osversion,"Apple")
 
+        log.debug(om)
         return om

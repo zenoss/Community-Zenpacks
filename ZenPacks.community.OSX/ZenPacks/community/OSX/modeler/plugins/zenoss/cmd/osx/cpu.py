@@ -63,6 +63,10 @@ class cpu(CommandPlugin):
                 if key == 'Processor Speed':
                     speed, unit = value.strip().split()
                     om.clockspeed = float(speed) * CPUMULTIPLIER.get(unit, 1)
+                #       Bus Speed: 800 MHz
+                if key == 'Bus Speed':
+                    speed, unit = value.strip().split()
+                    om.extspeed = float(speed) * CPUMULTIPLIER.get(unit, 1)
                 #       Number Of Processors: 1
                 if key == 'Number Of Processors':
                     number = int(value.strip())

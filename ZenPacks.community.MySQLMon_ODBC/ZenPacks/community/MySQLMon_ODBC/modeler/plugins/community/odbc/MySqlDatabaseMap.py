@@ -20,7 +20,7 @@ from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 
 class MySqlDatabaseMap(OdbcPlugin):
-    
+
 
     ZENPACKID = 'ZenPacks.community.MySQLMon_ODBC'
 
@@ -30,14 +30,14 @@ class MySqlDatabaseMap(OdbcPlugin):
     modname = "ZenPacks.community.MySQLMon_ODBC.MySqlDatabase"
     deviceProperties = \
                 OdbcPlugin.deviceProperties + ('zMySqlUsername',
-		                               'zMySqlPassword',
-					       'zMySqlConnectionString',
-					       )
+                                               'zMySqlPassword',
+                                               'zMySqlConnectionString',
+                                               )
 
 
     def queries(self, device):
         cs =  ';'.join((getattr(device, 'zMySqlConnectionString', None),
-	                'DATABASE=information_schema',
+                        'DATABASE=information_schema',
                         'SERVER=%s'%str(device.manageIp),
                         'UID=%s'%getattr(device, 'zMySqlUsername', None),
                         'PWD=%s'%getattr(device, 'zMySqlPassword', None)))
@@ -51,11 +51,11 @@ class MySqlDatabaseMap(OdbcPlugin):
 
     def process(self, device, results, log):
         log.info('processing %s for device %s', self.name(), device.id)
-	databases = results.get('databases')
-	if not databases: return
+        databases = results.get('databases')
+        if not databases: return
         rm = self.relMap()
         for database in databases:
-	    try:
+            try:
                 om = self.objectMap(database)
                 om.id = self.prepId(om.dbname)
                 om.status = 2

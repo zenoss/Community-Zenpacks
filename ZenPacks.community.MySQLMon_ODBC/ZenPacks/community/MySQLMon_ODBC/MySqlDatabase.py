@@ -30,7 +30,7 @@ class MySqlDatabase(Database, HWStatus):
     ZENPACKID = 'ZenPacks.community.MySQLMon_ODBC'
 
     portal_type = meta_type = 'MySqlDatabase'
-    
+
     def totalBytes(self):
         """
         Return the number of total bytes

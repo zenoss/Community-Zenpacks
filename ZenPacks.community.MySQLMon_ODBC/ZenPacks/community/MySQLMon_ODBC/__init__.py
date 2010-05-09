@@ -12,10 +12,10 @@ from Products.ZenModel.ZenPack import ZenPackBase
 class ZenPack(ZenPackBase):
     """ MySQLMon loader
     """
-    
+
     packZProperties = [
-            ('zMySqlConnectionString', 'DRIVER={MySQL};OPTION=3;PORT=3306;Database=information_schema', 'string'),
+            ('zMySqlConnectionString', 'DRIVER={MySQL};OPTION=3;PORT=3306', 'string'),
             ('zMySqlUsername', 'zenoss', 'string'),
             ('zMySqlPassword', '', 'password'),
-	    ]
+            ]
 

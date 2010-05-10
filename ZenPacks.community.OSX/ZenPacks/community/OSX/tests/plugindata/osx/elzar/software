@@ -1,0 +1,1802 @@
+system_profiler SPApplicationsDataType | sed '/Kind:/d' | sed '/64-Bit (Intel):/d' | sed '/^$/d' | sed 's/\©/\(c\)/g'
+Applications:
+    VLC:
+      Version: 1.0.5
+      Last Modified: 1/30/10 5:25 PM
+      Get Info String: VLC media player - version 1.0.5 Goldeneye - (c) 1996-2010 the VideoLAN team
+      Location: /Applications/Installed/VLC.app
+    Vienna:
+      Version: 2.5.0.2501
+      Last Modified: 3/18/10 7:28 AM
+      Get Info String: Vienna version 2.5.0.2501, Copyright 2004-2010 Contributors. See Help/Acknowledgements for list of contributors.
+      Location: /Applications/Installed/Vienna.app
+    Terminal:
+      Version: 2.1.1
+      Last Modified: 7/6/09 1:18 AM
+      Get Info String: 2.1.1, ¬(c) 1995-2009 Apple Inc. All Rights Reserved.
+      Location: /Applications/Utilities/Terminal.app
+    VMware Fusion:
+      Version: 3.0.2
+      Last Modified: 6/22/09 5:56 PM
+      Location: /Applications/VMware Fusion.app
+    Adium:
+      Version: 1.4b17
+      Last Modified: 12/1/09 9:56 PM
+      Get Info String: 1.4b17, Copyright 2001-2009 The Adium Team
+      Location: /Applications/Installed/Adium.app
+    iCal:
+      Version: 4.0.2
+      Last Modified: 7/16/09 2:42 AM
+      Location: /Applications/iCal.app
+    Preview:
+      Version: 5.0.2
+      Last Modified: 7/15/09 12:51 AM
+      Get Info String: 5.0.1, Copyright 2002-2009 Apple Inc.
+      Location: /Applications/Preview.app
+    SpamSieve:
+      Version: 2.8.1
+      Last Modified: 3/24/10 11:27 AM
+      Get Info String: 2.8.1, ¬(c)2002‚Äì2010 C-Command Software
+      Location: /Applications/Installed/SpamSieve.app
+    Mail:
+      Version: 4.2
+      Last Modified: 7/24/09 12:20 AM
+      Location: /Applications/Mail.app
+    Disk Utility:
+      Version: 11.5.1
+      Last Modified: 8/1/09 1:05 AM
+      Get Info String: Version 11.5.1, Copyright ¬(c) 1999-2009 Apple Inc. All rights reserved.
+      Location: /Applications/Utilities/Disk Utility.app
+    Emacs:
+      Version: 1.1
+      Last Modified: 7/25/09 6:54 PM
+      Location: /Applications/Installed/Emacs.app
+    Firefox:
+      Version: 3.6.3
+      Last Modified: 8/24/09 12:33 PM
+      Get Info String: Firefox 3.6.3, ¬(c) 1998-2010 Contributors
+      Location: /Applications/Installed/Firefox.app
+    OmniFocus:
+      Version: 1.7.5
+      Last Modified: 10/23/09 12:19 PM
+      Get Info String: OmniFocus 1.7.5, version 77.41.6.0.121031, ¬(c) 2007-2009 The Omni Group
+      Location: /Applications/Installed/OmniFocus.app
+    System Preferences:
+      Version: 7.0
+      Last Modified: 6/27/09 1:09 AM
+      Location: /Applications/System Preferences.app
+    iTunes:
+      Version: 9.1.1
+      Last Modified: 4/27/10 4:39 PM
+      Get Info String: iTunes 9.1.1, ¬(c) 2000-2010 Apple Inc. All rights reserved.
+      Location: /Applications/iTunes.app
+    Skype:
+      Version: 2.8.0.851
+      Last Modified: 2/8/10 8:15 AM
+      Get Info String: Skype version 2.8.0.851 (16248), Copyright ¬(c) 2004-2010 Skype Technologies S.A.
+      Location: /Applications/Installed/Skype.app
+    System Profiler:
+      Version: 10.6.0
+      Last Modified: 5/19/09 12:53 AM
+      Get Info String: 10.6.0, Copyright 1997-2009 Apple, Inc.
+      Location: /Applications/Utilities/System Profiler.app
+    Safari:
+      Version: 4.0.5
+      Last Modified: 5/21/09 5:20 PM
+      Get Info String: 4.0.5, Copyright ¬(c) 2003-2010 Apple Inc.
+      Location: /Applications/Safari.app
+    Google Chrome:
+      Version: 5.0.375.29
+      Last Modified: 4/29/10 10:17 PM
+      Location: /Applications/Installed/Google Chrome.app
+    Network Utility:
+      Version: 1.4.6
+      Last Modified: 6/24/09 9:25 PM
+      Get Info String: Version 1.4.6, Copyright ¬(c) 2000-2009 Apple Inc. All rights reserved.
+      Location: /Applications/Utilities/Network Utility.app
+    Remote Desktop Connection:
+      Version: 2.0.1
+      Last Modified: 7/14/09 3:21 AM
+      Get Info String: 2.0.1 (090714), ¬(c) 1998 - 2008 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Remote Desktop Connection.app
+    Microsoft Word:
+      Version: 12.2.4
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.4 (100205), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Microsoft Word.app
+    Microsoft PowerPoint:
+      Version: 12.2.4
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.4 (100205), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Microsoft PowerPoint.app
+    Microsoft Excel:
+      Version: 12.2.4
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.4 (100205), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Microsoft Excel.app
+    MagicPrefs:
+      Version: 1.9.0
+      Last Modified: 5/4/10 3:53 AM
+      Location: /Applications/Installed/MagicPrefs.app
+    Keychain Access:
+      Version: 4.1
+      Last Modified: 7/31/09 2:19 AM
+      Location: /Applications/Utilities/Keychain Access.app
+    OpenOffice.org:
+      Version: 3.1.1
+      Last Modified: 10/16/09 7:45 AM
+      Get Info String: OpenOffice.org 3.1.1 [310m19(Build:9420)]
+      Location: /Applications/Installed/OpenOffice.org.app
+    X11:
+      Version: 2.3.5
+      Last Modified: 7/6/09 1:30 AM
+      Get Info String: org.x.X11
+      Location: /Applications/Utilities/X11.app
+    zenoss-stack-2.5.2-590:
+      Version: 3.0
+      Last Modified: 2/26/10 12:51 AM
+      Get Info String: BitRock InstallBuilder, Copyright 2004-2007 BitRock.
+      Location: /Users/mray/Downloads/zenoss-stack-2.5.2-590.app
+    iPhoto:
+      Version: 7.1.5
+      Last Modified: 6/25/07 1:31 PM
+      Get Info String: iPhoto 7.1.5, Copyright ¬(c) 2002-2008 Apple Inc.
+      Location: /Applications/iPhoto.app
+    Archive Utility:
+      Version: 10.6
+      Last Modified: 6/18/09 12:01 AM
+      Location: /System/Library/CoreServices/Archive Utility.app
+    Software Update:
+      Version: 4.0.3
+      Last Modified: 7/24/09 12:14 AM
+      Get Info String: Software Update version 4.0, Copyright ¬(c) 2000-2009, Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/Software Update.app
+    Finder:
+      Version: 10.6.4
+      Last Modified: 7/31/09 2:21 AM
+      Get Info String: Mac OS X Finder 10.6.4
+      Location: /System/Library/CoreServices/Finder.app
+    Dictionary:
+      Version: 2.1.2
+      Last Modified: 6/10/09 9:32 PM
+      Location: /Applications/Dictionary.app
+    _seleniumtestdata:
+      Last Modified: 7/28/08 4:44 PM
+      Location: /Users/mray/ws/enterprise/enterprise-eval/EnterpriseSkin/tests/selenium/_seleniumtestdata.app
+    _seleniumtestdata:
+      Last Modified: 7/28/08 4:44 PM
+      Location: /Users/mray/ws/enterprise/zenForSPs-eval/ZenForSPsSkin/tests/selenium/_seleniumtestdata.app
+    DigitalColor Meter:
+      Version: 3.7.2
+      Last Modified: 5/28/09 12:06 AM
+      Get Info String: 3.7.2, Copyright 2001-2008 Apple Inc. All Rights Reserved.
+      Location: /Applications/Utilities/DigitalColor Meter.app
+    Bluetooth Setup Assistant:
+      Version: 2.3.1
+      Last Modified: 8/1/09 1:05 AM
+      Get Info String: 2.3.1, Copyright (c) 2010 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/Bluetooth Setup Assistant.app
+    AppleMobileSync:
+      Version: 3.1
+      Last Modified: 4/27/10 4:39 PM
+      Location: /System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/AppleMobileSync.app
+    AppleMobileDeviceHelper:
+      Version: 3.1
+      Last Modified: 4/27/10 4:39 PM
+      Location: /System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/AppleMobileDeviceHelper.app
+    Address Book:
+      Version: 5.0.1
+      Last Modified: 7/25/09 12:36 AM
+      Location: /Applications/Address Book.app
+    WebKitPluginHost:
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/WebKit.framework/WebKitPluginHost.app
+    Python:
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Python.framework/Versions/2.5/Resources/Python.app
+    Xcode:
+      Version: 3.2.2
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: Xcode version 3.2.2
+      Location: /Developer/Applications/Xcode.app
+    iSync Plug-in Maker:
+      Version: 3.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/iSync Plug-in Maker.app
+    USB Prober:
+      Version: 3.7.5
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 3.7.5, Copyright ¬(c) 2002-2007 Apple Inc. All Rights Reserved.
+      Location: /Developer/Applications/Utilities/USB Prober.app
+    Syncrospector:
+      Version: 4.0
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: Syncrospector 3.0, ¬(c) 2004 Apple Computer, Inc., All rights reserved.
+      Location: /Developer/Applications/Utilities/Syncrospector.app
+    SRLanguageModeler:
+      Version: 1.9
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/Speech/SRLanguageModeler.app
+    Repeat After Me:
+      Version: 1.3
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 1.3, Copyright ¬(c) 2002-2005 Apple Computer, Inc.
+      Location: /Developer/Applications/Utilities/Speech/Repeat After Me.app
+    SleepX:
+      Version: 2.7
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/SleepX.app
+    Build Applet:
+      Version: 2.6.0
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 2.6.0a0, (c) 2004 Python Software Foundation.
+      Location: /Developer/Applications/Utilities/Python 2.6/Build Applet.app
+    Property List Editor:
+      Version: 5.3
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/Property List Editor.app
+    PackageMaker:
+      Version: 3.0.4
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/PackageMaker.app
+    Build Applet:
+      Version: 2.5.4
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 2.5.4a0, (c) 2004 Python Software Foundation.
+      Location: /Developer/Applications/Utilities/MacPython 2.5/Build Applet.app
+    Icon Composer:
+      Version: 2.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/Icon Composer.app
+    IORegistryExplorer:
+      Version: 2.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/IORegistryExplorer.app
+    Help Indexer:
+      Version: 4.0
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/Help Indexer.app
+    FileMerge:
+      Version: 2.5
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/FileMerge.app
+    CrashReporterPrefs:
+      Version: 10.6
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/CrashReporterPrefs.app
+    PacketLogger:
+      Version: 2.2
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 2.2, Copyright (c) 2009 Apple Inc. All rights reserved.
+      Location: /Developer/Applications/Utilities/Bluetooth/PacketLogger.app
+    Bluetooth Explorer:
+      Version: 2.2
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 2.2, Copyright (c) 2009 Apple Inc. All rights reserved.
+      Location: /Developer/Applications/Utilities/Bluetooth/Bluetooth Explorer.app
+    Bluetooth Diagnostics Utility:
+      Version: 2.2
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 2.2, Copyright (c) 2009 Apple Inc. All rights reserved.
+      Location: /Developer/Applications/Utilities/Bluetooth/Bluetooth Diagnostics Utility.app
+    Accessibility Verifier:
+      Version: 1.2
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Utilities/Accessibility Tools/Accessibility Verifier.app
+    Accessibility Inspector:
+      Version: 2.0
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: Accessibility Inspector 2.0, Copyright 2002-2009 Apple Inc.
+      Location: /Developer/Applications/Utilities/Accessibility Tools/Accessibility Inspector.app
+    Quartz Composer:
+      Version: 4.0
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Quartz Composer.app
+    Spin Control:
+      Version: 0.9
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: Spin Control
+      Location: /Developer/Applications/Performance Tools/Spin Control.app
+    MallocDebug:
+      Version: 1.7.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Performance Tools/MallocDebug.app
+    Interface Builder:
+      Version: 3.2.2
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Interface Builder.app
+    Instruments:
+      Version: 2.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Instruments.app
+    Quartz Composer Visualizer:
+      Version: 1.2
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Graphics Tools/Quartz Composer Visualizer.app
+    Pixie:
+      Version: 2.3
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Graphics Tools/Pixie.app
+    OpenGL Shader Builder:
+      Version: 2.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Graphics Tools/OpenGL Shader Builder.app
+    OpenGL Profiler:
+      Version: 4.2
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 4.2, Copyright 2003-2009 Apple, Inc.
+      Location: /Developer/Applications/Graphics Tools/OpenGL Profiler.app
+    OpenGL Driver Monitor:
+      Version: 1.5
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 1.5, Copyright ¬(c) 2009 Apple Inc.
+      Location: /Developer/Applications/Graphics Tools/OpenGL Driver Monitor.app
+    Core Image Fun House:
+      Version: 2.1.43
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Graphics Tools/Core Image Fun House.app
+    Dashcode:
+      Version: 3.0.1
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Dashcode.app
+    HALLab:
+      Version: 1.6
+      Last Modified: 4/25/10 4:34 PM
+      Location: /Developer/Applications/Audio/HALLab.app
+    AU Lab:
+      Version: 2.1
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: 2.1 ¬(c)2009, Apple, Inc
+      Location: /Developer/Applications/Audio/AU Lab.app
+    About Xcode:
+      Version: 163
+      Last Modified: 4/25/10 4:34 PM
+      Get Info String: About Xcode
+      Location: /Developer/About Xcode.app
+    QuickTime Player:
+      Version: 10.0
+      Last Modified: 5/20/09 5:10 PM
+      Get Info String: 10.0, Copyright ¬(c) 2009-2010 Apple Inc. All Rights Reserved.
+      Location: /Applications/QuickTime Player.app
+    HandBrake:
+      Version: 0.9.4 x86_64
+      Last Modified: 11/23/09 4:01 PM
+      Get Info String: 2009112300
+      Location: /Applications/Installed/HandBrake.app
+    Fairmount (for VLC 32 bits):
+      Version: 1.0.6
+      Last Modified: 12/10/09 4:08 PM
+      Get Info String: 1.0.6
+      Location: /Applications/Installed/Fairmount/Fairmount (for VLC 32 bits).app
+    MacTheRipper:
+      Version: 2.6.6
+      Last Modified: 3/10/05 6:45 AM
+      Location: /Applications/Installed/MacTheRipper.app
+    HP LaserJet M2727nf MFP (0B4309):
+      Version: 6.1
+      Last Modified: 7/23/09 7:09 PM
+      Location: /Users/mray/Library/Printers/HP LaserJet M2727nf MFP (0B4309).app
+    HP Officejet 6300 series:
+      Version: 6.2
+      Last Modified: 7/23/09 7:09 PM
+      Location: /Users/mray/Library/Printers/HP Officejet 6300 series.app
+    Activity Monitor:
+      Version: 10.6
+      Last Modified: 7/31/09 2:18 AM
+      Location: /Applications/Utilities/Activity Monitor.app
+    Paintbrush:
+      Version: 2.0.1
+      Last Modified: 6/20/09 5:29 PM
+      Location: /Applications/Installed/Paintbrush.app
+    Seashore:
+      Version: 0.1.9
+      Last Modified: 4/2/07 6:29 AM
+      Get Info String: Seashore 0.1.9 - GNU General Public License
+      Location: /Applications/Installed/Seashore.app
+    Brother HL-5250DN series:
+      Version: 6.1
+      Last Modified: 7/23/09 7:09 PM
+      Location: /Users/mray/Library/Printers/Brother HL-5250DN series.app
+    Twitterrific:
+      Version: 3.2.2
+      Last Modified: 2/2/10 10:38 AM
+      Get Info String: Twitterrific 3.2.2 - Copyright ¬(c) 2006-2010, The Iconfactory
+      Location: /Applications/Installed/Twitterrific.app
+    TextEdit:
+      Version: 1.6
+      Last Modified: 6/27/09 1:06 AM
+      Location: /Applications/TextEdit.app
+    Meeting Center:
+      Version: 12.9.12.0
+      Last Modified: 4/13/10 2:08 PM
+      Location: /Users/mray/Library/Application Support/WebEx Folder/924/Meeting Center.app
+    Flickr Uploadr:
+      Version: 3.1
+      Last Modified: 1/19/10 3:55 PM
+      Get Info String: Flickr Uploadr 3.1, (c) Yahoo!, Inc.
+      Location: /Applications/Installed/Flickr Uploadr.app
+    Max:
+      Version: 0.9.1
+      Last Modified: 8/31/09 2:15 PM
+      Get Info String: Max 0.9.1
+      Location: /Applications/Installed/Max.app
+    Audacity:
+      Version: 1.3.10.0
+      Last Modified: 12/23/09 9:00 PM
+      Get Info String: Audacity version 1.3.10.0
+      Location: /Applications/Installed/Audacity.app
+    Screen Sharing:
+      Version: 1.1.1
+      Last Modified: 7/2/09 1:11 AM
+      Get Info String: 1.1.1, Copyright ¬(c) 2007-2009 Apple Inc., All Rights Reserved.
+      Location: /System/Library/CoreServices/Screen Sharing.app
+    AirPort Utility:
+      Version: 5.5.1
+      Last Modified: 3/31/10 3:15 PM
+      Get Info String: 5.5.1, Copyright 2001-2010 Apple Inc.
+      Location: /Applications/Utilities/AirPort Utility.app
+    Lingon:
+      Version: 2.1.1
+      Last Modified: 12/18/08 4:56 PM
+      Location: /Applications/Installed/Lingon.app
+    OmniGraffle Professional:
+      Version: 5.2.2
+      Last Modified: 3/22/10 3:44 PM
+      Get Info String: OmniGraffle Professional 5.2.2, version 138.14.0.129428, Copyright 2000-2010 The Omni Group
+      Location: /Applications/Installed/OmniGraffle Professional 5.app
+    Console:
+      Version: 10.6.3
+      Last Modified: 4/6/09 7:42 PM
+      Location: /Applications/Utilities/Console.app
+    Font Book:
+      Version: 2.2.1
+      Last Modified: 5/5/09 1:04 PM
+      Get Info String: 2.2.1, Copyright ¬(c) 2003-2009 Apple Inc.
+      Location: /Applications/Font Book.app
+    Java Preferences:
+      Version: 13.1.0
+      Last Modified: 7/20/09 6:36 PM
+      Location: /Applications/Utilities/Java Preferences.app
+    AirPort Base Station Agent:
+      Version: 1.5.5
+      Last Modified: 3/31/10 3:15 PM
+      Get Info String: 1.5.5 (155.2), Copyright ¬(c) 2006-2009 Apple Inc. All Rights Reserved.
+      Location: /System/Library/CoreServices/AirPort Base Station Agent.app
+    Problem Reporter:
+      Version: 10.6.3
+      Last Modified: 8/1/09 12:59 AM
+      Location: /System/Library/CoreServices/Problem Reporter.app
+    Display Calibrator:
+      Version: 4.6
+      Last Modified: 5/19/09 1:01 AM
+      Get Info String: 4.6, Copyright 2008 Apple Computer, Inc.
+      Location: /System/Library/ColorSync/Calibrators/Display Calibrator.app
+    ODSAgent:
+      Version: 1.4.1
+      Last Modified: 5/18/09 8:07 PM
+      Get Info String: 1.4.1 (141.1), Copyright ¬(c) 2007-2009 Apple Inc. All Rights Reserved.
+      Location: /System/Library/CoreServices/ODSAgent.app
+    TCIM:
+      Version: 6.3
+      Last Modified: 7/7/09 1:48 AM
+      Get Info String: 6.2, Copyright ¬(c) 1997-2006 Apple Computer Inc., All Rights Reserved
+      Location: /System/Library/Input Methods/TCIM.app
+    Extract:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Extract.app
+    Rename:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Rename.app
+    Dock:
+      Version: 1.7
+      Last Modified: 7/31/09 2:20 AM
+      Get Info String: Dock 1.7
+      Location: /System/Library/CoreServices/Dock.app
+    AVRCPAgent:
+      Version: 2.3.1
+      Last Modified: 8/1/09 1:04 AM
+      Get Info String: 2.3.1, Copyright (c) 2010 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/AVRCPAgent.app
+    ManagedClient:
+      Version: 2.2
+      Last Modified: 7/24/09 12:15 AM
+      Location: /System/Library/CoreServices/ManagedClient.app
+    ColorSync Utility:
+      Version: 4.6.2
+      Last Modified: 5/19/09 1:00 AM
+      Get Info String: 4.6.2, ¬(c) Copyright 2009 Apple Inc.
+      Location: /Applications/Utilities/ColorSync Utility.app
+    VoiceOver:
+      Version: 3.0.1
+      Last Modified: 7/18/09 1:58 AM
+      Location: /System/Library/CoreServices/VoiceOver.app
+    Proof:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Proof.app
+    iChat:
+      Version: 5.0.3
+      Last Modified: 7/29/09 12:28 AM
+      Location: /Applications/iChat.app
+    VoiceOver Quickstart:
+      Version: 3.0.1
+      Last Modified: 7/18/09 1:58 AM
+      Location: /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/VoiceOver Quickstart.app
+    SyncServer:
+      Version: 5.2
+      Last Modified: 7/18/09 1:22 AM
+      Get Info String: ¬(c) 2002-2003 Apple
+      Location: /System/Library/Frameworks/SyncServices.framework/Versions/A/Resources/SyncServer.app
+    iChatAgent:
+      Version: 5.0.3
+      Last Modified: 7/29/09 12:26 AM
+      Location: /System/Library/Frameworks/IMCore.framework/iChatAgent.app
+    Bluetooth File Exchange:
+      Version: 2.3.1
+      Last Modified: 8/1/09 1:04 AM
+      Get Info String: 2.3.1, Copyright (c) 2010 Apple Inc. All rights reserved.
+      Location: /Applications/Utilities/Bluetooth File Exchange.app
+    Match:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Match.app
+    Set Info:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Set Info.app
+    SCIM:
+      Version: 4.3
+      Last Modified: 5/19/09 12:35 AM
+      Get Info String: 4.0, Copyright ¬(c) 1997-2009 Apple Inc., All Rights Reserved
+      Location: /System/Library/Input Methods/SCIM.app
+    SyncDiagnostics:
+      Version: 5.2
+      Last Modified: 7/18/09 1:23 AM
+      Location: /System/Library/Frameworks/SyncServices.framework/Versions/A/Resources/SyncDiagnostics.app
+    SystemUIServer:
+      Version: 1.6
+      Last Modified: 7/22/09 3:48 AM
+      Get Info String: SystemUIServer version 1.6, Copyright 2000-2009 Apple Computer, Inc.
+      Location: /System/Library/CoreServices/SystemUIServer.app
+    System Events:
+      Version: 1.3.4
+      Last Modified: 5/19/09 4:07 AM
+      Location: /System/Library/CoreServices/System Events.app
+    VoiceOver Utility:
+      Version: 3.0.1
+      Last Modified: 7/18/09 1:58 AM
+      Location: /Applications/Utilities/VoiceOver Utility.app
+    Automator:
+      Version: 2.1
+      Last Modified: 7/11/09 2:09 AM
+      Get Info String: 2.1, Copyright ¬(c) 2004-2009 Apple Inc. All rights reserved.
+      Location: /Applications/Automator.app
+    Show Info:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Show Info.app
+    ExposeÃÅ:
+      Version: 1.1
+      Last Modified: 7/31/09 2:18 AM
+      Get Info String: 1.1, Copyright 2007-2008 Apple Inc.
+      Location: /Applications/Utilities/Expose.app
+    Spotlight:
+      Version: 2.0
+      Last Modified: 7/23/09 9:18 PM
+      Location: /System/Library/Services/Spotlight.service
+    ParentalControls:
+      Version: 2.0
+      Last Modified: 8/1/09 1:04 AM
+      Get Info String: 2.0, Copyright Apple Inc. 2007-2009
+      Location: /System/Library/PrivateFrameworks/FamilyControls.framework/Versions/A/Resources/ParentalControls.app
+    BluetoothAudioAgent:
+      Version: 2.3.1
+      Last Modified: 8/1/09 1:04 AM
+      Get Info String: 2.3.1, Copyright (c) 2010 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/BluetoothAudioAgent.app
+    Spaces:
+      Version: 1.1
+      Last Modified: 7/31/09 2:18 AM
+      Get Info String: 1.1, Copyright 2007-2008 Apple Inc.
+      Location: /Applications/Utilities/Spaces.app
+    Time Machine:
+      Version: 1.1
+      Last Modified: 7/31/09 2:18 AM
+      Get Info String: 1.1, Copyright 2007-2008 Apple Inc.
+      Location: /Applications/Time Machine.app
+    File Sync:
+      Version: 5.0.2
+      Last Modified: 7/23/09 1:56 AM
+      Get Info String: ¬(c) Copyright 2009 Apple Inc., all rights reserved.
+      Location: /System/Library/CoreServices/File Sync.app
+    Image Events:
+      Version: 1.1.4
+      Last Modified: 5/19/09 4:07 AM
+      Location: /System/Library/CoreServices/Image Events.app
+    BluetoothUIServer:
+      Version: 2.3.1
+      Last Modified: 8/1/09 1:03 AM
+      Get Info String: 2.3.1, Copyright (c) 2010 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/BluetoothUIServer.app
+    Photo Booth:
+      Version: 3.0.2
+      Last Modified: 7/6/09 2:13 AM
+      Location: /Applications/Photo Booth.app
+    AddressBookManager:
+      Version: 2.0.1
+      Last Modified: 7/25/09 12:36 AM
+      Location: /System/Library/Frameworks/AddressBook.framework/Versions/A/Resources/AddressBookManager.app
+    loginwindow:
+      Version: 6.1
+      Last Modified: 7/31/09 2:15 AM
+      Location: /System/Library/CoreServices/loginwindow.app
+    Folder Actions Dispatcher:
+      Version: 1.0.2
+      Last Modified: 5/19/09 4:07 AM
+      Location: /System/Library/CoreServices/Folder Actions Dispatcher.app
+    Front Row:
+      Version: 1.1
+      Last Modified: 7/31/09 2:18 AM
+      Get Info String: 1.1, Copyright 2007-2008 Apple Inc.
+      Location: /Applications/Front Row.app
+    Database Events:
+      Version: 1.0.4
+      Last Modified: 5/19/09 4:07 AM
+      Location: /System/Library/CoreServices/Database Events.app
+    Embed:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Embed.app
+    iCal Helper:
+      Version: 4.0.2
+      Last Modified: 7/16/09 2:38 AM
+      Location: /System/Library/Frameworks/CalendarStore.framework/Versions/A/Resources/iCal Helper.app
+    CoreServicesUIAgent:
+      Version: 41.3
+      Last Modified: 5/23/09 1:47 AM
+      Get Info String: Copyright ¬(c) 2009 Apple Inc.
+      Location: /System/Library/CoreServices/CoreServicesUIAgent.app
+    OBEXAgent:
+      Version: 2.3.1
+      Last Modified: 8/1/09 1:04 AM
+      Get Info String: 2.3.1, Copyright (c) 2010 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/OBEXAgent.app
+    ScreenReaderUIServer:
+      Version: 2.0.1
+      Last Modified: 7/18/09 1:59 AM
+      Location: /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/ScreenReaderUIServer.app
+    Conflict Resolver:
+      Version: 5.2
+      Last Modified: 7/18/09 1:22 AM
+      Get Info String: 1.0, Copyright Apple Computer Inc. 2004
+      Location: /System/Library/PrivateFrameworks/SyncServicesUI.framework/Versions/A/Resources/Conflict Resolver.app
+    AppleScript Runner:
+      Version: 1.0.2
+      Last Modified: 5/19/09 4:07 AM
+      Location: /System/Library/CoreServices/AppleScript Runner.app
+    Remove:
+      Last Modified: 4/24/09 9:11 PM
+      Location: /Library/Scripts/ColorSync/Remove.app
+    rcd:
+      Version: 2.5.6
+      Last Modified: 8/1/09 1:01 AM
+      Get Info String: 2.5.6
+      Location: /System/Library/CoreServices/rcd.app
+    syncuid:
+      Version: 5.2
+      Last Modified: 7/18/09 1:22 AM
+      Get Info String: 4.0, Copyright Apple Computer Inc. 2004
+      Location: /System/Library/PrivateFrameworks/SyncServicesUI.framework/Versions/A/Resources/syncuid.app
+    Folder Actions Setup:
+      Version: 1.1.4
+      Last Modified: 5/19/09 4:07 AM
+      Location: /System/Library/CoreServices/Folder Actions Setup.app
+    IncompatibleAppDisplay:
+      Version: 300.2
+      Last Modified: 8/1/09 1:05 AM
+      Location: /System/Library/PrivateFrameworks/SystemMigration.framework/Versions/A/Resources/IncompatibleAppDisplay.app
+    AddressBookSync:
+      Version: 2.0.1
+      Last Modified: 7/25/09 12:35 AM
+      Location: /System/Library/Frameworks/AddressBook.framework/Versions/A/Resources/AddressBookSync.app
+    Dashboard:
+      Version: 1.7
+      Last Modified: 7/31/09 2:18 AM
+      Get Info String: 1.7, Copyright 2006-2008 Apple Inc.
+      Location: /Applications/Dashboard.app
+    FileSyncAgent:
+      Version: 5.0.2
+      Last Modified: 7/23/09 1:55 AM
+      Get Info String: ¬(c) Copyright 2009 Apple Inc., all rights reserved.
+      Location: /System/Library/CoreServices/FileSyncAgent.app
+    Boot Camp Assistant:
+      Version: 3.0.1
+      Last Modified: 5/19/09 1:02 AM
+      Get Info String: Boot Camp Assistant 3.0.1, Copyright ¬(c) 2009 Apple Inc. All rights reserved
+      Location: /Applications/Utilities/Boot Camp Assistant.app
+    iSync:
+      Version: 3.1.1
+      Last Modified: 5/19/09 3:29 AM
+      Get Info String: 3.1.1, Copyright ¬(c) 2003-2010 Apple Inc.
+      Location: /Applications/iSync.app
+    CoreLocationAgent:
+      Version: 1.0
+      Last Modified: 7/20/09 12:08 AM
+      Get Info String: Copyright ¬(c) 2009 Apple Inc.
+      Location: /System/Library/CoreServices/CoreLocationAgent.app
+    AddPrinter:
+      Version: 6.3
+      Last Modified: 7/23/09 7:09 PM
+      Location: /System/Library/CoreServices/AddPrinter.app
+    webdav_cert_ui:
+      Version: 1.8
+      Last Modified: 8/1/09 12:59 AM
+      Location: /System/Library/Filesystems/webdav.fs/Support/webdav_cert_ui.app
+    Type3Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0, ¬(c) Copyright 2001-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type3Camera.app
+    SecurityAgent:
+      Version: 5.1
+      Last Modified: 7/18/09 1:18 AM
+      Location: /System/Library/CoreServices/SecurityAgent.app
+    quicklookd:
+      Version: 2.2
+      Last Modified: 7/24/09 12:14 AM
+      Get Info String: 1.0, Copyright Apple Inc. 2007
+      Location: /System/Library/Frameworks/QuickLook.framework/Versions/A/Resources/quicklookd.app
+    Printer Setup Utility:
+      Version: 6.3
+      Last Modified: 7/23/09 7:10 PM
+      Location: /System/Library/CoreServices/Printer Setup Utility.app
+    quicklookd32:
+      Version: 2.2
+      Last Modified: 7/24/09 12:14 AM
+      Get Info String: 1.0, Copyright Apple Inc. 2007
+      Location: /System/Library/Frameworks/QuickLook.framework/Versions/A/Resources/quicklookd32.app
+    Type1Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type1Camera.app
+    BluetoothCamera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0, ¬(c) Copyright 2004-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/BluetoothCamera.app
+    PTPCamera:
+      Version: 6.0.2
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0.2, ¬(c) Copyright 2004-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/PTPCamera.app
+    TWAINBridge:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/TWAINBridge.app
+    Type6Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2002-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type6Camera.app
+    PrinterProxy:
+      Version: 6.3
+      Last Modified: 7/23/09 7:09 PM
+      Location: /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/Print.framework/Versions/A/Plugins/PrinterProxy.app
+    Image Capture Extension:
+      Version: 6.0
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Support/Image Capture Extension.app
+    Type7Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2002-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type7Camera.app
+    FontRegistryUIAgent:
+      Version: 1.1
+      Last Modified: 7/26/09 12:36 AM
+      Get Info String: Copyright ¬(c) 2008 Apple Inc.
+      Location: /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Support/FontRegistryUIAgent.app
+    Type8Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2002-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type8Camera.app
+    Type2Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type2Camera.app
+    ScreenSaverEngine:
+      Version: 3.0.1
+      Last Modified: 6/23/09 10:20 PM
+      Location: /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app
+    Image Capture Web Server:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2003-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Support/Image Capture Web Server.app
+    KerberosAgent:
+      Version: 6.5.9
+      Last Modified: 5/28/09 7:37 PM
+      Location: /System/Library/CoreServices/KerberosAgent.app
+    Type4Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0, ¬(c) Copyright 2001-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type4Camera.app
+    Type5Camera:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2001-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/Type5Camera.app
+    MassStorageCamera:
+      Version: 6.0.1
+      Last Modified: 7/16/09 2:39 AM
+      Get Info String: 6.0.1, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Devices/MassStorageCamera.app
+    Audio MIDI Setup:
+      Version: 3.0.2
+      Last Modified: 7/10/09 5:40 PM
+      Get Info String: 3.0.2, Copyright 2002-2010 Apple, Inc.
+      Location: /Applications/Utilities/Audio MIDI Setup.app
+    HelpViewer:
+      Version: 5.0.2
+      Last Modified: 7/14/09 12:54 AM
+      Location: /System/Library/CoreServices/HelpViewer.app
+    Build Web Page:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2003-2009 Apple  Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Automatic Tasks/Build Web Page.app
+    MakePDF:
+      Version: 6.0
+      Last Modified: 7/16/09 2:40 AM
+      Get Info String: 6.0, ¬(c) Copyright 2003-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Automatic Tasks/MakePDF.app
+    Podcast Capture:
+      Version: 2.0.1
+      Last Modified: 7/21/09 12:31 AM
+      Get Info String: 2.0.1, Copyright ¬(c) 2007-2009 Apple Inc.
+      Location: /Applications/Utilities/Podcast Capture.app
+    CCacheServer:
+      Version: 6.5.9
+      Last Modified: 5/28/09 7:37 PM
+      Get Info String: 6.5 Copyright ¬(c) 2008 Massachusetts Institute of Technology
+      Location: /System/Library/CoreServices/CCacheServer.app
+    Network Diagnostics:
+      Version: 1.1.3
+      Last Modified: 5/20/09 3:47 AM
+      Location: /System/Library/CoreServices/Network Diagnostics.app
+    MiniTerm:
+      Version: 1.5
+      Last Modified: 8/1/09 1:00 AM
+      Get Info String: Terminal window application for PPP
+      Location: /usr/libexec/MiniTerm.app
+    ImageCaptureService:
+      Version: 6.0.1
+      Last Modified: 6/20/09 1:56 AM
+      Get Info String: 6.0, ¬(c) Copyright 2003-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Services/ImageCaptureService.app
+    DiskImages UI Agent:
+      Version: 257
+      Last Modified: 7/11/09 2:58 AM
+      Location: /System/Library/PrivateFrameworks/DiskImages.framework/Versions/A/Resources/DiskImages UI Agent.app
+    AutoImporter:
+      Version: 6.0.1
+      Last Modified: 6/20/09 1:56 AM
+      Get Info String: 6.0, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /System/Library/Image Capture/Support/Application/AutoImporter.app
+    Python:
+      Version: 2.6
+      Last Modified: 7/8/09 1:56 AM
+      Get Info String: 2.6, (c) 2004 Python Software Foundation.
+      Location: /System/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app
+    Python Launcher:
+      Version: 2.6.1
+      Last Modified: 7/8/09 1:56 AM
+      Get Info String: 2.6.1, ¬(c) 001-2006 Python Software Foundation
+      Location: /System/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python Launcher.app
+    Python:
+      Version: 2.5.4
+      Last Modified: 7/8/09 1:55 AM
+      Get Info String: 2.5.4a0, (c) 2004 Python Software Foundation.
+      Location: /System/Library/Frameworks/Python.framework/Versions/2.5/Resources/Python.app
+    Python Launcher:
+      Version: 2.5.4
+      Last Modified: 7/8/09 1:56 AM
+      Get Info String: 2.5.4, ¬(c) 001-2006 Python Software Foundation
+      Location: /System/Library/Frameworks/Python.framework/Versions/2.5/Resources/Python Launcher.app
+    check_afp:
+      Version: 2.0
+      Last Modified: 7/2/09 7:46 PM
+      Get Info String: AFP Client Session Monitor, Copyright ¬(c) 2000 - 2007, Apple Inc.
+      Location: /System/Library/Filesystems/AppleShare/check_afp.app
+    ServerJoiner:
+      Version: 10.6.3
+      Last Modified: 7/19/09 2:18 AM
+      Location: /System/Library/CoreServices/ServerJoiner.app
+    ARDAgent:
+      Version: 3.3.2
+      Last Modified: 5/22/09 2:54 AM
+      Location: /System/Library/CoreServices/RemoteManagement/ARDAgent.app
+    Language Chooser:
+      Version: 19
+      Last Modified: 5/22/09 3:42 AM
+      Get Info String: System Language Initializer
+      Location: /System/Library/CoreServices/Language Chooser.app
+    Install Helper:
+      Version: 1.0
+      Last Modified: 2/18/10 5:40 PM
+      Location: /System/Library/CoreServices/Install Helper.app
+    DiskImageMounter:
+      Version: 10.6.3
+      Last Modified: 7/11/09 2:59 AM
+      Location: /System/Library/CoreServices/DiskImageMounter.app
+    Automator Runner:
+      Version: 1.1
+      Last Modified: 7/11/09 2:09 AM
+      Get Info String: 1.1, Copyright ¬(c) 2006-2009 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/Automator Runner.app
+    Automator Launcher:
+      Version: 1.2
+      Last Modified: 7/11/09 2:09 AM
+      Get Info String: 1.2, Copyright ¬(c) 2004-2009 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/Automator Launcher.app
+    AppleFileServer:
+      Last Modified: 7/11/09 1:58 AM
+      Location: /System/Library/CoreServices/AppleFileServer.app
+    Apple80211Agent:
+      Version: 6.2.1
+      Last Modified: 7/21/09 2:41 AM
+      Get Info String: 6.2.1, Copyright ¬(c) 2000‚Äì2009 Apple Inc. All rights reserved.
+      Location: /System/Library/CoreServices/Apple80211Agent.app
+    Remote Install Mac OS X:
+      Version: 1.1.1
+      Last Modified: 5/18/09 9:13 PM
+      Get Info String: Remote Install Mac OS X 1.1.1, Copyright ¬(c) 2007-2009 Apple Inc. All rights reserved
+      Location: /Applications/Utilities/Remote Install Mac OS X.app
+    RAID Utility:
+      Version: 1.1
+      Last Modified: 8/1/09 1:03 AM
+      Get Info String: RAID Utility 1.0 (115), Copyright ¬(c) 2007-2009 Apple Inc.
+      Location: /Applications/Utilities/RAID Utility.app
+    Image Capture:
+      Version: 6.0.1
+      Last Modified: 6/20/09 1:56 AM
+      Get Info String: 6.0, ¬(c) Copyright 2000-2009 Apple Inc., all rights reserved.
+      Location: /Applications/Image Capture.app
+    AsAnnotation:
+      Version: 7.6.2.0
+      Last Modified: 3/25/10 11:00 AM
+      Location: /Users/mray/Library/Application Support/WebEx Folder/824/AsAnnotation.app
+    Meeting Manager:
+      Version: 8.0.1
+      Last Modified: 3/25/10 11:00 AM
+      Get Info String: 8.0, Copyright WebEx Communications, Inc. 2006
+      Location: /Users/mray/Library/Application Support/WebEx Folder/824/Meeting Manager.app
+    Transmission:
+      Version: 1.92
+      Last Modified: 3/11/10 8:09 PM
+      Get Info String: 1.92 (10363)
+      Location: /Applications/Installed/Transmission.app
+    AppFresh:
+      Version: 0.8.5
+      Last Modified: 9/9/09 10:05 AM
+      Location: /Applications/Installed/AppFresh.app
+    WebKitPluginHost:
+      Version: 6531.22
+      Last Modified: 7/11/09 5:04 AM
+      Location: /System/Library/Frameworks/WebKit.framework/WebKitPluginHost.app
+    PubSubAgent:
+      Version: 1.0.4
+      Last Modified: 5/23/09 3:59 AM
+      Location: /System/Library/Frameworks/PubSub.framework/Versions/A/Resources/PubSubAgent.app
+    HPFaxBackend:
+      Version: 3.1.1
+      Last Modified: 7/25/09 1:52 AM
+      Get Info String: 1.0, Copyright ¬(c) 2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/Fax/HPFaxBackend.app
+    HPScanner:
+      Version: 1.1.57
+      Last Modified: 7/24/09 3:03 AM
+      Get Info String: 1.1.57, Copyright 2009 Hewlett-Packard Company
+      Location: /Library/Image Capture/Devices/HPScanner.app
+    MPEG Streamclip:
+      Version: 1.9.2
+      Last Modified: 1/27/09 3:24 PM
+      Location: /Applications/Installed/MPEG Streamclip.app
+    Microsoft Graph:
+      Version: 12.2.4
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.4 (100205), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Graph.app
+    Microsoft Database Utility:
+      Version: 12.2.4
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.4 (100205), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Database Utility.app
+    Microsoft Database Daemon:
+      Version: 12.2.4
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.4 (100205), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Database Daemon.app
+    Microsoft Ship Asserts:
+      Version: 1.0.0
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 1.0.0 (080409), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Library/Application Support/Microsoft/MERP2.0/Microsoft Ship Asserts.app
+    Microsoft Error Reporting:
+      Version: 2.2.0
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 2.2.0 (080409), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Library/Application Support/Microsoft/MERP2.0/Microsoft Error Reporting.app
+    Installer:
+      Version: 4.0
+      Last Modified: 6/27/09 1:18 AM
+      Get Info String: 3.0, Copyright ¬(c) 2000-2006 Apple Computer Inc., All Rights Reserved
+      Location: /System/Library/CoreServices/Installer.app
+    VMware Fusion Start Menu:
+      Version: 3.0.2
+      Last Modified: 2/9/10 7:30 PM
+      Location: /Library/Application Support/VMware Fusion/VMware Fusion Start Menu.app
+    VMware Fusion Helper:
+      Version: 3.0.2
+      Last Modified: 2/9/10 7:30 PM
+      Location: /Library/Application Support/VMware Fusion/VMware Fusion Helper.app
+    VMDKMounter:
+      Version: 3.0.2
+      Last Modified: 6/22/09 5:45 PM
+      Location: /Library/Application Support/VMware Fusion/VMDKMounter.app
+    Uninstall VMware Fusion:
+      Version: 3.0.2
+      Last Modified: 6/22/09 5:56 PM
+      Location: /Library/Application Support/VMware Fusion/Uninstall VMware Fusion.app
+    Getting Started:
+      Version: 3.0.2
+      Last Modified: 2/9/10 7:30 PM
+      Location: /Library/Application Support/VMware Fusion/Getting Started.app
+    uninstall:
+      Version: 3.0
+      Last Modified: 10/13/09 8:57 PM
+      Get Info String: BitRock InstallBuilder, Copyright 2004-2007 BitRock.
+      Location: /usr/local/zenoss/uninstall.app
+    AppleScript Editor:
+      Version: 2.3
+      Last Modified: 4/24/09 8:41 AM
+      Location: /Applications/Utilities/AppleScript Editor.app
+    Microsoft Document Connection:
+      Version: 12.2.3
+      Last Modified: 6/29/09 1:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2009 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Microsoft Document Connection.app
+    Thunderbird:
+      Version: 3.0
+      Last Modified: 12/23/09 9:00 PM
+      Get Info String: Thunderbird 3.0, ¬(c) 1998-2009 Contributors
+      Location: /Applications/Installed/Thunderbird.app
+    Epson Printer Utility Lite:
+      Version: 8.07
+      Last Modified: 7/8/09 11:55 PM
+      Get Info String: Epson Printer Utility Lite version 8.07
+      Location: /Library/Printers/EPSON/InkjetPrinter2/Utility/UTL/Epson Printer Utility Lite.app
+    rastertoescpII:
+      Version: 8.17
+      Last Modified: 7/8/09 11:55 PM
+      Get Info String: rastertoescpII Copyright (C) SEIKO EPSON CORPORATION 2001-2009. All rights reserved.
+      Location: /Library/Printers/EPSON/InkjetPrinter2/Filter/rastertoescpII.app
+    pdftopdf2:
+      Version: 8.17
+      Last Modified: 7/8/09 11:55 PM
+      Get Info String: pdftopdf2 version 8.17, Copyright (C) SEIKO EPSON CORPORATION 2001-2009. All rights reserved.
+      Location: /Library/Printers/EPSON/InkjetPrinter2/Filter/pdftopdf2.app
+    commandtoescp:
+      Version: 8.17
+      Last Modified: 7/8/09 11:55 PM
+      Get Info String: commandtoescp Copyright (C) SEIKO EPSON CORPORATION 2001-2009. All rights reserved.
+      Location: /Library/Printers/EPSON/InkjetPrinter2/Filter/commandtoescp.app
+    EPIJAutoSetupTool2:
+      Version: 8.17
+      Last Modified: 7/8/09 11:55 PM
+      Get Info String: EPIJAutoSetupTool2 Copyright (C) SEIKO EPSON CORPORATION 2001-2009. All rights reserved.
+      Location: /Library/Printers/EPSON/InkjetPrinter2/AutoSetupTool/EPIJAutoSetupTool2.app
+    EPSON Scanner:
+      Version: 5.1.1
+      Last Modified: 7/8/09 11:57 PM
+      Get Info String: 5.1.1, Copyright 2003 EPSON
+      Location: /Library/Image Capture/Devices/EPSON Scanner.app
+    SLLauncher:
+      Version: 1.0
+      Last Modified: 8/18/09 4:27 AM
+      Location: /Library/Application Support/Microsoft/Silverlight/OutOfBrowser/SLLauncher.app
+    ScreenFlow:
+      Version: 2.0.2
+      Last Modified: 12/8/09 5:47 AM
+      Get Info String: 2.0.2, Copyright 2009 Telestream Inc.
+      Location: /Applications/Installed/ScreenFlow.app
+    LalaMover:
+      Version: 1 . 8 . 53
+      Last Modified: 3/11/09 4:55 PM
+      Location: /Applications/Lala Music Mover/LalaMover.app
+    Amazon MP3 Downloader:
+      Version: 1.0.7
+      Last Modified: 6/22/09 6:17 PM
+      Location: /Applications/Amazon MP3 Downloader.app
+    DiffMerge:
+      Version: 3.3.0
+      Last Modified: 4/1/09 9:54 AM
+      Location: /Applications/Installed/DiffMerge.app
+    Stanza:
+      Version: 100.0
+      Last Modified: 9/20/09 5:47 AM
+      Get Info String: 1.0.0 Copyright Lexcycle, Inc. 2008
+      Location: /Applications/Installed/Stanza.app
+    Fairmount (for VLC 64 bits):
+      Version: 1.0.6
+      Last Modified: 12/10/09 3:54 PM
+      Get Info String: 1.0.6
+      Location: /Applications/Installed/Fairmount/Fairmount (for VLC 64 bits).app
+    Braid:
+      Version: 1.5
+      Last Modified: 12/23/09 9:08 PM
+      Location: /Applications/Installed/Braid.app
+    WMV Player:
+      Version: 2.3.1.2
+      Last Modified: 11/3/09 5:46 PM
+      Get Info String: 2.3.1.2 ¬(c) 2005-2009 Telestream Inc. All Rights Reserved.
+      Location: /Applications/Flip4Mac/WMV Player.app
+    Jar Bundler:
+      Version: 13.1.0
+      Last Modified: 12/15/09 4:01 PM
+      Location: /usr/share/java/Tools/Jar Bundler.app
+    Applet Launcher:
+      Version: 13.1.0
+      Last Modified: 12/15/09 4:01 PM
+      Location: /usr/share/java/Tools/Applet Launcher.app
+    VisualVM:
+      Version: 13.1.0
+      Last Modified: 9/22/09 4:12 PM
+      Location: /usr/share/java/Tools/VisualVM.app
+    Quicksilver:
+      Version: √ü57
+      Last Modified: 12/3/09 5:17 PM
+      Location: /Applications/Installed/Quicksilver.app
+    Wine:
+      Version: 1.1.32
+      Last Modified: 10/27/09 10:39 AM
+      Location: /Applications/Installed/Wine.app
+    WineBottler:
+      Version: 1.1.32
+      Last Modified: 10/27/09 11:26 AM
+      Location: /Applications/Installed/WineBottler.app
+    Hordes of Orcs:
+      Version: 1.0
+      Last Modified: 9/25/08 3:19 PM
+      Location: /Applications/Installed/Hordes of Orcs.app
+    iGlasses Manager:
+      Version: v2.1.3
+      Last Modified: 10/16/09 9:26 AM
+      Get Info String: iGlasses Manager v2.1.3 Copyright 2006-2009 Ecamm Network, LLC
+      Location: /Applications/iGlasses/iGlasses Manager.app
+    RightZoom:
+      Version: 1.63
+      Last Modified: 10/16/09 7:41 AM
+      Location: /Applications/Installed/RightZoom.app
+    Carbon Copy Cloner:
+      Version: 3.3
+      Last Modified: 10/16/09 7:40 AM
+      Get Info String: Carbon Copy Cloner version 3.3, Copyright 2002-2009 Mike Bombich.
+      Location: /Applications/Installed/Carbon Copy Cloner.app
+    Musorg:
+      Version: 0.3.0
+      Last Modified: 1/30/08 9:47 AM
+      Location: /Applications/Installed/Musorg.app
+    HardwareGrowler:
+      Version: 1.2
+      Last Modified: 9/28/09 11:00 PM
+      Location: /Applications/Installed/HardwareGrowler.app
+    Network Connect:
+      Version: 14599
+      Last Modified: 9/29/09 3:09 PM
+      Location: /Applications/Network Connect.app
+    pzizz2:
+      Version: 2.7.1
+      Last Modified: 3/13/09 2:44 PM
+      Get Info String: pzizz 2.7.1 - Copyright ¬(c) 2008, Brainwave Limited. Developed by Xeric Design. All Rights Reserved.
+      Location: /Applications/Installed/pzizz2.app
+    ToggleHidden:
+      Last Modified: 9/23/09 5:19 PM
+      Location: /Applications/Installed/ToggleHidden.app
+    Quartz Debug:
+      Version: 4.0
+      Last Modified: 5/19/09 12:29 AM
+      Get Info String: Quartz Debug 4.0
+      Location: /Developer/Applications/Performance Tools/Quartz Debug.app
+    Burn:
+      Version: 2.3u
+      Last Modified: 9/22/09 11:09 AM
+      Location: /Applications/Installed/Burn.app
+    MarcoPolo:
+      Version: 2.5.1
+      Last Modified: 8/30/09 11:26 AM
+      Location: /Applications/Installed/MarcoPolo.app
+    GmailStatus:
+      Version: 140
+      Last Modified: 7/9/09 10:48 PM
+      Location: /Applications/Installed/GmailStatus.app
+    UnRarX:
+      Version: Version 2.2
+      Last Modified: 7/6/06 9:57 PM
+      Get Info String: UnRarX Version 2.0
+      Location: /Applications/Installed/UnRarX.app
+    Minuteur:
+      Version: 4.7.2
+      Last Modified: 10/10/06 5:28 AM
+      Get Info String: 4.7.2
+      Location: /Applications/Installed/Minuteur.app
+    Galerie:
+      Version: 5.4.0
+      Last Modified: 1/29/07 1:09 PM
+      Get Info String: Galerie version 5.4.0
+      Location: /Applications/Installed/Galerie.app
+    Display Rotation Menu:
+      Version: 1.2
+      Last Modified: 2/15/08 2:40 AM
+      Get Info String: 1.2, Copyright 2006 - 2007 Mage Software.
+      Location: /Applications/Installed/Display Rotation Menu.app
+    Delicious Library:
+      Version: 1.6.6
+      Last Modified: 10/5/07 10:58 AM
+      Location: /Applications/Installed/Delicious Library.app
+    ClipEdit:
+      Version: 3.0.3
+      Last Modified: 12/11/06 2:03 AM
+      Location: /Applications/Installed/ClipEdit.app
+    beaTunes:
+      Version: 1.2.19
+      Last Modified: 5/25/09 12:52 PM
+      Get Info String: beaTunes 1.2.19, (c) 2006-2009 tagtraum industries incorporated
+      Location: /Applications/Installed/beaTunes.app
+    left dock:
+      Version: 1.0
+      Last Modified: 11/14/07 4:50 PM
+      Location: /Users/mray/Projects/applescripts/left dock.app
+    Start Screen Saver:
+      Version: 1.0
+      Last Modified: 9/29/08 11:40 AM
+      Location: /Users/mray/Documents/Start Screen Saver.app
+    RDOCK:
+      Version: 1.0
+      Last Modified: 11/14/07 4:50 PM
+      Location: /Users/mray/Documents/RDOCK.app
+    LDOCK:
+      Version: 1.0
+      Last Modified: 11/14/07 4:51 PM
+      Location: /Users/mray/Documents/LDOCK.app
+    Organization Chart:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Organization Chart.app
+    Microsoft Sync Services:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Sync Services.app
+    Microsoft Query:
+      Version: 10.0.0
+      Last Modified: 12/3/07 2:00 AM
+      Get Info String: 10.0.0 (1204)  Copyright 1995-2002 Microsoft Corporation.  All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Query
+    Microsoft Project Gallery:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Project Gallery.app
+    Microsoft Office Setup Assistant:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Office Setup Assistant.app
+    Microsoft Office Reminders:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Office Reminders.app
+    Microsoft Clip Gallery:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Clip Gallery.app
+    Microsoft Chart Converter:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Chart Converter.app
+    Microsoft Cert Manager:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Microsoft Cert Manager.app
+    Equation Editor:
+      Version: 12.1.0
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.1.0 (080205), ¬(c) 2007 Microsoft Corporation.¬†¬†All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Equation Editor.app
+    Alerts Daemon:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Office/Alerts Daemon.app
+    Remove Office:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Additional Tools/Remove Office/Remove Office.app
+    Microsoft Language Register:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Applications/Microsoft Office 2008/Additional Tools/Microsoft Language Register/Microsoft Language Register.app
+    GarageBand:
+      Version: 4.1.2
+      Last Modified: 3/17/06 4:43 PM
+      Get Info String: GarageBand 4.1.2 (248.7), Copyright ¬(c) 2007 by Apple Inc.
+      Location: /Applications/GarageBand.app
+    GarageBand Getting Started:
+      Version: 1.0.2
+      Last Modified: 6/28/07 4:39 AM
+      Get Info String: GarageBand Getting Started
+      Location: /Library/Documentation/Applications/GarageBand/GarageBand Getting Started.app
+    iDVD Getting Started:
+      Version: 1.0.2
+      Last Modified: 7/3/07 4:50 AM
+      Get Info String: iDVD Getting Started
+      Location: /Library/Documentation/Applications/iDVD/iDVD Getting Started.app
+    iDVD:
+      Version: 7.0.4
+      Last Modified: 7/3/07 4:55 AM
+      Get Info String: iDVD 7.0.4, Copyright ¬(c) 2001-2009 Apple Inc.
+      Location: /Applications/iDVD.app
+    iMovie 08 Getting Started:
+      Version: 1.0.2
+      Last Modified: 7/2/07 2:15 PM
+      Get Info String: iMovie 08 Getting Started
+      Location: /Library/Documentation/Applications/iMovie/iMovie 08 Getting Started.app
+    iMovie:
+      Version: 7.1.4
+      Last Modified: 7/2/07 2:18 PM
+      Get Info String: 7.1.4, Copyright ¬(c) 2007-2008 Apple Inc. All Rights Reserved.
+      Location: /Applications/iMovie.app
+    iPhoto Getting Started:
+      Version: 1.0.2
+      Last Modified: 7/2/07 4:34 AM
+      Get Info String: iPhoto Getting Started
+      Location: /Library/Documentation/Applications/iPhoto/iPhoto Getting Started.app
+    DVD Player:
+      Version: 5.2
+      Last Modified: 7/14/09 4:05 AM
+      Get Info String: 5.2, Copyright ¬(c) 2001-2009 by Apple Inc.  All Rights Reserved.
+      Location: /Applications/DVD Player.app
+    Migration Assistant:
+      Version: 3.0
+      Last Modified: 7/1/09 2:17 AM
+      Location: /Applications/Utilities/Migration Assistant.app
+    Grab:
+      Version: 1.5
+      Last Modified: 5/18/09 9:12 PM
+      Location: /Applications/Utilities/Grab.app
+    Grapher:
+      Version: 2.1
+      Last Modified: 4/6/09 7:42 PM
+      Location: /Applications/Utilities/Grapher.app
+    Stickies:
+      Version: 7.0
+      Last Modified: 5/19/09 12:28 AM
+      Location: /Applications/Stickies.app
+    Chess:
+      Version: 2.4.2
+      Last Modified: 5/19/09 1:09 AM
+      Get Info String: 2.4.2, Copyright 2003-2009 Apple Inc.
+      Location: /Applications/Chess.app
+    Calculator:
+      Version: 4.5.2
+      Last Modified: 7/6/09 1:17 AM
+      Location: /Applications/Calculator.app
+    Event Center:
+      Version: 10.15.11.8
+      Last Modified: 12/8/09 11:47 AM
+      Location: /Users/mray/Library/Application Support/WebEx Folder/926/Event Center.app
+    asannotation2:
+      Version: 7.19.11.0
+      Last Modified: 11/11/09 9:56 AM
+      Location: /Users/mray/Library/Application Support/WebEx Folder/924/asannotation2.app
+    octoshape:
+      Version: 8.1024 a2
+      Last Modified: 11/5/09 5:08 PM
+      Get Info String: Octoshape add-in for Adobe Flash Player v 0810242
+      Location: /Users/mray/Library/Preferences/Macromedia/Flash Player/www.macromedia.com/bin/octoshape/octoshape
+    Network Diagnostic Utility:
+      Version: 14599
+      Last Modified: 9/29/09 3:09 PM
+      Location: /Library/Frameworks/net.juniper.DSNetworkDiagnostics.framework/Versions/6.5.0/Network Diagnostic Utility.app
+    Session Timer:
+      Version: 14599
+      Last Modified: 9/29/09 3:09 PM
+      Location: /Library/Frameworks/net.juniper.DSApplicationServices.framework/Versions/6.5.0/Session Timer.app
+    Log Viewer:
+      Version: 14599
+      Last Modified: 9/29/09 3:09 PM
+      Location: /Library/Frameworks/net.juniper.DSApplicationServices.framework/Versions/6.5.0/Log Viewer.app
+    asannotation2:
+      Version: 7.19.11.0
+      Last Modified: 9/22/09 10:50 AM
+      Location: /Users/mray/Library/Application Support/WebEx Folder/926/asannotation2.app
+    Open XML for Charts:
+      Version: 12.2.3
+      Last Modified: 5/5/08 8:00 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Library/Application Support/Microsoft/Office Converter Support/Open XML for Charts.app
+    Open XML for Excel:
+      Version: 12.2.3
+      Last Modified: 9/18/09 5:44 PM
+      Get Info String: 12.2.3 (091001), ¬(c) 2007 Microsoft Corporation. All rights reserved.
+      Location: /Library/Application Support/Microsoft/Office Converter Support/Open XML for Excel.app
+    Brother Scanner:
+      Version: 2.0.4
+      Last Modified: 6/28/09 7:52 PM
+      Get Info String: 2.0.4, Copyright 2009 Brother Industries, LTD.
+      Location: /Library/Image Capture/Devices/Brother Scanner.app
+    Brother Status Monitor:
+      Version: 3.02
+      Last Modified: 5/18/09 8:15 PM
+      Get Info String: ver3.02, ¬(c)2005-2009 Brother Industries, Ltd. All Rights Reserved.
+      Location: /Library/Printers/Brother/Utilities/BrStatusMonitor.app
+    Inkjet:
+      Version: 3.0
+      Last Modified: 6/16/09 5:48 AM
+      Get Info String: HP Inkjet Driver 3.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet.driver
+    HP Utility:
+      Version: 4.4.3
+      Last Modified: 6/23/09 9:22 AM
+      Get Info String: HP Utility version 4.4.3, Copyright ¬(c) 2005-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/Utilities/HP Utility.app
+    HP Printer Utility:
+      Version: 8.1.0
+      Last Modified: 6/23/09 9:22 AM
+      Get Info String: HP Printer Utility version 8.1.0, Copyright ¬(c) 2005-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/Utilities/HP Printer Utility.app
+    Inkjet4:
+      Version: 2.2
+      Last Modified: 6/16/09 8:17 AM
+      Get Info String: HP Inkjet 4 Driver 2.2, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet4.driver
+    Samsung Scanner:
+      Version: 2.00.29
+      Last Modified: 7/1/09 12:26 AM
+      Get Info String: Copyright (C) 2004-2009 Samsung Electronics Co., Ltd.
+      Location: /Library/Image Capture/Devices/Samsung Scanner.app
+    Inkjet3:
+      Version: 2.0
+      Last Modified: 6/16/09 8:21 AM
+      Get Info String: HP Inkjet 3 Driver 2.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet3.driver
+    commandtohp:
+      Version: 1.7
+      Last Modified: 6/15/09 7:48 AM
+      Get Info String: HP Command File Filter 1.7, Copyright (c) 2006-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/filters/commandtohp.filter
+    hprastertojpeg:
+      Version: 1.0.1
+      Last Modified: 3/30/09 5:51 AM
+      Get Info String: HP Photosmart Compact Photo Printer driver 1.0.1, Copyright (c) 2007-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/filter/hprastertojpeg.driver
+    Deskjet:
+      Version: 3.0
+      Last Modified: 6/18/09 6:21 AM
+      Get Info String: HP Deskjet Driver 3.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Deskjet.driver
+    Canon IJScanner2:
+      Version: 1.0.0
+      Last Modified: 6/15/09 1:18 AM
+      Get Info String: 1.0.0, Copyright CANON INC. 2009 All Rights Reserved
+      Location: /Library/Image Capture/Devices/Canon IJScanner2.app
+    pdftopdf:
+      Version: 1.3
+      Last Modified: 4/16/09 10:20 AM
+      Get Info String: HP PDF Filter 1.3, Copyright (c) 2001-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/filters/pdftopdf.filter
+    Officejet:
+      Version: 3.0
+      Last Modified: 6/16/09 7:48 AM
+      Get Info String: HP Officejet Driver 3.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Officejet.driver
+    Canon IJ Printer Utility:
+      Version: 7.17.10
+      Last Modified: 6/15/09 2:22 AM
+      Get Info String: Canon IJ Printer Utility version 7.17.10, Copyright CANON INC. 2001-2009 All Rights Reserved.
+      Location: /Library/Printers/Canon/BJPrinter/Utilities/BJPrinterUtility2.app
+    CIJScannerRegister:
+      Version: 1.0.0
+      Last Modified: 6/15/09 1:19 AM
+      Get Info String: CIJScannerRegister version 1.0.0, Copyright CANON INC. 2009 All Rights Reserved.
+      Location: /Library/Image Capture/Support/LegacyDeviceDiscoveryHelpers/CIJScannerRegister.app
+    Canon IJScanner1:
+      Version: 1.0.0
+      Last Modified: 6/15/09 1:19 AM
+      Get Info String: 1.0.0, Copyright CANON INC. 2009 All Rights Reserved
+      Location: /Library/Image Capture/Devices/Canon IJScanner1.app
+    CIJAutoSetupTool:
+      Version: 1.7.1
+      Last Modified: 6/15/09 1:18 AM
+      Get Info String: CIJAutoSetupTool.app version 1.7.0, Copyright CANON INC. 2007-2008 All Rights Reserved.
+      Location: /Library/Printers/Canon/BJPrinter/Utilities/CIJAutoSetupTool.app
+    Raster2CanonIJ:
+      Last Modified: 6/15/09 1:18 AM
+      Location: /Library/Printers/Canon/BJPrinter/Filters/Raster2CanonIJ/Raster2CanonIJ.bundle
+    Inkjet5:
+      Version: 2.1
+      Last Modified: 6/16/09 7:00 AM
+      Get Info String: HP Inkjet 5 Driver 2.1, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet5.driver
+    PhotosmartPro:
+      Version: 3.0
+      Last Modified: 6/16/09 4:32 AM
+      Get Info String: HP Photosmart Pro Driver 3.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/PhotosmartPro.driver
+    Laserjet:
+      Version: 1.0
+      Last Modified: 6/22/09 7:27 AM
+      Get Info String: HP Laserjet Driver 1.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Laserjet.driver
+    LexmarkCUPSDriver:
+      Version: 1.1.26
+      Last Modified: 7/1/09 12:26 AM
+      Get Info String: 0.0.0 (v27), Copyright 2008 Lexmark International, Inc. All rights reserved.
+      Location: /Library/Printers/Lexmark/Drivers/LexmarkCUPSDriver.app
+    Inkjet6:
+      Version: 1.0.2
+      Last Modified: 6/16/09 3:36 AM
+      Get Info String: HP Inkjet 6 Driver 1.0.2, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet6.driver
+    Inkjet1:
+      Version: 2.1.2
+      Last Modified: 6/16/09 8:54 AM
+      Get Info String: HP Inkjet 1 Driver 2.1.2, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet1.driver
+    Lexmark Printer Utility:
+      Version: 1.2.10
+      Last Modified: 7/1/09 12:28 AM
+      Get Info String: 1.0, Copyright 2008 Lexmark International, Inc. All rights reserved.
+      Location: /Library/Printers/Lexmark/Drivers/Lexmark Printer Utility.app
+    Lexmark Scanner:
+      Version: 3.2.45
+      Last Modified: 7/1/09 12:26 AM
+      Location: /Library/Image Capture/Devices/Lexmark Scanner.app
+    Inkjet8:
+      Version: 2.1
+      Last Modified: 6/16/09 4:59 AM
+      Get Info String: HP Inkjet 8 Driver 2.1, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Inkjet8.driver
+    Photosmart:
+      Version: 4.0
+      Last Modified: 6/16/09 5:03 AM
+      Get Info String: HP Photosmart Driver 4.0, Copyright (c) 1994-2009 Hewlett-Packard Development Company, L.P.
+      Location: /Library/Printers/hp/cups/Photosmart.driver
+    Java Web Start:
+      Version: 13.1.0
+      Last Modified: 7/20/09 6:35 PM
+      Location: /System/Library/CoreServices/Java Web Start.app
+    Jar Launcher:
+      Version: 13.1.0
+      Last Modified: 7/20/09 6:36 PM
+      Location: /System/Library/CoreServices/Jar Launcher.app
+    Setup Assistant:
+      Version: 10.6
+      Last Modified: 7/31/09 2:25 AM
+      Get Info String: 10.6
+      Location: /System/Library/CoreServices/Setup Assistant.app
+    50onPaletteServer:
+      Version: 1.0.3
+      Last Modified: 6/30/09 12:29 AM
+      Location: /System/Library/Input Methods/50onPaletteServer.app
+    License:
+      Version: 11
+      Last Modified: 7/25/09 12:43 AM
+      Get Info String: License
+      Location: /Library/Documentation/License.app
+    Wish:
+      Version: 8.5.7
+      Last Modified: 7/22/09 10:45 PM
+      Get Info String: Wish Shell 8.5.7,
+Copyright ¬(c) 1989-2009 Tcl Core Team,
+Copyright ¬(c) 2002-2009 Daniel A. Steffen,
+Copyright ¬(c) 2001-2009 Apple Inc.,
+Copyright ¬(c) 2001-2002 Jim Ingham & Ian Reid
+      Location: /System/Library/Frameworks/Tk.framework/Versions/8.5/Resources/Wish.app
+    Wish:
+      Version: 8.4.19
+      Last Modified: 7/22/09 10:18 PM
+      Get Info String: Wish Shell 8.4.19,
+Copyright ¬(c) 2009 Tcl Core Team,
+Copyright ¬(c) 2002-2009 Daniel A. Steffen,
+Initial MacOS X Port by Jim Ingham & Ian Reid,
+Copyright ¬(c) 2001-2002, Apple Computer, Inc.
+      Location: /System/Library/Frameworks/Tk.framework/Versions/8.4/Resources/Wish.app
+    kcSync:
+      Version: 3.0
+      Last Modified: 6/25/09 7:51 PM
+      Location: /System/Library/Frameworks/SecurityFoundation.framework/Versions/A/kcSync.app
+    dotmacfx:
+      Version: 3.0
+      Last Modified: 6/25/09 7:51 PM
+      Location: /System/Library/Frameworks/SecurityFoundation.framework/Versions/A/dotmacfx.app
+    eaptlstrust:
+      Version: 10.0
+      Last Modified: 5/19/09 12:34 AM
+      Location: /System/Library/PrivateFrameworks/EAP8021X.framework/Support/eaptlstrust.app
+    Yahoo! Sync:
+      Version: 1.3
+      Last Modified: 5/19/09 1:56 AM
+      Location: /System/Library/PrivateFrameworks/YahooSync.framework/Versions/A/Resources/Yahoo! Sync.app
+    VietnameseIM:
+      Version: 1.1
+      Last Modified: 5/19/09 1:12 AM
+      Location: /System/Library/Input Methods/VietnameseIM.app
+    UserNotificationCenter:
+      Version: 3.1.0
+      Last Modified: 5/18/09 9:13 PM
+      Location: /System/Library/CoreServices/UserNotificationCenter.app
+    UnmountAssistantAgent:
+      Version: 1.0
+      Last Modified: 7/2/09 8:00 PM
+      Location: /System/Library/CoreServices/UnmountAssistantAgent.app
+    URL Access Scripting:
+      Version: 1.1.1
+      Last Modified: 5/19/09 12:34 AM
+      Get Info String: URL Access Scripting 1.1, Copyright ¬(c) 2002-2004 Apple Computer, Inc.
+      Location: /System/Library/ScriptingAdditions/URL Access Scripting.app
+    Ticket Viewer:
+      Version: 1.0
+      Last Modified: 5/19/09 12:28 AM
+      Location: /System/Library/CoreServices/Ticket Viewer.app
+    TamilIM:
+      Version: 1.3
+      Last Modified: 5/19/09 12:36 AM
+      Get Info String: Tamil Input Method 1.2
+      Location: /System/Library/Input Methods/TamilIM.app
+    SummaryService:
+      Version: 2.0
+      Last Modified: 5/19/09 12:27 AM
+      Get Info String: Summary Service Version  2
+      Location: /System/Library/Services/SummaryService.app
+    SpeechService:
+      Version: 3.10.35
+      Last Modified: 7/12/09 12:23 AM
+      Location: /System/Library/Services/SpeechService.service
+    SpeechRecognitionServer:
+      Version: 3.11.1
+      Last Modified: 5/28/09 7:37 PM
+      Location: /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SpeechRecognition.framework/Versions/A/Resources/SpeechRecognitionServer.app
+    SpeechFeedbackWindow:
+      Version: 3.8.1
+      Last Modified: 5/28/09 7:38 PM
+      Location: /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SpeechRecognition.framework/Versions/A/Resources/SpeechFeedbackWindow.app
+    Speech Startup:
+      Version: 3.8.1
+      Last Modified: 5/28/09 7:38 PM
+      Location: /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SpeechRecognition.framework/Versions/A/Resources/Speech Startup.app
+    SpeakableItems:
+      Version: 3.7.8
+      Last Modified: 5/19/09 3:45 AM
+      Location: /System/Library/Speech/Recognizers/AppleSpeakableItems.SpeechRecognizer/Contents/Resources/SpeakableItems.app
+    SecurityProxy:
+      Version: 1.0
+      Last Modified: 5/20/09 9:37 PM
+      Location: /System/Library/CoreServices/SecurityProxy.app
+    SecurityFixer:
+      Version: 10.6
+      Last Modified: 5/18/09 9:17 PM
+      Location: /System/Library/CoreServices/SecurityFixer.app
+    PreferenceSyncClient:
+      Version: 2.0
+      Last Modified: 7/2/09 1:17 AM
+      Location: /System/Library/CoreServices/PreferenceSyncClient.app
+    PluginIM:
+      Version: 1.1
+      Last Modified: 5/19/09 12:36 AM
+      Location: /System/Library/Input Methods/PluginIM.app
+    Network Setup Assistant:
+      Version: 1.6
+      Last Modified: 5/19/09 4:15 AM
+      Get Info String: 1.6
+      Location: /System/Library/CoreServices/Network Setup Assistant.app
+    Keychain Scripting:
+      Version: 4.0.2
+      Last Modified: 7/2/09 7:57 PM
+      Location: /System/Library/ScriptingAdditions/Keychain Scripting.app
+    KeyboardViewer:
+      Version: 2.0
+      Last Modified: 6/11/09 1:11 AM
+      Get Info String: 2.0, Copyright ¬(c) 2004-2009 Apple Inc., All Rights Reserved
+      Location: /System/Library/Input Methods/KeyboardViewer.app
+    KeyboardSetupAssistant:
+      Version: 10.5.0
+      Last Modified: 5/19/09 12:45 AM
+      Location: /System/Library/CoreServices/KeyboardSetupAssistant.app
+    InkServer:
+      Version: 1.0
+      Last Modified: 5/18/09 9:18 PM
+      Get Info String: 1.0, Copyright 2008 Apple Inc.
+      Location: /System/Library/Input Methods/InkServer.app
+    Front Row:
+      Version: 2.2.1
+      Last Modified: 7/22/09 3:50 AM
+      Location: /System/Library/CoreServices/Front Row.app
+    FontSyncScripting:
+      Version: 2.0.6
+      Last Modified: 5/18/09 9:17 PM
+      Get Info String: FontSync Scripting 2.0. Copyright ¬(c) 2000-2008 Apple Inc.
+      Location: /System/Library/ScriptingAdditions/FontSyncScripting.app
+    Memory Slot Utility:
+      Version: 1.4
+      Last Modified: 5/18/09 9:17 PM
+      Location: /System/Library/CoreServices/Memory Slot Utility.app
+    Expansion Slot Utility:
+      Version: 1.4
+      Last Modified: 5/18/09 9:17 PM
+      Location: /System/Library/CoreServices/Expansion Slot Utility.app
+    Directory Utility:
+      Version: 2.2
+      Last Modified: 5/19/09 4:08 AM
+      Get Info String: 2.2, Copyright ¬(c) 2001‚Äì2008 Apple Inc.
+      Location: /System/Library/CoreServices/Directory Utility.app
+    ChineseTextConverterService:
+      Version: 1.2
+      Last Modified: 5/18/09 9:18 PM
+      Get Info String: Chinese Text Converter 1.1
+      Location: /System/Library/Services/ChineseTextConverterService.app
+    ChineseHandwriting:
+      Version: 1.0
+      Last Modified: 7/17/09 12:28 AM
+      Location: /System/Library/Input Methods/ChineseHandwriting.app
+    CharacterPalette:
+      Version: 1.0.4
+      Last Modified: 7/2/09 2:49 AM
+      Location: /System/Library/Input Methods/CharacterPalette.app
+    Certificate Assistant:
+      Version: 3.0
+      Last Modified: 7/2/09 1:27 AM
+      Location: /System/Library/CoreServices/Certificate Assistant.app
+    wxPerl:
+      Version: 1.0
+      Last Modified: 5/19/09 1:31 AM
+      Location: /System/Library/Perl/Extras/5.8.9/darwin-thread-multi-2level/auto/Wx/wxPerl.app
+    wxPerl:
+      Version: 1.0
+      Last Modified: 5/19/09 1:30 AM
+      Location: /System/Library/Perl/Extras/5.10.0/darwin-thread-multi-2level/auto/Wx/wxPerl.app
+    AppleScript Utility:
+      Version: 1.1.1
+      Last Modified: 5/19/09 12:34 AM
+      Location: /System/Library/CoreServices/AppleScript Utility.app
+    AppleGraphicsWarning:
+      Version: 2.0.3
+      Last Modified: 5/19/09 12:27 AM
+      Get Info String: Version 2.0.3, Copyright Apple Inc., 2008
+      Location: /System/Library/CoreServices/AppleGraphicsWarning.app
+    SpeechSynthesisServer:
+      Version: 3.10.35
+      Last Modified: 7/12/09 12:23 AM
+      Location: /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/SpeechSynthesis.framework/Versions/A/Resources/SpeechSynthesisServer.app
+    NetAuthAgent:
+      Version: 2.0
+      Last Modified: 6/23/09 2:33 AM
+      Location: /System/Library/CoreServices/NetAuthAgent.app
+    Kotoeri:
+      Version: 4.2.0
+      Last Modified: 6/10/09 9:33 PM
+      Location: /System/Library/Input Methods/Kotoeri.app
+    KoreanIM:
+      Version: 6.1
+      Last Modified: 5/5/09 11:41 AM
+      Get Info String: 6.0, Copyright ¬(c) 1997-2006 Apple Computer Inc., All Rights Reserved
+      Location: /System/Library/Input Methods/KoreanIM.app

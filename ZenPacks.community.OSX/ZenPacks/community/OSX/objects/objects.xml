@@ -3,7 +3,7 @@
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'SSH', 'OSX') -->
 <object id='/zport/dmd/Devices/Server/SSH/OSX' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.cmd.osx.uname_a', 'zenoss.cmd.osx.memory', 'zenoss.cmd.osx.cpu']
+['zenoss.cmd.osx.uname_a', 'zenoss.cmd.osx.memory', 'zenoss.cmd.osx.cpu', 'zenoss.cmd.osx.software']
 </property>
 <property visible="True" type="lines" id="zFileSystemMapIgnoreTypes" >
 ['other', 'ram', 'virtualMemory', 'removableDisk', 'floppyDisk', 'compactDisk', 'ramDisk', 'flashMemory', 'networkDisk', 'objfs', 'devfs', 'map']

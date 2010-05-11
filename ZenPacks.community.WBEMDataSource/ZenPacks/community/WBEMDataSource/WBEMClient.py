@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.4 2010/05/04 19:50:54 egor Exp $"""
+$Id: WBEMClient.py,v 2.5 2010/05/11 16:06:57 egor Exp $"""
 
-__version__ = "$Revision: 2.4 $"[11:-2]
+__version__ = "$Revision: 2.5 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -118,15 +118,20 @@ class WBEMClient(BaseClient):
         for name, aname in properties.iteritems():
             if name not in instance.properties: continue
             prop = instance.properties[name]
-            if prop.is_array and prop.value:
-                idict[aname] = [self.parseValue(v) for v in prop.value]
+            if 'Values' not in prop.qualifiers:
+                if prop.is_array and prop.value:
+                    idict[aname] = [self.parseValue(v) for v in prop.value]
+                else:
+                    idict[aname] = self.parseValue(prop.value)
             else:
-                idict[aname] = self.parseValue(prop.value)
-            if 'Values' not in prop.qualifiers: continue
-            try:
-                idx = prop.qualifiers['ValueMap'].value.index(str(prop.value))
-                idict[aname] = prop.qualifiers['Values'].value[idx]
-            except: idict[aname] = None
+                if prop.is_array and prop.value:
+                    idict[aname] = []
+                    for v in prop.value:
+                        idx = prop.qualifiers['ValueMap'].value.index(str(v))
+                        idict[aname].append(prop.qualifiers['Values'].value[idx])
+                else:
+                    idx=prop.qualifiers['ValueMap'].value.index(str(prop.value))
+                    idict[aname] = prop.qualifiers['Values'].value[idx]
         idict[properties.get('__path', '__path')] = str(instance.path)
         return idict
 
@@ -373,4 +378,3 @@ if __name__ == "__main__":
                     if var in properties.values():
                         var = properties.keys()[properties.values().index(var)]
                     print "%s = %s"%(var, val)
-

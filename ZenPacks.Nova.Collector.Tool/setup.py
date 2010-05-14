@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.Nova.Collector.Tool"
-VERSION = "1.1"
+VERSION = "1.2"
 AUTHOR = "Ryan Matte"
 LICENSE = "GPLv2"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Nova', 'ZenPacks.Nova.Collector']

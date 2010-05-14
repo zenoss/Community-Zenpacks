@@ -1,0 +1,16 @@
+######################################################################
+#
+# Copyright 2009 Zenoss, Inc.  All Rights Reserved.
+#
+######################################################################
+
+. $ZENHOME/bin/zenfunctions
+
+MYPATH=`python -c "import os.path; print os.path.realpath('$0')"`
+THISDIR=`dirname $MYPATH`
+PRGHOME=`dirname $THISDIR`
+PRGNAME=zensunprocess.py
+CFGFILE=$CFGDIR/zensunprocess.conf
+
+generic "$@"
+

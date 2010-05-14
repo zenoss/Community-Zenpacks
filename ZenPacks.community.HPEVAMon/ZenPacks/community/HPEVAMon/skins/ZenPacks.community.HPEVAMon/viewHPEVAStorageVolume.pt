@@ -14,7 +14,7 @@
 <tal:block metal:fill-slot="zentablecontents">
     <tr>
       <td class="tableheader" align=left>Name</td>
-      <td class="tablevalues" tal:content="here/name">sd0</td>
+      <td class="tablevalues" tal:content="here/caption">sd0</td>
       <td class="tableheader">Monitor</td>
       <td class="tablevalues">
         <select class="tablevalues"  name="monitor:boolean">

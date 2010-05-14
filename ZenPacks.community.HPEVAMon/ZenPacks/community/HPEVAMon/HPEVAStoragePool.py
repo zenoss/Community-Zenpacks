@@ -12,9 +12,9 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.0 2010/03/09 15:26:27 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.1 2010/05/14 18:18:21 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.OSComponent import *
@@ -34,33 +34,33 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     diskType = ""
     protLevel = ""
     threshold = 0
-    
+
     _properties = OSComponent._properties + (
                  {'id':'caption', 'type':'string', 'mode':'w'},
                  {'id':'diskGroupType', 'type':'string', 'mode':'w'},
                  {'id':'diskType', 'type':'string', 'mode':'w'},
                  {'id':'protLevel', 'type':'string', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
-                )    
+                )
 
 
     _relations = OSComponent._relations + (
         ("os", ToOne(
-	    ToManyCont,
-	    "ZenPacks.community.HPEVAMon.HPEVADevice.HPEVADeviceOS",
-	    "storagepools")),
+            ToManyCont,
+            "ZenPacks.community.HPEVAMon.HPEVADevice.HPEVADeviceOS",
+            "storagepools")),
         ("harddisks", ToMany(
-	    ToOne,
-	    "ZenPacks.community.HPEVAMon.HPEVADiskDrive",
-	    "storagepool")),
+            ToOne,
+            "ZenPacks.community.HPEVAMon.HPEVADiskDrive",
+            "storagepool")),
         ("virtualdisks", ToMany(
-	    ToOne,
-	    "ZenPacks.community.HPEVAMon.HPEVAStorageVolume",
-	    "storagepool")),
-	)
+            ToOne,
+            "ZenPacks.community.HPEVAMon.HPEVAStorageVolume",
+            "storagepool")),
+        )
 
     factory_type_information = ( 
-        { 
+        {
             'id'             : 'StoragePool',
             'meta_type'      : 'StoragePool',
             'description'    : """Arbitrary device grouping class""",
@@ -69,7 +69,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
             'factory'        : 'manage_addStoragePool',
             'immediate_view' : 'viewHPEVAStoragePool',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewHPEVAStoragePool'
@@ -84,7 +84,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
                 , 'permissions'   : ("Change Device", )
-                },                
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -98,7 +98,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     def getStatus(self):
         """
         Return the components status
-	"""
+        """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
     def totalBytes(self):
@@ -124,15 +124,9 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
         if self.totalBytes() is not 0:
             return int(100.0 * self.usedBytes() / self.totalBytes())
         return 'unknown'
-	
+
     def disks(self):
         return int(round(self.cacheRRDValue('TotalDisks', 0)))
 
-    def viewName(self): 
-        """
-        Return the mount point name of a filesystem '/boot'
-        """
-        return self.caption
-    name = viewName
 
 InitializeClass(HPEVAStoragePool)

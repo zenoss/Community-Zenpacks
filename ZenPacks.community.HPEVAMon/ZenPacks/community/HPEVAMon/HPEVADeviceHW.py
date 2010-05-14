@@ -34,9 +34,9 @@ class HPEVADeviceHW(DeviceHW):
         ("temperaturesensors", ToManyCont(ToOne,
             "Products.ZenModel.TemperatureSensor", "hw")),
         ("enclosures", ToManyCont(ToOne,
-	    "ZenPacks.community.HPEVAMon.HPEVAStorageDiskEnclosure", "hw")),
+            "ZenPacks.community.HPEVAMon.HPEVAStorageDiskEnclosure", "hw")),
         ("fcports", ToManyCont(ToOne,
-	    "ZenPacks.community.HPEVAMon.HPEVAHostFCPort", "hw")),
+            "ZenPacks.community.HPEVAMon.HPEVAHostFCPort", "hw")),
     )
 
     factory_type_information = (

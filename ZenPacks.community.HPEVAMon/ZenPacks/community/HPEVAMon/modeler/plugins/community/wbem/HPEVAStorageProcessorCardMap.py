@@ -34,15 +34,15 @@ class HPEVAStorageProcessorCardMap(WBEMPlugin):
             "HPEVA_StorageProcessorCard":
                 (
                 "HPEVA_StorageProcessorCard",
-		None,
+                None,
                 "root/eva",
                     {
-		    "Tag":"snmpindex",
-		    "Caption":"caption",
-		    "FirmwareVersion":"FWRev",
-		    "Model":"setProductKey",
-		    "Name":"id",
-		    "SerialNumber":"serialNumber",
+                    "Tag":"snmpindex",
+                    "Caption":"caption",
+                    "FirmwareVersion":"FWRev",
+                    "Model":"setProductKey",
+                    "Name":"id",
+                    "SerialNumber":"serialNumber",
                     },
                 ),
             }
@@ -51,17 +51,17 @@ class HPEVAStorageProcessorCardMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-	instances = results["HPEVA_StorageProcessorCard"]
-	if not instances: return
+        instances = results["HPEVA_StorageProcessorCard"]
+        if not instances: return
         rm = self.relMap()
         sysname = getattr(device, "snmpSysName", 'None')
-	for instance in instances:
-	    if not instance["id"].startswith(sysname): continue
-	    try:
+        for instance in instances:
+            if not instance["id"].startswith(sysname): continue
+            try:
                 om = self.objectMap(instance)
                 om.id = self.prepId(om.id)
-		om.slot = om.caption[-1]
-	        om.setProductKey = MultiArgs(om.setProductKey, "HP")
+                om.slot = om.caption[-1]
+                om.setProductKey = MultiArgs(om.setProductKey, "HP")
             except AttributeError:
                 continue
             rm.append(om)

@@ -33,23 +33,23 @@ class HPEVAStorageVolumeMap(WBEMPlugin):
             "HPEVA_StorageVolume":
                 (
                 "HPEVA_StorageVolume",
-		None,
+                None,
                 "root/eva",
                     {
-		    "__path":"snmpindex",
-		    "Access":"accessType",
-		    "Caption":"caption",
-		    "BlockSize":"blockSize",
-		    "DiskGroupID":"_dgid",
-		    "MirrorCache":"mirrorCache",
-		    "VDiskType":"diskType",
-		    "PreferredPath":"preferredPath",
-		    "Name": "id",
-		    "OnlineController":"_cntrl",
-		    "RaidType":"raidType",
-		    "ReadCachePolicy":"readCachePolicy",
-		    "SystemName":"_sname",
-		    "WriteCachePolicy":"writeCachePolicy",
+                    "__path":"snmpindex",
+                    "Access":"accessType",
+                    "Caption":"caption",
+                    "BlockSize":"blockSize",
+                    "DiskGroupID":"_dgid",
+                    "MirrorCache":"mirrorCache",
+                    "VDiskType":"diskType",
+                    "PreferredPath":"preferredPath",
+                    "Name": "id",
+                    "OnlineController":"_cntrl",
+                    "RaidType":"raidType",
+                    "ReadCachePolicy":"readCachePolicy",
+                    "SystemName":"_sname",
+                    "WriteCachePolicy":"writeCachePolicy",
                     },
                 ),
             }
@@ -58,16 +58,16 @@ class HPEVAStorageVolumeMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-	instances = results["HPEVA_StorageVolume"]
-	if not instances: return
+        instances = results["HPEVA_StorageVolume"]
+        if not instances: return
         rm = self.relMap()
         sysname = getattr(device, "snmpSysName", 'None')
-	for instance in instances:
-	    if instance["_sname"] != sysname: continue
-	    try:
+        for instance in instances:
+            if instance["_sname"] != sysname: continue
+            try:
                 om = self.objectMap(instance)
                 om.id = self.prepId("%s.%s"%(om._sname, om.id))
-		om.setStoragePool = "%s.%s"%(om._sname, om._dgid)
+                om.setStoragePool = "%s.%s"%(om._sname, om._dgid)
             except AttributeError:
                 continue
             rm.append(om)

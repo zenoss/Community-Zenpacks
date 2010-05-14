@@ -32,28 +32,28 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
 #    enclosureLayout = ((1,2,3,4,5,6,7,8,9,10,11,12),)
     enclosureLayout = ( (1,4,7,10),
                         (2,5,8,11),
-		        (3,6,9,12))
+                        (3,6,9,12))
     diskOrientation = 'h'
 
     linkimg = '/zport/dmd/hpevaselink'
     rightimg = '/zport/dmd/hpevaseright'
     blankimg = '/zport/dmd/hpevadisk_blank'
-    
-    
+
+
     _properties = HWComponent._properties + (
-                )    
+                )
 
     _relations = HWComponent._relations + (
         ("hw", ToOne(ToManyCont,
-	            "ZenPacks.community.HPEVAMon.HPEVADeviceHW",
-	            "enclosures")),
+                    "ZenPacks.community.HPEVAMon.HPEVADeviceHW",
+                    "enclosures")),
         ("harddisks", ToMany(ToOne,
-	            "ZenPacks.community.HPEVAMon.HPEVADiskDrive",
-	            "enclosure")),
-	)
+                    "ZenPacks.community.HPEVAMon.HPEVADiskDrive",
+                    "enclosure")),
+        )
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'HPEVAStorageDiskEnclosure',
             'meta_type'      : 'HPEVAStorageDiskEnclosure',
             'description'    : """Arbitrary device grouping class""",
@@ -62,7 +62,7 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
             'factory'        : 'manage_addStorageDiskEnclosure',
             'immediate_view' : 'viewHPEVAStorageDiskEnclosure',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewHPEVAStorageDiskEnclosure'
@@ -77,7 +77,7 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
                 , 'permissions'   : ("Change Device", )
-                },                
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -91,34 +91,34 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
     def getStatus(self):
         """
         Return the components status
-	"""
+        """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
     def layout(self):
         bays = {}
         for disk in self.harddisks():
-	    bays[int(disk.bay)]='<a href=\"%s\"><img src=\"%s_%s.png\"  /></a>'%(
-	        disk.getPrimaryUrlPath(), disk.diskImg(), self.diskOrientation)
-	result = "\t\t\t<table border=\"0\">\n\t\t\t\t<tr>\n\t\t\t\t\t"
-	result=result+"<td><a href=\"%s\"><img src=\"%s%s.png\" /></a></td>\n"%(
-	                                    self.getPrimaryUrlPath(),
-					    self.linkimg,
-					    int(self.id) < 28 and self.id or '')
-	result= result + "\t\t\t\t\t<td><table border=\"0\">\n"
+            bays[int(disk.bay)]='<a href=\"%s\"><img src=\"%s_%s.png\"  /></a>'%(
+                disk.getPrimaryUrlPath(), disk.diskImg(), self.diskOrientation)
+        result = "\t\t\t<table border=\"0\">\n\t\t\t\t<tr>\n\t\t\t\t\t"
+        result=result+"<td><a href=\"%s\"><img src=\"%s%s.png\" /></a></td>\n"%(
+                                            self.getPrimaryUrlPath(),
+                                            self.linkimg,
+                                            int(self.id) < 28 and self.id or '')
+        result= result + "\t\t\t\t\t<td><table border=\"0\">\n"
         for line in self.enclosureLayout:
-	    result = result + "\t\t\t\t<tr>\n"
-	    for bay in line:
-	        result = result + "\t\t\t\t\t<td>%s</td>\n"%bays.get(bay, 
-		                    '<img src=\"%s_%s.png\" />'%(self.blankimg,
-		                                        self.diskOrientation))
-	    result = result + "\t\t\t\t</tr>\n"
-	result = result + "\t\t\t\t\t</table>\t\t\t\t\t</td>\n\t\t\t\t\t<td>"
-	result = result +"<a href=\"%s\"><img src=\"%s_%s.png\" /></a></td>\n"%(
-	                                            self.getPrimaryUrlPath(),
-	                                            self.rightimg,
-	                                            self.statusDot())
-	result = result + "\t\t\t\t\t</td>\n\t\t\t\t</tr>\n"
-	result = result + "\t\t\t</table>\n"
+            result = result + "\t\t\t\t<tr>\n"
+            for bay in line:
+                result = result + "\t\t\t\t\t<td>%s</td>\n"%bays.get(bay, 
+                                    '<img src=\"%s_%s.png\" />'%(self.blankimg,
+                                                        self.diskOrientation))
+            result = result + "\t\t\t\t</tr>\n"
+        result = result + "\t\t\t\t\t</table>\t\t\t\t\t</td>\n\t\t\t\t\t<td>"
+        result = result +"<a href=\"%s\"><img src=\"%s_%s.png\" /></a></td>\n"%(
+                                                    self.getPrimaryUrlPath(),
+                                                    self.rightimg,
+                                                    self.statusDot())
+        result = result + "\t\t\t\t\t</td>\n\t\t\t\t</tr>\n"
+        result = result + "\t\t\t</table>\n"
         return result
 
 

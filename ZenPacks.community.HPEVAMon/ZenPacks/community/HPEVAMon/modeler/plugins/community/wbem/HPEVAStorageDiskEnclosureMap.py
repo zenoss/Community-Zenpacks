@@ -24,7 +24,7 @@ from Products.DataCollector.plugins.DataMaps import MultiArgs
 from Products.DataCollector.EnterpriseOIDs import EnterpriseOIDs
 
 class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
-    """Map HPEVA_StorageDiskEnclosure class to HardDisk"""
+    """Map HPEVA_StorageDiskEnclosure class to Storage Enclosure"""
 
     maptype = "HPEVAStorageDiskEnclosureMap"
     modname = "ZenPacks.community.HPEVAMon.HPEVAStorageDiskEnclosure"
@@ -36,14 +36,14 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
             "HPEVA_StorageDiskEnclosure":
                 (
                 "HPEVA_StorageDiskEnclosure",
-		None,
+                None,
                 "root/eva",
                     {
-		    "__path":"snmpindex",
-		    "Caption":"id",
-		    "Manufacturer":"_manuf",
-		    "Model":"_model",
-		    "Name":"_sname",
+                    "__path":"snmpindex",
+                    "Caption":"id",
+                    "Manufacturer":"_manuf",
+                    "Model":"_model",
+                    "Name":"_sname",
                     },
                 ),
             }
@@ -51,19 +51,19 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-	instances = results["HPEVA_StorageDiskEnclosure"]
-	if not instances: return
+        instances = results["HPEVA_StorageDiskEnclosure"]
+        if not instances: return
         rm = self.relMap()
         sysname = getattr(device, "snmpSysName", 'None')
-	for instance in instances:
-	    if instance["_sname"] != sysname: continue
+        for instance in instances:
+            if instance["_sname"] != sysname: continue
             om = self.objectMap(instance)
             om.id = self.prepId(om.id.split()[-1])
-	    try:
-	        if om._manuf not in EnterpriseOIDs.values():
-	            om._manuf = "Unknown"
-	        if om._model:
-	            om.setProductKey = MultiArgs(om._model, om._manuf)
+            try:
+                if om._manuf not in EnterpriseOIDs.values():
+                    om._manuf = "Unknown"
+                if om._model:
+                    om.setProductKey = MultiArgs(om._model, om._manuf)
             except AttributeError:
                 continue
             rm.append(om)

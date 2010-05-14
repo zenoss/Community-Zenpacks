@@ -26,7 +26,7 @@ class HPEVADeviceOS(OperatingSystem):
     # Define new relationships
     _relations = Software._relations + (
         ("interfaces", ToManyCont(ToOne,
-	    "Products.ZenModel.IpInterface", "os")),
+            "Products.ZenModel.IpInterface", "os")),
         ("routes", ToManyCont(ToOne, "Products.ZenModel.IpRouteEntry", "os")),
         ("ipservices", ToManyCont(ToOne, "Products.ZenModel.IpService", "os")),
         ("winservices", ToManyCont(ToOne,
@@ -36,9 +36,9 @@ class HPEVADeviceOS(OperatingSystem):
             "Products.ZenModel.FileSystem", "os")),
         ("software", ToManyCont(ToOne, "Products.ZenModel.Software", "os")),
         ("storagepools", ToManyCont(ToOne,
-	    "ZenPacks.community.HPEVAMon.HPEVAStoragePool", "os")),
+            "ZenPacks.community.HPEVAMon.HPEVAStoragePool", "os")),
         ("virtualdisks", ToManyCont(ToOne,
-	    "ZenPacks.community.HPEVAMon.HPEVAStorageVolume", "os")),
+            "ZenPacks.community.HPEVAMon.HPEVAStorageVolume", "os")),
     )
 
 

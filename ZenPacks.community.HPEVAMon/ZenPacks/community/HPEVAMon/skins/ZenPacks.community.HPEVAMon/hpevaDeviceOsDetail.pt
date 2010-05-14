@@ -121,7 +121,7 @@
     objects here/os/storagepools/objectValuesAll;
     tabletitle string:Disk Groups;
     batch python:here.ZenTableManager.getBatch(tableName,objects,
-                                            sortedHeader='name');">
+                                            sortedHeader='caption');">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 
 <tal:block metal:fill-slot="zentablecontents">
@@ -129,7 +129,7 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr tal:condition="objects">
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'name','Name')">Name
+                            tableName,'caption','Name')">Name
         </th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'disks','Total Disks')">Total Disks
@@ -168,7 +168,7 @@
         
       <td class="tablevalues">
           <tal:block 
-           tal:content="structure python:stpool.urlLink(text=stpool.name(),
+           tal:content="structure python:stpool.urlLink(text=stpool.caption,
             attrs={'class':'tablevalues'})"/>
       </td>
       <td class="tablevalues"
@@ -223,7 +223,7 @@
     objects here/os/virtualdisks/objectValuesAll;
     tabletitle string:Virtual Disks;
     batch python:here.ZenTableManager.getBatch(tableName,objects,
-                                            sortedHeader='name');">
+                                            sortedHeader='caption');">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 
 <tal:block metal:fill-slot="zentablecontents">
@@ -231,7 +231,7 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr tal:condition="objects">
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'name','Name')">Name
+                            tableName,'caption','Name')">Name
         </th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'diskType','Disk Type')">Disk Type
@@ -261,7 +261,7 @@
         
       <td class="tablevalues">
           <tal:block 
-           tal:content="structure python:vdisk.urlLink(text=vdisk.name(),
+           tal:content="structure python:vdisk.urlLink(text=vdisk.caption,
             attrs={'class':'tablevalues'})"/>
       </td>
       <td class="tablevalues"

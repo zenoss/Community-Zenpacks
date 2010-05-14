@@ -34,32 +34,32 @@ class HPEVADiskDriveMap(WBEMPlugin):
             "HPEVA_DiskDrive":
                 (
                 "HPEVA_DiskDrive",
-		None,
+                None,
                 "root/eva",
                     {
-		    "DeviceID":"id",
-		    "Caption":"bay",
-		    "DiskType":"diskType",
-		    "DriveType":"_diskType",
-		    "FirmwareRevision":"FWRev",
-		    "Manufacturer":"_manuf",
-		    "MaxMediaSize":"size",
-		    "Model":"_model",
-		    "Name":"wwn",
-		    "ShortName":"description",
-		    "SystemName":"_sname",
+                    "DeviceID":"id",
+                    "Caption":"bay",
+                    "DiskType":"diskType",
+                    "DriveType":"_diskType",
+                    "FirmwareRevision":"FWRev",
+                    "Manufacturer":"_manuf",
+                    "MaxMediaSize":"size",
+                    "Model":"_model",
+                    "Name":"wwn",
+                    "ShortName":"description",
+                    "SystemName":"_sname",
                     },
                 ),
             "HPEVA_DiskModule":
                 (
                 "HPEVA_DiskModule",
-		None,
+                None,
                 "root/eva",
                     {
-		    "DeviceID":"_id",
-		    "HotSwappable":"hotPlug",
-		    "SerialNumber":"serialNumber",
-		    "Tag":"snmpindex",
+                    "DeviceID":"_id",
+                    "HotSwappable":"hotPlug",
+                    "SerialNumber":"serialNumber",
+                    "Tag":"snmpindex",
                     },
                 ),
             }
@@ -67,30 +67,30 @@ class HPEVADiskDriveMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-	instances = results["HPEVA_DiskModule"]
-	if not instances: return
-	diskModules = {}
-	for instance in instances:
-	    diskModules[instance['_id']] = instance
-	instances = results["HPEVA_DiskDrive"]
-	if not instances: return
+        instances = results["HPEVA_DiskModule"]
+        if not instances: return
+        diskModules = {}
+        for instance in instances:
+            diskModules[instance['_id']] = instance
+        instances = results["HPEVA_DiskDrive"]
+        if not instances: return
         rm = self.relMap()
         sysname = getattr(device, "snmpSysName", 'None')
-	for instance in instances:
-	    if instance["_sname"] != sysname: continue
-	    try:
+        for instance in instances:
+            if instance["_sname"] != sysname: continue
+            try:
                 instance.update(diskModules.get(instance['id'], {}))
                 om = self.objectMap(instance)
                 om.id = self.prepId(om.id)
-	        om.diskType = str('%s %s'%(om._diskType or '',
-		                    om.diskType or 'Unknown')).replace('_', ' ')
-		om.size = int(om.size) * 1000
-	        bay = om.bay.split(",", 2)
-	        om.setEnclosure = bay[0][6:]
-	        om.setStoragePool = bay[2][12:]
-	        om.bay = bay[1][10:]
-	        if om._model == 'HPQ': om._model = 'HP'
-	        om.setProductKey = MultiArgs(om._model, om._manuf)
+                om.diskType = str('%s %s'%(om._diskType or '',
+                                    om.diskType or 'Unknown')).replace('_', ' ')
+                om.size = int(om.size) * 1000
+                bay = om.bay.split(",", 2)
+                om.setEnclosure = bay[0][6:]
+                om.setStoragePool = bay[2][12:]
+                om.bay = bay[1][10:]
+                if om._model == 'HPQ': om._model = 'HP'
+                om.setProductKey = MultiArgs(om._model, om._manuf)
             except AttributeError:
                 raise
             rm.append(om)

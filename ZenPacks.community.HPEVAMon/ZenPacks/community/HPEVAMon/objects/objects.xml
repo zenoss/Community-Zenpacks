@@ -312,7 +312,7 @@ AVERAGE
 DiskDrive performance template for HP EVA Storage
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.HPEVADiskDrive
+ZenPacks.community.HPEVAMon.HPEVADiskDrive
 </property>
 <tomanycont id='datasources'>
 <object id='DiskDrive' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
@@ -1490,6 +1490,26 @@ True
 0
 </property>
 </object>
+<object id='high Occupancy' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['StoragePool_Occupancy']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+here.totalBytes() * here.threshold / 100
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/Filesystem
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
 </tomanycont>
 <tomanycont id='graphDefs'>
 <object id='Disks' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
@@ -1566,7 +1586,7 @@ True
 0
 </property>
 <property type="int" id="maxy" mode="w" >
-100
+-1
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -1578,9 +1598,6 @@ True
 <object id='Occupancy' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
-</property>
-<property type="string" id="color" mode="w" >
-00FF00
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
@@ -1600,9 +1617,6 @@ Used
 <property type="long" id="limit" mode="w" >
 -1
 </property>
-<property type="string" id="rpn" mode="w" >
-TotalManagedSpace,/,100,*
-</property>
 <property type="string" id="dpName" mode="w" >
 StoragePool_Occupancy
 </property>
@@ -1611,11 +1625,14 @@ AVERAGE
 </property>
 </object>
 <object id='TotalManagedSpace' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
 <property type="string" id="color" mode="w" >
 000000
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-DONTDRAW
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1637,6 +1654,14 @@ StoragePool_TotalManagedSpace
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
+</property>
+</object>
+<object id='high Occupancy' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+high Occupancy
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
 </property>
 </object>
 </tomanycont>
@@ -1710,7 +1735,7 @@ True
 </object>
 <object id='CntrCpuUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-DERIVE
+GAUGE
 </property>
 <property type="boolean" id="isrow" mode="w" >
 True
@@ -1843,7 +1868,7 @@ True
 500
 </property>
 <property type="string" id="units" mode="w" >
-ms
+percentage
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1855,7 +1880,7 @@ False
 0
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+100
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -1872,13 +1897,16 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+10,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_CntrCpuBusyTime
@@ -1901,13 +1929,16 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+10,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_CntrCpuDfpTime
@@ -1930,45 +1961,19 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%5.1lf%%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+10,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_CntrCpuTransferTime
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='CntrCpuUpTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-3
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-StatisticalData_CntrCpuUpTime
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE

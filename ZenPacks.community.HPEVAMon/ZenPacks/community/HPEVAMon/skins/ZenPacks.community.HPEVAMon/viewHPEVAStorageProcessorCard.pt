@@ -24,14 +24,20 @@
       </td>
     </tr>
     <tr>
+      <td class="tableheader" align=left>Slot</td>
+      <td class="tablevalues" tal:content="here/slot">1</td>
       <td class="tableheader" align=left>Model</td>
       <td class="tablevalues" tal:content="here/getProductName">1</td>
-      <td class="tableheader" align=left>Serial Number</td>
-      <td class="tablevalues" tal:content="here/serialNumber">1</td>
     </tr>
     <tr>
+      <td class="tableheader" align=left>Serial Number</td>
+      <td class="tablevalues" tal:content="here/serialNumber">1</td>
       <td class="tableheader" align=left>Firmware</td>
       <td class="tablevalues" tal:content="here/FWRev">1</td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Uptime</td>
+      <td class="tablevalues" tal:content="here/uptimeString">1</td>
       <td class="tableheader" align=left>Status</td>
       <td class="tablevalues" tal:content="here/statusString">1</td>
     </tr>
@@ -58,7 +64,7 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'Interface Name','Interface Name')"/>
+                            tableName,'interfaceName','Interface Name')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'wwn','WWN')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(

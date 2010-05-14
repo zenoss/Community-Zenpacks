@@ -28,7 +28,7 @@ class HPEVADiskFCPort(HPEVAHostFCPort):
     def getStatus(self):
         """
         Return the components status
-	"""
+        """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
 

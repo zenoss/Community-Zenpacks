@@ -12,9 +12,9 @@ __doc__="""HPEVAHostFCPort
 
 HPEVAHostFCPort is an abstraction of a HPEVA_HostFCPort
 
-$Id: HPEVAHostFCPort.py,v 1.0 2010/05/06 18:24:28 egor Exp $"""
+$Id: HPEVAHostFCPort.py,v 1.1 2010/05/14 18:12:49 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -43,7 +43,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
     speed = 0
     mtu = 0
     wwn = ""
-    
+
     _properties = HWComponent._properties + (
                  {'id':'interfaceName', 'type':'string', 'mode':'w'},
                  {'id':'fc4Types', 'type':'lines', 'mode':'w'},
@@ -55,21 +55,21 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
                  {'id':'speed', 'type':'int', 'mode':'w'},
                  {'id':'mtu', 'type':'int', 'mode':'w'},
                  {'id':'wwn', 'type':'string', 'mode':'w'},
-                )    
+                )
 
 
     _relations = HWComponent._relations + (
         ("hw", ToOne(ToManyCont,
-	            "ZenPacks.community.HPEVAMon.HPEVADeviceHW",
-	            "fcports")),
+                    "ZenPacks.community.HPEVAMon.HPEVADeviceHW",
+                    "fcports")),
         ("controller", ToOne(ToMany,
-	            "ZenPacks.community.HPEVAMon.HPEVAStorageProcessorCard",
-	            "fcports")),
-	)
+                    "ZenPacks.community.HPEVAMon.HPEVAStorageProcessorCard",
+                    "fcports")),
+        )
 
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'HostFCPort',
             'meta_type'      : 'HostFCPort',
             'description'    : """Arbitrary device grouping class""",
@@ -78,7 +78,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
             'factory'        : 'manage_addHostFCPort',
             'immediate_view' : 'viewHPEVAHostFCPort',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewHPEVAHostFCPort'
@@ -93,7 +93,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
                 , 'permissions'   : ("Change Device", )
-                },                
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -112,18 +112,18 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
         Set the controller relationship to the Controller specified by the given
         id.
         """
-	cntr = None
+        cntr = None
         for controller in self.hw().cards():
             if str(controller.id) != str(cid): continue
-	    cntr = controller
-	    break
+            cntr = controller
+            break
         if cntr: self.controller.addRelation(cntr)
         else: log.warn("controller id:%s not found", cid)
-	
+
     security.declareProtected('View', 'getController')
     def getController(self):
         try: return self.controller()
-	except: return None
+        except: return None
 
     def speedString(self):
         """
@@ -134,24 +134,17 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
 
     def networkString(self):
         """
-        Return the number of total bytes in human readable form ie 10MB
+        Return the networks string
         """
-	if self.networkAddresses: return '<br>'.join(self.networkAddresses)
-	else: return 'Unknown'
+        if self.networkAddresses: return '<br>'.join(self.networkAddresses)
+        else: return 'Unknown'
 
 
     def getStatus(self):
         """
         Return the components status
-	"""
+        """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
-
-    def viewName(self): 
-        """
-        Return the mount point name of a filesystem '/boot'
-        """
-        return self.interfaceName
-    name = viewName
 
 InitializeClass(HPEVAHostFCPort)

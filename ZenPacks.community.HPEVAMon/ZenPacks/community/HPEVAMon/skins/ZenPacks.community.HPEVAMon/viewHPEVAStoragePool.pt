@@ -14,7 +14,7 @@
 <tal:block metal:fill-slot="zentablecontents">
     <tr>
       <td class="tableheader" align=left>Name</td>
-      <td class="tablevalues" tal:content="here/name">1</td>
+      <td class="tablevalues" tal:content="here/caption">1</td>
       <td class="tableheader">Monitor</td>
       <td class="tablevalues">
         <select class="tablevalues"  name="monitor:boolean">
@@ -112,7 +112,7 @@
     objects here/virtualdisks;
     tabletitle string:Virtual Disks;
     batch python:here.ZenTableManager.getBatch(tableName,objects,
-                                            sortedHeader='name');"
+                                            sortedHeader='caption');"
     tal:condition="objects">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 <tal:block metal:fill-slot="zentablecontents">
@@ -120,7 +120,7 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'description','Name')"/>
+                            tableName,'caption','Name')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'diskType','Disk Type')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
@@ -138,7 +138,7 @@
         tal:attributes="class python:test(odd, 'odd', 'even')">
       <td class="tablevalues">
           <tal:block 
-           tal:content="structure python:disk.urlLink(text=disk.name())"/>
+           tal:content="structure python:disk.urlLink(text=disk.caption)"/>
       </td>
       <td class="tablevalues" tal:content="disk/diskType"/>
       <td class="tablevalues" tal:content="disk/raidType"/>

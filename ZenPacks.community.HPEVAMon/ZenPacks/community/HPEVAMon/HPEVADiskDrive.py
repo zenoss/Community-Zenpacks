@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDrive
 
 HPEVADiskDrive is an abstraction of a harddisk.
 
-$Id: HPEVADiskDrive.py,v 1.0 2010/03/09 14:06:27 egor Exp $"""
+$Id: HPEVADiskDrive.py,v 1.1 2010/05/14 18:09:18 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -54,14 +54,14 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
 
     _relations = HWComponent._relations + (
         ("hw", ToOne(ToManyCont,
-	                    "ZenPacks.community.HPEVAMon.HPEVADeviceHW",
-			    "harddisks")),
+                            "ZenPacks.community.HPEVAMon.HPEVADeviceHW",
+                            "harddisks")),
         ("enclosure", ToOne(ToMany,
-	                    "ZenPacks.community.HPEVAMon.HPEVAStorageDiskEnclosure",
-	                    "harddisks")),
+                            "ZenPacks.community.HPEVAMon.HPEVAStorageDiskEnclosure",
+                            "harddisks")),
         ("storagepool", ToOne(ToMany,
-	                    "ZenPacks.community.HPEVAMon.HPEVAStoragePool",
-	                    "harddisks")),
+                            "ZenPacks.community.HPEVAMon.HPEVAStoragePool",
+                            "harddisks")),
         )
 
 
@@ -91,7 +91,7 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
                 , 'permissions'   : ("Change Device", )
-                },                
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -109,18 +109,18 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         Set the enclosure relationship to the enclosure specified by the given
         id.
         """
-	encl = None
+        encl = None
         for enclosure in self.hw().enclosures():
-            if str(enclosure.id).split()[-1] != str(encid): continue
-	    encl = enclosure
-	    break
+            if str(enclosure.id) != str(encid): continue
+            encl = enclosure
+            break
         if encl: self.enclosure.addRelation(encl)
         else: log.warn("enclosure id:%s not found", encid)
-	
+
     security.declareProtected('View', 'getEnclosure')
     def getEnclosure(self):
         try: return self.enclosure()
-	except: return None
+        except: return None
 
     security.declareProtected('Change Device', 'setStoragePool')
     def setStoragePool(self, spid):
@@ -128,31 +128,31 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         Set the storagepool relationship to the storage pool specified by the given
         id.
         """
-	strpool = None
+        strpool = None
         for storagepool in self.device().os.storagepools():
             if storagepool.caption != spid: continue
-	    strpool = storagepool
-	    break
+            strpool = storagepool
+            break
         if strpool: self.storagepool.addRelation(strpool)
         else: log.warn("storage pool id:%s not found", spid)
 
     security.declareProtected('View', 'getStoragePool')
     def getStoragePool(self):
         try: return self.storagepool()
-	except: return None
+        except: return None
 
     def getEnclosureName(self):
         return self.getEnclosure() and self.getEnclosure().id or 'Unknown'
 
     def diskImg(self):
         return '/zport/dmd/hpevadisk_%s_%s'%(
-	        self.diskType.startswith('online') and 'online' or 'nearonline',
-		self.statusDot())
+                self.diskType.startswith('online') and 'online' or 'nearonline',
+                self.statusDot())
 
     def getStatus(self):
         """
         Return the components status
-	"""
+        """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
     def bayString(self):
@@ -168,13 +168,13 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         """
         Return the RPM in tradition form ie 7200, 10K
         """
-	return 'Unknown'
+        return 'Unknown'
 
     def hotPlugString(self):
         """
         Return the HotPlug Status
         """
         if self.hotPlug: return 'Hot Swappable'
-	else: return 'Non-Hot Swappable'
+        else: return 'Non-Hot Swappable'
 
 InitializeClass(HPEVADiskDrive)

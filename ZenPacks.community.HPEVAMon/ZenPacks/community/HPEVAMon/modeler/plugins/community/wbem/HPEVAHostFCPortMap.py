@@ -34,23 +34,23 @@ class HPEVAHostFCPortMap(WBEMPlugin):
             "HPEVA_HostFCPort":
                 (
                 "CIM_FCPort",
-		None,
+                None,
                 "root/eva",
                     {
-		    "__path":"snmpindex",
-		    "ActiveFC4Types":"fc4Types",
-		    "CreationClassName":"_ccn",
-		    "Description":"description",
-		    "DeviceID":"id",
-		    "Caption":"interfaceName",
-		    "FullDuplex":"fullDuplex",
-		    "LinkTechnology":"linkTechnology",
-		    "NetworkAddresses":"networkAddresses",
-		    "PermanentAddress":"wwn",
-		    "PortType":"type",
-		    "Speed":"speed",
-		    "SupportedMaximumTransmissionUnit":"mtu",
-		    "SystemName":"setController",
+                    "__path":"snmpindex",
+                    "ActiveFC4Types":"fc4Types",
+                    "CreationClassName":"_ccn",
+                    "Description":"description",
+                    "DeviceID":"id",
+                    "Caption":"interfaceName",
+                    "FullDuplex":"fullDuplex",
+                    "LinkTechnology":"linkTechnology",
+                    "NetworkAddresses":"networkAddresses",
+                    "PermanentAddress":"wwn",
+                    "PortType":"type",
+                    "Speed":"speed",
+                    "SupportedMaximumTransmissionUnit":"mtu",
+                    "SystemName":"setController",
                     },
                 ),
             }
@@ -58,19 +58,19 @@ class HPEVAHostFCPortMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-	instances = results["HPEVA_HostFCPort"]
-	if not instances: return
+        instances = results["HPEVA_HostFCPort"]
+        if not instances: return
         rm = self.relMap()
         sysname = getattr(device, "snmpSysName", 'None')
-	for instance in instances:
-	    if not instance["setController"].startswith(sysname): continue
-	    try:
+        for instance in instances:
+            if not instance["setController"].startswith(sysname): continue
+            try:
                 om = self.objectMap(instance)
                 om.id = self.prepId(om.id)
-		if om._ccn == 'HPEVA_DiskFCPort':
+                if om._ccn == 'HPEVA_DiskFCPort':
                     self.modname = "ZenPacks.community.HPEVAMon.HPEVADiskFCPort"
-		if om.setController: om.setController = om.setController.strip()
-		if om.interfaceName:om.interfaceName=om.interfaceName.split()[-1]
+                if om.setController: om.setController = om.setController.strip()
+                if om.interfaceName:om.interfaceName=om.interfaceName.split()[-1]
             except AttributeError:
                 continue
             rm.append(om)

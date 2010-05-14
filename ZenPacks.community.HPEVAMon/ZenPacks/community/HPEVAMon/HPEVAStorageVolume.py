@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageVolume
 
 HPEVAStorageVolume is an abstraction of a HPEVA_StorageVolume
 
-$Id: HPEVAStorageVolume.py,v 1.0 2010/03/09 16:28:27 egor Exp $"""
+$Id: HPEVAStorageVolume.py,v 1.1 2010/05/14 18:51:19 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -57,7 +57,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
     readCachePolicy = ""
     writeCachePolicy = ""
     diskType = ""
-    
+
     _properties = OSComponent._properties + (
                  {'id':'accessType', 'type':'string', 'mode':'w'},
                  {'id':'caption', 'type':'string', 'mode':'w'},
@@ -68,19 +68,19 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
                  {'id':'readCachePolicy', 'type':'string', 'mode':'w'},
                  {'id':'writeCachePolicy', 'type':'string', 'mode':'w'},
                  {'id':'diskType', 'type':'string', 'mode':'w'},
-                )    
+                )
 
     _relations = OSComponent._relations + (
         ("os", ToOne(ToManyCont,
-	    "ZenPacks.community.HPEVAMon.HPEVADevice.HPEVADeviceOS",
-	    "virtualdisks")),
+            "ZenPacks.community.HPEVAMon.HPEVADevice.HPEVADeviceOS",
+            "virtualdisks")),
         ("storagepool", ToOne(ToMany,
-	    "ZenPacks.community.HPEVAMon.HPEVAStoragePool",
-	    "virtualdisks")),
-	)
+            "ZenPacks.community.HPEVAMon.HPEVAStoragePool",
+            "virtualdisks")),
+        )
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'StorageVolume',
             'meta_type'      : 'StorageVolume',
             'description'    : """Arbitrary device grouping class""",
@@ -89,7 +89,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
             'factory'        : 'manage_addStorageVolume',
             'immediate_view' : 'viewHPEVAStorageVolume',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewHPEVAStorageVolume'
@@ -104,7 +104,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
                 , 'permissions'   : ("Change Device", )
-                },                
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -126,20 +126,20 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
         strpool = None
         for storagepool in self.os().storagepools():
             if storagepool.id != spid: continue
-	    strpool = storagepool
-	    break
+            strpool = storagepool
+            break
         if strpool: self.storagepool.addRelation(strpool)
         else: log.warn("storage pool id:%s not found", spid)
 
     security.declareProtected('View', 'getStoragePool')
     def getStoragePool(self):
         try: return self.storagepool()
-	except: return None
+        except: return None
 
     def getStatus(self):
         """
         Return the components status
-	"""
+        """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
 
@@ -155,11 +155,5 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
         """
         return convToUnits(self.totalBytes(), divby=1024)
 
-    def viewName(self): 
-        """
-        Return the mount point name of a filesystem '/boot'
-        """
-        return self.caption
-    name = viewName
 
 InitializeClass(HPEVAStorageVolume)

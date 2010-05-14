@@ -13,9 +13,9 @@ __doc__="""HPEVAStoragePoolMap
 HPEVAStoragePoolMap maps HPEVA_StoragePool class to
 HPEVAStoragePool class.
 
-$Id: HPEVA_StoragePoolMap.py,v 1.0 2010/05/04 12:36:31 egor Exp $"""
+$Id: HPEVA_StoragePoolMap.py,v 1.1 2010/05/14 19:31:17 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -33,16 +33,16 @@ class HPEVAStoragePoolMap(WBEMPlugin):
             "HPEVA_StoragePool":
                 (
                 "HPEVA_StoragePool",
-		None,
+                None,
                 "root/eva",
                     {
-		    "__path":"snmpindex",
-		    "ActualDiskFailureProtectionLevel":"protLevel",
-		    "DiskGroupType":"diskGroupType",
-		    "DiskType":"diskType",
-		    "InstanceID":"id",
-		    "Name":"caption",
-		    "OccupancyAlarmLevel":"threshold",
+                    "__path":"snmpindex",
+                    "ActualDiskFailureProtectionLevel":"protLevel",
+                    "DiskGroupType":"diskGroupType",
+                    "DiskType":"diskType",
+                    "InstanceID":"id",
+                    "Name":"caption",
+                    "OccupancyAlarmLevel":"threshold",
                     },
                 ),
             }
@@ -50,17 +50,18 @@ class HPEVAStoragePoolMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-	instances = results["HPEVA_StoragePool"]
-	if not instances: return
+        instances = results["HPEVA_StoragePool"]
+        if not instances: return
         rm = self.relMap()
         sysname = getattr(device, "snmpSysName", 'None')
-	for instance in instances:
-	    if not instance["id"].startswith(sysname): continue
-	    if instance["id"].endswith('.Allocated Disks'): continue
-	    if instance["id"].endswith('.Ungrouped Disks'): continue
-	    try:
+        for instance in instances:
+            if not instance["id"].startswith(sysname): continue
+            if instance["id"].endswith('.Allocated Disks'): continue
+            if instance["id"].endswith('.Ungrouped Disks'): continue
+            try:
                 om = self.objectMap(instance)
                 om.id = self.prepId(om.id)
+                if type(om.threshold) is not int: om.threshold = 90
             except AttributeError:
                 continue
             rm.append(om)

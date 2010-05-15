@@ -22,7 +22,7 @@ class ZenPack(ZenPackBase):
             manage_addDeviceClass(self.dmd.Devices.Server, 'NetWare')
         dc = self.dmd.Devices.Server.NetWare
         dc.description = 'Novell NetWare Servers'
-        dc.devtypes = ['SNMP',]
+#        dc.devtypes = ['SNMP',]
         dc.zIcon = '/zport/dmd/server-netware.png'
         dc.zLinks = "<a href='https://${here/manageIp}:8009' target='_'>Novell Remote Manager</a> <a href='https://${here/manageIp}/nps' target='_'>iManager</a>"
         dc.zCollectorPlugins = tuple(self.dmd.Devices.Server.zCollectorPlugins) + (
@@ -32,7 +32,7 @@ class ZenPack(ZenPackBase):
             manage_addDeviceClass(self.dmd.Devices.Server.NetWare, 'NCS')
         nwcs = self.dmd.Devices.Server.NetWare.NCS
         nwcs.description = 'Novell Cluster Virtual Resources'
-        nwcs.devtypes = ['SNMP',]
+#        nwcs.devtypes = ['SNMP',]
         nwcs.zCollectorPlugins = ('zenoss.snmp.NewDeviceMap',
                                 'zenoss.snmp.DeviceMap',
                                 'zenoss.snmp.IpServiceMap',

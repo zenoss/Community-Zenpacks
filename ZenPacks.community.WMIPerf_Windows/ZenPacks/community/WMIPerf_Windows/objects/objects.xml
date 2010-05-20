@@ -2695,6 +2695,8 @@ True
 <tomanycont id='aliases'>
 <object id='BytesReceivedPersec' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 </object>
+<object id='inputOctets__bytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
 </tomanycont>
 </object>
 <object id='ifInPackets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -2742,6 +2744,8 @@ True
 </property>
 <tomanycont id='aliases'>
 <object id='BytesSentPersec' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+<object id='outputOctets__bytes' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 </object>
 </tomanycont>
 </object>
@@ -3816,5 +3820,28 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'Win32DiskDrive') -->
+<object id='/zport/dmd/Events/Status/Win32DiskDrive' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {0:'Unknown',1:'Other',2:'OK',3:'Degraded',4:'Stressed',5:'Predictive Failure',6:'Error',7:'Non-Recoverable Error',8:'Starting',9:'Stopping',10:'Stopped',11:'In Service',12:'No Contact',13:'Lost Communication',14:'Aborted',15:'Dormant',16:'Supporting Entity in Error',17:'Completed',18:'Power Mode'}.get(status, 'Unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:3,2:0,3:4,4:3,5:3,6:4,7:5,8:2,9:3,10:4,11:2,12:3,13:4,14:4,15:3,16:4,17:0,18:3}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.harddisks._getOb(evt.component).state = state
+    txnCommit()
+
+</property>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {0:'Unknown',1:'Other',2:'OK',3:'Degraded',4:'Stressed',5:'Predictive Failure',6:'Error',7:'Non-Recoverable Error',8:'Starting',9:'Stopping',10:'Stopped',11:'In Service',12:'No Contact',13:'Lost Communication',14:'Aborted',15:'Dormant',16:'Supporting Entity in Error',17:'Completed',18:'Power Mode'}.get(status, 'Unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:3,2:0,3:4,4:3,5:3,6:4,7:5,8:2,9:3,10:4,11:2,12:3,13:4,14:4,15:3,16:4,17:0,18:3}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.harddisks._getOb(evt.component).state = state
+    txnCommit()
+
+</property>
 </object>
 </objects>

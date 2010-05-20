@@ -12,9 +12,9 @@ __doc__="""WmiPerfConfig
 
 Provides Wmi config to zenperfwmi clients.
 
-$Id: WmiPerfConfig.py,v 2.7 2010/03/19 15:08:21 egor Exp $"""
+$Id: WmiPerfConfig.py,v 2.8 2010/05/20 21:29:16 egor Exp $"""
 
-__version__ = "$Revision: 2.7 $"[11:-2]
+__version__ = "$Revision: 2.8 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
@@ -65,13 +65,14 @@ def getWbemComponentConfig(transports, comp, queries, datapoints):
             compname = comp.meta_type == "Device" and "" or comp.id
             for dp in ds.getRRDDataPoints():
                 if len(dp.aliases()) > 0:
-                    alias = dp.aliases()[0].id
+                    alias = dp.aliases()[0].id.strip()
                     expr = talesEval("string:%s"%dp.aliases()[0].formula, comp,
                                                             extra={'now':'now'})
                 else:
-                    alias = dp.id
+                    alias = dp.id.strip()
                     expr = None
-                properties[alias.strip()] = dp.id
+                if alias not in properties: properties[alias] = (dp.id,)
+                else: properties[alias] = properties[alias] + (dp.id,)
                 dpname = dp.name()
                 names.append(dpname)
                 datapoints[qid].append((dp.id,

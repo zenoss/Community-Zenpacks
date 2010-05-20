@@ -110,6 +110,7 @@ def wbemInstanceToPython(obj):
             setattr(result, prop.name.lower(), value)
     return result
 
+
 def wbemInstanceWithQualifiersToPython(obj):
     klass = obj.contents.obj_class.contents
     inst = obj.contents.instance.contents
@@ -117,7 +118,7 @@ def wbemInstanceWithQualifiersToPython(obj):
     kb = []
     result._class_name = klass.__CLASS
     for j in range(klass.__PROPERTY_COUNT):
-        vindex = None
+        vindex = True
         values = None
         prop = klass.properties[j]
         value = convert(inst.data[j], prop.desc.contents.cimtype & CIM_TYPEMASK)
@@ -130,12 +131,19 @@ def wbemInstanceWithQualifiersToPython(obj):
                             type(value) is str and '"%s"'%value or value))
             elif qname == 'ValueMap':
                 try:
-                    vindex = qvalue.index(value)
-                except: pass
+                    if type(value) is list:
+                        vindex = [qvalue.index(str(v)) for v in value]
+                    else:
+                        vindex = qvalue.index(str(value))
+                except: vindex = False
             elif qname == 'Values':
                 values = qvalue
-        if vindex and values:
-            value = values[vindex]
+        if values and vindex:
+            if type(vindex) is not int: vindex = value
+            if type(value) is list:
+                value = [values[v] for v in vindex]
+            else:
+                value = values[vindex]
         if prop.name:
             setattr(result, prop.name.lower(), value)
     result.__path = "%s:%s.%s"%(obj.contents.__NAMESPACE.replace("\\", '/'),

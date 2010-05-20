@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 2.0 2010/04/21 18:34:38 egor Exp $"""
+$Id: WMIClient.py,v 2.1 2010/05/20 21:38:28 egor Exp $"""
 
-__version__ = "$Revision: 2.0 $"[11:-2]
+__version__ = "$Revision: 2.1 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -134,30 +134,29 @@ class WMIClient(BaseClient):
                         else:
                             kbIns.append(str(val))
                     if tuple(kbIns) not in kbVal: continue
-                lastprops = None
                 for table, properties in kbVal[tuple(kbIns)]:
-                    if properties == lastprops and lastprops is not None:
-                        results[table].append(result)
-                        continue
                     result = {}
                     if len(properties) == 0:
                         properties = instance.__dict__.keys()
                     if type(properties) is not dict:
                         properties = dict(zip(properties, properties))
-                    for name, aname in properties.iteritems():
+                    for name, anames in properties.iteritems():
                         if name is '_class_name': continue
-                        result[aname] = getattr(instance, name.lower(), None)
-                        if type(result[aname]) is not str: continue
-                        r = DTPAT.search(result[aname])
-                        if not r: continue
-                        g = r.groups()
-                        if g[8] == '000':
-                            tz = 'GMT'
-                        else:
-                            tz = divmod(int(g[8]), 60)
-                            tz = 'GMT%s%02d%02d' % (g[7], tz[0], tz[1]*60)
-                        result[aname] = DateTime(int(g[0]),int(g[1]),int(g[2]),
-                            int(g[3]),int(g[4]),float('%s.%s'%(g[5],g[6])),tz)
+                        res = getattr(instance, name.lower(), None)
+                        if type(res) is str:
+                            r = DTPAT.search(res)
+                            if r:
+                                g = r.groups()
+                                if g[8] == '000':
+                                    tz = 'GMT'
+                                else:
+                                    tz = divmod(int(g[8]), 60)
+                                    tz = 'GMT%s%02d%02d' % (g[7],tz[0],tz[1]*60)
+                                res = DateTime(int(g[0]), int(g[1]), int(g[2]),
+                                                int(g[3]),int(g[4]),
+                                                float('%s.%s'%(g[5],g[6])), tz)
+                        if type(anames) is not tuple: anames = (anames,)
+                        for aname in anames: result[aname] = res
                     results[table].append(result)
         return results
 
@@ -236,7 +235,8 @@ class WMIClient(BaseClient):
                     log.debug("Sending queries for plugin: %s", pluginName)
                     log.debug("Queries: %s" % str(plugin.queries(self.device)))
                     try:
-                        yield self.query(plugin.queries(self.device))
+                        yield self.query(plugin.queries(self.device),
+                                                    plugin.includeQualifiers)
                         self.results.append((plugin, driver.next()))
                     except Exception, ex:
                         self.results.append((plugin, ex))
@@ -286,6 +286,7 @@ def WmiGet(url, query, properties):
 
     wp = WMIPlugin()
     wp.tables = {'t': (cn, kb, ns, properties)}
+    wp.includeQualifiers = False
     cl = WMIClient(device=device, plugins=[wp,])
     cl.run()
     reactor.run()

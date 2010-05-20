@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.5 2010/05/11 16:06:57 egor Exp $"""
+$Id: WBEMClient.py,v 2.6 2010/05/20 21:29:48 egor Exp $"""
 
-__version__ = "$Revision: 2.5 $"[11:-2]
+__version__ = "$Revision: 2.6 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -115,23 +115,30 @@ class WBEMClient(BaseClient):
         if type(properties) is not dict:
              properties = dict(zip(properties, properties))
         idict = {}
-        for name, aname in properties.iteritems():
+        for name, anames in properties.iteritems():
             if name not in instance.properties: continue
             prop = instance.properties[name]
             if 'Values' not in prop.qualifiers:
                 if prop.is_array and prop.value:
-                    idict[aname] = [self.parseValue(v) for v in prop.value]
+                    idictp = [self.parseValue(v) for v in prop.value]
                 else:
-                    idict[aname] = self.parseValue(prop.value)
+                    idictp = self.parseValue(prop.value)
             else:
-                if prop.is_array and prop.value:
-                    idict[aname] = []
-                    for v in prop.value:
-                        idx = prop.qualifiers['ValueMap'].value.index(str(v))
-                        idict[aname].append(prop.qualifiers['Values'].value[idx])
+                values = prop.qualifiers['Values'].value
+                if 'ValueMap' in prop.qualifiers:
+                    vmap = prop.qualifiers['ValueMap'].value
                 else:
-                    idx=prop.qualifiers['ValueMap'].value.index(str(prop.value))
-                    idict[aname] = prop.qualifiers['Values'].value[idx]
+                    vmap = [str(i) for i in range(len(values))]
+                if prop.is_array and prop.value:
+                    idictp = []
+                    for v in prop.value:
+                        idx = vmap.index(str(v))
+                        idictp.append(values[idx])
+                else:
+                    idx = vmap.index(str(prop.value))
+                    idictp = values[idx]
+            if type(anames) is not tuple: anames = (anames,)
+            for aname in anames: idict[aname] = idictp
         idict[properties.get('__path', '__path')] = str(instance.path)
         return idict
 
@@ -154,12 +161,8 @@ class WBEMClient(BaseClient):
                             else:
                                 kbIns.append(str(val))
                         if tuple(kbIns) not in kbVal: continue
-                    lastprops = None
                     for table, props in kbVal[tuple(kbIns)]:
-                        if props != lastprops or lastprops is None:
-                            result = self.parseInstance(instance, props)
-                            lastprops = props
-                        results[table].append(result)
+                        results[table].append(self.parseInstance(instance,props))
             return results
 
         plst = set()
@@ -189,15 +192,10 @@ class WBEMClient(BaseClient):
     def _wbemExecQuery(self, query, namespace, instMap, qualifier):
         def parse(instances):
             results = {}
-            result = None
-            lastprops = None
             if isinstance(instances, pywbem.CIMInstance):
                 instances = [instances]
             for table, props in instMap[()]:
-                if props != lastprops or lastprops is None:
-                    result = [self.parseInstance(i,props) for i in instances]
-                    lastprops = props
-                results[table] = result
+                results[table]=[self.parseInstance(i,props) for i in instances]
             return results
 
         d = defer.maybeDeferred(self._wbem.ExecQuery,
@@ -212,13 +210,8 @@ class WBEMClient(BaseClient):
     def _wbemGetInstance(self, classname, namespace, instMap, qualifier):
         def parse(instance):
             results = {}
-            result = None
-            lastprops = None
             for table, props in instMap.values()[0].values()[0]:
-                if props != lastprops or lastprops is None:
-                    result = [self.parseInstance(instance, props)]
-                    lastprops = props
-                results[table] = result
+                results[table] = [self.parseInstance(instance, props)]
             return results
 
         keybindings = dict([(var, val.strip('"')) for var, val in zip(
@@ -276,7 +269,8 @@ class WBEMClient(BaseClient):
                     log.debug("Sending queries for plugin: %s", pluginName)
                     log.debug("Queries: %s" % str(plugin.queries(self.device)))
                     try:
-                        yield self.query(plugin.queries(self.device))
+                        yield self.query(plugin.queries(self.device),
+                                                    plugin.includeQualifiers)
                         self.results.append((plugin, driver.next()))
                     except Exception, ex:
                         self.results.append((plugin, ex))
@@ -327,6 +321,7 @@ def WbemGet(url, query, properties):
 
     wp = WBEMPlugin()
     wp.tables = {'t': (cn, kb, ns, properties)}
+    wp.includeQualifiers = False
     cl = WBEMClient(device=device, plugins=[wp,])
     cl.run()
     reactor.run()

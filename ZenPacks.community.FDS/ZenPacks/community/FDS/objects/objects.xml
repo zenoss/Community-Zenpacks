@@ -1,0 +1,2243 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'FDS-LDAPServer') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/FDS-LDAPServer' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Monitors FDS based LDAP Server
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='check_ldap' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+ldap
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/LDAP
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+$$ZENHOME/libexec/check_ldap -H ${dev/manageIp} -b ${here/zLDAPBaseDN}
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='time' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='check_ldap_cert' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+ldap
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/LDAP
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+$$ZENHOME/ZenPacks/ZenPacks.community.FDS-1.0-py2.4.egg/ZenPacks/community/FDS/libexec/ssl-cert-check -n -s ${dev/manageIp} -p 636
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+</object>
+<object id='check_ldaps' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+ldap
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/LDAP
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+$$ZENHOME/libexec/check_ldaps -H ${dev/manageIp} -b ${here/zLDAPBaseDN}
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+</object>
+<object id='dsAddEntryOps' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.9.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsAddEntryOps' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsAnonymousBinds' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.1.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsAnonymousBinds' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsBindSecurityErrors' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.5.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsBindSecurityErrors' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsCacheHits' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+False
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1.4.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsCacheHits' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsErrors' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.20.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsErrors' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsFailures' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.7.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsFailures' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsModifyEntryOps' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.11.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsModifyEntryOps' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsReferals' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.17.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsReferals' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsRemoveEntryOps' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.10.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsRemoveEntryOps' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsSearchOps' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.14.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsSearchOps' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsSecurityErrors' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.19.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsSecurityErrors' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsSimpleAuthBinds' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.3.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsSimpleAuthBinds' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='dsUnAuthBinds' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.2.389
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='dsUnAuthBinds' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='BrokenLDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['check_ldap_time']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+300
+</property>
+<property type="string" id="maxval" mode="w" >
+30000
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/LDAP
+</property>
+<property type="int" id="severity" mode="w" >
+5
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='SlowLDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['check_ldap_time']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+300
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/LDAP
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+6
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Directory Server Errors' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='Bind Security Errors' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsBindSecurityErrors_dsBindSecurityErrors
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Security Errors' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsSecurityErrors_dsSecurityErrors
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Total Errors' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsErrors_dsErrors
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='LDAP Binds' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='dsAnonymousBinds' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsAnonymousBinds_dsAnonymousBinds
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dsSimpleAuthBinds' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsSimpleAuthBinds_dsSimpleAuthBinds
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dsUnAuthBinds' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsUnAuthBinds_dsUnAuthBinds
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='LDAP Failures' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='Failures' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsFailures_dsFailures
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Referals' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsReferals_dsReferals
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='LDAP Operations' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='dsAddEntryOps' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsAddEntryOps_dsAddEntryOps
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dsModifyEntryOps' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsModifyEntryOps_dsModifyEntryOps
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dsRemoveEntryOps' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsRemoveEntryOps_dsRemoveEntryOps
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dsSearchOps' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dsSearchOps_dsSearchOps
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='LDAP Server Response Time' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Response time' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+check_ldap_time
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'LDAP') -->
+<object id='/zport/dmd/Events/Status/LDAP' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+import re
+
+if evt.severity&gt;=1:
+# Extract the response time from the summary
+   sum = evt.summary
+   m = re.search("threshold of [^:]+: current value ([\d\.]+)", evt.message)
+   currentvalue = float(m.group(1))
+   evt.summary = "LDAP needs attention; Current response time exceeds (%3.1f seconds)" %currentvalue
+   evt.message = evt.summary
+</property>
+<property type="text" id="transform" mode="w" >
+import re
+
+if evt.severity&gt;=1:
+# Extract the response time from the summary
+   sum = evt.summary
+   m = re.search("threshold of [^:]+: current value ([\d\.]+)", evt.message)
+   currentvalue = float(m.group(1))
+   evt.summary = "LDAP needs attention; Current response time exceeds (%3.1f seconds)" %currentvalue
+   evt.message = evt.summary
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'RHDS-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/RHDS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Red Hat, Inc.
+Website: http://www.redhat.com
+</property>
+<property type="string" id="description" mode="w" >
+ An implementation of the MADMAN mib for monitoring LDAP/CLDAP and X.500
+directories described in RFC 2788 and 2789
+used for Red Hat and Fedora  Directory Server
+</property>
+<tomanycont id='nodes'>
+<object id='dsAddEntryOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of addEntry operations serviced by
+this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsAnonymousBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of anonymous  binds to this DS from UAs
+since application start.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsBindSecurityErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of bind operations that have been rejected
+by this DS due to inappropriateAuthentication or
+invalidCredentials.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsCacheEntries' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of entries cached (non-systematic copies) in
+the DS. This will include the entries that are
+cached partially. The negative cache is not counted.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsCacheHits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of operations that were serviced from
+the locally held cache since application
+startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsChainings' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of operations forwarded by this DS
+to other DSs since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsCompareOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of compare operations serviced by
+this DS  since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsCopyEntries' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of entries for which systematic (slave)
+copies are maintained in the DS.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntityContact' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Contact person(s)responsible for the directory server at this 
+installation, together with information on how to conact.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntityDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A general textual description of this directory server.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntityEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Entry of general information about an installed instance
+of a directory server
+</property>
+</object>
+<object id='dsEntityLocation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Physical location of this entity (directory server).
+For example: hostname, building  number, lab number, etc.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntityName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Name assigned to this entity at the installation site
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntityOrg' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Organization responsible for directory server at this installation
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntityTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This table holds general information related to an installed
+instance of a directory server
+</property>
+</object>
+<object id='dsEntityVers' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.5.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The version of this directory server
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsEntriesEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Entry containing statistics pertaining to entries
+held by a DS.
+</property>
+</object>
+<object id='dsEntriesTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ The table holding information related to the
+entry statistics and cache performance of the DSs.
+</property>
+</object>
+<object id='dsErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of operations that could not be serviced
+due to errors other than security errors, and
+referrals.
+A partially serviced operation will not be counted
+as an error.
+The errors include NameErrors, UpdateErrors, Attribute
+errors and ServiceErrors.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsFailures' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Cumulative failures since the creation of
+this entry.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsFailuresSinceLastSuccess' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ The number of failures since the last time an
+attempt to contact this DS was successful. If
+there has been no successful attempts, this counter
+will contain the number of failures since this entry
+was created.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsInOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of operations forwarded to this DS
+from UAs or other DSs since application
+start up.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsIntEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Entry containing interaction details of a DS
+with a peer DS.
+</property>
+</object>
+<object id='dsIntIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Together with applIndex it forms the unique key to
+identify the conceptual row which contains useful info
+ on the (attempted) interaction between the DS (referred
+ to by applIndex) and a peer DS.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='dsIntTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Each row of this table contains some details
+related to the history of the interaction
+of the monitored DSs with their respective
+peer DSs.
+</property>
+</object>
+<object id='dsListOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of list operations serviced by
+this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsMasterEntries' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of entries mastered in the DS.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsModifyEntryOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of modifyEntry operations serviced by
+this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsModifyRDNOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of modifyRDN operations serviced by
+this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Distinguished Name of the peer DS to which this
+entry pertains.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsOneLevelSearchOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of oneLevel search operations serviced
+by this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsOpsEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Entry containing operations related statistics  
+for a DS.
+</property>
+</object>
+<object id='dsOpsTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ The table holding information related to the
+DS operations.
+</property>
+</object>
+<object id='dsReadOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of read operations serviced by
+this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsReferrals' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of referrals returned by this DS in response
+to requests for operations since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsRemoveEntryOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of removeEntry operations serviced by
+this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsSearchOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of search operations- baseObject searches,
+oneLevel searches and  wholeSubtree searches,
+serviced by this DS  since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsSecurityErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of operations forwarded to this DS
+which did not meet the security requirements. 
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsSimpleAuthBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of binds to this DS that were authenticated
+using simple authentication procedures since
+application start.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsSlaveHits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.2.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of operations that were serviced from
+the locally held object replications ( shadow
+entries) since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsStrongAuthBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of binds to this DS that were authenticated
+using the strong authentication procedures since
+application start. This includes the binds that were
+authenticated using external authentication procedures.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsSuccesses' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Cumulative successes since the creation of
+this entry.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsTimeOfCreation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ The value of sysUpTime when this row was created.
+If the entry was created before the network management
+subsystem was initialized, this object will contain
+a value of zero.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsTimeOfLastAttempt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ The value of sysUpTime when the last attempt was made
+to contact this DS. If the last attempt was made before
+the network management subsystem was initialized, this
+object will contain a value of zero.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsTimeOfLastSuccess' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ The value of sysUpTime when the last attempt made to
+contact this DS was successful. If there have
+been no successful attempts this entry will have a value
+of zero. If the last successful attempt was made before
+the network management subsystem was initialized, this
+object will contain a value of zero.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsURL' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.3.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ URL of the DS application.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsUnAuthBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of un-authenticated binds to this DS since
+application start.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='dsWholeSubtreeSearchOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6.1.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ Number of wholeSubtree search operations serviced
+by this DS since application startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='redhat' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312
+</property>
+</object>
+<object id='rhds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='DirectoryServerDown' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.0.6001
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This trap is generated whenever the agent detects the
+directory server to be (potentially) Down.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'dsEntityDescr': {'nodetype': 'object', 'module': 'RHDS-MIB'}, 'dsEntityLocation': {'nodetype': 'object', 'module': 'RHDS-MIB'}, 'dsEntityVers': {'nodetype': 'object', 'module': 'RHDS-MIB'}, 'dsEntityContact': {'nodetype': 'object', 'module': 'RHDS-MIB'}}
+</property>
+</object>
+<object id='DirectoryServerStart' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+RHDS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2312.0.6002
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This trap is generated whenever the agent detects the
+directory server to have (re)started.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'dsEntityDescr': {'nodetype': 'object', 'module': 'RHDS-MIB'}, 'dsEntityLocation': {'nodetype': 'object', 'module': 'RHDS-MIB'}, 'dsEntityVers': {'nodetype': 'object', 'module': 'RHDS-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

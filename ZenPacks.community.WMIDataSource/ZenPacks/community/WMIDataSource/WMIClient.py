@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 2.1 2010/05/20 21:38:28 egor Exp $"""
+$Id: WMIClient.py,v 2.3 2010/05/25 15:05:37 egor Exp $"""
 
-__version__ = "$Revision: 2.1 $"[11:-2]
+__version__ = "$Revision: 2.3 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -286,14 +286,14 @@ def WmiGet(url, query, properties):
 
     wp = WMIPlugin()
     wp.tables = {'t': (cn, kb, ns, properties)}
-    wp.includeQualifiers = False
+    wp.includeQualifiers = True
     cl = WMIClient(device=device, plugins=[wp,])
     cl.run()
     reactor.run()
     for plugin, result in cl.getResults():
-        if plugin == wp:
+        if plugin == wp and 't' in result:
             return result['t']
-    return
+    return result
 
 
 if __name__ == "__main__":

@@ -12,9 +12,9 @@ __doc__="""HPEVAHostFCPort
 
 HPEVAHostFCPort is an abstraction of a HPEVA_HostFCPort
 
-$Id: HPEVAHostFCPort.py,v 1.1 2010/05/14 18:12:49 egor Exp $"""
+$Id: HPEVAHostFCPort.py,v 1.2 2010/05/18 13:36:18 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -43,6 +43,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
     speed = 0
     mtu = 0
     wwn = ""
+    state = "OK"
 
     _properties = HWComponent._properties + (
                  {'id':'interfaceName', 'type':'string', 'mode':'w'},
@@ -55,6 +56,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
                  {'id':'speed', 'type':'int', 'mode':'w'},
                  {'id':'mtu', 'type':'int', 'mode':'w'},
                  {'id':'wwn', 'type':'string', 'mode':'w'},
+                 {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
 
@@ -138,13 +140,5 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
         """
         if self.networkAddresses: return '<br>'.join(self.networkAddresses)
         else: return 'Unknown'
-
-
-    def getStatus(self):
-        """
-        Return the components status
-        """
-        return int(round(self.cacheRRDValue('OperationalStatus', 0)))
-
 
 InitializeClass(HPEVAHostFCPort)

@@ -31,7 +31,7 @@ class ZenPack(ZenPackBase):
                 ),
                 'lines',
             ),
-	    'zLinks': ("<a href='https://${here/zWbemProxy}:2372' target='_'>Command View EVA</a>", 'string'),
+            'zLinks': ("<a href='https://${here/zWbemProxy}:2372' target='_'>Command View EVA</a>", 'string'),
             'zPythonClass': ('ZenPacks.community.HPEVAMon.HPEVADevice', 'string'),
             'zSnmpMonitorIgnore': (True, 'boolean'),
             'zWbemMonitorIgnore': (False, 'boolean'),

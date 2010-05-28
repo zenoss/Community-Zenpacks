@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageVolume
 
 HPEVAStorageVolume is an abstraction of a HPEVA_StorageVolume
 
-$Id: HPEVAStorageVolume.py,v 1.1 2010/05/14 18:51:19 egor Exp $"""
+$Id: HPEVAStorageVolume.py,v 1.2 2010/05/18 13:34:59 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -57,6 +57,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
     readCachePolicy = ""
     writeCachePolicy = ""
     diskType = ""
+    state = "OK"
 
     _properties = OSComponent._properties + (
                  {'id':'accessType', 'type':'string', 'mode':'w'},
@@ -68,6 +69,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
                  {'id':'readCachePolicy', 'type':'string', 'mode':'w'},
                  {'id':'writeCachePolicy', 'type':'string', 'mode':'w'},
                  {'id':'diskType', 'type':'string', 'mode':'w'},
+                 {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
     _relations = OSComponent._relations + (
@@ -136,13 +138,6 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
         try: return self.storagepool()
         except: return None
 
-    def getStatus(self):
-        """
-        Return the components status
-        """
-        return int(round(self.cacheRRDValue('OperationalStatus', 0)))
-
-
     def totalBytes(self):
         """
         Return the number of total bytes
@@ -155,5 +150,10 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
         """
         return convToUnits(self.totalBytes(), divby=1024)
 
+    def getRRDNames(self):
+        """
+        Return the datapoint name of this StorageVolume
+        """
+        return ['StorageVolume_NumberOfBlocks']
 
 InitializeClass(HPEVAStorageVolume)

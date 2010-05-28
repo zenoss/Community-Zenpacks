@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDrive
 
 HPEVADiskDrive is an abstraction of a harddisk.
 
-$Id: HPEVADiskDrive.py,v 1.1 2010/05/14 18:09:18 egor Exp $"""
+$Id: HPEVADiskDrive.py,v 1.2 2010/05/18 13:35:30 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -40,6 +40,7 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
     bay = 0
     FWRev = ""
     wwn = ""
+    state = "OK"
 
     _properties = HWComponent._properties + (
                  {'id':'description', 'type':'string', 'mode':'w'},
@@ -50,6 +51,7 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
                  {'id':'bay', 'type':'int', 'mode':'w'},
                  {'id':'FWRev', 'type':'string', 'mode':'w'},
                  {'id':'wwn', 'type':'string', 'mode':'w'},
+                 {'id':'state', 'type':'string', 'mode':'w'},
                 )    
 
     _relations = HWComponent._relations + (
@@ -63,7 +65,6 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
                             "ZenPacks.community.HPEVAMon.HPEVAStoragePool",
                             "harddisks")),
         )
-
 
 
     factory_type_information = ( 
@@ -149,20 +150,14 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
                 self.diskType.startswith('online') and 'online' or 'nearonline',
                 self.statusDot())
 
-    def getStatus(self):
-        """
-        Return the components status
-        """
-        return int(round(self.cacheRRDValue('OperationalStatus', 0)))
-
     def bayString(self):
-        return '%s bay %02d'%(self.getEnclosureName() ,int(self.bay))
+        return '%s bay %02d'%(self.getEnclosureName(), int(self.bay))
 
     def sizeString(self):
         """
         Return the number of total bytes in human readable form ie 10MB
         """
-        return convToUnits(self.size,divby=1000)
+        return convToUnits(self.size, divby=1000)
 
     def rpmString(self):
         """

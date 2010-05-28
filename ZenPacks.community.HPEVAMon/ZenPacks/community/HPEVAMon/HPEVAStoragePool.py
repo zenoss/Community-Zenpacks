@@ -12,9 +12,9 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.1 2010/05/14 18:18:21 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.2 2010/05/18 13:37:13 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.OSComponent import *
@@ -34,6 +34,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     diskType = ""
     protLevel = ""
     threshold = 0
+    state = "OK"
 
     _properties = OSComponent._properties + (
                  {'id':'caption', 'type':'string', 'mode':'w'},
@@ -41,6 +42,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                  {'id':'diskType', 'type':'string', 'mode':'w'},
                  {'id':'protLevel', 'type':'string', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
+                 {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
 
@@ -95,12 +97,6 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
         )
 
 
-    def getStatus(self):
-        """
-        Return the components status
-        """
-        return int(round(self.cacheRRDValue('OperationalStatus', 0)))
-
     def totalBytes(self):
         return self.cacheRRDValue('TotalManagedSpace', 0)
 
@@ -128,5 +124,13 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     def disks(self):
         return int(round(self.cacheRRDValue('TotalDisks', 0)))
 
+    def getRRDNames(self):
+        """
+        Return the datapoint name of this StoragePool
+        """
+        return ['StoragePool_Occupancy',
+                'StoragePool_TotalManagedSpace', 
+                'StoragePool_TotalDisks',
+                ]
 
 InitializeClass(HPEVAStoragePool)

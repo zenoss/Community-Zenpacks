@@ -12,7 +12,7 @@ __doc__="""HPEVAStorageDiskEnclosure
 
 HPEVAStorageDiskEnclosure is an abstraction of a HPEVA_StorageDiskEnclosure
 
-$Id: HPEVAStorageDiskEnclosure.py,v 1.0 2010/03/10 10:38:27 egor Exp $"""
+$Id: HPEVAStorageDiskEnclosure.py,v 1.1 2010/05/18 13:36:45 egor Exp $"""
 
 __version__ = "$Revision: 1.0 $"[11:-2]
 
@@ -29,6 +29,7 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
 
     portal_type = meta_type = 'HPEVAStorageDiskEnclosure'
 
+    state = "OK"
 #    enclosureLayout = ((1,2,3,4,5,6,7,8,9,10,11,12),)
     enclosureLayout = ( (1,4,7,10),
                         (2,5,8,11),
@@ -41,6 +42,7 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
 
 
     _properties = HWComponent._properties + (
+                 {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
     _relations = HWComponent._relations + (
@@ -120,6 +122,12 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
         result = result + "\t\t\t\t\t</td>\n\t\t\t\t</tr>\n"
         result = result + "\t\t\t</table>\n"
         return result
+
+    def getRRDNames(self):
+        """
+        Return the datapoint name of this StorageDiskEnclosure
+        """
+        return ['StorageDiskEnclosure_OperationalStatus']
 
 
 InitializeClass(HPEVAStorageDiskEnclosure)

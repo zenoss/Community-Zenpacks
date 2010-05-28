@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageProcessorCard
 
 HPEVAStorageProcessorCard is an abstraction of a HPEVA_StorageProcessorCard
 
-$Id: HPEVAStorageProcessorCard.py,v 1.1 2010/05/14 18:43:11 egor Exp $"""
+$Id: HPEVAStorageProcessorCard.py,v 1.2 2010/05/18 13:37:38 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.ExpansionCard import *
@@ -30,12 +30,14 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
 
     caption = ""
     FWRev = 0
+    state = "OK"
 
     monitor = True
 
     _properties = ExpansionCard._properties + (
                  {'id':'caption', 'type':'string', 'mode':'w'},
                  {'id':'FWRev', 'type':'string', 'mode':'w'},
+                 {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
     _relations = ExpansionCard._relations + (
@@ -80,18 +82,13 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
         )
 
 
-    def getStatus(self):
-        """
-        Return the components status
-        """
-        return int(round(self.cacheRRDValue('OperationalStatus', 0)))
-
-
     def sysUpTime(self):
         """
         Return the controllers UpTime
         """
-        return int(round(self.cacheRRDValue('CntrCpuUpTime', -1))) / 10
+        cpuUpTime = round(self.cacheRRDValue('CntrCpuUpTime', -1))
+        if cpuUpTime == -1: return -1
+        return cpuUpTime / 10
 
     def uptimeString(self):
         """
@@ -112,5 +109,11 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
         secs = ut%60
         return "%02dd:%02dh:%02dm:%02ds" % (
             days, hour, mins, secs)
+
+    def getRRDNames(self):
+        """
+        Return the datapoint name of this StorageProcessorCard
+        """
+        return ['StorageProcessorCard_CntrCpuUpTime']
 
 InitializeClass(HPEVAStorageProcessorCard)

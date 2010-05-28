@@ -12,9 +12,9 @@ __doc__="""HPEVADiskFCPort
 
 HPEVADiskFCPort is an abstraction of a HPEVA_DiskFCPort
 
-$Id: HPEVADiskFCPort.py,v 1.0 2010/05/10 15:23:54 egor Exp $"""
+$Id: HPEVADiskFCPort.py,v 1.1 2010/05/18 13:35:52 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from HPEVAHostFCPort import *
@@ -23,13 +23,5 @@ class HPEVADiskFCPort(HPEVAHostFCPort):
     """DiskFCPort object"""
 
     portal_type = meta_type = 'HPEVADiskFCPort'
-
-
-    def getStatus(self):
-        """
-        Return the components status
-        """
-        return int(round(self.cacheRRDValue('OperationalStatus', 0)))
-
 
 InitializeClass(HPEVADiskFCPort)

@@ -43,6 +43,8 @@ class HPEVAStoragePoolMap(WBEMPlugin):
                     "InstanceID":"id",
                     "Name":"caption",
                     "OccupancyAlarmLevel":"threshold",
+                    "TotalDisks":"totalDisks",
+                    "TotalManagedSpace":"totalManagedSpace",
                     },
                 ),
             }

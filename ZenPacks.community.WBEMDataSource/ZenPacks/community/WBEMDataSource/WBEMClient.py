@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.6 2010/05/20 21:29:48 egor Exp $"""
+$Id: WBEMClient.py,v 2.8 2010/05/25 14:44:58 egor Exp $"""
 
-__version__ = "$Revision: 2.6 $"[11:-2]
+__version__ = "$Revision: 2.8 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -105,7 +105,11 @@ class WBEMClient(BaseClient):
         if isinstance(value, pywbem.Sint64): return int(value)
         if isinstance(value, pywbem.Real32): return float(value)
         if isinstance(value, pywbem.Real64): return float(value)
-        if isinstance(value, pywbem.CIMDateTime):return DateTime(value.datetime)
+        if isinstance(value, pywbem.CIMDateTime):
+            try: return DateTime(value.datetime)
+            except:
+                t = value.datetime.utctimetuple()
+                return DateTime(t[0],t[1],t[2],t[3],t[4],t[5],'GMT')
         return value
 
 
@@ -178,12 +182,11 @@ class WBEMClient(BaseClient):
             plst = plst.union(keyprops)
         try: plst.remove('__path')
         except: pass
-        d = defer.maybeDeferred(self._wbem.EnumerateInstances,
-                                                    classname,
-                                                    namespace=namespace,
-                                                    IncludeQualifiers=qualifier,
-                                                    PropertyList=list(plst),
-                                                    LocalOnly=False)
+        kwargs={"namespace":namespace,
+                "IncludeQualifiers":qualifier,
+                "LocalOnly":False}
+        if plst: kwargs["PropertyList"] = list(plst)
+        d=defer.maybeDeferred(self._wbem.EnumerateInstances,classname, **kwargs)
         d.addCallback(parse)
         d.addErrback(self.parseError, classname, instMap)
         return d
@@ -219,12 +222,11 @@ class WBEMClient(BaseClient):
         plst = instMap.values()[0].values()[0][0][1].keys()
         try: plst.remove('__path')
         except: pass
+        kwargs = {"IncludeQualifiers":qualifier, "LocalOnly":False}
+        if plst: kwargs["PropertyList"] = list(plst)
         instancename = pywbem.CIMInstanceName(classname, keybindings,
                                                     namespace=namespace)
-        d = defer.maybeDeferred(self._wbem.GetInstance, instancename,
-                                                    IncludeQualifiers=qualifier,
-                                                    PropertyList=plst,
-                                                    LocalOnly=False)
+        d = defer.maybeDeferred(self._wbem.GetInstance, instancename, **kwargs)
         d.addCallback(parse)
         d.addErrback(self.parseError, classname, instMap)
         return d
@@ -321,14 +323,14 @@ def WbemGet(url, query, properties):
 
     wp = WBEMPlugin()
     wp.tables = {'t': (cn, kb, ns, properties)}
-    wp.includeQualifiers = False
+    wp.includeQualifiers = True
     cl = WBEMClient(device=device, plugins=[wp,])
     cl.run()
     reactor.run()
     for plugin, result in cl.getResults():
-        if plugin == wp:
+        if plugin == wp and 't' in result:
             return result['t']
-    return
+    return result
 
 
 if __name__ == "__main__":

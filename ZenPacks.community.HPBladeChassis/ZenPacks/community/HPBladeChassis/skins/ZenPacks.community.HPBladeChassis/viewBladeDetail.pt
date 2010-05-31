@@ -1,0 +1,52 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<!-- BEGIN BLADE INFO SECTION -->
+
+<tal:block metal:define-macro="objectperf" 
+        tal:define="tabletitle string:Blade Details">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+    <tr>
+        <td class="tableheader" align=left>System Name</td>
+        <td class="tablevalues" tal:content="here/bsDisplayName"></td>
+        <td class="tableheader" align=left>Product ID</td>
+        <td class="tablevalues" tal:content="here/bsProductId"></td>
+    </tr>
+    <tr>
+        <td class="tableheader" align=left>Serial Number</td>
+        <td class="tablevalues" tal:content="here/bsSerialNum"></td>
+        <td class="tableheader" align=left>CPU Type</td>
+        <td class="tablevalues" tal:content="here/bsCPUType"></td>
+    <tr>
+        <td class="tableheader" align=left>Part Number</td>
+        <td class="tablevalues" tal:content="here/bsPartNumber"></td>
+        <td class="tableheader" align=left>System Board Part Number</td>
+        <td class="tablevalues" tal:content="here/bsSystemBoardPartNum"></td>
+    </tr>
+    <tr>
+        <td class="tableheader" align=left>NIC #1 MAC Address</td>
+        <td class="tablevalues" tal:content="here/bsNic1Mac"></td>
+        <td class="tableheader" align=left>NIC #2 MAC Address</td>
+        <td class="tablevalues" tal:content="here/bsNic2Mac"></td>
+    </tr>
+    <tr>
+        <td class="tableheader" align=left>ILO IP Address</td>
+        <td class="tablevalues" tal:content="here/bsIloIp"></td>
+        <td class="tableheader" align=left>ILO Firmware Version</td>
+        <td class="tablevalues" tal:content="here/bsIloFirmwareVersion"></td>
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END BLADE INFO SECTION -->
+
+<br/>
+
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf"/>
+
+</tal:block>
+</tal:block>
+

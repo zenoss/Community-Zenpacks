@@ -13,33 +13,30 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
 	    <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPosition', 'Position')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'getStatus','Health')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsDisplayName','Name', 'nocase')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsProductId','Product Id')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsSerialNum','Serial #')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsCPUType','CPU Type')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsCPUCount','CPUs')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsInstalledRam','RAM')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPartNumber','Part Number')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsIloFirmwareVersion','ILO Firmware')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsIloIp','ILO Ip Address')"/>
     </tr>
     <tal:block tal:repeat="gd batch">
     <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
         tal:attributes="class python:test(odd, 'odd', 'even')">
-	    <td class="tablevalues" tal:content="gd/bsPosition"/>
+	    <td class="tablevalues" width="50" tal:content="gd/bsPosition"/>
+        <td class="tablevalues" align="center" width="40">
+            <img border="0" tal:attributes="src 
+            python:here.os.getStatusImgSrc(gd.getRRDValue('bladeHealth'))" />
+        </td>
         <td class="tablevalues">
         <span tal:content="structure gd/urlLink"/>
         <span tal:condition="link" tal:omit-tag>
                  (<span tal:replace="structure gd/managedDeviceLink"/>)
             </span>
         </td>
-        <td class="tablevalues" tal:content="gd/bsProductId"/>
         <td class="tablevalues" tal:content="gd/bsSerialNum"/>
-        <td class="tablevalues" tal:content="gd/bsCPUType"/>
         <td class="tablevalues" tal:content="gd/bsCPUCount"/>
         <td class="tablevalues" tal:content="gd/bsInstalledRam"/>
-        <td class="tablevalues" tal:content="gd/bsPartNumber"/>
-        <td class="tablevalues" tal:content="gd/bsIloFirmwareVersion"/>
         <td class="tablevalues" tal:content="gd/bsIloIp"/>
     </tr>
     </tal:block>

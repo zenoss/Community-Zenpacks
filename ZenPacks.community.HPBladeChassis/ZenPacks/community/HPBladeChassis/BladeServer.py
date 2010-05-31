@@ -67,12 +67,12 @@ class BladeServer(DeviceComponent, ManagedEntity):
 	    'icon'           : 'Device_icon.gif',
 	    'product'        : 'BladeServers',
 	    'factory'        : 'manage_addBladeServer',
-	    'immediate_view' : 'bladeserverPerformance',
+	    'immediate_view' : 'viewBladeDetail',
 	    'actions'        :
 	    (
-		{ 'id'            : 'perf'
-		, 'name'          : 'perf'
-		, 'action'        : 'bladeserverPerformance'
+		{ 'id'            : 'detail'
+		, 'name'          : 'Blade Detail'
+		, 'action'        : 'viewBladeDetail'
 		, 'permissions'   : (ZEN_VIEW, )
 		},
 		{ 'id'            : 'templates'

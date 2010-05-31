@@ -21,6 +21,8 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsPartNumber','Part Number')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsIloFirmwareVersion','ILO Firmware')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsIloIp','ILO Ip Address')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsNic1Mac','Eth0 MAC')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'bsNic2Mac','Eth1 MAC')"/>
     </tr>
     <tal:block tal:repeat="gd batch">
     <tr>
@@ -34,6 +36,8 @@
         <td class="tablevalues" tal:content="gd/bsPartNumber"/>
         <td class="tablevalues" tal:content="gd/bsIloFirmwareVersion"/>
         <td class="tablevalues" tal:content="gd/bsIloIp"/>
+        <td class="tablevalues" tal:content="gd/bsNic1Mac"/>
+        <td class="tablevalues" tal:content="gd/bsNic2Mac"/>
     </tr>
     </tal:block>
     <tr>

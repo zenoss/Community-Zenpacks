@@ -13,16 +13,14 @@ class CfengineClient(DeviceComponent, ManagedEntity):
 
     cfcDisplayName = ""
     cfcCompliance = 0
-    cfcLastUpdateTime = ""
 
     _properties = (
 	dict(id='cfcDisplayName', type='string',  **_kw),
 	dict(id='cfcCompliance', type='int',  **_kw),
-	dict(id='cfcLastUpdateTime', type='string',  **_kw),
     )
 
     _relations = (
-	('cfengineserver', ToOne(ToManyCont, 'ZenPacks.community.cfengine.CfengineDevice', 'cfengineclients')),
+	('cfengineserver', ToOne(ToManyCont, 'ZenPacks.community.Cfengine.CfengineDevice', 'cfengineclients')),
     )
 
     factory_type_information = (

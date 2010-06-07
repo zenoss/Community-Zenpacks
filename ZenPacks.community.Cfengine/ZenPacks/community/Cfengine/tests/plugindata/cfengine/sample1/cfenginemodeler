@@ -1,9 +1,0 @@
-python -c "import os,sys; print os.path.getctime('%s' % sys.argv[1])" ~/ws/zenpacks/cfengine-clients.txt; cat $zCfengineComplianceFile
-1275602690
-62.109.39.157,97
-62.109.39.156,96
-128.39.89.233,93
-62.109.39.155,95
-62.109.39.151,19
-62.109.39.152,92
-62.109.39.150,80

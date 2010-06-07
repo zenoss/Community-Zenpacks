@@ -13,7 +13,6 @@
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcDisplayName','Name')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcCompliance','Compliance')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcLastUpdateTime','LastUpdateTime')"/>
     </tr>
     <tal:block tal:repeat="gd batch">
     <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
@@ -25,7 +24,6 @@
             </span>
         </td>
         <td class="tablevalues" tal:content="gd/cfcCompliance"/>
-        <td class="tablevalues" tal:content="structure python:gd.getRRDValue('cfcLastUpdateTime')"/>
     </tr>
     </tal:block>
     <tr>

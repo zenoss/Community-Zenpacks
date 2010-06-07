@@ -2,7 +2,7 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Cfengine') -->
 <property visible="True" type="lines" id="zCollectorPlugins" >
-[community.cmd.cfengine.cfenginemodeler']
+[community.cfengine.cfenginemodeler']
 </property>
 <object id='/zport/dmd/Devices/rrdTemplates/Cfengine' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >
@@ -29,7 +29,7 @@ Cfengine
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/bin/echo compliance:`/bin/grep ${here/manageIp} /tmp/cfengine-clients.txt | /usr/bin/cut -d , -f 2`
+/bin/echo compliance:`/bin/grep ${here/manageIp} ${here/zCfengineComplianceFile} | /usr/bin/cut -d , -f 2`
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

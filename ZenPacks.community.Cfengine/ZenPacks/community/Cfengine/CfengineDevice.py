@@ -12,7 +12,7 @@ from Products.ZenModel.ZenossSecurity import ZEN_VIEW
 import copy
 
 class CfengineDevice(Device):
-    "A Cfengine Device"
+    "Cfengine Server Device"
 
     _relations = Device._relations + (
 	('cfengineclients', ToManyCont(ToOne, "ZenPacks.community.Cfengine.CfengineClient", "cfengineserver")),
@@ -30,7 +30,7 @@ class CfengineDevice(Device):
                 },
                 { 'id'            : 'cfengineclientData'
                 , 'name'          : 'Clients'
-                , 'action'        : 'cfengineClientData'
+                , 'action'        : 'cfengineclientData'
                 , 'permissions'   : (ZEN_VIEW, )
                 },
                 { 'id'            : 'osdetail'

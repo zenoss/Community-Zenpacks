@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = 'ZenPacks.community.Cfengine'
-VERSION = '0.1'
+VERSION = '0.2'
 AUTHOR = 'Matt Ray & Mark Burgess'
 LICENSE = 'GPLv2'
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

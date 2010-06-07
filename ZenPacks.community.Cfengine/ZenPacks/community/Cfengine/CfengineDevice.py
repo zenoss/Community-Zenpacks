@@ -9,8 +9,6 @@ from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.Device import Device
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW
 
-import copy
-
 class CfengineDevice(Device):
     "Cfengine Server Device"
 

@@ -1,5 +1,4 @@
-import re
-import sys
+import re, os
 from Products.DataCollector.plugins.CollectorPlugin import PythonPlugin
 
 class cfenginemodeler(PythonPlugin):
@@ -7,7 +6,7 @@ class cfenginemodeler(PythonPlugin):
     Parse the zCfengineComplianceFile to get the compliance status for devices.
     """
 
-    deviceProperties = ('zCfengineComplianceFile')
+    deviceProperties = PythonPlugin.deviceProperties + ('zCfengineComplianceFile',)
 
 # 62.109.39.157,97
 # 62.109.39.156,96
@@ -20,12 +19,10 @@ class cfenginemodeler(PythonPlugin):
     #get the results we're looking for
     def collect(self, device, log):
         log.info('Parsing cfengine client list for device %s' % device.id)
-        compliancefile = getattr(device, 'zCfengineComplianceFile', None)
-        log.info(device)
-        log.info('compliancefile %s' % compliancefile)
+        compliancefile = device.zCfengineComplianceFile
+        log.debug('compliancefile %s' % compliancefile)
         try:
-#            output = open(compliancefile, 'r')
-            output = open('/tmp/cfengine-clients.txt', 'r')
+            output = open(compliancefile, 'r')
         except IOError:
             log.error('Can\'t open %s for reading.' % compliancefile)
 	    return None
@@ -34,7 +31,6 @@ class cfenginemodeler(PythonPlugin):
 	if results is None or output == '':
 	    log.info('cfengine zCfengineComplianceFile: Unable to connect or denied access?')
 	    return None
-	log.info('cfengine: results = '+' '.join(dir(results)))
 	return results
 
     #push the results into the model
@@ -49,7 +45,7 @@ class cfenginemodeler(PythonPlugin):
             if re.search(',', line):
                 om.cfcDisplayName, value = line.split(',')
                 om.cfcCompliance = int(value)
-                log.info('Collecting cfengine client list for device %s: Found client = %s' % (device.id,om.cfcDisplayName))
+                log.debug('Collecting cfengine client list for device %s: Found client = %s' % (device.id,om.cfcDisplayName))
                 om.id = self.prepId(om.cfcDisplayName)
                 rm.append(om)
         log.debug(rm)

@@ -13,18 +13,23 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcDisplayName','Device Name')"/>
-<!--         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcCompliance','Compliance')"/> -->
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcDeviceClass','Device Class')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'cfcCompliance','Compliance')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                        tableName,'getDeviceClassPath','Class')"/>
     </tr>
     <tal:block tal:repeat="gd batch">
     <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
         tal:attributes="class python:test(odd, 'odd', 'even')">
         <td class="tablevalues">
-<!--         <span tal:content="structure gd/urlLink"/> -->
         <span tal:content="gd/cfcDisplayName"/>
         <span tal:condition="link" tal:omit-tag>
                  (<span tal:replace="structure link"/>)
         </span>
         </td>
+        <td class="tablevalues" tal:content="gd/cfcDeviceClass"/> 
+        <td class="tablevalues" tal:content="gd/cfcCompliance"/> 
+        <td class="tablevalues" tal:content="gd/getDeviceClassPath"/>
     </tr>
     </tal:block>
     <tr>

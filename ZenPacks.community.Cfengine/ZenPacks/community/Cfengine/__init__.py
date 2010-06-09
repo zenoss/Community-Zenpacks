@@ -26,5 +26,10 @@ class ZenPack(ZenPackBase):
         cfengine = app.dmd.Devices.createOrganizer('/Server/Cfengine')
         
         plugins=[]
+        server = app.dmd.findChild('Devices/Server')
+        for plugin in server.zCollectorPlugins:
+            plugins.append(plugin)
+
         plugins.append('community.cfenginemodeler')
+
         cfengine.setZenProperty( 'zCollectorPlugins', plugins )

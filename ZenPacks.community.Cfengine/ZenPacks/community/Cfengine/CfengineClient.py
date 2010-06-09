@@ -12,10 +12,12 @@ class CfengineClient(DeviceComponent, ManagedEntity):
     portal_type = meta_type = 'CfengineClient'
 
     cfcDisplayName = ""
+    cfcDeviceClass = ""
     cfcCompliance = 0
 
     _properties = (
 	dict(id='cfcDisplayName', type='string',  **_kw),
+	dict(id='cfcDeviceClass', type='string',  **_kw),
 	dict(id='cfcCompliance', type='int',  **_kw),
     )
 

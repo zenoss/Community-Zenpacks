@@ -2,7 +2,7 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Cfengine') -->
 <property visible="True" type="lines" id="zCollectorPlugins" >
-[community.cfengine.cfenginemodeler']
+[community.cfenginemodeler']
 </property>
 <object id='/zport/dmd/Devices/rrdTemplates/Cfengine' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="text" id="description" mode="w" >

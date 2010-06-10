@@ -1,4 +1,6 @@
 import re, os
+from Products.ZenUtils.Utils import zenPath
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from Products.DataCollector.plugins.CollectorPlugin import PythonPlugin
 
 class cfenginemodeler(PythonPlugin):
@@ -8,13 +10,20 @@ class cfenginemodeler(PythonPlugin):
 
     deviceProperties = PythonPlugin.deviceProperties + ('zCfengineComplianceFile',)
 
-# 62.109.39.157,97
-# 62.109.39.156,96
-# 128.39.89.233,93
-# 62.109.39.155,95
-# 62.109.39.151,19
-# 62.109.39.152,92
-# 62.109.39.150,80
+# 62.109.39.157,/Server/Linux,97
+# 62.109.39.156,/Server/Linux,96
+# 128.39.89.233,/Server/Solaris,73
+# 62.109.39.155,/Server/Darwin,95
+# 62.109.39.151,/Server/Windows,19
+# 62.109.39.152,/Ping,92
+# 62.109.39.150,/Ping,80
+
+    def findPath(self):
+        path = []
+        for p in __file__.split(os.sep):
+            if p == 'modeler': break
+            path.append(p)
+        return os.sep.join(path)
 
     #get the results we're looking for
     def collect(self, device, log):
@@ -40,15 +49,26 @@ class cfenginemodeler(PythonPlugin):
         self.relname = "cfengineclients"
         rm = self.relMap()
         rlines = results.split("\n")
+        newdevices = {}
         for line in rlines:
             om = self.objectMap()
             if re.search(',', line):
-                om.cfcDisplayName, value = line.split(',')
+                om.cfcDisplayName, om.cfcDeviceClass, value = line.split(',')
+                if om.cfcDeviceClass == "any":
+                    om.cfcDeviceClass == "/Discovered"
                 om.cfcCompliance = int(value)
                 log.debug('Collecting cfengine client list for device %s: Found client = %s' % (device.id,om.cfcDisplayName))
+                #check if this is an existing device
                 om.id = self.prepId(om.cfcDisplayName)
+                om.setCfengineClient = MultiArgs(om.id)
                 rm.append(om)
         log.debug(rm)
+#         path = self.findPath()
+#         log.info("running cfengine device discovery")        
+#         cmd = path+'/libexec/cfengine_discovery.py'
+#         py = zenPath("bin","python")
+#         args = (cmd, "-u", device.access_id, "-p", device.zEC2Secret)
+
         return rm
         
 

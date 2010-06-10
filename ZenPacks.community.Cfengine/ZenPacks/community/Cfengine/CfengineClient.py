@@ -60,5 +60,14 @@ class CfengineClient(DeviceComponent, ManagedEntity):
 	    return ZenModelRM.urlLink(d, 'link')
 	return None
 
+    def getCfengineClient(self):
+        pass
+
+    def setCfengineClient(self, name):
+        d = self.getDmdRoot("Devices").findDeviceByIdOrIp(name)
+        if d == None:
+            d = self.getDmdRoot("Devices").createInstance(name)
+        #nothing happens without the device class and modeling
+
 InitializeClass(CfengineClient)
 

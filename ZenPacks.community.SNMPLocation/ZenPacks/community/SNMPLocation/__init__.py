@@ -9,8 +9,13 @@ if os.path.isdir(skinsDir):
 
 from Products.ZenModel.Device import Device
 
-def Device_getLocation( self ):
+def Device_getLocationviaSNMP( self ):
     if self.location():
         return self.location().getOrganizerName()
 
-Device.getLocation = Device_getLocation
+Device.getLocationviaSNMP = Device_getLocationviaSNMP
+
+def Device_setLocationviaSNMP( self, location ):
+    self.setLocation(location)
+
+Device.setLocationviaSNMP = Device_setLocationviaSNMP

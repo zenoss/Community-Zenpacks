@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = 'ZenPacks.community.SNMPLocation'
-VERSION = '0.2'
+VERSION = '1.0'
 AUTHOR = 'Matt Ray'
 LICENSE = 'GPLv2'
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

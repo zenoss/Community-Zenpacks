@@ -5,5 +5,5 @@
            for=".datasources.WMIDataSource.WMIDataSource"
            provides=".interfaces.IWMIDataSourceInfo"
            />
-  
+
 </configure>

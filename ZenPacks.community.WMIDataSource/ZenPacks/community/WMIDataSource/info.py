@@ -31,7 +31,7 @@ class WMIDataSourceInfo(InfoBase):
     @property
     def id(self):
         return '/'.join(self._object.getPrimaryPath())
-    
+
     @property
     def source(self):
         return self._object.getDescription()
@@ -43,13 +43,12 @@ class WMIDataSourceInfo(InfoBase):
     enabled = ProxyProperty('enabled')
     namespace = ProxyProperty('namespace')
     wql = ProxyProperty('wql')
-        
+
     @property
     def testable(self):
         """
         We can NOT test this datsource against a specific device
         """
         return True
-    
 
 

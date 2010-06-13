@@ -13,9 +13,9 @@ __doc__="""WMIDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WMIDataSource.py,v 1.4 2010/02/09 15:45:33 egor Exp $"""
+$Id: WMIDataSource.py,v 1.5 2010/06/13 19:39:29 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -107,38 +107,26 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         return (transport, classname, keybindings, namespace)
 
 
-    security.declareProtected('Change Device', 'manage_testDataSource')
-    def manage_testDataSource(self, testDevice, REQUEST):
-        ''' Test the datasource by executing the command and outputting the
-        non-quiet results.
-        '''
+    def testDataSourceAgainstDevice(self, testDevice, REQUEST, write, errorLog):
+        """
+        Does the majority of the logic for testing a datasource against the device
+        @param string testDevice The id of the device we are testing
+        @param Dict REQUEST the browers request
+        @param Function write The output method we are using to stream the result of the command
+        @parma Function errorLog The output method we are using to report errors
+        """ 
         out = REQUEST.RESPONSE
-
-        def write(lines):
-            ''' Output (maybe partial) result text.
-            '''
-            # Looks like firefox renders progressive output more smoothly
-            # if each line is stuck into a table row.  
-            startLine = '<tr><td class="tablevalues">'
-            endLine = '</td></tr>\n'
-            if out:
-                if not isinstance(lines, list):
-                    lines = [lines]
-                for l in lines:
-                    if not isinstance(l, str):
-                        l = str(l)
-                    l = l.strip()
-                    l = cgi.escape(l)
-                    l = l.replace('\n', endLine + startLine)
-                    out.write(startLine + l + endLine)
-
         # Determine which device to execute against
         device = None
         if testDevice:
             # Try to get specified device
             device = self.findDevice(testDevice)
             if not device:
-                REQUEST['message'] = 'Cannot find device matching %s' % testDevice
+                errorLog(
+                    'No device found',
+                    'Cannot find device matching %s.' % testDevice,
+                    priority=messaging.WARNING
+                )
                 return self.callZenScreen(REQUEST)
         elif hasattr(self, 'device'):
             # ds defined on a device, use that device
@@ -151,14 +139,21 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                 # No devices in this class, bail out
                 pass
         if not device:
-            REQUEST['message'] = 'Cannot determine a device to test against.'
+            errorLog(
+                'No Testable Device',
+                'Cannot determine a device against which to test.',
+                priority=messaging.WARNING
+            )
             return self.callZenScreen(REQUEST)
 
+        header = ''
+        footer = ''
         # Render
-        header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
+        if REQUEST.get('renderTemplate', True):
+            header, footer = self.commandTestOutput().split('OUTPUT_TOKEN')
+
         out.write(str(header))
 
-        start = time.time()
         try:
             tr, inst, kb, namespace = self.getInstanceInfo(device)
             inst = RRDDataSource.RRDDataSource.getCommand(self, device,
@@ -179,6 +174,7 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
                                                 inst,
                                                 " ".join(properties.keys()),
                                                 " ".join(properties.values()))
+            start = time.time()
             executeStreamCommand(command, write)
         except:
             import sys
@@ -188,3 +184,35 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         write('')
         write('DONE in %s seconds' % long(time.time() - start))
         out.write(str(footer))
+
+    security.declareProtected('Change Device', 'manage_testDataSource')
+    def manage_testDataSource(self, testDevice, REQUEST):
+        ''' Test the datasource by executing the command and outputting the
+        non-quiet results.
+        '''
+        # set up the output method for our test
+        out = REQUEST.RESPONSE
+        def write(lines):
+            ''' Output (maybe partial) result text.
+            '''
+            # Looks like firefox renders progressive output more smoothly
+            # if each line is stuck into a table row.  
+            startLine = '<tr><td class="tablevalues">'
+            endLine = '</td></tr>\n'
+            if out:
+                if not isinstance(lines, list):
+                    lines = [lines]
+                for l in lines:
+                    if not isinstance(l, str):
+                        l = str(l)
+                    l = l.strip()
+                    l = cgi.escape(l)
+                    l = l.replace('\n', endLine + startLine)
+                    out.write(startLine + l + endLine)
+
+        # use our input and output to call the testDataSource Method
+        errorLog = messaging.IMessageSender(self).sendToBrowser
+        return self.testDataSourceAgainstDevice(testDevice,
+                                                REQUEST,
+                                                write,
+                                                errorLog)

@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/05/31 19:01:22 egor Exp $"""
+$Id: interfaces.py,v 1.1 2010/06/13 16:36:29 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.Zuul.interfaces import IInfo
 from Products.Zuul.form import schema
@@ -24,9 +24,6 @@ from Products.Zuul.utils import ZuulMessageFactory as _t
 class IWMIDataSourceInfo(IInfo):
     name = schema.Text(title=_t(u'Name'))
     enabled = schema.Bool(title=_t(u'Enabled'))
-    namespace = schema.Text(title=_t(u'CIM Namespace'))
-    wql = schema.TextLine(title=_t(u'WQL Queue'))
-    
-    
-    
+    namespace = schema.Text(title=_t(u'Namespace'))
+    wql = schema.TextLine(title=_t(u'Query'))
 

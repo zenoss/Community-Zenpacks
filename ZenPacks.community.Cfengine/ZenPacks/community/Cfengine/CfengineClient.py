@@ -1,3 +1,4 @@
+from transaction import commit
 from Globals import InitializeClass
 from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.DeviceComponent import DeviceComponent
@@ -63,11 +64,41 @@ class CfengineClient(DeviceComponent, ManagedEntity):
     def getCfengineClient(self):
         pass
 
-    def setCfengineClient(self, name):
-        d = self.getDmdRoot("Devices").findDeviceByIdOrIp(name)
-        if d == None:
-            d = self.getDmdRoot("Devices").createInstance(name)
-        #nothing happens without the device class and modeling
+    def setCfengineClient(self, name, dclass, serverId):
+        devdmd = self.getDmdRoot("Devices")
+        needsModeling = False
+        #find the device
+        dev = devdmd.findDeviceByIdOrIp(name)
+        #create it if missing
+        if dev == None:
+            dev = devdmd.createInstance(name)
+            needsModeling = True
+        #find the Device Class
+        fclass = devdmd.getOrganizer(dclass)
+        #set to /Discovered if nonexistent
+        if fclass == None:
+            fclass = devdmd.getOrganizer("/Discovered")
+            dclass="/Discovered"
+            needsModeling = True
+        #check for existing membership, move into class
+        if dev not in fclass.getDevices():
+            devdmd.moveDevices(dclass, name)
+            needsModeling = True
+        #add the 'Cfengine' template to our Device
+        templates =  dev.zDeviceTemplates
+        if 'Cfengine' not in templates:
+            dev.setZenProperty('zDeviceTemplates', templates+['Cfengine'])
+            needsModeling = True
+        #log.info('CfengineClient Device Class: %s' % fclass)
+        if needsModeling:
+            #get the collector for the Cfengine server
+            server = devdmd.findDevice(serverId)
+            collectorId = server.getPerformanceServerName()
+            #set the managed device to the same collector as the server
+            dev.setPerformanceMonitor(collectorId)
+            commit()
+            #model this junk
+            #dev.collectDevice()
 
 InitializeClass(CfengineClient)
 

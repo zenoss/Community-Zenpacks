@@ -29,7 +29,7 @@ Cfengine
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/bin/echo compliance:`/bin/grep ${here/manageIp} ${here/zCfengineComplianceFile} | /usr/bin/cut -d , -f 2`
+/bin/echo compliance:`/bin/grep ${here/manageIp} ${here/zCfengineComplianceFile} | /usr/bin/cut -d , -f 3`
 </property>
 <property type="int" id="cycletime" mode="w" >
 300

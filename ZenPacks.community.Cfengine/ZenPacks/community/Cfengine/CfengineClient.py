@@ -58,8 +58,14 @@ class CfengineClient(DeviceComponent, ManagedEntity):
 	from Products.ZenModel.ZenModelRM import ZenModelRM
 	d = self.getDmdRoot("Devices").findDevice(self.cfcDisplayName)
 	if d:
-	    return ZenModelRM.urlLink(d, 'link')
-	return None
+	    return ZenModelRM.urlLink(d, self.cfcDisplayName)
+	return self.cfcDisplayName
+
+    def managedDeviceClassLink(self):
+	dc = self.getDmdRoot("Devices").getOrganizer(self.cfcDeviceClass)
+	if dc:
+	    return dc.getIdLink()
+	return self.cfcDeviceClass
 
     def getCfengineClient(self):
         pass

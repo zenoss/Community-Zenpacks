@@ -12,9 +12,9 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.2 2010/05/18 13:37:13 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.3 2010/06/23 00:34:11 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.OSComponent import *
@@ -33,6 +33,8 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     diskGroupType = ""
     diskType = ""
     protLevel = ""
+    totalManagedSpace = 0
+    totalDisks = 0
     threshold = 0
     state = "OK"
 
@@ -41,6 +43,8 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                  {'id':'diskGroupType', 'type':'string', 'mode':'w'},
                  {'id':'diskType', 'type':'string', 'mode':'w'},
                  {'id':'protLevel', 'type':'string', 'mode':'w'},
+                 {'id':'totalManagedSpace', 'type':'int', 'mode':'w'},
+                 {'id':'totalDisks', 'type':'int', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
                  {'id':'state', 'type':'string', 'mode':'w'},
                 )
@@ -98,7 +102,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
 
 
     def totalBytes(self):
-        return self.cacheRRDValue('TotalManagedSpace', 0)
+        return self.totalManagedSpace or 0
 
     def usedBytes(self):
         return self.cacheRRDValue('Occupancy', 0)
@@ -122,15 +126,12 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
         return 'unknown'
 
     def disks(self):
-        return int(round(self.cacheRRDValue('TotalDisks', 0)))
+        return self.totalDisks or 0
 
     def getRRDNames(self):
         """
         Return the datapoint name of this StoragePool
         """
-        return ['StoragePool_Occupancy',
-                'StoragePool_TotalManagedSpace', 
-                'StoragePool_TotalDisks',
-                ]
+        return ['StoragePool_Occupancy']
 
 InitializeClass(HPEVAStoragePool)

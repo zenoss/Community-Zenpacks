@@ -12,9 +12,9 @@ __doc__="""HPEVADevice
 
 HPEVADevice is an abstraction of a HP EVA
 
-$Id: HPEVADevice.py,v 1.1 2010/05/14 18:03:32 egor Exp $"""
+$Id: HPEVADevice.py,v 1.2 2010/06/23 00:37:13 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW
@@ -78,13 +78,6 @@ class HPEVADevice(Device):
             )
          },
         )
-
-    def sysUpTime(self):
-        upTime = -1
-        for cntr in self.getDeviceComponents(type='HPEVAStorageProcessorCard'):
-            cntrSysUpTime = cntr.sysUpTime()
-            if cntrSysUpTime > upTime: upTime = cntrSysUpTime
-        return upTime
 
 InitializeClass(HPEVADevice)
 

@@ -13,15 +13,13 @@ __doc__="""HPEVAStorageDiskEnclosureMap
 HPEVAStorageDiskEnclosureMap maps HPEVA_StorageDiskEnclosure class to
 HPEVAStorageDiskEnclosure class.
 
-$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.0 2010/04/29 12:34:31 egor Exp $"""
+$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.1 2010/06/23 00:31:52 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
-from Products.DataCollector.plugins.DataMaps import ObjectMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
-from Products.DataCollector.EnterpriseOIDs import EnterpriseOIDs
 
 class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
     """Map HPEVA_StorageDiskEnclosure class to Storage Enclosure"""
@@ -41,6 +39,7 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
                     {
                     "__path":"snmpindex",
                     "Caption":"id",
+                    "Height":"_height",
                     "Manufacturer":"_manuf",
                     "Model":"_model",
                     "Name":"_sname",
@@ -60,10 +59,14 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
             om = self.objectMap(instance)
             om.id = self.prepId(om.id.split()[-1])
             try:
-                if om._manuf not in EnterpriseOIDs.values():
-                    om._manuf = "Unknown"
-                if om._model:
-                    om.setProductKey = MultiArgs(om._model, om._manuf)
+	        if om._height < 4:
+		    om.enclosureLayout = '1 4 7 10,2 5 8 11,3 6 9 12'
+		    om.hLayout = True
+		else:
+		    om.enclosureLayout = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
+		    om.hLayout = False
+                if not om._manuf: om._manuf = "Unknown"
+                if om._model: om.setProductKey = MultiArgs(om._model, om._manuf)
             except AttributeError:
                 continue
             rm.append(om)

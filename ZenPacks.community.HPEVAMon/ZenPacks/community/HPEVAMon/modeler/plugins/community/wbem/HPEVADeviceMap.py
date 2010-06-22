@@ -13,9 +13,9 @@ __doc__="""HPEVADeviceMap
 HPEVADeviceMap maps HPEVA_StorageSystem class to hw and
 os products.
 
-$Id: HPEVADeviceMap.py,v 1.3 2010/05/21 09:58:27 egor Exp $"""
+$Id: HPEVADeviceMap.py,v 1.4 2010/06/22 10:19:39 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -109,7 +109,13 @@ class HPEVADeviceMap(WBEMPlugin):
             om = self.objectMap(cs)
 #            om.snmpLocation = ""
 #            om.snmpOid = ""
-            if om.setHWProductKey == 'HSV300': om.setHWProductKey = 'EVA4400'
+            if om.setHWProductKey == 'HSV100': om.setHWProductKey = 'EVA3000'
+            elif om.setHWProductKey == 'HSV110': om.setHWProductKey = 'EVA5000'
+            elif om.setHWProductKey == 'HSV200': om.setHWProductKey = 'EVA6000'
+            elif om.setHWProductKey == 'HSV200-B': om.setHWProductKey = 'EVA6100'
+            elif om.setHWProductKey == 'HSV210': om.setHWProductKey = 'EVA8000'
+            elif om.setHWProductKey == 'HSV210-B': om.setHWProductKey = 'EVA8100'
+            elif om.setHWProductKey == 'HSV300': om.setHWProductKey = 'EVA4400'
             elif om.setHWProductKey == 'HSV400': om.setHWProductKey = 'EVA6400'
             elif om.setHWProductKey == 'HSV450': om.setHWProductKey = 'EVA8400'
             om.setHWProductKey = MultiArgs(om.setHWProductKey, "HP")

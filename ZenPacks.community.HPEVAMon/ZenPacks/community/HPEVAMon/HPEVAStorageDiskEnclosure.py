@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageDiskEnclosure
 
 HPEVAStorageDiskEnclosure is an abstraction of a HPEVA_StorageDiskEnclosure
 
-$Id: HPEVAStorageDiskEnclosure.py,v 1.1 2010/05/18 13:36:45 egor Exp $"""
+$Id: HPEVAStorageDiskEnclosure.py,v 1.2 2010/06/22 10:27:23 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.HWComponent import *
@@ -30,11 +30,11 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
     portal_type = meta_type = 'HPEVAStorageDiskEnclosure'
 
     state = "OK"
-#    enclosureLayout = ((1,2,3,4,5,6,7,8,9,10,11,12),)
-    enclosureLayout = ( (1,4,7,10),
-                        (2,5,8,11),
-                        (3,6,9,12))
-    diskOrientation = 'h'
+
+    #enclosureLayout = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
+    #hLayout = 'v'
+    enclosureLayout = '1 4 7 10,2 5 8 11,3 6 9 12'
+    hLayout = True
 
     linkimg = '/zport/dmd/hpevaselink'
     rightimg = '/zport/dmd/hpevaseright'
@@ -43,6 +43,8 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
 
     _properties = HWComponent._properties + (
                  {'id':'state', 'type':'string', 'mode':'w'},
+                 {'id':'enclosureLayout', 'type':'string', 'mode':'w'},
+                 {'id':'hLayout', 'type':'boolean', 'mode':'w'},
                 )
 
     _relations = HWComponent._relations + (
@@ -90,29 +92,33 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
         )
 
 
+
     def getStatus(self):
         """
         Return the components status
         """
         return int(round(self.cacheRRDValue('OperationalStatus', 0)))
 
+
     def layout(self):
         bays = {}
         for disk in self.harddisks():
             bays[int(disk.bay)]='<a href=\"%s\"><img src=\"%s_%s.png\"  /></a>'%(
-                disk.getPrimaryUrlPath(), disk.diskImg(), self.diskOrientation)
+                                                    disk.getPrimaryUrlPath(),
+                                                    disk.diskImg(),
+                                                    self.hLayout and 'h' or 'v')
         result = "\t\t\t<table border=\"0\">\n\t\t\t\t<tr>\n\t\t\t\t\t"
         result=result+"<td><a href=\"%s\"><img src=\"%s%s.png\" /></a></td>\n"%(
                                             self.getPrimaryUrlPath(),
                                             self.linkimg,
                                             int(self.id) < 28 and self.id or '')
         result= result + "\t\t\t\t\t<td><table border=\"0\">\n"
-        for line in self.enclosureLayout:
+        for line in self.enclosureLayout.split(','):
             result = result + "\t\t\t\t<tr>\n"
-            for bay in line:
-                result = result + "\t\t\t\t\t<td>%s</td>\n"%bays.get(bay, 
+            for bay in line.strip().split():
+                result = result + "\t\t\t\t\t<td>%s</td>\n"%bays.get(int(bay), 
                                     '<img src=\"%s_%s.png\" />'%(self.blankimg,
-                                                        self.diskOrientation))
+                                                self.hLayout and 'h' or 'v'))
             result = result + "\t\t\t\t</tr>\n"
         result = result + "\t\t\t\t\t</table>\t\t\t\t\t</td>\n\t\t\t\t\t<td>"
         result = result +"<a href=\"%s\"><img src=\"%s_%s.png\" /></a></td>\n"%(

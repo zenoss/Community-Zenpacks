@@ -8,6 +8,21 @@ import copy
 class BladeChassis(Device):
     "HP Blade Chassis Device"
 
+    portal_type = meta_type = 'BladeChassis'
+
+    bcEnclosureName = ""
+    bcEnclosureType = ""
+    bcPartNumber = ""
+    bcSerialNumber = ""
+    bcUUID = ""
+    bcAssetTag = ""
+    bcMidplaneSparePartNumber = ""
+    bcPduType = ""
+    bcPduSparePartNumber = ""
+    bcOATrayType = ""
+    bcOATraySparePartNumber = ""
+    bcOATraySerialNumber = ""
+
     _relations = Device._relations + (
 	('bladeservers', ToManyCont(ToOne, "ZenPacks.community.HPBladeChassis.BladeServer", "bladechassis")),
     ) + (

@@ -48,7 +48,7 @@ class BladeServers(CommandPlugin):
                 om = self.objectMap()
                 om.bsPosition = int(match.groups()[0])
                 om.snmpindex = om.bsPosition
-                om.id = self.prepId(om.bsPosition)
+                om.id = self.prepId("%s slot %2d" % (device.id, om.bsPosition))
                 om.bsInstalledRam = 0
                 om.bsCPUCount = 0
                 bladeCount = bladeCount + 1
@@ -62,16 +62,13 @@ class BladeServers(CommandPlugin):
             if match:
                 # We need to set a bunch of default values for "no blade here" and continue
                 om.bsDisplayName = "Empty Slot"
-                om.id = self.prepId(om.bsDisplayName)
                 continue
             match = re.match('^Type:.((Server|Storage|Unknown).*)$',line.strip())
             if match:
                 if "Storage" in match.groups()[0]:
                     om.bsDisplayName = oldHostName + " Storage Blade"
-                    om.id = self.prepId(om.bsDisplayName)
                 if "Unknown" in match.groups()[0]:
                     om.bsDisplayName = "ERROR - Unrecognized Blade"
-                    om.id = self.prepId(om.bsDisplayName)
                 continue
             match = re.match('^Product.Name:.(.*)$',line.strip())
             if match:
@@ -94,7 +91,6 @@ class BladeServers(CommandPlugin):
             match = re.match('^Server.Name:.(.*)$',line.strip())
             if match:
                 om.bsDisplayName = match.groups()[0]
-                om.id = self.prepId(om.bsDisplayName)
                 continue
             match = re.match('^CPU.[0-9]:.(.*)$',line.strip())
             if match:

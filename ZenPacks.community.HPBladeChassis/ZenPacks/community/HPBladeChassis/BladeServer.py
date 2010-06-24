@@ -16,6 +16,7 @@ class BladeServer(DeviceComponent, ManagedEntity):
     portal_type = meta_type = 'BladeServer'
 
     bsDisplayName = ""
+    bsId = ""
     bsPosition = -1
     bsHeight = -1
     bsWidth = -1
@@ -36,6 +37,7 @@ class BladeServer(DeviceComponent, ManagedEntity):
 
     _properties = (
 	dict(id='bsDisplayName', type='string',  **_kw),
+	dict(id='bsId', type='string',  **_kw),
 	dict(id='bsPosition', type='int',  **_kw),
 	dict(id='bsHeight', type='int',  **_kw),
 	dict(id='bsWidth',	type='int',  **_kw),

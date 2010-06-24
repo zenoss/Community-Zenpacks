@@ -1,3 +1,0 @@
-[zenoss.zenpacks]
-ZenPacks.community.ZeusLoadBalancer = ZenPacks.community.ZeusLoadBalancer
-

@@ -1,6 +1,8 @@
+INSTALL.txt
 MANIFEST.in
 README.txt
 setup.py
+setup.pyo
 ZenPacks/__init__.py
 ZenPacks/__init__.pyc
 ZenPacks.community.ZeusLoadBalancer.egg-info/PKG-INFO
@@ -10,6 +12,7 @@ ZenPacks.community.ZeusLoadBalancer.egg-info/entry_points.txt
 ZenPacks.community.ZeusLoadBalancer.egg-info/namespace_packages.txt
 ZenPacks.community.ZeusLoadBalancer.egg-info/not-zip-safe
 ZenPacks.community.ZeusLoadBalancer.egg-info/top_level.txt
+ZenPacks.community.ZeusLoadBalancer.egg-info/zenpack_info
 ZenPacks/community/__init__.py
 ZenPacks/community/__init__.pyc
 ZenPacks/community/ZeusLoadBalancer/ZeusLoadBalancer.py

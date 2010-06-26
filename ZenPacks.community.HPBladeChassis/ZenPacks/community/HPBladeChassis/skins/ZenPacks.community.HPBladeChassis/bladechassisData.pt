@@ -1,5 +1,41 @@
 <tal:block metal:use-macro="here/templates/macros/page2">
 <tal:block metal:fill-slot="contentPane">
+<!-- BEGIN CHASSIS INFO SECTION -->
+
+<tal:block metal:define-macro="objectperf" 
+        tal:define="tabletitle string:Chassis Details">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+    <tr>
+        <td class="tableheader" align=left>Enclosure Name</td>
+        <td class="tablevalues" tal:content="here/bcEnclosureName"></td>
+        <td class="tableheader" align=left>Part Number</td>
+        <td class="tablevalues" tal:content="here/bcPartNumber"></td>
+    </tr>
+    <tr>
+        <td class="tableheader" align=left>Enclosure Type</td>
+        <td class="tablevalues" tal:content="here/bcEnclosureType"></td>
+        <td class="tableheader" align=left>Serial Number</td>
+        <td class="tablevalues" tal:content="here/bcSerialNumber"></td>
+    <tr>
+        <td class="tableheader" align=left>UUID</td>
+        <td class="tablevalues" tal:content="here/bcUUID"></td>
+        <td class="tableheader" align=left>PDU Type</td>
+        <td class="tablevalues" tal:content="here/bcPduType"></td>
+    </tr>
+    <tr>
+        <td class="tableheader" align=left>Asset Tag</td>
+        <td class="tablevalues" tal:content="here/bcAssetTag"></td>
+        <td class="tableheader" align=left>PDU Spare Part Number</td>
+        <td class="tablevalues" tal:content="here/bcPduSparePartNumber"></td>
+    </tr>
+
+</tal:block>
+</tal:block>
+</tal:block>
+<!-- END CHASSIS INFO SECTION -->
 
 <!-- BEGIN FAN TABLE -->
 <tal:block 

@@ -9,12 +9,10 @@ HP Blade Chassis Monitoring
 ZenPacks.community.HPBladeChassis.BladeChassis
 </property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['BladeServers', 'BladeChassisFans', 'BladeChassisPsus', 'BladeChassisInterconnects', 'zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.HPDeviceMap', 'zenoss.snmp.HPCPUMap']
+['BladeChassis', 'BladeServers', 'BladeChassisFans', 'BladeChassisPsus', 'BladeChassisInterconnects']
 </property>
 <property visible="True" type="lines" id="zDeviceTemplates" >
 ['BladeChassisCmd', 'Device']
-</property>
-<property visible="True" type="string" id="zCommandPath">
 </property>
 <property visible="True" type="int" id="zSshConcurrentSessions" >
 5
@@ -878,6 +876,9 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'HP Blade Server List') -->
+<object id='/zport/dmd/Reports/Device Reports/HP Blade Server List' module='Products.ZenModel.Report' class='Report'>
 </object>
 <!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'bladeserverlist') -->
 <object id='/zport/dmd/Reports/Device Reports/bladeserverlist' module='Products.ZenModel.Report' class='Report'>

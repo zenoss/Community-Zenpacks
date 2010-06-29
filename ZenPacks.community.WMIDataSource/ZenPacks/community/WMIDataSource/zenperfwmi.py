@@ -12,9 +12,9 @@ __doc__="""zenperfwmi
 
 Gets WMI performance data and stores it in RRD files.
 
-$Id: zenperfwmi.py,v 2.7 2010/04/21 18:40:54 egor Exp $"""
+$Id: zenperfwmi.py,v 2.8 2010/06/28 07:55:55 egor Exp $"""
 
-__version__ = "$Revision: 2.7 $"[11:-2]
+__version__ = "$Revision: 2.8 $"[11:-2]
 
 import logging
 
@@ -214,11 +214,11 @@ class ZenPerfWmiTask(ObservableMixin):
         err = result.getErrorMessage()
         log.error("Device %s: %s", self._devId, err)
         collectorName = self._preferences.collectorName
-        summary = "Could not get %s Instance (%s)." % (
-                                                collectorName[7:].upper(), err)
+        summary = "Could not get %s Instance"%collectorName[7:].upper()
 
         self._eventService.sendEvent(dict(
             summary=summary,
+            message=summary + " (%s)"%err,
             component=comp or collectorName,
             eventClass='/Status/Wbem',
             device=self._devId,
@@ -243,6 +243,14 @@ class ZenPerfWmiTask(ObservableMixin):
             ZenPerfWmiTask.QUERIES += len(classes)
 
         if not results: return None
+        self._eventService.sendEvent(dict(
+            summary="Could not get %s Instance"%collectorName[7:].upper(),
+            component=self._preferences.collectorName,
+            eventClass='/Status/Wbem',
+            device=self._devId,
+            severity=Clear,
+            agent=self._preferences.collectorName,
+            ))
         for tableName, data in results.iteritems():
             for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
                                         minmax) in self._datapoints[tableName]:

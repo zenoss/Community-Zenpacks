@@ -243,13 +243,14 @@ class ZenPerfWmiTask(ObservableMixin):
             ZenPerfWmiTask.QUERIES += len(classes)
 
         if not results: return None
+        collectorName = self._preferences.collectorName
         self._eventService.sendEvent(dict(
             summary="Could not get %s Instance"%collectorName[7:].upper(),
-            component=self._preferences.collectorName,
+            component=collectorName,
             eventClass='/Status/Wbem',
             device=self._devId,
             severity=Clear,
-            agent=self._preferences.collectorName,
+            agent=collectorName,
             ))
         for tableName, data in results.iteritems():
             for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,

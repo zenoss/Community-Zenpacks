@@ -12,9 +12,9 @@ __doc__="""zenperfwbem
 
 Gets WBEM performance data and stores it in RRD files.
 
-$Id: zenperfwbem.py,v 2.7 2010/04/21 18:24:17 egor Exp $"""
+$Id: zenperfwbem.py,v 2.8 2010/06/29 21:58:46 egor Exp $"""
 
-__version__ = "$Revision: 2.7 $"[11:-2]
+__version__ = "$Revision: 2.8 $"[11:-2]
 
 import logging
 
@@ -184,11 +184,11 @@ class ZenPerfWbemTask(ObservableMixin):
         err = result.getErrorMessage()
         log.error("Device %s: %s", self._devId, err)
         collectorName = self._preferences.collectorName
-        summary = "Could not get %s Instance (%s)." % (
-                                                collectorName[7:].upper(), err)
+        summary = "Could not get %s Instance"%collectorName[7:].upper()
 
         self._eventService.sendEvent(dict(
             summary=summary,
+            message=summary + " (%s)"%err,
             component=comp or collectorName,
             eventClass='/Status/Wbem',
             device=self._devId,
@@ -213,6 +213,15 @@ class ZenPerfWbemTask(ObservableMixin):
             ZenPerfWbemTask.QUERIES += len(classes)
 
         if not results: return results
+        collectorName = self._preferences.collectorName,
+        self._eventService.sendEvent(dict(
+            summary="Could not get %s Instance"%collectorName[7:].upper(),
+            component=collectorName,
+            eventClass='/Status/Wbem',
+            device=self._devId,
+            severity=Clear,
+            agent=collectorName,
+            ))
         for tableName, data in results.iteritems():
             for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
                                         minmax) in self._datapoints[tableName]:

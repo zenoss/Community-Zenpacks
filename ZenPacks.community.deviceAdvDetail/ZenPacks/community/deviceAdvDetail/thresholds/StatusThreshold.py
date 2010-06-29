@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the deviceAdvDetail Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__= """StatusThreshold
 Make threshold comparisons dynamic by using objects statusmap property,
 rather than just number bounds checking.
 
-$Id: HWStatus.py,v 1.3 2009/07/17 21:36:24 egor Exp $"""
+$Id: StatusThreshold.py,v 1.4 2010/06/29 23:51:22 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 import rrdtool
 from AccessControl import Permissions
@@ -42,10 +42,11 @@ class StatusThreshold(ThresholdClass):
 
     escalateCount = 0
     eventClass='/Change/Set/Status'
+    severity = 3
 
     _properties = ThresholdClass._properties + (
-        {'id':'escalateCount', 'type':'int',     'mode':'w'},
-        {'id':'eventClass', 'type':'string',     'mode':'w'},
+        {'id':'escalateCount', 'type':'int', 'mode':'w'},
+        {'id':'eventClass', 'type':'string', 'mode':'w'},
         )
 
     factory_type_information = (
@@ -53,7 +54,7 @@ class StatusThreshold(ThresholdClass):
         'immediate_view' : 'editRRDStatusThreshold',
         'actions'        :
         ( 
-        { 'id'            : 'edit'
+          { 'id'            : 'edit'
           , 'name'          : 'Status Threshold'
           , 'action'        : 'editRRDStatusThreshold'
           , 'permissions'   : ( Permissions.view, )

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.StatusThresholdInfo"
+                 for=".thresholds.StatusThreshold.StatusThreshold"
+                 provides=".interfaces.IStatusThresholdInfo"
+                 />
+
+        <adapter factory=".info.MemoryModuleInfo"
+                 for=".MemoryModule.MemoryModule"
+                 provides=".interfaces.IMemoryModuleInfo"
+                 />
+
+        <adapter factory=".info.HardDiskInfo"
+                 for="Products.ZenModel.HardDisk.HardDisk"
+                 provides=".interfaces.IHardDiskInfo"
+                 />
+
+        <adapter factory=".info.LogicalDiskInfo"
+                 for=".LogicalDisk.LogicalDisk"
+                 provides=".interfaces.ILogicalDiskInfo"
+                 />
+
+        <adapter factory=".info.ExpansionCardInfo"
+                 for="Products.ZenModel.ExpansionCard.ExpansionCard"
+                 provides=".interfaces.IExpansionCardInfo"
+                 />
+
+        <adapter factory=".info.FanInfo"
+                 for="Products.ZenModel.Fan.Fan"
+                 provides=".interfaces.IFanInfo"
+                 />
+
+        <adapter factory=".info.TemperatureSensorInfo"
+                 for="Products.ZenModel.TemperatureSensor.TemperatureSensor"
+                 provides=".interfaces.ITemperatureSensorInfo"
+                 />
+
+        <adapter factory=".info.PowerSupplyInfo"
+                 for="Products.ZenModel.PowerSupply.PowerSupply"
+                 provides=".interfaces.IPowerSupplyInfo"
+                 />
+
+        <browser:resourceDirectory
+                 name="deviceadvdetail"
+                 directory="resources"
+                 />
+
+        <browser:viewlet
+                 name="js-deviceadvdetail"
+                 paths="/++resource++deviceadvdetail/deviceAdvDetail.js"
+                 weight="10"
+                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                 permission="zope2.Public"
+                 />
+    </configure>
+</configure>

@@ -213,7 +213,7 @@ class ZenPerfWbemTask(ObservableMixin):
             ZenPerfWbemTask.QUERIES += len(classes)
 
         if not results: return results
-        collectorName = self._preferences.collectorName,
+        collectorName = self._preferences.collectorName
         self._eventService.sendEvent(dict(
             summary="Could not get %s Instance"%collectorName[7:].upper(),
             component=collectorName,

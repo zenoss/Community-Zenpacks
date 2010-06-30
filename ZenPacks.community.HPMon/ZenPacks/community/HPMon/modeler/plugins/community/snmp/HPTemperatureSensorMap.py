@@ -28,13 +28,13 @@ class HPTemperatureSensorMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('cpqHeTemperatureTable',
-	            '.1.3.6.1.4.1.232.6.2.6.8.1',
-		    {
-			'.3': '_location',
-			'.5': 'threshold',
-			'.6': 'status',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.6.2.6.8.1',
+                    {
+                        '.3': '_location',
+                        '.5': 'threshold',
+                        '.6': 'status',
+                    }
+        ),
     )
 
     localemap = {1: "other", 
@@ -58,16 +58,16 @@ class HPTemperatureSensorMap(SnmpPlugin):
         getdata, tabledata = results
         tsensorstable = tabledata.get("cpqHeTemperatureTable")
         rm = self.relMap()
-	localecounter = {}
+        localecounter = {}
         for oid, tsensor in tsensorstable.iteritems():
             try:
                 om = self.objectMap(tsensor)
-		if om.status == 1: continue
-		om.snmpindex = oid.strip('.')
-		if om._location in localecounter:
-		    localecounter[om._location] = localecounter[om._location] + 1
-		else:
-		    localecounter[om._location] = 1
+                if om.status == 1: continue
+                om.snmpindex = oid.strip('.')
+                if om._location in localecounter:
+                    localecounter[om._location] = localecounter[om._location] + 1
+                else:
+                    localecounter[om._location] = 1
                 om.id = self.prepId("%s%d" % (self.localemap.get(getattr(om, '_location', 1), self.localemap[1]), localecounter[om._location]))
             except AttributeError:
                 continue

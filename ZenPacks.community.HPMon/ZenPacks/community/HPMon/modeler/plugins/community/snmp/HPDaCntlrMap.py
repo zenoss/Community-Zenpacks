@@ -28,17 +28,17 @@ class HPDaCntlrMap(HPExpansionCardMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqDaCntlrTable',
-	            '.1.3.6.1.4.1.232.3.2.2.1.1',
-		    {
-			'.2': 'model',
-			'.3': 'FWRev',
-			'.5': 'slot',
-			'.9': 'role',
-			'.10': 'status',
-			'.15': 'serialNumber',
-			'.16': 'redundancyType',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.3.2.2.1.1',
+                    {
+                        '.2': 'model',
+                        '.3': 'FWRev',
+                        '.5': 'slot',
+                        '.9': 'role',
+                        '.10': 'status',
+                        '.15': 'serialNumber',
+                        '.16': 'redundancyType',
+                    }
+        ),
     )
 
     models = {1: 'Unknown Array Controller',
@@ -77,34 +77,34 @@ class HPDaCntlrMap(HPExpansionCardMap):
             34: 'HP Smart Array P800 Controller',
             35: 'HP Smart Array E500 Controller',
             36: 'HP Smart Array P700m Controller',
-	    }
+            }
 
     redundancyTypes = {1: 'other',
-		        2: 'Not Redundancy',
-			3: 'Driver Duplexing',
-		        4: 'Active-Standby',
-		        5: 'Primary-Secondary',
-		        }
+                        2: 'Not Redundancy',
+                        3: 'Driver Duplexing',
+                        4: 'Active-Standby',
+                        5: 'Primary-Secondary',
+                        }
 
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('cpqDaCntlrTable')
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        cardtable = tabledata.get('cpqDaCntlrTable')
+        if not device.id in HPExpansionCardMap.oms:
+            HPExpansionCardMap.oms[device.id] = []
         for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqDaCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
-		om.redundancyType = self.redundancyTypes.get(getattr(om, 'redundancyType', 1))
+                om.redundancyType = self.redundancyTypes.get(getattr(om, 'redundancyType', 1))
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
-	return
+        return
 

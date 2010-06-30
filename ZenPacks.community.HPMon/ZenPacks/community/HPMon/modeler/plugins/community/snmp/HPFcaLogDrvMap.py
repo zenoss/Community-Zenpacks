@@ -27,56 +27,56 @@ class HPFcaLogDrvMap(HPLogicalDiskMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqFcaLogDrvTable',
-	            '.1.3.6.1.4.1.232.16.2.3.1.1',
-		    {
-		        '.1': 'chassis',
-			'.3': 'diskType',
-			'.4': 'status',
-			'.9': 'size',
-			'.12': 'stripesize',
-			'.13': 'description',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.16.2.3.1.1',
+                    {
+                        '.1': 'chassis',
+                        '.3': 'diskType',
+                        '.4': 'status',
+                        '.9': 'size',
+                        '.12': 'stripesize',
+                        '.13': 'description',
+                    }
+        ),
         GetTableMap('cpqSsChassisTable',
-	            '.1.3.6.1.4.1.232.8.2.2.1.1',
-		    {
-			'.4': 'name',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.8.2.2.1.1',
+                    {
+                        '.4': 'name',
+                    }
+        ),
     )
 
     diskTypes = {1: 'other',
-		2: 'RAID0',
-		3: 'RAID1',
-		4: 'RAID4',
-		5: 'RAID5',
-		6: 'RAID1E',
-		7: 'RAID ADG',
-		}
+                2: 'RAID0',
+                3: 'RAID1',
+                4: 'RAID4',
+                5: 'RAID5',
+                6: 'RAID1E',
+                7: 'RAID ADG',
+                }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	disktable = tabledata.get('cpqFcaLogDrvTable')
+        disktable = tabledata.get('cpqFcaLogDrvTable')
         chassismap = {}
-	chassistable = tabledata.get('cpqSsChassisTable')
-	for oid, chassis in chassistable.iteritems():
-	    chassismap[oid.strip('.')] = chassis['name']
-	external = 'community.snmp.HPSsChassisMap' in getattr(device, 'zCollectorPlugins', [])
-	if not device.id in HPLogicalDiskMap.oms:
-	    HPLogicalDiskMap.oms[device.id] = []
+        chassistable = tabledata.get('cpqSsChassisTable')
+        for oid, chassis in chassistable.iteritems():
+            chassismap[oid.strip('.')] = chassis['name']
+        external = 'community.snmp.HPSsChassisMap' in getattr(device, 'zCollectorPlugins', [])
+        if not device.id in HPLogicalDiskMap.oms:
+            HPLogicalDiskMap.oms[device.id] = []
         for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
-		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
-		om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
-		om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
-		om.chassis = chassismap.get(om.chassis, '')
-		om.external = external
+                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
+                om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
+                om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
+                om.chassis = chassismap.get(om.chassis, '')
+                om.external = external
             except AttributeError:
                 continue
             HPLogicalDiskMap.oms[device.id].append(om)
-	return
+        return

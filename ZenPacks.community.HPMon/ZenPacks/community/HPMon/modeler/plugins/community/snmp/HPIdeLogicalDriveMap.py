@@ -27,42 +27,42 @@ class HPIdeLogicalDriveMap(HPLogicalDiskMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqIdeLogicalDriveTable',
-	            '.1.3.6.1.4.1.232.14.2.6.1.1',
-		    {
-			'.3': 'diskType',
-			'.4': 'size',
-			'.5': 'status',
-			'.8': 'stripesize',
-			'.11': 'description',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.14.2.6.1.1',
+                    {
+                        '.3': 'diskType',
+                        '.4': 'size',
+                        '.5': 'status',
+                        '.8': 'stripesize',
+                        '.11': 'description',
+                    }
+        ),
     )
 
     diskTypes = {1: 'other',
-	        2: 'RAID0',
-		3: 'RAID1',
-		4: 'RAID1+0',
-		5: 'RAID5',
-		6: 'RAID1+5',
-		7: 'VOLUME',
-		}
+                2: 'RAID0',
+                3: 'RAID1',
+                4: 'RAID1+0',
+                5: 'RAID5',
+                6: 'RAID1+5',
+                7: 'VOLUME',
+                }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	disktable = tabledata.get('cpqIdeLogicalDriveTable')
-	if not device.id in HPLogicalDiskMap.oms:
-	    HPLogicalDiskMap.oms[device.id] = []
+        disktable = tabledata.get('cpqIdeLogicalDriveTable')
+        if not device.id in HPLogicalDiskMap.oms:
+            HPLogicalDiskMap.oms[device.id] = []
         for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
-		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
-		om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
-		om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
+                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
+                om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
+                om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
             except AttributeError:
                 continue
             HPLogicalDiskMap.oms[device.id].append(om)
-	return
+        return

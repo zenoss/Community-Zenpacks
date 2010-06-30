@@ -27,18 +27,18 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqFcaHostCntlrTable',
-	            '.1.3.6.1.4.1.232.16.2.7.1.1',
-		    {
-			'.2': 'slot',
-			'.3': 'model',
-			'.4': 'status',
-			'.6': 'wwnn',
-			'.10': 'serialNumber',
-			'.12': 'wwpn',
-			'.13': 'FWRev',
-			'.14': 'ROMRev',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.16.2.7.1.1',
+                    {
+                        '.2': 'slot',
+                        '.3': 'model',
+                        '.4': 'status',
+                        '.6': 'wwnn',
+                        '.10': 'serialNumber',
+                        '.12': 'wwpn',
+                        '.13': 'FWRev',
+                        '.14': 'ROMRev',
+                    }
+        ),
     )
 
     models =   {1: 'Unknown Fibre Channel HBA',
@@ -71,25 +71,25 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
                 28: 'HP FC2142SR 4Gb PCI-e HBA',
                 29: 'HP FC2242SR 4Gb PCI-e DC HBA',
                 30: 'Emulex based BL20p Fibre Channel Mezz HBA',
-		}
+                }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('cpqFcaHostCntlrTable')
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        cardtable = tabledata.get('cpqFcaHostCntlrTable')
+        if not device.id in HPExpansionCardMap.oms:
+            HPExpansionCardMap.oms[device.id] = []
         for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqFcaHostCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
-	return
+        return
 

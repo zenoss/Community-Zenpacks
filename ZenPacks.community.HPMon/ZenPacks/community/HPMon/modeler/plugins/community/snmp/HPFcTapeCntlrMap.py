@@ -27,35 +27,35 @@ class HPFcTapeCntlrMap(HPExpansionCardMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqFcTapeCntlrTable',
-	            '.1.3.6.1.4.1.232.16.3.1.1.1',
-		    {
-			'.2': 'status',
-			'.5': 'wwnn',
-			'.6': 'FWRev',
-			'.8': 'model',
-			'.9': 'serialNumber',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.16.3.1.1.1',
+                    {
+                        '.2': 'status',
+                        '.5': 'wwnn',
+                        '.6': 'FWRev',
+                        '.8': 'model',
+                        '.9': 'serialNumber',
+                    }
+        ),
     )
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('cpqFcTapeCntlrTable')
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        cardtable = tabledata.get('cpqFcTapeCntlrTable')
+        if not device.id in HPExpansionCardMap.oms:
+            HPExpansionCardMap.oms[device.id] = []
         for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqFcTapeCntlr%s" % om.snmpindex.replace('.', '_'))
                 om.slot = getattr(om, 'slot', 0)
-		if not om.model:
-		    om.model = 'Unknown FC Tape Controller'
-		om.setProductKey = "%s" % om.model
+                if not om.model:
+                    om.model = 'Unknown FC Tape Controller'
+                om.setProductKey = "%s" % om.model
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
-	return
+        return
 

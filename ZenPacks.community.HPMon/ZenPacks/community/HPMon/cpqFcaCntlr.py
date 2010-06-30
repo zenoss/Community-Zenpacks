@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,14 @@ __doc__="""cpqFcaCntlr
 
 cpqFcaCntlr is an abstraction of a HP FC Array Controller.
 
-$Id: cpqFcaCntlr.py,v 1.0 2008/12/03 08:46:24 egor Exp $"""
+$Id: cpqFcaCntlr.py,v 1.1 2010/06/30 16:20:56 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from HPExpansionCard import *
 
 class cpqFcaCntlr(HPExpansionCard):
     """HP Disk Array Controller object"""
-
-    portal_type = meta_type = 'cpqFcaCntlr'
 
     model = ""
     FWRev = ""
@@ -31,13 +29,13 @@ class cpqFcaCntlr(HPExpansionCard):
     role = 1
     chassis = ""
     external = False
-        
+
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
-	        2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
-		3: (DOT_RED, SEV_CRITICAL, 'Offline'),
-		4: (DOT_ORANGE, SEV_ERROR, 'Redundant Path Offline'),
-		5: (DOT_RED, SEV_CRITICAL, 'Not Connected'),
-		}
+                2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+                3: (DOT_RED, SEV_CRITICAL, 'Offline'),
+                4: (DOT_ORANGE, SEV_ERROR, 'Redundant Path Offline'),
+                5: (DOT_RED, SEV_CRITICAL, 'Not Connected'),
+                }
 
     # we monitor RAID Controllers
     monitor = True
@@ -53,8 +51,8 @@ class cpqFcaCntlr(HPExpansionCard):
         {'id':'external', 'type':'boolean', 'mode':'w'},
     )
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'cpqFcaCntlr',
             'meta_type'      : 'cpqFcaCntlr',
             'description'    : """Arbitrary device grouping class""",
@@ -67,13 +65,13 @@ class cpqFcaCntlr(HPExpansionCard):
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewCpqFcaCntlr'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
-                },                
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -89,9 +87,9 @@ class cpqFcaCntlr(HPExpansionCard):
     def roleString(self):
         roles = {1: 'other',
                 2: 'Not Duplexed',
-	        3: 'Active',
-	        4: 'Backup',
-	        }
+                3: 'Active',
+                4: 'Backup',
+                }
         return roles.get(getattr(self, 'role', 1), roles[1])
 
 InitializeClass(cpqFcaCntlr)

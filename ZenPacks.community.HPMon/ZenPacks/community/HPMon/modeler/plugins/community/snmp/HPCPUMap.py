@@ -28,33 +28,33 @@ class HPCPUMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('hrProcessorTable',
-	            '.1.3.6.1.2.1.25.3.3.1',
-		    {
-		        '.1': '_cpuidx',
-		    }
-	),
+                    '.1.3.6.1.2.1.25.3.3.1',
+                    {
+                        '.1': '_cpuidx',
+                    }
+        ),
         GetTableMap('cpuTable',
-	            '.1.3.6.1.4.1.232.1.2.2.1.1',
-		    {
-		        '.1': '_cpuidx',
-		        '.3': 'setProductKey',
-		        '.4': 'clockspeed',
-		        '.5': 'null',
-		        '.6': 'null',
-		        '.7': 'extspeed',
-		        '.8': 'null',
-		        '.9': 'socket',
-		        '.15':'core',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.1.2.2.1.1',
+                    {
+                        '.1': '_cpuidx',
+                        '.3': 'setProductKey',
+                        '.4': 'clockspeed',
+                        '.5': 'null',
+                        '.6': 'null',
+                        '.7': 'extspeed',
+                        '.8': 'null',
+                        '.9': 'socket',
+                        '.15':'core',
+            }
+        ),
         GetTableMap('cacheTable',
-	            '.1.3.6.1.4.1.232.1.2.2.3.1',
-		    {
-		        '.1': 'cpuidx',
-			'.2': 'level',
-			'.3': 'size',
-		    }
-	), 
+                    '.1.3.6.1.4.1.232.1.2.2.3.1',
+                    {
+                        '.1': 'cpuidx',
+                        '.2': 'level',
+                        '.3': 'size',
+                    }
+        ),
     )
 
 
@@ -69,19 +69,19 @@ class HPCPUMap(SnmpPlugin):
         if cores == 0: cores = 1
         rm = self.relMap()
         cpumap = {}
-	cachemap = {}
+        cachemap = {}
         if cachetable:
             for cache in cachetable.values():
-	        if not cachemap.get(cache['cpuidx']):cachemap[cache['cpuidx']]={}
+                if not cachemap.get(cache['cpuidx']):cachemap[cache['cpuidx']]={}
                 cachemap[cache['cpuidx']][cache['level']] = cache.get('size',0)
         for cpu in cputable.values():
             del cpu['null']
             om = self.objectMap(cpu)
             idx = getattr(om, 'socket', om._cpuidx)
             om.id = self.prepId("%s_%s" % (om.setProductKey,idx))
-	    om.core = getattr(om, 'core', 0)
-	    if om.core == 0: om.core = cores
-	    for level, size in cachemap[om._cpuidx].iteritems():
-	        setattr(om, "cacheSizeL%d"%level, size)
+            om.core = getattr(om, 'core', 0)
+            if om.core == 0: om.core = cores
+            for level, size in cachemap[om._cpuidx].iteritems():
+                setattr(om, "cacheSizeL%d"%level, size)
             rm.append(om)
         return rm

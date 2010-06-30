@@ -31,17 +31,17 @@ class HPLogicalDiskMap(SnmpPlugin):
     oms = {}
 
     diskTypes = {1: 'other',
-		}
-		
+                }
+
     snmpGetMap = GetMap({'.1.3.6.1.2.1.1.2.0' : 'snmpOid'})
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-	if not device.id in self.oms:
-	    return rm
-	for om in self.oms[device.id]:
-	    rm.append(om)
-	del self.oms[device.id]
+        if not device.id in self.oms:
+            return rm
+        for om in self.oms[device.id]:
+            rm.append(om)
+        del self.oms[device.id]
         return rm

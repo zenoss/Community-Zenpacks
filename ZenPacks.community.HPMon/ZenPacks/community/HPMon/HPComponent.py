@@ -19,4 +19,11 @@ __version__ = "$Revision: 1.0 $"[11:-2]
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
 
 class HPComponent(HWStatus):
-    pass
+
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
+

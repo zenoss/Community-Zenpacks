@@ -40,27 +40,27 @@ class HPDeviceMap(SnmpPlugin):
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
         if getdata['setHWProductKey'] is None: return None
-	om = self.objectMap(getdata)
+        om = self.objectMap(getdata)
         if om.setOSProductKey and om.setOSProductKey.find("NetWare") > -1:
-	    om.setOSProductKey = "Novell %s %s" %(om.setOSProductKey, om._OSVer)
+            om.setOSProductKey = "Novell %s %s" %(om.setOSProductKey, om._OSVer)
             manuf = "Novell"
         elif re.search(r'Microsoft', om.setOSProductKey, re.I):
             manuf = "Microsoft"
         elif re.search(r'Red\s*Hat', om.setOSProductKey, re.I):
             manuf = "Red Hat"
         elif re.search(r'VMware', om.setOSProductKey, re.I):
-	    om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
-	    om.setOSProductKey = "%s %s" %(om.setOSProductKey, om._OSVer)
+            om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
+            om.setOSProductKey = "%s %s" %(om.setOSProductKey, om._OSVer)
             manuf = "VMware"
         elif re.search(r'SuSE', om.setOSProductKey, re.I):
-	    om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
-	    om.setOSProductKey = "Novell %s %s" %(om.setOSProductKey, om._OSVer)
+            om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
+            om.setOSProductKey = "Novell %s %s" %(om.setOSProductKey, om._OSVer)
             manuf = "Novell"
-	try:
+        try:
             from Products.DataCollector.plugins.DataMaps import MultiArgs
             om.setHWProductKey = MultiArgs(om.setHWProductKey, "HP")
             om.setOSProductKey = MultiArgs(om.setOSProductKey, manuf)
-	except:
-	    pass
+        except:
+            pass
         return om
 

@@ -27,16 +27,16 @@ class HPScsiCntlrMap(HPExpansionCardMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqScsiCntlrTable',
-	            '.1.3.6.1.4.1.232.5.2.2.1.1',
-		    {
-			'.3': 'model',
-			'.4': 'FWRev',
-			'.6': 'slot',
-			'.7': 'status',
-			'.13': 'serialNumber',
-			'.14': 'scsiwidth',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.5.2.2.1.1',
+                    {
+                        '.3': 'model',
+                        '.4': 'FWRev',
+                        '.6': 'slot',
+                        '.7': 'status',
+                        '.13': 'serialNumber',
+                        '.14': 'scsiwidth',
+                    }
+        ),
     )
 
     models =   {1: 'other',
@@ -61,28 +61,28 @@ class HPScsiCntlrMap(HPExpansionCardMap):
                 }
 
     scsiwidths =   {1: 'other',
-		    2: 'Narrow SCSI',
-		    3: 'Wide SCSI',
-		    }
+                    2: 'Narrow SCSI',
+                    3: 'Wide SCSI',
+                    }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('cpqScsiCntlrTable')
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        cardtable = tabledata.get('cpqScsiCntlrTable')
+        if not device.id in HPExpansionCardMap.oms:
+            HPExpansionCardMap.oms[device.id] = []
         for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqScsiCntlr%s" % om.snmpindex.replace('.', '_'))
                 om.slot = getattr(om, 'slot', 0)
-		om.model = self.models.get(getattr(om, 'model', 16), '%s (%d)' %(self.models[16], om.model))
+                om.model = self.models.get(getattr(om, 'model', 16), '%s (%d)' %(self.models[16], om.model))
                 om.setProductKey = "%s" % om.model
-		om.scsiwidth = self.scsiwidths.get(getattr(om, 'scsiwidth', 1), '%s (%d)' %(self.scsiwidths[1], om.scsiwidth))
+                om.scsiwidth = self.scsiwidths.get(getattr(om, 'scsiwidth', 1), '%s (%d)' %(self.scsiwidths[1], om.scsiwidth))
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
-	return
+        return
 

@@ -27,43 +27,43 @@ class HPScsiPhyDrvMap(HPHardDiskMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqScsiPhyDrvTable',
-	            '.1.3.6.1.4.1.232.5.2.4.1.1',
-		    {
-			'.4': 'description',
-			'.5': 'FWRev',
-			'.6': 'vendor',
-			'.7': 'size',
-			'.8': 'bay',
-			'.9': 'status',
-			'.30': 'serialNumber',
-			'.38': 'rpm',
-			'.40': 'hotPlug',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.5.2.4.1.1',
+                    {
+                        '.4': 'description',
+                        '.5': 'FWRev',
+                        '.6': 'vendor',
+                        '.7': 'size',
+                        '.8': 'bay',
+                        '.9': 'status',
+                        '.30': 'serialNumber',
+                        '.38': 'rpm',
+                        '.40': 'hotPlug',
+                    }
+        ),
     )
 
     diskTypes = {1: 'SCSI',
-		}
+                }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	disktable = tabledata.get('cpqScsiPhyDrvTable')
-	if not device.id in HPHardDiskMap.oms:
-	    HPHardDiskMap.oms[device.id] = []
+        disktable = tabledata.get('cpqScsiPhyDrvTable')
+        if not device.id in HPHardDiskMap.oms:
+            HPHardDiskMap.oms[device.id] = []
         for oid, disk in disktable.iteritems():
             try:
                 om = self.objectMap(disk)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("HardDisk%s" % om.snmpindex).replace('.', '_')
-		if hasattr(om, 'vendor'):
-		    om.description = "%s %s" % (om.vendor, om.description)
+                if hasattr(om, 'vendor'):
+                    om.description = "%s %s" % (om.vendor, om.description)
                 om.setProductKey = om.description
-		om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), self.diskTypes[1])
-		om.rpm = self.rpms.get(getattr(om, 'rpm', 1), om.rpm)
-		om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
+                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), self.diskTypes[1])
+                om.rpm = self.rpms.get(getattr(om, 'rpm', 1), om.rpm)
+                om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
             except AttributeError:
                 continue
             HPHardDiskMap.oms[device.id].append(om)
-	return
+        return

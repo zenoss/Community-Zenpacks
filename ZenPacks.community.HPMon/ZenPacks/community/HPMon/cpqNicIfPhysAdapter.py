@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,14 @@ __doc__="""cpqNicIfPhysAdapter
 
 cpqNicIfPhysAdapter is an abstraction of a HP NIC.
 
-$Id: cpqNicIfPhysAdapter.py,v 1.0 2008/12/05 15:14:24 egor Exp $"""
+$Id: cpqNicIfPhysAdapter.py,v 1.1 2010/06/30 16:25:15 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from HPExpansionCard import *
 
 class cpqNicIfPhysAdapter(HPExpansionCard):
     """NIC object"""
-
-    portal_type = meta_type = 'cpqNicIfPhysAdapter'
 
     model = ""
     role = ""
@@ -29,15 +27,15 @@ class cpqNicIfPhysAdapter(HPExpansionCard):
     duplex = ""
     speed = 0
     port = 0
-    
+
     # we monitor RAID Controllers
     monitor = True
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
-	        2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
-		3: (DOT_RED, SEV_CRITICAL, 'General Failure'),
-		4: (DOT_ORANGE, SEV_ERROR, 'Link Failure'),
-		}
+                2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
+                3: (DOT_RED, SEV_CRITICAL, 'General Failure'),
+                4: (DOT_ORANGE, SEV_ERROR, 'Link Failure'),
+                }
 
     _properties = HPExpansionCard._properties + (
         {'id':'model', 'type':'string', 'mode':'w'},
@@ -48,8 +46,8 @@ class cpqNicIfPhysAdapter(HPExpansionCard):
         {'id':'port', 'type':'int', 'mode':'w'},
     )
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'cpqNicIfPhysAdapter',
             'meta_type'      : 'cpqNicIfPhysAdapter',
             'description'    : """Arbitrary device grouping class""",
@@ -58,17 +56,17 @@ class cpqNicIfPhysAdapter(HPExpansionCard):
             'factory'        : 'manage_addCpqNicIfPhysAdapter',
             'immediate_view' : 'viewCpqNicIfPhysAdapter',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewCpqNicIfPhysAdapter'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
-                },                
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'

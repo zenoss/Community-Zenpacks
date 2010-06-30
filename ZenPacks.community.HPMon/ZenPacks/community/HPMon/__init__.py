@@ -14,4 +14,15 @@ class ZenPack(ZenPackBase):
 
     packZProperties = [
             ('zHPExpansionCardMapIgnorePci', 'False', 'boolean'),
-	    ]
+            ]
+
+
+    def upgrade(self, app):
+        from ZenPacks.community.deviceAdvDetail.thresholds.StatusThreshold import StatusThreshold
+        for t in dmd.Devices.getAllRRDTemplates():
+            for gt in t.thresholds():
+                if isinstance(gt, StatusThreshold): continue
+                if gt.id != '%s status'%t.id: continue
+                template.thresholds.removeRelation(gt)
+        ZenPackBase.upgrade(self, app)
+

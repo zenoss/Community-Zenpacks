@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.cpqIdeControllerInfo"
+                 for=".cpqIdeController.cpqIdeController"
+                 provides=".interfaces.IcpqIdeControllerInfo"
+                 />
+
+        <adapter factory=".info.cpqSasHbaInfo"
+                 for=".cpqSasHba.cpqSasHba"
+                 provides=".interfaces.IcpqIdeControllerInfo"
+                 />
+
+        <adapter factory=".info.cpqScsiCntlrInfo"
+                 for=".cpqScsiCntlr.cpqScsiCntlr"
+                 provides=".interfaces.IcpqScsiCntlrInfo"
+                 />
+
+        <adapter factory=".info.cpqDaCntlrInfo"
+                 for=".cpqDaCntlr.cpqDaCntlr"
+                 provides=".interfaces.IcpqDaCntlrInfo"
+                 />
+
+        <adapter factory=".info.cpqFcTapeCntlrInfo"
+                 for=".cpqFcTapeCntlr.cpqFcTapeCntlr"
+                 provides=".interfaces.IcpqFcTapeCntlrInfo"
+                 />
+
+        <adapter factory=".info.cpqFcaCntlrInfo"
+                 for=".cpqFcaCntlr.cpqFcaCntlr"
+                 provides=".interfaces.IcpqFcaCntlrInfo"
+                 />
+
+        <adapter factory=".info.cpqFcaHostCntlrInfo"
+                 for=".cpqFcaHostCntlr.cpqFcaHostCntlr"
+                 provides=".interfaces.IcpqFcaHostCntlrInfo"
+                 />
+
+        <adapter factory=".info.cpqNicIfPhysAdapterInfo"
+                 for=".cpqNicIfPhysAdapter.cpqNicIfPhysAdapter"
+                 provides=".interfaces.IcpqNicIfPhysAdapterInfo"
+                 />
+
+        <adapter factory=".info.cpqSm2CntlrInfo"
+                 for=".cpqSm2Cntlr.cpqSm2Cntlr"
+                 provides=".interfaces.IcpqSm2CntlrInfo"
+                 />
+
+    </configure>
+</configure>

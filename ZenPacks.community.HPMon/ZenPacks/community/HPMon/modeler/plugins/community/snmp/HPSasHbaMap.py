@@ -27,15 +27,15 @@ class HPSasHbaMap(HPExpansionCardMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqSasHbaTable',
-	            '.1.3.6.1.4.1.232.5.5.1.1.1',
-		    {
-			'.2': 'slot',
-			'.3': 'model',
-			'.4': 'status',
-			'.7': 'serialNumber',
-			'.8': 'FWRev',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.5.5.1.1.1',
+                    {
+                        '.2': 'slot',
+                        '.3': 'model',
+                        '.4': 'status',
+                        '.7': 'serialNumber',
+                        '.8': 'FWRev',
+                    }
+        ),
     )
 
     models =   {1: 'other',
@@ -50,19 +50,19 @@ class HPSasHbaMap(HPExpansionCardMap):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('cpqSasHbaTable')
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        cardtable = tabledata.get('cpqSasHbaTable')
+        if not device.id in HPExpansionCardMap.oms:
+            HPExpansionCardMap.oms[device.id] = []
         for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSasHba%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-		om.model = self.models.get(getattr(om, 'model', 2), '%s (%d)' %(self.models[2], om.model))
+                om.model = self.models.get(getattr(om, 'model', 2), '%s (%d)' %(self.models[2], om.model))
                 om.setProductKey = "%s" % om.model
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
-	return
+        return
 

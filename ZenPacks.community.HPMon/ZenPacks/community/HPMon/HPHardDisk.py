@@ -12,9 +12,9 @@ __doc__="""HPHardDisk
 
 HPHardDisk is an abstraction of a harddisk.
 
-$Id: HPHardDisk.py,v 1.0 2008/11/24 12:53:24 egor Exp $"""
+$Id: HPHardDisk.py,v 1.1 2010/06/29 10:37:31 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.ZenModel.DeviceComponent import DeviceComponent
@@ -31,7 +31,7 @@ class HPHardDisk(HardDisk, HPComponent):
     bay = 0
     FWRev = ""
     status = 1
-    
+
     _properties = HWComponent._properties + (
                  {'id':'rpm', 'type':'int', 'mode':'w'},
                  {'id':'diskType', 'type':'string', 'mode':'w'},
@@ -40,7 +40,7 @@ class HPHardDisk(HardDisk, HPComponent):
                  {'id':'bay', 'type':'int', 'mode':'w'},
                  {'id':'FWRev', 'type':'string', 'mode':'w'},
                  {'id':'status', 'type':'int', 'mode':'w'},
-                )    
+                )
 
     factory_type_information = ( 
         { 
@@ -56,13 +56,13 @@ class HPHardDisk(HardDisk, HPComponent):
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewHPHardDisk'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
-                },                
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -83,21 +83,31 @@ class HPHardDisk(HardDisk, HPComponent):
         """
         Return the RPM in tradition form ie 7200, 10K
         """
-	if int(self.rpm) == 1:
-	    return 'Unknown'
-	if int(self.rpm) < 10000:
+        if int(self.rpm) == 1:
+            return 'Unknown'
+        if int(self.rpm) < 10000:
             return int(self.rpm)
-	else:
-	    return "%sK" %(int(self.rpm) / 1000)
+        else:
+            return "%sK" %(int(self.rpm) / 1000)
 
     def hotPlugString(self):
         """
         Return the HotPlug Status
         """
-	if self.hotPlug == 2:
+        if self.hotPlug == 2:
             return 'HotPlug'
-	if self.hotPlug == 3:
+        if self.hotPlug == 3:
             return 'nonHotPlug'
         return 'other'
+
+    def getRRDTemplates(self):
+        """
+        Return the RRD Templates list
+        """
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(HPHardDisk)

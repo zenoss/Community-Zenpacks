@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPFanMap
 
 HPFanMap maps the cpqHeFltTolFanTable table to fab objects
 
-$Id: HPFanMap.py,v 1.1 2009/08/18 16:41:53 egor Exp $"""
+$Id: HPFanMap.py,v 1.2 2010/06/30 21:25:39 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -29,15 +29,15 @@ class HPFanMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('cpqHeFltTolFanTable',
-	            '.1.3.6.1.4.1.232.6.2.6.7.1',
-		    {
-			'.3': '_locale',
-			'.4': '_present',
-			'.5': 'type',
-			'.9': 'status',
-			'.12': '_rpm',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.6.2.6.7.1',
+                    {
+                        '.3': '_locale',
+                        '.4': '_present',
+                        '.5': 'type',
+                        '.9': 'status',
+                        '.12': '_rpm',
+                    }
+        ),
     )
 
 
@@ -67,19 +67,23 @@ class HPFanMap(SnmpPlugin):
         getdata, tabledata = results
         rm = self.relMap()
         fantable = tabledata.get('cpqHeFltTolFanTable')
-	localecounter = {}
+        localecounter = {}
         for oid, fan in fantable.iteritems():
             try:
                 om = self.objectMap(fan)
-	        if om._present < 3: continue
-	        if not hasattr(om, '_rpm'): om.modname = "ZenPacks.community.HPMon.HPsdFan"
-		om.snmpindex = oid.strip('.')
-	        om.type = self.typemap.get(getattr(om, 'type', 1), self.typemap[1])
-	        if om._locale in localecounter:
-	            localecounter[om._locale] = localecounter[om._locale] + 1
-	        else:
-	            localecounter[om._locale] = 1
-                om.id = self.prepId("%s%d" % (self.localemap.get(getattr(om, '_locale', 1), self.localemap[1]), localecounter[om._locale]))
+                if om._present < 3: continue
+                if not hasattr(om, '_rpm'):
+                    om.modname = "ZenPacks.community.HPMon.HPsdFan"
+                om.snmpindex = oid.strip('.')
+                om.type = self.typemap.get(getattr(om,'type',1),self.typemap[1])
+                if om._locale in localecounter:
+                    localecounter[om._locale] = localecounter[om._locale] + 1
+                else:
+                    localecounter[om._locale] = 1
+                om.id = self.prepId("%s%d" % (self.localemap.get(
+                                            getattr(om, '_locale', 1),
+                                            self.localemap[1]),
+                                            localecounter[om._locale]))
             except AttributeError:
                 continue
             rm.append(om)

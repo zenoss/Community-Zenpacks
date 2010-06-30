@@ -28,22 +28,22 @@ class HPPowerSupplyMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('cpqHeFltTolPowerSupplyTable',
-	            '.1.3.6.1.4.1.232.6.2.9.3.1',
-		    {
-			'.3': '_present',
-			'.5': 'status',
-			'.6': 'millivolts',
-			'.8': 'watts',
-			'.11': 'serialNumber',
-			'.13': 'type',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.6.2.9.3.1',
+                    {
+                        '.3': '_present',
+                        '.5': 'status',
+                        '.6': 'millivolts',
+                        '.8': 'watts',
+                        '.11': 'serialNumber',
+                        '.13': 'type',
+                    }
+        ),
     )
 
     typemap =  {1: 'other',
                 2: 'Non Hot-pluggable Power Supply',
                 3: 'Hot-pluggable Power Supply',
-		}
+                }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
@@ -54,8 +54,8 @@ class HPPowerSupplyMap(SnmpPlugin):
         for oid, ps in pstable.iteritems():
             try:
                 om = self.objectMap(ps)
-		if om._present < 3: continue
-		om.snmpindex = oid.strip('.')
+                if om._present < 3: continue
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("PSU%s" % om.snmpindex.replace('.', '_'))
                 om.type = "%s" % self.typemap.get(getattr(om, 'type', 1), '%s (%d)' %(self.typemap[1], om.type))
             except AttributeError:

@@ -27,27 +27,27 @@ class HPSm2CntlrMap(HPExpansionCardMap):
 
     snmpGetTableMaps = (
         GetTableMap('cpqSm2CntlrTable',
-	            '.1.3.6.1.4.1.232.9.2.2',
-		    {
-		        '.2': 'romRev',
-			'.12': 'status',
-			'.15': 'serialNumber',
-			'.18': 'systemId',
-			'.21': 'model',
-			'.28': 'hwVer',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.9.2.2',
+                    {
+                        '.2': 'romRev',
+                        '.12': 'status',
+                        '.15': 'serialNumber',
+                        '.18': 'systemId',
+                        '.21': 'model',
+                        '.28': 'hwVer',
+                    }
+        ),
         GetTableMap('cpqSm2NicConfigTable',
-	            '.1.3.6.1.4.1.232.9.2.5.1.1',
-		    {
-		        '.1': 'snmpindex',
-			'.2': 'model',
-			'.4': 'macaddress',
-			'.5': 'ipaddress',
-			'.6': 'subnetmask',
-			'.14': 'dnsName',
-		    }
-	),
+                    '.1.3.6.1.4.1.232.9.2.5.1.1',
+                    {
+                        '.1': 'snmpindex',
+                        '.2': 'model',
+                        '.4': 'macaddress',
+                        '.5': 'ipaddress',
+                        '.6': 'subnetmask',
+                        '.14': 'dnsName',
+                    }
+        ),
     )
 
     models =   {1: 'Unknown Integrated Lights-Out Board',
@@ -63,26 +63,26 @@ class HPSm2CntlrMap(HPExpansionCardMap):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-	cardtable = tabledata.get('cpqSm2CntlrTable')
-	iloniccardtable = tabledata.get('cpqSm2NicConfigTable')
-	if not device.id in HPExpansionCardMap.oms:
-	    HPExpansionCardMap.oms[device.id] = []
+        cardtable = tabledata.get('cpqSm2CntlrTable')
+        iloniccardtable = tabledata.get('cpqSm2NicConfigTable')
+        if not device.id in HPExpansionCardMap.oms:
+            HPExpansionCardMap.oms[device.id] = []
         for oid, card in cardtable.iteritems():
             try:
                 om = self.objectMap(card)
-		om.snmpindex = oid.strip('.')
+                om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSm2Cntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-		om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
-		for nic in iloniccardtable.values():
-#		    om.nicmodel = nic['model']
-		    om.macaddress = self.asmac(nic['macaddress'])
-		    om.ipaddress = nic['ipaddress']
-		    om.subnetmask = nic['subnetmask']
-		    om.dnsName = nic['dnsName']
+                for nic in iloniccardtable.values():
+#                    om.nicmodel = nic['model']
+                    om.macaddress = self.asmac(nic['macaddress'])
+                    om.ipaddress = nic['ipaddress']
+                    om.subnetmask = nic['subnetmask']
+                    om.dnsName = nic['dnsName']
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
-	return
+        return
 

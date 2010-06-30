@@ -38,6 +38,6 @@ class HPCPU(CPU):
          {'id':'voltage', 'type':'int', 'mode':'w'},        #Millivolts
          {'id':'cacheSizeL1', 'type':'int', 'mode':'w'},    #KBytes
          {'id':'cacheSizeL2', 'type':'int', 'mode':'w'},    #KBytes
-    )    
+    )
 
 InitializeClass(HPCPU)

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellPowerSupply
 
 DellPowerSupply is an abstraction of a PowerSupply.
 
-$Id: DellPowerSupply.py,v 1.0 2008/11/28 15:32:24 egor Exp $"""
+$Id: DellPowerSupply.py,v 1.1 2010/06/30 22:07:35 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 import inspect
 from Products.ZenModel.PowerSupply import *
@@ -22,8 +22,6 @@ from DellComponent import *
 
 class DellPowerSupply(PowerSupply, DellComponent):
     """PowerSupply object"""
-
-    portal_type = meta_type = 'DellPowerSupply'
 
     state = property(fget=lambda self: self.statusString())
     status = 1
@@ -43,8 +41,8 @@ class DellPowerSupply(PowerSupply, DellComponent):
         {'id':'aptype', 'type':'int', 'mode':'w'},
     )
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'PowerSupply',
             'meta_type'      : 'PowerSupply',
             'description'    : """Arbitrary device grouping class""",
@@ -53,16 +51,16 @@ class DellPowerSupply(PowerSupply, DellComponent):
             'factory'        : 'manage_addPowerSupply',
             'immediate_view' : 'viewDellPowerSupply',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewDellPowerSupply'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'

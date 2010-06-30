@@ -12,18 +12,15 @@ __doc__="""DellLogicalDisk
 
 DellLogicalDisk is an abstraction of a harddisk.
 
-$Id: DellLogicalDisk.py,v 1.1 2009/02/19 22:08:22 egor Exp $"""
+$Id: DellLogicalDisk.py,v 1.2 2010/06/30 22:00:33 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-import inspect
 from ZenPacks.community.deviceAdvDetail.LogicalDisk import *
 from DellComponent import *
 
 class DellLogicalDisk(LogicalDisk, DellComponent):
     """DellLogicalDisk object"""
-
-    portal_type = meta_type = 'DellLogicalDisk'
 
     statusmap ={0: (DOT_GREY, SEV_WARNING, 'Unknown'),
                 1: (DOT_GREEN, SEV_CLEAN, 'Ready'),
@@ -44,8 +41,8 @@ class DellLogicalDisk(LogicalDisk, DellComponent):
                 }
 
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'HardDisk',
             'meta_type'      : 'HardDisk',
             'description'    : """Arbitrary device grouping class""",
@@ -54,16 +51,16 @@ class DellLogicalDisk(LogicalDisk, DellComponent):
             'factory'        : 'manage_addHardDisk',
             'immediate_view' : 'viewDellLogicalDisk',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewDellLogicalDisk'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -74,5 +71,11 @@ class DellLogicalDisk(LogicalDisk, DellComponent):
           },
         )
 
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(DellLogicalDisk)

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,17 +12,15 @@ __doc__="""DellTemperatureSensor
 
 DellTemperatureSensor is an abstraction of a temperature sensor or probe.
 
-$Id: DellTemperatureSensor.py,v 1.0 2009/06/22 22:39:24 egor Exp $"""
+$Id: DellTemperatureSensor.py,v 1.1 2010/06/30 22:09:04 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel.TemperatureSensor import *
 from DellComponent import *
 
 class DellTemperatureSensor(TemperatureSensor, DellComponent):
     """TemperatureSensor object"""
-
-    portal_type = meta_type = 'DellTemperatureSensor'
 
     threshold = 0
     status = 1
@@ -52,5 +50,12 @@ class DellTemperatureSensor(TemperatureSensor, DellComponent):
     state = property(fget=lambda self: self.statusString(),
                      fset=lambda self, v: self.setState(v)
                     )
+
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(DellTemperatureSensor)

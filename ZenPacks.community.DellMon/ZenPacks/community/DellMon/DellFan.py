@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -22,8 +22,6 @@ from DellComponent import *
 class DellFan(Fan, DellComponent):
     """Fan object"""
 
-    portal_type = meta_type = 'DellFan'
-
     status = 1
     threshold = 0
 
@@ -42,5 +40,12 @@ class DellFan(Fan, DellComponent):
     state = property(fget=lambda self: self.statusString(),
                      fset=lambda self, v: self.setState(v)
                      )
+
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(DellFan)

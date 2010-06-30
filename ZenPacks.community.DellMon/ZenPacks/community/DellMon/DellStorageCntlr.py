@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellStorageCntlr
 
 DellStorageCntlr is an abstraction of a Dell Storage Controller.
 
-$Id: DellStorageCntlr.py,v 1.0 2009/06/26 22:24:24 egor Exp $"""
+$Id: DellStorageCntlr.py,v 1.1 2010/06/30 22:08:44 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from DellExpansionCard import *
@@ -22,15 +22,13 @@ from DellExpansionCard import *
 class DellStorageCntlr(DellExpansionCard):
     """Delll Storage Controller object"""
 
-    portal_type = meta_type = 'DellStorageCntlr'
-
     model = ""
     FWRev = ""
     SWVer = ""
     role = 1
     cacheSize = 0
     controllerType = ""
-    
+
     # we monitor RAID Controllers
     monitor = True
 
@@ -52,8 +50,8 @@ class DellStorageCntlr(DellExpansionCard):
     )
 
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'DellStorageCntlr',
             'meta_type'      : 'DellStorageCntlr',
             'description'    : """Arbitrary device grouping class""",
@@ -62,16 +60,16 @@ class DellStorageCntlr(DellExpansionCard):
             'factory'        : 'manage_addDellStorageCntlr',
             'immediate_view' : 'viewDellStorageCntlr',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewDellStorageCntlr'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -99,5 +97,11 @@ class DellStorageCntlr(DellExpansionCard):
         """
         return convToUnits(self.cacheSize)
 
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(DellStorageCntlr)

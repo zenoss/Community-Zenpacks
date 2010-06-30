@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellHardDisk
 
 DellHardDisk is an abstraction of a harddisk.
 
-$Id: DellHardDisk.py,v 1.1 2010/02/19 22:10:58 egor Exp $"""
+$Id: DellHardDisk.py,v 1.2 2010/06/30 21:58:56 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 import inspect
 from Products.ZenUtils.Utils import convToUnits
@@ -23,8 +23,6 @@ from DellComponent import *
 
 class DellHardDisk(HardDisk, DellComponent):
     """DellHardDisk object"""
-
-    portal_type = meta_type = 'DellHardDisk'
 
     rpm = 0
     size = 0
@@ -65,7 +63,7 @@ class DellHardDisk(HardDisk, DellComponent):
                  {'id':'status', 'type':'int', 'mode':'w'},
                 )
 
-    factory_type_information = ( 
+    factory_type_information = (
         {
             'id'             : 'HardDisk',
             'meta_type'      : 'HardDisk',
@@ -79,12 +77,12 @@ class DellHardDisk(HardDisk, DellComponent):
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewDellHardDisk'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -113,5 +111,11 @@ class DellHardDisk(HardDisk, DellComponent):
         else:
             return "%sK" %(int(self.rpm) / 1000)
 
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(DellHardDisk)

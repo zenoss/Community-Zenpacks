@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the deviceAdvDetail Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""LogicalDisk
 
 LogicalDisk is an abstraction of a logicaldisk.
 
-$Id: LogicalDisk.py,v 1.0 2009/04/23 14:56:24 egor Exp $"""
+$Id: LogicalDisk.py,v 1.1 2010/06/30 22:02:26 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 
 from Globals import DTMLFile
@@ -46,7 +46,7 @@ class LogicalDisk(HWComponent):
     portal_type = meta_type = 'LogicalDisk'
 
     manage_editHardDiskForm = DTMLFile('dtml/manageEditHardDisk',globals())
-    
+
     description = ""
     hostresindex = 0
     size = 0
@@ -61,15 +61,15 @@ class LogicalDisk(HWComponent):
                  {'id':'size', 'type':'int', 'mode':'w'},
                  {'id':'stripesize', 'type':'int', 'mode':'w'},
                  {'id':'status', 'type':'int', 'mode':'w'},
-                )    
+                )
 
     _relations = HWComponent._relations + (
         ("hw", ToOne(ToManyCont, "Products.ZenModel.DeviceHW", "logicaldisks")),
         )
 
-    
-    factory_type_information = ( 
-        { 
+
+    factory_type_information = (
+        {
             'id'             : 'LogicalDisk',
             'meta_type'      : 'LogicalDisk',
             'description'    : """Arbitrary device grouping class""",
@@ -78,17 +78,17 @@ class LogicalDisk(HWComponent):
             'factory'        : 'manage_addHardDisk',
             'immediate_view' : 'viewLogicalDisk',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewLogicalDisk'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
-                },                
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'

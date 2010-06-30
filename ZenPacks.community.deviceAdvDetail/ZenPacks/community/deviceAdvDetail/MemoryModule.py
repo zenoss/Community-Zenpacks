@@ -34,7 +34,7 @@ class MemoryModule(HWComponent):
     slot = 0
     size = 0
     status = 1
-    
+
     _properties = HWComponent._properties + (
         {'id':'slot', 'type':'int', 'mode':'w'},
         {'id':'size', 'type':'int', 'mode':'w'},
@@ -45,8 +45,8 @@ class MemoryModule(HWComponent):
         ("hw", ToOne(ToManyCont, "Products.ZenModel.DeviceHW", "memorymodules")),
         )
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'MemoryModule',
             'meta_type'      : 'MemoryModule',
             'description'    : """Arbitrary device grouping class""",
@@ -55,17 +55,17 @@ class MemoryModule(HWComponent):
             'factory'        : 'manage_addMemoryModule',
             'immediate_view' : 'viewMemoryModule',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewMemoryModule'
-                , 'permissions'   : ('View',)
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
-                },                
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -79,9 +79,9 @@ class MemoryModule(HWComponent):
         """
         Return the number of total bytes in human readable form ie 10MB
         """
-	if self.size > 0:
+        if self.size > 0:
             return convToUnits(self.size)
-	else:
-	    return ''
+        else:
+            return ''
 
 InitializeClass(MemoryModule)

@@ -12,9 +12,9 @@ __doc__="""WBEMClient
 
 Gets WBEM performance data.
 
-$Id: WBEMClient.py,v 2.8 2010/05/25 14:44:58 egor Exp $"""
+$Id: WBEMClient.py,v 2.9 2010/07/01 13:58:53 egor Exp $"""
 
-__version__ = "$Revision: 2.8 $"[11:-2]
+__version__ = "$Revision: 2.9 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -79,8 +79,8 @@ class WBEMClient(BaseClient):
 
 
     def parseError(self, err, query, instMap):
-        if str(err.type).rsplit('.', 1)[1] == 'AuthError':
-            msg = 'AuthError: Please set zWinUser and zWinPassword zProperties'
+        if isinstance(err.value, pywbem.cim_http.AuthError):
+            msg = 'AuthError: Please check zWinUser and zWinPassword zProperties'
         else:
             msg = 'Received %s from query: %s'%(err.value[1], query)
         err = Failure(err)

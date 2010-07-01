@@ -1,0 +1,20 @@
+<h2>Edit Locking</h2>
+<p style="text-align:right;">
+<input tal:attributes="name string:sendEventWhenBlocked;
+    type string:checkbox;
+    checked here/sendEventWhenBlocked"
+    />Send event when actions are blocked by a lock
+<br/><br/>
+<input type="submit" name="lockMessageQueuesFromDeletion:method"
+    value="Lock Queues"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+        '${here/os/absolute_url_path}')" />
+<br/><br/>
+<input type="submit" name="unlockMessageQueues:method"
+    value="Unlock Queues"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+        '${here/os/absolute_url_path}')" />
+<br/><br/>
+<input id="dialog_cancel" type="button" value="Cancel" onclick="$('dialog').hide()" />
+</p>
+

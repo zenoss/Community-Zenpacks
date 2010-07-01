@@ -1,0 +1,97 @@
+<tal:block metal:define-macro="compList">
+<form method="post" tal:attributes="action here/os/absolute_url"
+        name="msmqListForm"
+        tal:condition="python:not here.getZ('zWmiMonitorIgnore')">
+
+<tal:block
+        tal:define="unused here/os/cacheComponents;
+        tableName string:msmqlist;
+        objects here/os/msmq/objectValuesAll;
+        tabletitle string:Message Queues;
+        batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='Name',
+                                            onlyMonitored=True);
+        ts python:here.ZenTableManager.getTableState(tableName);
+        menu_id string:MessageQueues;
+        showfilterbox python:True;"
+        metal:define-macro="msmqList">
+
+<input type="hidden" name="context" value="msmq"/>
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="filterslot">
+    <div style="position:absolute;right:200px;top:0px;">
+                        Monitored
+                        <input class="navcontrol" type="checkbox"
+                                name="onlyMonitored"
+                                onchange="this.form.submit()"
+                                value="1"
+                style="margin-top:-2px;margin-bottom:2px;"
+                                tal:attributes="checked ts/onlyMonitored"/>
+    </div>
+    <tal:block metal:use-macro="here/zenuimacros/macros/filterbox"/>
+</tal:block>
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+
+    <tr tal:condition="batch">
+        <th class="tableheader" width="20"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'viewName','Queue Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'viewType','Queue Type','cmp')"/>
+        <th class="tableheader">Queue Length</th>
+        <th class="tableheader" align="center" width="30">M</th>
+        <th class="tableheader" align="center" width="60">Lock</th>
+    </tr>
+    <tr tal:condition="not:batch">
+        <th class="tableheader" align="left">
+            No Queues
+        </th>
+    </tr>
+    <tal:block tal:repeat="mq batch">
+    <tr tal:define="odd repeat/mq/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues" align="center">
+         <input type="checkbox" name="componentNames:list"
+                tal:attributes="value mq/getRelationshipManagerId"/>
+      </td>
+      <td class="tablevalues">
+                  <tal:block tal:content="structure python:mq.urlLink(text=mq.viewName())"/>
+          </td>
+          <td class="tablevalues" tal:content="mq/viewType">
+                  Public
+          </td>
+          <td class="tablevalues" tal:content="mq/viewCount">
+                  0
+          </td>
+      <td class="tablevalues" align="center">
+      <img border="0"
+       tal:attributes="src python:test(mq.monitor,
+               here.os.getStatusImgSrc(0),
+               here.os.getStatusImgSrc(1))" />
+      </td>
+      <td class="tablevalues" align="center">
+      <img tal:condition="mq/isLockedFromDeletion"
+              border="0" src="locked-delete-icon.png">
+      <img tal:condition="mq/isLockedFromUpdates"
+              border="0" src="locked-update-icon.png">
+      <img tal:condition="mq/sendEventWhenBlocked"
+              border="0" src="locked-sendevent-icon.png">
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="9" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+</form>
+</tal:block>
+
+

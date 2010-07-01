@@ -1,0 +1,77 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+  <tal:block metal:fill-slot="contentPane">
+
+    <form method="post"
+      tal:define="manager python:here.has_permission('Change Device');
+                  userCreated here/isUserCreated"
+      tal:attributes="action string:${here/absolute_url_path}">
+      <input type="hidden" name="zenScreenName"
+        tal:attributes="value template/id" />
+
+      <tal:block metal:define-macro="objectperf"
+        tal:define="tabletitle string:Message Queue;
+                    editable python:manager and userCreated">
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+          <tal:block metal:fill-slot="zentablecontents">
+
+            <!-- BEGIN TABLE CONTENTS -->
+
+            <tr>
+              <td class="tableheader" align=left>Queue Name</td>
+              <td class="tablevalues"
+                tal:condition="not:editable"
+                tal:content="here/id">queue</td>
+              <td class="tablevalues" tal:condition="editable">
+                <input tal:attributes="
+                  class string:tablevalues;
+                  name string:id;
+                  value here/id" />
+              </td>
+            </tr>
+            <tr>
+              <td class="tableheader" align="left">Queue Type</td>
+              <td class="tablevalues"
+                tal:condition="not:editable"
+                tal:content="here/viewType">type</td>
+              <td class="tablevalues" tal:condition="editable">
+                <select class="tablevalues" name="queueType">
+                  <option
+                    tal:repeat="e python:('public','private')"
+                    tal:content="e"
+                    tal:attributes="value e; selected python:e==here.viewType()" />
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="tableheader" align="left">Monitor</td>
+              <td class="tablevalues" tal:condition="not:manager" tal:content="here/monitored" />
+              <td class="tablevalues" tal:condition="manager">
+                <select class="tablevalues" name="monitor:boolean">
+                  <option
+                    tal:repeat="e python:(True,False)"
+                    tal:content="e"
+                    tal:attributes="value e; selected python:e==here.monitored()" />
+                </select>
+              </td>
+            </tr>
+            <tr tal:condition="manager">
+              <td class="tableheader" align="left" colspan="2">
+                <input class="tableheader" type="submit" value=" Save "
+                  name="zmanage_editProperties:method" />
+              </td>
+            </tr>
+
+            <!-- END TABLE CONTENTS -->
+
+          </tal:block>
+        </tal:block>
+      </tal:block>
+    </form>
+    <br/>
+    <tal:block tal:condition="here/monitored">
+      <table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+    </tal:block>
+  </tal:block>
+</tal:block>
+
+

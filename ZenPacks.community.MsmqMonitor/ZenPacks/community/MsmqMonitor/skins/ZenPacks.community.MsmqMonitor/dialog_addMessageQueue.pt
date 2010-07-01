@@ -1,0 +1,30 @@
+<h2>Add Message Queue</h2>
+<input type="hidden" name="userCreated" value="True"/>
+<span id="errmsg" style="color:red;"></span>
+<br/>
+<p style="text-align:right;">
+  <span id="new_id_label">Queue Name:</span>
+  <input id="new_id" name="id" />
+  <input type="hidden" id="checkValidIdPath"
+   tal:attributes="value here/os/absolute_url" />
+</p>
+<p style="text-align:right;">
+  <span id="new_type_label">Queue Type:</span>
+  <select name="queueType">
+    <option tal:repeat="e python:('private','public')" tal:content="e"
+      tal:attributes="value e" />
+  </select>
+  </p>
+<div id="dialog_buttons">
+  <input tal:attributes="id string:dialog_submit;
+                         type string:submit;
+                         value string:Add;
+                         onclick string:return $$('dialog').submit_form(
+                                                            '${here/os/absolute_url_path}')"
+         name="addMessageQueue:method" />
+  <input tal:attributes="id string:dialog_cancel;
+                         type string:button;
+                         value string: Cancel;
+                         onclick string:$$('dialog').hide()" />
+</div>
+

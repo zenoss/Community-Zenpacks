@@ -38,8 +38,8 @@ ZC.MemoryModulePanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'manufacturer'},
                 {name: 'product'},
                 {name: 'size'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -67,13 +67,13 @@ ZC.MemoryModulePanel = Ext.extend(ZC.ComponentGridPanel, {
                 header: _t('Size'),
                 renderer: Zenoss.render.bytesString,
                 width: 70
-            }, {
-                id: 'monitored',
-                dataIndex: 'monitored',
+            },{
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
-            }, {
+                renderer: Zenoss.render.monitor,
+                width: 60
+            },{
                 id: 'status',
                 dataIndex: 'status',
                 header: _t('Status'),
@@ -99,8 +99,8 @@ ZC.LogicalDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'diskType'},
                 {name: 'stripesize'},
                 {name: 'size'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -132,13 +132,13 @@ ZC.LogicalDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
                 header: _t('Size'),
                 renderer: Zenoss.render.bytesString,
                 width: 70
-            }, {
-                id: 'monitored',
-                dataIndex: 'monitored',
+            },{
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
-            }, {
+                renderer: Zenoss.render.monitor,
+                width: 60
+            },{
                 id: 'status',
                 dataIndex: 'status',
                 header: _t('Status'),
@@ -168,8 +168,8 @@ ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'manufacturer'},
                 {name: 'product'},
                 {name: 'serialNumber'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -211,11 +211,11 @@ ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
                 header: _t('Size'),
                 renderer: Zenoss.render.bytesString,
             },{
-                id: 'monitored',
-                dataIndex: 'monitored',
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
+                renderer: Zenoss.render.monitor,
+                width: 60
             },{
                 id: 'status',
                 dataIndex: 'status',
@@ -243,8 +243,8 @@ ZC.ExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'manufacturer'},
                 {name: 'product'},
                 {name: 'serialNumber'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -275,11 +275,11 @@ ZC.ExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'serialNumber',
                 header: _t('Serial #')
             },{
-                id: 'monitored',
-                dataIndex: 'monitored',
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
+                renderer: Zenoss.render.monitor,
+                width: 60
             },{
                 id: 'status',
                 dataIndex: 'status',
@@ -303,8 +303,8 @@ ZC.FanPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'status'},
                 {name: 'name'},
                 {name: 'rpmString'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -321,11 +321,11 @@ ZC.FanPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'rpmString',
                 header: _t('Speed')
             },{
-                id: 'monitored',
-                dataIndex: 'monitored',
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
+                renderer: Zenoss.render.monitor,
+                width: 60
             },{
                 id: 'status',
                 dataIndex: 'status',
@@ -349,8 +349,8 @@ ZC.TemperatureSensorPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'status'},
                 {name: 'name'},
                 {name: 'tempString'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -367,11 +367,11 @@ ZC.TemperatureSensorPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'tempString',
                 header: _t('Temperature')
             },{
-                id: 'monitored',
-                dataIndex: 'monitored',
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
+                renderer: Zenoss.render.monitor,
+                width: 60
             },{
                 id: 'status',
                 dataIndex: 'status',
@@ -397,8 +397,8 @@ ZC.PowerSupplyPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'type'},
                 {name: 'wattsString'},
                 {name: 'millivoltsString'},
-                {name: 'usesMonitorAttribute'},
-                {name: 'monitored'}
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
             ],
             columns: [{
                 id: 'severity',
@@ -423,11 +423,11 @@ ZC.PowerSupplyPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'millivoltsString',
                 header: _t('Voltage')
             },{
-                id: 'monitored',
-                dataIndex: 'monitored',
+                id: 'monitor',
+                dataIndex: 'monitor',
                 header: _t('Monitored'),
-                width: 70,
-                sortable: true
+                renderer: Zenoss.render.monitor,
+                width: 60
             },{
                 id: 'status',
                 dataIndex: 'status',

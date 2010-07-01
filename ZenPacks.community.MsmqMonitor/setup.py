@@ -9,7 +9,7 @@ LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.MsmqMonitor']
 INSTALL_REQUIRES = ['ZenPacks.community.deviceAdvDetail>=1.2']
-COMPAT_ZENOSS_VERS = ""
+COMPAT_ZENOSS_VERS = '>=2.4'
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

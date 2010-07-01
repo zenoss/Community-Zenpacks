@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 2.3 2010/05/25 15:05:37 egor Exp $"""
+$Id: WMIClient.py,v 2.4 2010/07/01 13:57:52 egor Exp $"""
 
-__version__ = "$Revision: 2.3 $"[11:-2]
+__version__ = "$Revision: 2.4 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -174,7 +174,10 @@ class WMIClient(BaseClient):
                 queryResult = {}
                 for namespace, classes in queries.iteritems():
                     yield self.connect(namespace=namespace)
-                    driver.next()
+                    try:
+                        driver.next()
+                    except WMIFailure, ex:
+                        raise Exception("Connection error %s"%str(ex))
                     for classname, instMap in classes.iteritems():
                         plst = set()
                         for keyprops, insts in instMap.iteritems():

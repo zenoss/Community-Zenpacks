@@ -1,0 +1,22 @@
+#. snmpget needs to be installed and found in the zenoss users $PATH
+#. Create the device class "/Devices/Power/PDU"
+
+#. Create 2 custom schema properties.
+       :menuselect: More -> Custom Schema 
+
+            Label: APC PDU A
+            Name: cAPCpduA
+            Type: string
+            Default:
+            Visible: true
+
+            Label: APC PDU B
+            Name: cAPCpduB
+            Type: string
+            Default:
+            Visible: true
+
+#. Install Zenpack
+#. Add your device to "/Devices/Power/PDU/Aggregate APC"
+#. Set the hostname/ip for PDU A and PDU B in :menuselect: More -> Custom
+

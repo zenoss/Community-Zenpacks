@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.10031') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.10031' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary= "Checking Printer"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.10031
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.10031
+</property>
+<property visible="True" type="lines" id="zEventClearClasses" >
+['net-printer.40079']
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.35037') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.35037' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Page Punt (error 20)"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.35037
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.35037
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.35076') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.35076' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Memory Out (error 20)"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.35076
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.35076
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40010') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40010' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Toner Out"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40010
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40010
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40019') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40019' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Output Full of Paper"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40019
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40019
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40021') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40021' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Cover is Open"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40021
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40021
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40026') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40026' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Tray Missing"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40026
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40026
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40050') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40050' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Generic Printer Error"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40050
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40050
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40051') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40051' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Fatal Error"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40051
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40051
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40052') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40052' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Scanner Failure"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40052
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40052
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40059') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40059' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Main Motor Failure"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40059
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40059
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40079') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40079' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Printer Offline"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40079
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40079
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40090') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40090' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Envelope Connection Error"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40090
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40090
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.40124') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.40124' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Duplex Connection Error"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.40124
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.40124
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.41002') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.41002' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Tray 1 Load Paper"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.41002
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.41002
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.41202') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.41202' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Tray 2 Load Paper"
+
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.41202
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.41202
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.41302') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.41302' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Tray 3 Load Paper"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.41302
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.41302
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.41502') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.41502' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Tray 4 Load Paper"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.41502
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.41502
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.44001') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.44001' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Paper Jam - Input"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.44001
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.44001
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.44002') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.44002' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Paper Jam - Output"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.44002
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.44004
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.44003') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.44003' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Paper Jam - Top Cover"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.44003
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.44003
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Printer', 'instances', 'net-printer.44004') -->
+<object id='/zport/dmd/Events/Printer/instances/net-printer.44004' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = "Paper Jam - Duplexer"
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+net-printer.44004
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap net-printer.44005
+</property>
+</object>
+</objects>

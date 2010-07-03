@@ -1,0 +1,47 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:rpcStatusList;
+    objects here/RpcStat/objectValuesAll;
+    tabletitle string:Opengear RPC Status;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'ogRpcStatusName','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'ogRpcStatusMaxTemp','Maximum Temperature')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'ogRpcStatusAlertCount','Alert Count')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+	<!--
+        <td class="tablevalues">
+	    <span tal:content="structure gd/urlLink"/>
+	    <span tal:condition="link" tal:omit-tag>
+                 (<span tal:replace="structure gd/managedDeviceLink"/>)
+            </span>
+        </td>
+	-->
+        <td class="tablevalues" tal:content="gd/ogRpcStatusName"/>
+        <td class="tablevalues" tal:content="gd/ogRpcStatusMaxTemp"/>
+        <td class="tablevalues" tal:content="gd/ogRpcStatusAlertCount"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+

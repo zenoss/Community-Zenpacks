@@ -1,0 +1,62 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string: Serial Port Status;
+                menu_id string:Lockable;">
+
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+      <td class="tableheader" align=left>Label</td>
+      <td class="tableheader" align=left>Speed</td>
+      <td class="tableheader" align=left>Rx Bytes</td>
+      <td class="tableheader" align=left>Tx Bytes</td>
+      <td class="tableheader" align=left>DCD</td>
+      <td class="tableheader" align=left>DTR</td>
+      <td class="tableheader" align=left>DSR</td>
+      <td class="tableheader" align=left>CTS</td>
+      <td class="tableheader" align=left>RTS</td>
+    </tr>
+    <tr>
+      <td class="tablevalues" tal:content="here/serialPortLabel"/>
+      <td class="tablevalues" tal:content="here/ogSerialPortStatusSpeed">1</td>
+      <td class="tablevalues" tal:content="here/ogSerialPortStatusRxBytes">1</td>
+      <td class="tablevalues" tal:content="here/ogSerialPortStatusTxBytes">1</td>
+<!--
+      <td class="tablevalues"
+	    tal:define='color python:test(here.dcd, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+-->
+      <td class="tablevalues"
+	    tal:define='color python:test(here.ogSerialPortStatusDCD, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+      <td class="tablevalues"
+	    tal:define='color python:test(here.ogSerialPortStatusDTR, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+      <td class="tablevalues"
+	    tal:define='color python:test(here.ogSerialPortStatusDSR, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+      <td class="tablevalues"
+	    tal:define='color python:test(here.ogSerialPortStatusCTS, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+      <td class="tablevalues"
+	    tal:define='color python:test(here.ogSerialPortStatusRTS, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf"/>
+
+</tal:block>
+</tal:block>
+

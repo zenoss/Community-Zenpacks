@@ -1,0 +1,51 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:upsList;
+    objects here/UpsCfg/objectValuesAll;
+    tabletitle string:Opengear UPSs;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'upsPerformanceLink','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'upsDescription','Description')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'upsType','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'upsConnected','Connected Via')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'upsLogStatus','Log Status')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd; link gd/getPerformanceLink"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        <td class="tablevalues">
+	    <span tal:content="structure gd/urlLink"/>
+	    <span tal:condition="link" tal:omit-tag>
+                 (<span tal:replace="structure gd/getPerformanceLink"/>)
+            </span>
+        </td>
+        <td class="tablevalues" tal:content="gd/upsDescription"/>
+        <td class="tablevalues" tal:content="gd/upsType"/>
+        <td class="tablevalues" tal:content="gd/upsConnected"/>
+        <td class="tablevalues"
+	    tal:define='color python:test(gd.upsLogStatus, "green", "red")'>
+           <img tal:attributes="src string:img/${color}_dot.png"/>
+        </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+

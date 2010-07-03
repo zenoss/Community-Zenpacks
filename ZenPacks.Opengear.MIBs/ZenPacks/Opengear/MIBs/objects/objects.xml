@@ -1,0 +1,4407 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OG-STATUS-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OG-STATUS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South, Suite A,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear console connection MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogEmdStatusAlertCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of alerts triggered on the EMD
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEmdStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RPC status entry
+</property>
+</object>
+<object id='ogEmdStatusHumidity' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Humidity sensor on the EMD
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEmdStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index within the EMD status table
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogEmdStatusName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the EMD device.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEmdStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's rpc table.
+</property>
+</object>
+<object id='ogEmdStatusTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Maximum temperature on the EMD
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEnvAlertStatusDevice' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The device the environment alert occurred on.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEnvAlertStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console environment entry
+</property>
+</object>
+<object id='ogEnvAlertStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index of the environment alert status
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogEnvAlertStatusOldValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Previous value of the environment status
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEnvAlertStatusOutlet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Outlet of the environment status
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEnvAlertStatusSensor' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The sensor the environment alert occurred on.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEnvAlertStatusStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+status value of the environment status
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogEnvAlertStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's serial port signal table.
+</property>
+</object>
+<object id='ogEnvAlertStatusValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.6.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Value of the environment status
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogNutAlertStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A NUT (ups) entry
+</property>
+</object>
+<object id='ogNutAlertStatusHost' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The host of the nut alert.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogNutAlertStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index of the nut alert status
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogNutAlertStatusName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The UPS name of the nut alert.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogNutAlertStatusPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port of the nut alert
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogNutAlertStatusStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the nut alert.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogNutAlertStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's nut (ups) alert table.
+</property>
+</object>
+<object id='ogRpcStatusAlertCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of alerts triggered on the RPC
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogRpcStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RPC status entry
+</property>
+</object>
+<object id='ogRpcStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index within the RPC status table
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogRpcStatusMaxTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Maximum temperature on the RPC
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogRpcStatusName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the RPC device.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogRpcStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's rpc table.
+</property>
+</object>
+<object id='ogSerialPortActiveUsersEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A user logged in on the serial port
+</property>
+</object>
+<object id='ogSerialPortActiveUsersIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index within the serial port table of this status
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogSerialPortActiveUsersName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the user logged in on the port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortActiveUsersPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortActiveUsersTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's serial port users table.
+</property>
+</object>
+<object id='ogSerialPortStatusCTS' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the CTS signal.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusDCD' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the DCD signal.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusDSR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the DSR signal.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusDTR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the DTR signal.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console serial port entry
+</property>
+</object>
+<object id='ogSerialPortStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index within the serial port table of this status
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogSerialPortStatusPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusRTS' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The status of the RTS signal.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusRxBytes' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port bytes received
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusSpeed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port speed in bits per second
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSerialPortStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's serial port statistics table.
+</property>
+</object>
+<object id='ogSerialPortStatusTxBytes' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port bytes transmitted
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSignalAlertStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console signal entry
+</property>
+</object>
+<object id='ogSignalAlertStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Index within the table of this alert
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogSignalAlertStatusLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where the signal applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSignalAlertStatusPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which the signal change occurred
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSignalAlertStatusSignalName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The particular signal which changed
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSignalAlertStatusState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current signal state
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogSignalAlertStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This entity's serial port signal table.
+</property>
+</object>
+<object id='ogStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogStatusCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.65535.1
+</property>
+</object>
+<object id='ogStatusConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.65535
+</property>
+</object>
+<object id='ogStatusGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OG-STATUS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.16.65535.2
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OGTRAP-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OGTRAP-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv1
+</property>
+<tomanycont id='nodes'>
+<object id='ogConnectMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10
+</property>
+</object>
+<object id='ogConnectMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10
+</property>
+</object>
+<object id='ogFailoverMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15
+</property>
+</object>
+<object id='ogFailoverMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15.10
+</property>
+</object>
+<object id='ogHostMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14
+</property>
+</object>
+<object id='ogHostMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10
+</property>
+</object>
+<object id='ogLegacyMgmt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2
+</property>
+</object>
+<object id='ogNetUpsMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16
+</property>
+</object>
+<object id='ogNetUpsMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16.10
+</property>
+</object>
+<object id='ogPatternMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12
+</property>
+</object>
+<object id='ogPatternMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10
+</property>
+</object>
+<object id='ogSensorMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13
+</property>
+</object>
+<object id='ogSensorMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10
+</property>
+</object>
+<object id='ogSignalMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11
+</property>
+</object>
+<object id='ogSignalMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10
+</property>
+</object>
+<object id='ogconnEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1
+</property>
+</object>
+<object id='ogconnEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1.1.1
+</property>
+</object>
+<object id='ogconnEventPortLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where the connection
+occurred.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnEventPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which this connection applies
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1.1
+</property>
+</object>
+<object id='ogconnEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnEventUsername' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.10.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The user pertaining to the connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogfovrEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15.10.1
+</property>
+</object>
+<object id='ogfovrEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15.10.1.1.1
+</property>
+</object>
+<object id='ogfovrEventPrimary' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the network interface which failed
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogfovrEventSecondary' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the network interface which was connected
+instead
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogfovrEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.15.10.1.1
+</property>
+</object>
+<object id='oghostEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1
+</property>
+</object>
+<object id='oghostEventAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The address of the host to which this connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventDescription' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The description of the host to which this connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1
+</property>
+</object>
+<object id='oghostEventPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The applicable port number of the host.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventProtocol' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The internet protocl to which this connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1
+</property>
+</object>
+<object id='oghostEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventUsername' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.14.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The user pertaining to the connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ognupsEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16.10.1
+</property>
+</object>
+<object id='ognupsEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16.10.1.1.1
+</property>
+</object>
+<object id='ognupsEventName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the UPS pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ognupsEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16.10.1.1
+</property>
+</object>
+<object id='ognupsEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.16.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1
+</property>
+</object>
+<object id='ogpatnEventDescription' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A description of the matches purpose
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1.1.1
+</property>
+</object>
+<object id='ogpatnEventPortLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where pattern match
+occurred
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEventPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which the pattern matched
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1.1
+</property>
+</object>
+<object id='ogpatnEventText' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.12.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The full text which matched the pattern
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1
+</property>
+</object>
+<object id='ogsensStatusDevType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of device pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1.1.1
+</property>
+</object>
+<object id='ogsensStatusName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the device pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1.1
+</property>
+</object>
+<object id='ogsensStatusType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of sensor pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatusValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.13.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of the sensor pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1
+</property>
+</object>
+<object id='ogsgnlEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1.1.1
+</property>
+</object>
+<object id='ogsgnlEventPortLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where the signal applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEventPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which this signal applies
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEventState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current signal state
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1.1
+</property>
+</object>
+<object id='ogsgnlEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.2.11.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The particular signal which changed
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='opengear' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ogconnEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.1001
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alert sent when a user connection event occurs.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogconnEventPortLabel': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogconnEventUsername': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogconnEventType': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogconnEventPortNumber': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+<object id='ogfovrEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.2002
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alert sent when a network failover event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogfovrEventSecondary': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogfovrEventPrimary': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+<object id='oghostEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.2001
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alert sent when a user connection event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'oghostEventAddress': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'oghostEventPort': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'oghostEventType': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'oghostEventDescription': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'oghostEventUsername': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'oghostEventProtocol': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+<object id='ognupsEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.2003
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alert sent when a UPS status event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ognupsEventName': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ognupsEventType': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+<object id='ogpatnEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.1003
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alert sent when a pre-defined pattern was
+matched text in a consoles serial character stream
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogpatnEventPortNumber': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogpatnEventDescription': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogpatnEventPortLabel': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogpatnEventText': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+<object id='ogsensStatusOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.1004
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The trap sent when a sensor event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogsensStatusName': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogsensStatusType': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogsensStatusDevType': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogsensStatusValue': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+<object id='ogsgnlEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OGTRAP-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.0.1002
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The alert sent when a signal change occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogsgnlEventState': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogsgnlEventPortNumber': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogsgnlEventType': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}, 'ogsgnlEventPortLabel': {'nodetype': 'object', 'module': 'OGTRAP-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-CONNECT-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-CONNECT-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear console connection MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogConnectMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogConnectMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.3.1
+</property>
+</object>
+<object id='ogConnectMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.3
+</property>
+</object>
+<object id='ogConnectMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.3.2
+</property>
+</object>
+<object id='ogConnectMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.2
+</property>
+</object>
+<object id='ogConnectMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10
+</property>
+</object>
+<object id='ogconnEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1
+</property>
+</object>
+<object id='ogconnEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console connection event occuring at this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='ogconnEventIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogconnEventPortLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where the connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnEventPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which this connection applies
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of sensor status events generated by this device.
+</property>
+</object>
+<object id='ogconnEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnEventUsername' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The user pertaining to the connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogconnMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.2.0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ogconnEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-CONNECT-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.10.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The notification sent when a user connection event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogconnEventPortLabel': {'nodetype': 'object', 'module': 'OPENGEAR-CONNECT-MIB'}, 'ogconnEventUsername': {'nodetype': 'object', 'module': 'OPENGEAR-CONNECT-MIB'}, 'ogconnEventType': {'nodetype': 'object', 'module': 'OPENGEAR-CONNECT-MIB'}, 'ogconnEventPortNumber': {'nodetype': 'object', 'module': 'OPENGEAR-CONNECT-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-FAILOVER-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-FAILOVER-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear network failover MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogFailoverMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogFailoverMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.3.1
+</property>
+</object>
+<object id='ogFailoverMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.3
+</property>
+</object>
+<object id='ogFailoverMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.3.2
+</property>
+</object>
+<object id='ogFailoverMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.2
+</property>
+</object>
+<object id='ogFailoverMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10
+</property>
+</object>
+<object id='ogfovrEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10.1
+</property>
+</object>
+<object id='ogfovrEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console connection event occuring at this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='ogfovrEventIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogfovrEventPrimary' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the network interface which failed
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogfovrEventSecondary' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the network interface which was connected instead
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogfovrEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of sensor status events generated by this device.
+</property>
+</object>
+<object id='ogfovrMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.2.0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ogfovrEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-FAILOVER-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.15.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The notification sent when a network failover event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogfovrEventSecondary': {'nodetype': 'object', 'module': 'OPENGEAR-FAILOVER-MIB'}, 'ogfovrEventPrimary': {'nodetype': 'object', 'module': 'OPENGEAR-FAILOVER-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-HOST-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-HOST-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear host connection MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogHostMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogHostMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.3.1
+</property>
+</object>
+<object id='ogHostMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.3
+</property>
+</object>
+<object id='ogHostMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.3.2
+</property>
+</object>
+<object id='ogHostMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.2
+</property>
+</object>
+<object id='ogHostMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10
+</property>
+</object>
+<object id='oghostEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1
+</property>
+</object>
+<object id='oghostEventAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The address of the host to which this connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventDescription' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The description of the host to which this connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console connection event occuring at this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='oghostEventIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='oghostEventPort' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The applicable port number of the host.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventProtocol' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The internet protocl to which this connection applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of sensor status events generated by this device.
+</property>
+</object>
+<object id='oghostEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostEventUsername' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The user pertaining to the connection event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='oghostMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.2.0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='oghostEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-HOST-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.14.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The notification sent when a user connection event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'oghostEventAddress': {'nodetype': 'object', 'module': 'OPENGEAR-HOST-MIB'}, 'oghostEventPort': {'nodetype': 'object', 'module': 'OPENGEAR-HOST-MIB'}, 'oghostEventType': {'nodetype': 'object', 'module': 'OPENGEAR-HOST-MIB'}, 'oghostEventDescription': {'nodetype': 'object', 'module': 'OPENGEAR-HOST-MIB'}, 'oghostEventUsername': {'nodetype': 'object', 'module': 'OPENGEAR-HOST-MIB'}, 'oghostEventProtocol': {'nodetype': 'object', 'module': 'OPENGEAR-HOST-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-PATTERN-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-PATTERN-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear console pattern matching MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogPatternMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogPatternMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.3.1
+</property>
+</object>
+<object id='ogPatternMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.3
+</property>
+</object>
+<object id='ogPatternMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.3.2
+</property>
+</object>
+<object id='ogPatternMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.2
+</property>
+</object>
+<object id='ogPatternMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10
+</property>
+</object>
+<object id='ogpatnEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1
+</property>
+</object>
+<object id='ogpatnEventDescription' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A description of the matches purpose
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console connection event occuring at this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='ogpatnEventIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogpatnEventPortLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where pattern matched occurred
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEventPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which the pattern matched
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of sensor status events generated by this device.
+</property>
+</object>
+<object id='ogpatnEventText' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The full text which matched the pattern
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogpatnMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.2.0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ogpatnEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PATTERN-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.12.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An alert sent when a pre-defined pattern was
+matched text in a consoles serial character stream
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogpatnEventPortNumber': {'nodetype': 'object', 'module': 'OPENGEAR-PATTERN-MIB'}, 'ogpatnEventDescription': {'nodetype': 'object', 'module': 'OPENGEAR-PATTERN-MIB'}, 'ogpatnEventPortLabel': {'nodetype': 'object', 'module': 'OPENGEAR-PATTERN-MIB'}, 'ogpatnEventText': {'nodetype': 'object', 'module': 'OPENGEAR-PATTERN-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-PRODUCTS-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-PRODUCTS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear Product MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogACM500x' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.80
+</property>
+</object>
+<object id='ogCD' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.30
+</property>
+</object>
+<object id='ogCM4001' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.1
+</property>
+</object>
+<object id='ogCM4002' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.2
+</property>
+</object>
+<object id='ogCM4008' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.3
+</property>
+</object>
+<object id='ogCM41xx' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.10
+</property>
+</object>
+<object id='ogCMS61xx' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.40
+</property>
+</object>
+<object id='ogCMx86' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.31
+</property>
+</object>
+<object id='ogIM4004' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.50
+</property>
+</object>
+<object id='ogIM42xx' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.60
+</property>
+</object>
+<object id='ogKCS61xx' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.70
+</property>
+</object>
+<object id='ogProductsMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.11.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogSD4001' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.20
+</property>
+</object>
+<object id='ogSD4001DW' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.23
+</property>
+</object>
+<object id='ogSD4002' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.21
+</property>
+</object>
+<object id='ogSD4002DX' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.24
+</property>
+</object>
+<object id='ogSD4008' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-PRODUCTS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1.22
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-SENSOR-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-SENSOR-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear SENSOR status MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogSensorMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogSensorMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.3.1
+</property>
+</object>
+<object id='ogSensorMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.3
+</property>
+</object>
+<object id='ogSensorMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.3.2
+</property>
+</object>
+<object id='ogSensorMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.2
+</property>
+</object>
+<object id='ogSensorMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10
+</property>
+</object>
+<object id='ogsensMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.2.0
+</property>
+</object>
+<object id='ogsensStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1
+</property>
+</object>
+<object id='ogsensStatusDevType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of device pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatusEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A sensor status event that was previously generated by this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='ogsensStatusIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogsensStatusName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the device pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatusTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of sensor status events generated by this device.
+</property>
+</object>
+<object id='ogsensStatusType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of sensor pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsensStatusValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.10.1.3.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value of the sensor pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ogsensEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SENSOR-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.13.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The notification sent when a sensor status event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogsensStatusName': {'nodetype': 'object', 'module': 'OPENGEAR-SENSOR-MIB'}, 'ogsensStatusType': {'nodetype': 'object', 'module': 'OPENGEAR-SENSOR-MIB'}, 'ogsensStatusDevType': {'nodetype': 'object', 'module': 'OPENGEAR-SENSOR-MIB'}, 'ogsensStatusValue': {'nodetype': 'object', 'module': 'OPENGEAR-SENSOR-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-SIGNAL-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-SIGNAL-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear serial console signal MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogSignalMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogSignalMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.3.1
+</property>
+</object>
+<object id='ogSignalMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.3
+</property>
+</object>
+<object id='ogSignalMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.3.2
+</property>
+</object>
+<object id='ogSignalMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.2
+</property>
+</object>
+<object id='ogSignalMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10
+</property>
+</object>
+<object id='ogsgnlEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1
+</property>
+</object>
+<object id='ogsgnlEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console connection event occuring at this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='ogsgnlEventIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ogsgnlEventPortLabel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The label for the serial port where the signal applies.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEventPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Serial port number on which this signal applies
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEventState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current signal state
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of serial signal events generated by this device.
+</property>
+</object>
+<object id='ogsgnlEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The particular signal which changed
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ogsgnlMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.2.0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ogsgnlEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SIGNAL-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.11.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The notification sent when a signal change occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ogsgnlEventState': {'nodetype': 'object', 'module': 'OPENGEAR-SIGNAL-MIB'}, 'ogsgnlEventPortNumber': {'nodetype': 'object', 'module': 'OPENGEAR-SIGNAL-MIB'}, 'ogsgnlEventType': {'nodetype': 'object', 'module': 'OPENGEAR-SIGNAL-MIB'}, 'ogsgnlEventPortLabel': {'nodetype': 'object', 'module': 'OPENGEAR-SIGNAL-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-SMI-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-SMI-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear Structure of Management Information MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogAgentCapability' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ogAgentCapability provides a root object identifier
+from which AGENT-CAPABILITIES values may be assigned.
+</property>
+</object>
+<object id='ogConfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ogConfig is the main subtree for configuration mibs.
+</property>
+</object>
+<object id='ogExperimental' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subtree reserved for experimental MIBS.
+</property>
+</object>
+<object id='ogInternal' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subtree reserved for use by Opengear internal groups
+</property>
+</object>
+<object id='ogMgmt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The main subtree for MIB development.
+</property>
+</object>
+<object id='ogModules' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ogModules provides a root object identifier
+from which MODULE-IDENTITY values may be assigned.
+</property>
+</object>
+<object id='ogProducts' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ogProducts is the root OBJECT IDENTIFIER from
+which sysObjectID values are assigned.  Actual
+values are defined in OG-PRODUCTS-MIB.
+</property>
+</object>
+<object id='ogReserved1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Reserved for future use
+</property>
+</object>
+<object id='ogReserved2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Reserved for future use
+</property>
+</object>
+<object id='otherEnterprises' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-SMI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+otherEnterprises provides a root object identifier
+from which mibs produced by other companies may be
+placed.  mibs produced by other enterprises are
+typicially implemented with the object identifiers
+as defined in the mib, but if the mib is deemed to
+be uncontrolled, we may reroot the mib at this
+subtree in order to have a controlled version.
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'OPENGEAR-UPS-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/OPENGEAR-UPS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+Opengear Inc.
+630 West 9560 South,
+Sandy, UT 84070
+support@opengear.com
+</property>
+<property type="string" id="description" mode="w" >
+Opengear UPS status MIB
+</property>
+<tomanycont id='nodes'>
+<object id='ogNetUpsMib' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='ogNetUpsMibCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.3.1
+</property>
+</object>
+<object id='ogNetUpsMibConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.3
+</property>
+</object>
+<object id='ogNetUpsMibGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.3.2
+</property>
+</object>
+<object id='ogNetUpsMibNotificationPrefix' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.2
+</property>
+</object>
+<object id='ogNetUpsMibObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10
+</property>
+</object>
+<object id='ognupsEvent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10.1
+</property>
+</object>
+<object id='ognupsEventEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A console connection event occuring at this
+device. Each entry is indexed by a message index.
+</property>
+</object>
+<object id='ognupsEventIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A monotonically increasing integer for the sole
+purpose of indexing messages.  When it reaches the
+maximum value the agent flushes the table and wraps
+the value back to 1.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='ognupsEventName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10.1.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the UPS pertaining to the status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ognupsEventTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table of serial signal events generated by this device.
+</property>
+</object>
+<object id='ognupsEventType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.10.1.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The type of status event
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='ognupsMibNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.2.0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='ognupsEventOccurred' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+OPENGEAR-UPS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25049.10.16.2.0.200
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The notification sent when a UPS status event occurs
+</property>
+<property type="lines" id="objects" mode="w" >
+{'ognupsEventName': {'nodetype': 'object', 'module': 'OPENGEAR-UPS-MIB'}, 'ognupsEventType': {'nodetype': 'object', 'module': 'OPENGEAR-UPS-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

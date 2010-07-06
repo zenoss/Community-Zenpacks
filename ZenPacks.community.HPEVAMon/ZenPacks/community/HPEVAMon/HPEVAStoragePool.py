@@ -12,7 +12,7 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.3 2010/06/23 00:34:11 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.3 2010/06/30 17:10:54 egor Exp $"""
 
 __version__ = "$Revision: 1.3 $"[11:-2]
 
@@ -81,6 +81,16 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                 , 'action'        : 'viewHPEVAStoragePool'
                 , 'permissions'   : (ZEN_VIEW,)
                 },
+                { 'id'            : 'disks'
+                , 'name'          : 'Disks'
+                , 'action'        : 'viewHPEVAStoragePoolDisks'
+                , 'permissions'   : (ZEN_VIEW, )
+                },
+                { 'id'            : 'volumes'
+                , 'name'          : 'Volumes'
+                , 'action'        : 'viewHPEVAStoragePoolVolumes'
+                , 'permissions'   : (ZEN_VIEW, )
+                },
                 { 'id'            : 'events'
                 , 'name'          : 'Events'
                 , 'action'        : 'viewEvents'
@@ -89,7 +99,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'

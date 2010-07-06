@@ -105,7 +105,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -119,7 +119,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
 
     security = ClassSecurityInfo()
 
-    security.declareProtected('Change Device', 'setStoragePool')
+    security.declareProtected(ZEN_CHANGE_DEVICE, 'setStoragePool')
     def setStoragePool(self, spid):
         """
         Set the storagepool relationship to the storage pool specified by the given
@@ -133,7 +133,7 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
         if strpool: self.storagepool.addRelation(strpool)
         else: log.warn("storage pool id:%s not found", spid)
 
-    security.declareProtected('View', 'getStoragePool')
+    security.declareProtected(ZEN_VIEW, 'getStoragePool')
     def getStoragePool(self):
         try: return self.storagepool()
         except: return None

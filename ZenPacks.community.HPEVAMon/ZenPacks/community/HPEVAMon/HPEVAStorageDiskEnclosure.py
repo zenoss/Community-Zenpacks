@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageDiskEnclosure
 
 HPEVAStorageDiskEnclosure is an abstraction of a HPEVA_StorageDiskEnclosure
 
-$Id: HPEVAStorageDiskEnclosure.py,v 1.2 2010/06/22 10:27:23 egor Exp $"""
+$Id: HPEVAStorageDiskEnclosure.py,v 1.3 2010/06/30 17:10:07 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.HWComponent import *
@@ -23,6 +23,8 @@ from Products.ZenModel.ZenossSecurity import *
 from HPEVAComponent import *
 
 from Products.ZenUtils.Utils import convToUnits
+
+LINKTMPLT='<a href="%s" target="_top"><img src="%s%s.png"  /></a>'
 
 class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
     """HPStorageDiskEnclosure object"""
@@ -37,7 +39,7 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
     hLayout = True
 
     linkimg = '/zport/dmd/hpevaselink'
-    rightimg = '/zport/dmd/hpevaseright'
+    rightimg = '/zport/dmd/hpevaseright_'
     blankimg = '/zport/dmd/hpevadisk_blank'
 
 
@@ -72,6 +74,16 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
                 , 'action'        : 'viewHPEVAStorageDiskEnclosure'
                 , 'permissions'   : (ZEN_VIEW,)
                 },
+                { 'id'            : 'layout'
+                , 'name'          : 'Layout'
+                , 'action'        : 'viewHPEVAStorageDiskEnclosureLayout'
+                , 'permissions'   : (ZEN_VIEW,)
+                },
+                { 'id'            : 'disks'
+                , 'name'          : 'Disks'
+                , 'action'        : 'viewHPEVAStorageDiskEnclosureDisks'
+                , 'permissions'   : (ZEN_VIEW,)
+                },
                 { 'id'            : 'events'
                 , 'name'          : 'Events'
                 , 'action'        : 'viewEvents'
@@ -80,7 +92,7 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -103,30 +115,24 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
     def layout(self):
         bays = {}
         for disk in self.harddisks():
-            bays[int(disk.bay)]='<a href=\"%s\"><img src=\"%s_%s.png\"  /></a>'%(
-                                                    disk.getPrimaryUrlPath(),
-                                                    disk.diskImg(),
-                                                    self.hLayout and 'h' or 'v')
-        result = "\t\t\t<table border=\"0\">\n\t\t\t\t<tr>\n\t\t\t\t\t"
-        result=result+"<td><a href=\"%s\"><img src=\"%s%s.png\" /></a></td>\n"%(
-                                            self.getPrimaryUrlPath(),
-                                            self.linkimg,
-                                            int(self.id) < 28 and self.id or '')
-        result= result + "\t\t\t\t\t<td><table border=\"0\">\n"
+            bays[int(disk.bay)] = LINKTMPLT % ( disk.getPrimaryUrlPath(),
+                                                disk.diskImg(),
+                                                self.hLayout and '_h' or '_v')
+        result = "<table border='0'>\n<tr>\n<td>"
+        result = result + LINKTMPLT % (self.getPrimaryUrlPath(), self.linkimg,
+                                        int(self.id) < 28 and self.id or '')
+        result=result+"<td><table border='0'>\n"
         for line in self.enclosureLayout.split(','):
-            result = result + "\t\t\t\t<tr>\n"
+            result = result + "<tr>\n"
             for bay in line.strip().split():
-                result = result + "\t\t\t\t\t<td>%s</td>\n"%bays.get(int(bay), 
-                                    '<img src=\"%s_%s.png\" />'%(self.blankimg,
-                                                self.hLayout and 'h' or 'v'))
-            result = result + "\t\t\t\t</tr>\n"
-        result = result + "\t\t\t\t\t</table>\t\t\t\t\t</td>\n\t\t\t\t\t<td>"
-        result = result +"<a href=\"%s\"><img src=\"%s_%s.png\" /></a></td>\n"%(
-                                                    self.getPrimaryUrlPath(),
-                                                    self.rightimg,
-                                                    self.statusDot())
-        result = result + "\t\t\t\t\t</td>\n\t\t\t\t</tr>\n"
-        result = result + "\t\t\t</table>\n"
+                result = result + "<td>%s</td>\n"%bays.get(int(bay), 
+                                    '<img src="%s%s.png" />'%(self.blankimg,
+                                                self.hLayout and '_h' or '_v'))
+            result = result + "</tr>\n"
+        result = result + "</table>\n</td>\n<td>"
+        result = result + LINKTMPLT % (self.getPrimaryUrlPath(), self.rightimg,
+                                                            self.statusDot())
+        result = result + "</td>\n</td>\n</tr>\n</table>\n"
         return result
 
     def getRRDNames(self):
@@ -134,6 +140,5 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
         Return the datapoint name of this StorageDiskEnclosure
         """
         return ['StorageDiskEnclosure_OperationalStatus']
-
 
 InitializeClass(HPEVAStorageDiskEnclosure)

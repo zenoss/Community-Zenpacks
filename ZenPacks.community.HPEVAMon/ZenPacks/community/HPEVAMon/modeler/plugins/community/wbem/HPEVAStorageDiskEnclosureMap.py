@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageDiskEnclosureMap
 HPEVAStorageDiskEnclosureMap maps HPEVA_StorageDiskEnclosure class to
 HPEVAStorageDiskEnclosure class.
 
-$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.1 2010/06/23 00:31:52 egor Exp $"""
+$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.2 2010/07/06 22:59:16 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -39,9 +39,18 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
                     {
                     "__path":"snmpindex",
                     "Caption":"id",
-                    "Height":"_height",
                     "Manufacturer":"_manuf",
                     "Model":"_model",
+                    "Name":"_sname",
+                    },
+                ),
+            "HPEVA_StorageSystem":
+                (
+                "HPEVA_StorageSystem",
+                None,
+                "root/eva",
+                    {
+                    "Model":"sysmodel",
                     "Name":"_sname",
                     },
                 ),
@@ -50,23 +59,33 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-        instances = results["HPEVA_StorageDiskEnclosure"]
+        sysmodels = {}
+        instances = results.get("HPEVA_StorageSystem", [])
+        for instance in instances:
+            sysmodels[instance['_sname']] = instance['sysmodel']
+        instances = results.get("HPEVA_StorageDiskEnclosure", None)
         if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", 'None')
+        sysname = getattr(device, 'snmpSysName', 'None')
         for instance in instances:
             if instance["_sname"] != sysname: continue
+            sysmodel = sysmodels.get(sysname, 'Unknown')
             om = self.objectMap(instance)
             om.id = self.prepId(om.id.split()[-1])
             try:
-	        if om._height < 4:
-		    om.enclosureLayout = '1 4 7 10,2 5 8 11,3 6 9 12'
-		    om.hLayout = True
-		else:
-		    om.enclosureLayout = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
-		    om.hLayout = False
-                if not om._manuf: om._manuf = "Unknown"
-                if om._model: om.setProductKey = MultiArgs(om._model, om._manuf)
+                if sysmodel in ['HSV300', 'HSV400', 'HSV450']:
+                    om._model = 'M6412A'
+                    om.enclosureLayout = '1 4 7 10,2 5 8 11,3 6 9 12'
+                    om.hLayout = True
+                elif sysmodel in ['HSV200-B', 'HSV210-B', 'HSV200B', 'HSV210B']:
+                    om._model = 'M5314C'
+                    om.enclosureLayout = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
+                    om.hLayout = False
+                else:
+                    om._model = 'M5314A'
+                    om.enclosureLayout = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
+                    om.hLayout = False
+                if om._model: om.setProductKey = MultiArgs(om._model, 'HP')
             except AttributeError:
                 continue
             rm.append(om)

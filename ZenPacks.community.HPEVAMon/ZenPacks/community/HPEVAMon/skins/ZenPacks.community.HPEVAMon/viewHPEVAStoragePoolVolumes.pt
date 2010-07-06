@@ -1,0 +1,69 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" tal:attributes="action string:${here/absolute_url_path}"
+    tal:define="manager python:here.has_permission('Change Device')">
+
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="virtualDiskList"
+    tal:define="tableName string:virtualDiskList;
+    objects here/virtualdisks;
+    tabletitle string:Virtual Disks;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='caption');"
+    tal:condition="objects">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'caption','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'diskType','Disk Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'raidType','Raid Level')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'preferredPath','Preferred Path')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'accessType','Access')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'size','Size')"/>
+        <th class="tableheader" align="center" width="60">Status</th>
+    </tr>
+    <tal:block tal:repeat="disk batch">
+    <tr tal:define="odd repeat/disk/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+      <td class="tablevalues">
+          <tal:block 
+           tal:content="structure python:disk.urlLink(text=disk.caption,
+                                                    attrs={'target':'_top'})"/>
+      </td>
+      <td class="tablevalues" tal:content="disk/diskType"/>
+      <td class="tablevalues" tal:content="disk/raidType"/>
+      <td class="tablevalues" tal:content="disk/preferredPath"/>
+      <td class="tablevalues" tal:content="disk/accessType"/>
+      <td class="tablevalues" tal:content="disk/totalBytesString"/>
+      <td tal:define="color disk/statusDot|string:grey" 
+        class="tablevalues" style="text-align:center;">
+        <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="7" class="tableheader">
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+</tal:block>
+</tal:block>

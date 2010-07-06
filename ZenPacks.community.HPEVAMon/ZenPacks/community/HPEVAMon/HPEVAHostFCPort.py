@@ -12,9 +12,9 @@ __doc__="""HPEVAHostFCPort
 
 HPEVAHostFCPort is an abstraction of a HPEVA_HostFCPort
 
-$Id: HPEVAHostFCPort.py,v 1.2 2010/05/18 13:36:18 egor Exp $"""
+$Id: HPEVAHostFCPort.py,v 1.3 2010/06/30 17:09:00 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -31,7 +31,7 @@ log = logging.getLogger("zen.HPEVAHostFCPort")
 class HPEVAHostFCPort(HWComponent, HPEVAComponent):
     """HPHostFCPort object"""
 
-    portal_type = meta_type = 'HPEVAHostFCPort'
+    portal_type = meta_type = 'HPEVAFCPort'
 
     interfaceName = ""
     fc4Types = []
@@ -94,7 +94,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -108,7 +108,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
 
     security = ClassSecurityInfo()
 
-    security.declareProtected('Change Device', 'setController')
+    security.declareProtected(ZEN_CHANGE_DEVICE, 'setController')
     def setController(self, cid):
         """
         Set the controller relationship to the Controller specified by the given
@@ -122,7 +122,7 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
         if cntr: self.controller.addRelation(cntr)
         else: log.warn("controller id:%s not found", cid)
 
-    security.declareProtected('View', 'getController')
+    security.declareProtected(ZEN_VIEW, 'getController')
     def getController(self):
         try: return self.controller()
         except: return None
@@ -140,5 +140,15 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
         """
         if self.networkAddresses: return '<br>'.join(self.networkAddresses)
         else: return 'Unknown'
+
+    def getRRDTemplates(self):
+        """
+        Return the RRD Templates list
+        """
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(HPEVAHostFCPort)

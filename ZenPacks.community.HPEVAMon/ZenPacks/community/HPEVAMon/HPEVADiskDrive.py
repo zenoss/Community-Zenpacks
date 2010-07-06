@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDrive
 
 HPEVADiskDrive is an abstraction of a harddisk.
 
-$Id: HPEVADiskDrive.py,v 1.2 2010/05/18 13:35:30 egor Exp $"""
+$Id: HPEVADiskDrive.py,v 1.3 2010/06/30 17:07:12 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -91,7 +91,7 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -104,7 +104,7 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
 
     security = ClassSecurityInfo()
 
-    security.declareProtected('Change Device', 'setEnclosure')
+    security.declareProtected(ZEN_CHANGE_DEVICE, 'setEnclosure')
     def setEnclosure(self, encid):
         """
         Set the enclosure relationship to the enclosure specified by the given
@@ -118,12 +118,12 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         if encl: self.enclosure.addRelation(encl)
         else: log.warn("enclosure id:%s not found", encid)
 
-    security.declareProtected('View', 'getEnclosure')
+    security.declareProtected(ZEN_VIEW, 'getEnclosure')
     def getEnclosure(self):
         try: return self.enclosure()
         except: return None
 
-    security.declareProtected('Change Device', 'setStoragePool')
+    security.declareProtected(ZEN_CHANGE_DEVICE, 'setStoragePool')
     def setStoragePool(self, spid):
         """
         Set the storagepool relationship to the storage pool specified by the given
@@ -137,13 +137,32 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         if strpool: self.storagepool.addRelation(strpool)
         else: log.warn("storage pool id:%s not found", spid)
 
-    security.declareProtected('View', 'getStoragePool')
+    security.declareProtected(ZEN_VIEW, 'getStoragePool')
     def getStoragePool(self):
         try: return self.storagepool()
         except: return None
 
     def getEnclosureName(self):
-        return self.getEnclosure() and self.getEnclosure().id or 'Unknown'
+        if not self.getEnclosure(): return 'Unknown'
+        else: return self.getEnclosure().id
+
+    def getStoragePoolName(self):
+        if not self.getStoragePool(self): return 'Unknown'
+        else: return self.getStoragePool(self).name
+
+    security.declareProtected(ZEN_VIEW, 'getManufacturerLink')
+    def getManufacturerLink(self, target=None):
+        if self.productClass():
+            url = self.productClass().manufacturer.getPrimaryLink()
+            if target: url = url.replace(">", " target='%s'>" % target, 1)
+            return url    
+        return ""
+
+    security.declareProtected(ZEN_VIEW, 'getProductLink')
+    def getProductLink(self, target=None):
+        url = self.productClass.getPrimaryLink()
+        if target: url = url.replace(">", " target='%s'>" % target, 1)
+        return url
 
     def diskImg(self):
         return '/zport/dmd/hpevadisk_%s_%s'%(

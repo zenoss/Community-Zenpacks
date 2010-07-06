@@ -17,6 +17,7 @@ $Id: HPEVAStorageProcessorCard.py,v 1.2 2010/05/18 13:37:38 egor Exp $"""
 __version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
+from AccessControl import ClassSecurityInfo
 from Products.ZenModel.ExpansionCard import *
 from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.ZenossSecurity import *
@@ -67,10 +68,15 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
                 , 'action'        : 'viewEvents'
                 , 'permissions'   : (ZEN_VIEW, )
                 },
+                { 'id'            : 'fcports'
+                , 'name'          : 'FC Ports'
+                , 'action'        : 'viewHPEVAStorageProcessorCardPorts'
+                , 'permissions'   : (ZEN_VIEW, )
+                },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -81,6 +87,21 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
           },
         )
 
+    security = ClassSecurityInfo()
+
+    security.declareProtected(ZEN_VIEW, 'getManufacturerLink')
+    def getManufacturerLink(self, target=None):
+        if self.productClass():
+            url = self.productClass().manufacturer.getPrimaryLink()
+            if target: url = url.replace(">", " target='%s'>" % target, 1)
+            return url    
+        return ""
+
+    security.declareProtected(ZEN_VIEW, 'getProductLink')
+    def getProductLink(self, target=None):
+        url = self.productClass.getPrimaryLink()
+        if target: url = url.replace(">", " target='%s'>" % target, 1)
+        return url
 
     def sysUpTime(self):
         """

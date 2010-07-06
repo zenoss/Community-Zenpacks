@@ -12,9 +12,9 @@ __doc__="""HPEVADiskFCPort
 
 HPEVADiskFCPort is an abstraction of a HPEVA_DiskFCPort
 
-$Id: HPEVADiskFCPort.py,v 1.1 2010/05/18 13:35:52 egor Exp $"""
+$Id: HPEVADiskFCPort.py,v 1.2 2010/06/30 17:08:21 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from HPEVAHostFCPort import *
@@ -22,6 +22,14 @@ from HPEVAHostFCPort import *
 class HPEVADiskFCPort(HPEVAHostFCPort):
     """DiskFCPort object"""
 
-    portal_type = meta_type = 'HPEVADiskFCPort'
+    def getRRDTemplates(self):
+        """
+        Return the RRD Templates list
+        """
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(HPEVADiskFCPort)

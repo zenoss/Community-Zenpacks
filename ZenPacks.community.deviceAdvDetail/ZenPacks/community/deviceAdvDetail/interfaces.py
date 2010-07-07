@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/06/24 12:31:06 egor Exp $"""
+$Id: interfaces.py,v 1.1 2010/07/07 13:37:53 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.Zuul.interfaces import IThresholdInfo, IComponentInfo
 from Products.Zuul.form import schema
@@ -43,9 +43,9 @@ class ILogicalDiskInfo(IComponentInfo):
     Info adapter for LogicalDisk components.
     """
     status = schema.Text(title=u"Status", readonly=True, group='Overview')
-    description = schema.Entity(title=u"OS Name", readonly=True,
+    description = schema.Text(title=u"OS Name", readonly=True,
                                 group='Details')
-    diskType = schema.Entity(title=u"Type", readonly=True, group='Details')
+    diskType = schema.Text(title=u"Type", readonly=True, group='Details')
     stripesize = schema.Int(title=u"Stripe Size", readonly=True, group='Details')
     size = schema.Int(title=u"Size", readonly=True, group='Details')
 

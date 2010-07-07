@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of hardware components.
 
-$Id: info.py,v 1.0 2010/06/30 22:16:38 egor Exp $"""
+$Id: info.py,v 1.1 2010/07/07 13:42:07 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -28,7 +28,7 @@ class DellStorageCntlrInfo(ComponentInfo):
 
     serialNumber = ProxyProperty("serialNumber")
     FWRev = ProxyProperty("FWRev")
-    SWVer = ProxyProperty("SWVer")
+    controllerType = ProxyProperty("controllerType")
     slot = ProxyProperty("slot")
     cacheSize = ProxyProperty("cacheSize")
 
@@ -43,6 +43,10 @@ class DellStorageCntlrInfo(ComponentInfo):
     @info
     def product(self):
         return self._object.productClass()
+
+    @property
+    def SWVer(self):
+        return self._object.SWVer.strip('"')
 
     @property
     def role(self):

@@ -4,7 +4,7 @@
            form_title='Add Database',
            help_product='RelationshipManager',
            help_topic='Database_Add.stx'
-	   )">
+           )">
 
 <form action="manage_addDatabase" method="post">
 <table cellspacing="0" cellpadding="2" border="0">

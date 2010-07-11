@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the RDBMS Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,22 +12,21 @@ __doc__="""Database
 
 Database is a Database
 
-$Id: Database.py,v 1.0 2009/05/15 16:18:23 egor Exp $"""
+$Id: Database.py,v 1.1 2010/07/11 15:37:46 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
-from Globals import InitializeClass
-from Globals import DTMLFile
+from Globals import InitializeClass, DTMLFile
 
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
-from Products.ZenUtils.Utils import convToUnits
+from Products.ZenModel.ZenossSecurity import *
+from Products.ZenUtils.Utils import convToUnits, prepId
 from Products.ZenRelations.RelSchema import *
+from Products.ZenWidgets import messaging
 
 from Products.ZenModel.OSComponent import OSComponent
-from Products.ZenUtils.Utils import prepId
 
-from Products.ZenModel.ZenossSecurity import *
 
 def manage_addDatabase(context, id, userCreated, REQUEST=None):
     """make a database"""
@@ -60,11 +59,11 @@ class Database(OSComponent, HWStatus):
     status = 1
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'Unknown'),
-	        2: (DOT_GREEN, SEV_CLEAN, 'Active'),
-		3: (DOT_YELLOW, SEV_WARNING, 'Available'),
-		4: (DOT_ORANGE, SEV_ERROR, 'Restricted'),
-		5: (DOT_RED, SEV_CRITICAL, 'Unavailable'),
-		}
+                2: (DOT_GREEN, SEV_CLEAN, 'Active'),
+                3: (DOT_YELLOW, SEV_WARNING, 'Available'),
+                4: (DOT_ORANGE, SEV_ERROR, 'Restricted'),
+                5: (DOT_RED, SEV_CRITICAL, 'Unavailable'),
+                }
 
     _properties = OSComponent._properties + (
         {'id':'dbname', 'type':'string', 'mode':'w'},
@@ -77,10 +76,9 @@ class Database(OSComponent, HWStatus):
     _relations = OSComponent._relations + (
         ("os", ToOne(ToManyCont, "Products.ZenModel.OperatingSystem", "softwaredatabases")),
         )
-    
 
-    factory_type_information = ( 
-        { 
+    factory_type_information = (
+        {
             'id'             : 'Database',
             'meta_type'      : 'Database',
             'description'    : """Arbitrary device grouping class""",
@@ -89,7 +87,7 @@ class Database(OSComponent, HWStatus):
             'factory'        : 'manage_addDatabase',
             'immediate_view' : 'viewDatabase',
             'actions'        :
-            ( 
+            (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
                 , 'action'        : 'viewDatabase'
@@ -103,8 +101,8 @@ class Database(OSComponent, HWStatus):
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : ("Change Device", )
-                },                
+                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -180,23 +178,37 @@ class Database(OSComponent, HWStatus):
         return self.dbname
     name = viewName
 
+    def getRRDTemplates(self):
+        """
+        Return the RRD Templates list
+        """
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
+
     def manage_editDatabase(self, monitor=False,
                 dbname=None, type=None, blockSizes=None, 
-                sizeAllocated=None, REQUEST=None):
+                totalBlocks=None, REQUEST=None):
         """
-        Edit a Service from a web page.
+        Edit a Database from a web page.
         """
         if dbname:
             self.dbname = dbname
             self.type = type
             self.blockSize = blockSize
             self.totalBlocks = totalBlocks
-        
+
         self.monitor = monitor
         self.index_object()
 
         if REQUEST:
             REQUEST['message'] = "Database updated"
+            messaging.IMessageSender(self).sendToBrowser(
+                'Database Updated',
+                'Database %s was updated.' % dbname
+            )
             return self.callZenScreen(REQUEST)
 
 

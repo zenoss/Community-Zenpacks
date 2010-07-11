@@ -8,8 +8,8 @@ if os.path.isdir(skinsDir):
     registerDirectory(skinsDir, globals())
 
 from Products.ZenUtils.Utils import prepId
+from Products.ZenWidgets import messaging
 from Database import manage_addDatabase
-
 
 
 def addDatabase(self, id, userCreated, REQUEST=None):
@@ -19,44 +19,61 @@ def addDatabase(self, id, userCreated, REQUEST=None):
     manage_addDatabase(self.softwaredatabases, id, userCreated)
     self._p_changed = True
     if REQUEST:
-        REQUEST['message'] = 'Database created'
+        messaging.IMessageSender(self).sendToBrowser(
+            'Database Created',
+            'Database %s was created.' % id
+        )
         REQUEST['RESPONSE'].redirect(
             self.softwaredatabases._getOb(dbid).absolute_url())
         return self.callZenScreen(REQUEST)
-            
+
 def deleteDatabases(self, componentNames=[], REQUEST=None):
     """Delete Databases"""
     self.deleteDeviceComponents(self.softwaredatabases, componentNames, REQUEST)
     if REQUEST: 
-        REQUEST['message'] = 'Database deleted'
+        messaging.IMessageSender(self).sendToBrowser(
+            'Databases Deleted',
+            'Databases %s were deleted.' % (', '.join(componentNames))
+        )
         REQUEST['RESPONSE'].redirect(self.absolute_url())
         return self.callZenScreen(REQUEST)
-    
+
 def unlockDatabases(self, componentNames=[], REQUEST=None):
     """Unlock Databases"""
     self.unlockDeviceComponents(self.softwaredatabases, componentNames, REQUEST)
     if REQUEST: 
-        REQUEST['message'] = 'Databases unlocked'
+        messaging.IMessageSender(self).sendToBrowser(
+            'Databases Unlocked',
+            'Databases %s were unlocked.' % (', '.join(componentNames))
+        )
         REQUEST['RESPONSE'].redirect(self.absolute_url())
         return self.callZenScreen(REQUEST)
-        
+
 def lockDatabasesFromDeletion(self, componentNames=[], 
         sendEventWhenBlocked=None, REQUEST=None):
-    """Lock FileSystems from deletion"""
+    """Lock Databases from deletion"""
     self.lockDeviceComponentsFromDeletion(self.softwaredatabases, componentNames, 
         sendEventWhenBlocked, REQUEST)
     if REQUEST: 
-        REQUEST['message'] = 'Databases locked from deletion'
+        messaging.IMessageSender(self).sendToBrowser(
+            'Databases Locked',
+            'Databases %s were locked from deletion.' % (
+                ', '.join(componentNames))
+        )
         REQUEST['RESPONSE'].redirect(self.absolute_url())
         return self.callZenScreen(REQUEST)
-    
+
 def lockDatabasesFromUpdates(self, componentNames=[], 
         sendEventWhenBlocked=None, REQUEST=None):
     """Lock Databases from updates"""
     self.lockDeviceComponentsFromUpdates(self.softwaredatabases, componentNames, 
         sendEventWhenBlocked, REQUEST)
     if REQUEST: 
-        REQUEST['message'] = 'Databases locked from updates and deletion'
+        messaging.IMessageSender(self).sendToBrowser(
+            'Databases Locked',
+            'Databases %s were locked from updates and deletion.' % (
+                ', '.join(componentNames))
+        )
         REQUEST['RESPONSE'].redirect(self.absolute_url())
         return self.callZenScreen(REQUEST)
 
@@ -74,7 +91,7 @@ from Products.ZenUtils.ZenScriptBase import ZenScriptBase
 class ZenPack(ZenPackBase):
     """ Database loader
     """
-    
+
     def install(self, app):
         if hasattr(self.dmd.zenMenus, 'Database'):
             self.dmd.zenMenus._delObject('Database')

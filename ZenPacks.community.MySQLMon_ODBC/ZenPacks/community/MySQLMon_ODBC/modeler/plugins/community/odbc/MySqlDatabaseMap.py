@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the MySQLMon_ODBC Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""MySqlDatabaseMap.py
 
 MySqlDatabaseMap maps the MySQL Databases table to Database objects
 
-$Id: MySqlDatabaseMap.py,v 1.1 2009/08/09 21:28:23 egor Exp $"""
+$Id: MySqlDatabaseMap.py,v 1.2 2010/07/11 17:40:34 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
@@ -36,15 +36,19 @@ class MySqlDatabaseMap(OdbcPlugin):
 
 
     def queries(self, device):
-        cs =  ';'.join((getattr(device, 'zMySqlConnectionString', None),
-                        'DATABASE=information_schema',
-                        'SERVER=%s'%str(device.manageIp),
-                        'UID=%s'%getattr(device, 'zMySqlUsername', None),
-                        'PWD=%s'%getattr(device, 'zMySqlPassword', None)))
+        cs = [getattr(device, 'zMySqlConnectionString', 'DRIVER={MySQL}')]
+        if not cs[0].upper().__contains__('SERVER='):
+            cs.append('SERVER=%s'%device.manageIp)
+        cs.append('DATABASE=information_schema')
+        uid = getattr(device, 'zMySqlUsername', None)
+        if uid: cs.append('UID=%s'%uid)
+        pwd = getattr(device, 'zMySqlUsername', None)
+        if pwd: cs.append('PWD=%s'%pwd)
+        cs = ';'.join(cs)
         return {
             "databases": (cs,
                 """USE information_schema;
-                SELECT table_schema, engine FROM TABLES GROUP BY table_schema;""",
+                SELECT table_schema as dbname, engine as type FROM TABLES GROUP BY table_schema;""",
                 ['dbname', 'type']),
             }
 

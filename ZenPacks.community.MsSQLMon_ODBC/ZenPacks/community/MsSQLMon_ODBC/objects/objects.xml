@@ -6,7 +6,7 @@
 MS SQL 2000 Database Template
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.MsSQLMon_ODBC.MsSql80Database
 </property>
 <tomanycont id='datasources'>
 <object id='databaseSize' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
@@ -26,7 +26,7 @@ True
 ${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-use ${here/dbname}; select sum(convert(dec(15),case when status &amp; 64 = 0 then size else 0 end)), sum(convert(dec(15),case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles;
+use ${here/dbname}; select sum(convert(dec(15),case when status &amp; 64 = 0 then size else 0 end)) as dbSize, sum(convert(dec(15),case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) as logSize from dbo.sysfiles;
 </property>
 <tomanycont id='datapoints'>
 <object id='dbSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -64,7 +64,7 @@ True
 ${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-use ${here/dbname}; select sum(convert(dec(15),case when indid &lt; 2 then dpages when indid = 255 then used else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then reserved else 0 end)), sum(convert(dec(15),case when indid in (0, 1, 255) then used else 0 end)) from sysindexes;
+use ${here/dbname}; select sum(convert(dec(15),case when indid &lt; 2 then dpages when indid = 255 then used else 0 end)) as dataPages, sum(convert(dec(15),case when indid in (0, 1, 255) then reserved else 0 end)) as reservedPages, sum(convert(dec(15),case when indid in (0, 1, 255) then used else 0 end)) as usedPages from sysindexes;
 </property>
 <tomanycont id='datapoints'>
 <object id='dataPages' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -316,7 +316,7 @@ AVERAGE
 MS SQL 2005 Database Template
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.MsSQLMon_ODBC.MsSql90Database
 </property>
 <tomanycont id='datasources'>
 <object id='databaseSize' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
@@ -336,7 +336,7 @@ True
 ${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-use ${here/dbname}; select sum(convert(bigint,case when status &amp; 64 = 0 then size else 0 end)), sum(convert(bigint,case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) from dbo.sysfiles;
+use ${here/dbname}; select sum(convert(bigint,case when status &amp; 64 = 0 then size else 0 end)) as dbSize, sum(convert(bigint,case when status &amp; 64 &lt;&gt; 0 then size else 0 end)) as logSize from dbo.sysfiles;
 </property>
 <tomanycont id='datapoints'>
 <object id='dbSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -374,7 +374,7 @@ True
 ${here/zMsSqlConnectionString};DATABASE=master;Server=${here/manageIp};UID=${here/zWinUser};PWD=${here/zWinPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-use ${here/dbname}; select sum(CASE When it.internal_type IN (202,204) Then 0 When a.type &lt;&gt; 1 Then a.used_pages When p.index_id &lt; 2 Then a.data_pages Else 0 END), sum(a.total_pages), sum(a.used_pages) from sys.partitions p join sys.allocation_units a on p.partition_id = a.container_id left join sys.internal_tables it on p.object_id = it.object_id;
+use ${here/dbname}; select sum(CASE When it.internal_type IN (202,204) Then 0 When a.type &lt;&gt; 1 Then a.used_pages When p.index_id &lt; 2 Then a.data_pages Else 0 END) as dataPages, sum(a.total_pages) as reservedPages, sum(a.used_pages) as usedPages from sys.partitions p join sys.allocation_units a on p.partition_id = a.container_id left join sys.internal_tables it on p.object_id = it.object_id;
 </property>
 <tomanycont id='datapoints'>
 <object id='dataPages' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

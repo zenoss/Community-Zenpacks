@@ -6,7 +6,7 @@
 PostgreSQL Database Template
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.PgSQLMon_ODBC.PgSqlDatabase
 </property>
 <tomanycont id='datasources'>
 <object id='sizeUsed' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
@@ -26,7 +26,7 @@ True
 ${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=template1;UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT pg_database_size(datname) FROM pg_database WHERE datname='${here/dbname}';
+SELECT pg_database_size(datname) as sizeUsed FROM pg_database WHERE datname='${here/dbname}';
 </property>
 <tomanycont id='datapoints'>
 <object id='sizeUsed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -118,7 +118,7 @@ True
 ${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=${here/dbname};UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT SUM(idx_scan), SUM(idx_tup_fetch), SUM(n_tup_ins), SUM(n_tup_upd), SUM(n_tup_del), SUM(seq_scan), SUM(seq_tup_read) FROM pg_stat_user_tables;
+SELECT SUM(idx_scan) as idx_scan, SUM(idx_tup_fetch) as idx_tup_fetch, SUM(n_tup_ins) as n_tup_ins, SUM(n_tup_upd) as n_tup_upd, SUM(n_tup_del) as n_tup_del, SUM(seq_scan) as seq_scan, SUM(seq_tup_read) as seq_tup_read FROM pg_stat_user_tables;
 </property>
 <tomanycont id='datapoints'>
 <object id='idx_scan' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -196,7 +196,7 @@ True
 ${here/zPgSqlConnectionString};Servername=${here/manageIp};Database=${here/dbname};UID=${here/zPgSqlUsername};PWD=${here/zPgSqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT SUM(heap_blks_hit), SUM(heap_blks_read), SUM(idx_blks_hit), SUM(idx_blks_read), SUM(tidx_blks_hit), SUM(tidx_blks_read), SUM(toast_blks_hit), SUM(toast_blks_read) FROM pg_statio_user_tables;
+SELECT SUM(heap_blks_hit) as heap_blks_hit, SUM(heap_blks_read) as heap_blks_read, SUM(idx_blks_hit) as idx_blks_hit, SUM(idx_blks_read) as idx_blks_read, SUM(tidx_blks_hit) as tidx_blks_hit, SUM(tidx_blks_read) as tidx_blks_read, SUM(toast_blks_hit) as toast_blks_hit, SUM(toast_blks_read) as toast_blks_read FROM pg_statio_user_tables;
 </property>
 <tomanycont id='datapoints'>
 <object id='heap_blks_hit' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

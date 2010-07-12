@@ -1533,28 +1533,4 @@ MySQL Server Process
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Services', 'IpService', 'Registered', 'serviceclasses', 'mysql') -->
-<object id='/zport/dmd/Services/IpService/Registered/serviceclasses/mysql' module='Products.ZenModel.IpServiceClass' class='IpServiceClass'>
-<property type="string" id="name" mode="w" >
-mysql
-</property>
-<property type="lines" id="serviceKeys" mode="w" >
-('mysql', 'tcp_03306', 'udp_03306')
-</property>
-<property type="text" id="description" mode="w" >
-MySQL
-</property>
-<property type="int" id="port" mode="w" >
-3306
-</property>
-<property type="int" id="port" mode="w" >
-3306
-</property>
-<property visible="True" type="boolean" id="zMonitor" >
-True
-</property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Server/Linux/devices/localhost/os/ipservices/tcp_03306'/>
-</tomany>
-</object>
 </objects>

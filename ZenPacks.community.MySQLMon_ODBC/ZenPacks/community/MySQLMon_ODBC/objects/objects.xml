@@ -29,7 +29,7 @@ True
 ${here/zMySqlConnectionString};DATABASE=information_schema;SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-USE information_schema; SHOW GLOBAL STATUS;
+SHOW GLOBAL STATUS
 </property>
 <tomanycont id='datapoints'>
 <object id='Bytes_received' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1132,7 +1132,7 @@ True
 ${here/zMySqlConnectionString};DATABASE=information_schema;SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
 </property>
 <property type="string" id="sql" mode="w" >
-USE information_schema; SELECT sum(data_length) as dataSize, sum(index_length) as indexSize, sum( data_length + index_length ) as sizeUsed FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema;
+SELECT sum(data_length) as dataSize, sum(index_length) as indexSize, sum( data_length + index_length ) as sizeUsed FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema
 </property>
 <tomanycont id='datapoints'>
 <object id='dataSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

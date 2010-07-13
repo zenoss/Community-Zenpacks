@@ -12,9 +12,9 @@ __doc__="""Win32DiskDrive
 
 Win32DiskDrive is an abstraction of a HardDisk.
 
-$Id: Win32DiskDrive.py,v 1.1 2010/05/19 16:23:32 egor Exp $"""
+$Id: Win32DiskDrive.py,v 1.2 2010/07/13 11:52:14 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ZenossSecurity import *
@@ -23,8 +23,6 @@ from Products.ZenModel.HardDisk import HardDisk
 
 class Win32DiskDrive(HardDisk):
     """HardDisk object"""
-
-    portal_type = meta_type = 'Win32DiskDrive'
 
     rpm = 0
     size = 0
@@ -110,5 +108,14 @@ class Win32DiskDrive(HardDisk):
         """
         return ['DiskDrive_OperationalStatus']
 
+    def getRRDTemplates(self):
+        """
+        Return the RRD Templates list
+        """
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
 
 InitializeClass(Win32DiskDrive)

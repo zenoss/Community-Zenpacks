@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.HPMon"
-VERSION = "1.9.70"
+VERSION = "2.0"
 AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.HPMon']
-INSTALL_REQUIRES = ['ZenPacks.community.deviceAdvDetail>=1.2']
-COMPAT_ZENOSS_VERS = ">=2.3"
+INSTALL_REQUIRES = ['ZenPacks.community.deviceAdvDetail>=1.3']
+COMPAT_ZENOSS_VERS = ">=2.5"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

@@ -12,9 +12,9 @@ __doc__="""OdbcPlugin
 
 wrapper for PythonPlugin
 
-$Id: OdbcPlugin.py,v 1.3 2010/06/15 17:07:05 egor Exp $"""
+$Id: OdbcPlugin.py,v 1.4 2010/07/13 12:07:37 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
 from twisted.python.failure import Failure
@@ -39,6 +39,8 @@ class OdbcPlugin(CollectorPlugin):
         for tname, query in queries.iteritems():
             if len(queries.values()[0]) == 3:
                 cs, sql, columns = query
+                if type(columns) is not dict:
+                    columns = dict(zip(columns, columns))
             else:
                 sql, kb, cs, columns = query 
             queries[tname] = (sql, {}, "findodbc, '" + cs + "'", columns)

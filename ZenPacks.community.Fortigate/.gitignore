@@ -1,2 +1,4 @@
 ZenPacks.community.Fortigate.egg-info
+build/*
+dist/*
 *.pyc

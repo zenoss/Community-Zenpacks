@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the ZenODBC Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,14 +12,13 @@ __doc__="""OdbcPlugin
 
 wrapper for PythonPlugin
 
-$Id: OdbcPlugin.py,v 1.1 2009/11/11 13:26:23 egor Exp $"""
+$Id: OdbcPlugin.py,v 1.3 2010/06/15 17:07:05 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
-
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import CollectorPlugin
-from OdbcClient import OdbcClient, CError
-from twisted.internet import defer
+from twisted.python.failure import Failure
+from ZenPacks.community.SQLDataSource.SQLClient import SQLClient
 
 class OdbcPlugin(CollectorPlugin):
     """
@@ -31,22 +30,27 @@ class OdbcPlugin(CollectorPlugin):
 
     tables = {}
 
-    def queries(self, device=None):
+    def queries(self, device = None):
         return self.tables
 
+
     def collect(self, device, log):
-        d = defer.maybeDeferred(OdbcClient(device).query, self.queries(device))
-        return d
+        queries = self.queries(device)
+        for tname, query in queries.iteritems():
+            if len(queries.values()[0]) == 3:
+                cs, sql, columns = query
+            else:
+                sql, kb, cs, columns = query 
+            queries[tname] = (sql, {}, "findodbc, '" + cs + "'", columns)
+        return SQLClient(device).query(queries)
+
 
     def preprocess(self, results, log):
         newres = {}
         for table, value in results.iteritems():
-            if isinstance(value[0], CError):
-                log.error(value[0].getErrorMessage())
-                continue
-	    newres[table] = value
+            if value != []:
+                if isinstance(value[0], Failure):
+                    log.error(value[0].getErrorMessage())
+                    continue
+            newres[table] = value
         return newres
-
-
-
-

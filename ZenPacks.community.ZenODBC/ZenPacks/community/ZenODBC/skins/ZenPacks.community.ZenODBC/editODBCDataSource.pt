@@ -24,7 +24,7 @@
 
         <tal:block metal:fill-slot="zentablecontents">
         <!-- BEGIN TABLE CONTENTS -->
-            
+
     <tr>
         <td class="tableheader">Name</td>
         <td class="tablevalues" tal:condition="editable">
@@ -36,7 +36,7 @@
     </tr>
     <tr>
       <td class="tableheader">Source Type</td>
-	  <td class="tablevalues" tal:content="here/sourcetype"></td>
+          <td class="tablevalues" tal:content="here/sourcetype"></td>
     </tr>
     <tr>
         <td class="tableheader">Enabled</td>
@@ -53,7 +53,7 @@
         <td class="tableheader">Connection String</td>
         <td class="tablevalues" tal:condition="editable">
             <textarea class="tablevalues" rows="2" cols="80" 
-	        name="cs:text"
+                name="cs:text"
                 tal:content="here/cs">
             </textarea>
         </td>
@@ -61,7 +61,7 @@
             tal:content="here/cs"/>
     </tr>
     <tr>
-        <td class="tableheader">SQL Queue</td>
+        <td class="tableheader">SQL Query</td>
         <td class="tablevalues" tal:condition="editable">
             <textarea class="tablevalues" rows="3" cols="80" 
                 name="sql:text"
@@ -97,7 +97,7 @@
         </tal:block>
         </tal:block>
         </tal:block>
-        
+
 
 </form>
 
@@ -124,8 +124,8 @@
 
         <tal:block metal:fill-slot="zentablecontents">
         <!-- BEGIN TABLE CONTENTS -->
-            
-    
+
+
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                     tableName,'getId','Name')"/>
@@ -155,7 +155,7 @@
         </tal:block>
         </tal:block>
         </tal:block>
-        
+
 
 </form>
 

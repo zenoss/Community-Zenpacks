@@ -1,0 +1,24 @@
+#! /usr/bin/env bash
+################################################################################
+#
+# This program is part of the SQLDataSource Zenpack for Zenoss.
+# Copyright (C) 2010 Egor Puzanov.
+#
+# This program can be used under the GNU General Public License version 2
+# You can find full information here: http://www.zenoss.com/oss
+#
+################################################################################
+
+. $ZENHOME/bin/zenfunctions
+
+MYPATH=`readlink -f $0`
+THISDIR=`dirname $MYPATH`
+PRGHOME=`dirname $THISDIR`
+PRGNAME=zenperfsql.py
+CFGFILE=$CFGDIR/zenperfsql.conf
+if [ ! -f $CFGFILE ]; then
+    touch $CFGFILE
+fi
+
+generic "$@"
+

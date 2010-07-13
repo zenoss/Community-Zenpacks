@@ -1,0 +1,6 @@
+7.13.2010 - Nick Anderson <nick@cmdln.org> - 1.2
+Added Fortinet MIBS
+Added event mapping for cpu traps
+Added event mapping for apparent extraneous trap
+Bound template to fortinet device class
+

@@ -1,0 +1,5 @@
+Prerequisites:
+	bc must be in the zenoss users $PATH
+
+#. Install Zenpack
+#. Attache nginx_status template to desired device or device class

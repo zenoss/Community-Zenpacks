@@ -8,7 +8,7 @@ AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.MsSQLMon_ODBC']
-INSTALL_REQUIRES = ['ZenPacks.community.RDBMS>=1.1', 'ZenPacks.community.ZenODBC>=2.1']
+INSTALL_REQUIRES = ['ZenPacks.community.RDBMS>=1.2', 'ZenPacks.community.ZenODBC>=2.1']
 COMPAT_ZENOSS_VERS = ">=2.5"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS

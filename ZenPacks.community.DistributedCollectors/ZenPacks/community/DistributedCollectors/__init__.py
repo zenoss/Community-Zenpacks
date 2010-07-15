@@ -25,6 +25,7 @@ from Products.ZenUtils.Utils import monkeypatch
 from Products.ZenUtils.Utils import zenPath
 from Products.ZenUtils.Utils import executeStreamCommand
 from Products.ZenModel.PerformanceConf import performancePath
+from Products.ZenModel.ZVersion import VERSION
 
 zpDir = zenPath('ZenPacks')
 updConfZenBin = zenPath('bin/updateConfigs')
@@ -32,10 +33,14 @@ updConfBin = os.path.join(os.path.dirname(__file__), 'bin/updateConfigs')
 masterdaemons=['zeoctl','zopectl','zenhub','zenjobs','zenactions','zenmodeler']
 
 
+class blackhole:
+    def write(self, text=None):
+        return
+
 def setupRemoteMonitors(ids, templ, REQUEST=None, install=None, remove=None):
-    if REQUEST:
+    if REQUEST and VERSION < '2.6':
         out = REQUEST.RESPONSE
-    else: out = None
+    else: out = blackhole()
     def write(lines):
         ''' Output (maybe partial) result text.
         '''
@@ -133,7 +138,7 @@ def setPerformanceMonitor(self, performanceMonitor,
 @monkeypatch('Products.ZenModel.MonitorClass.MonitorClass')
 def manage_addRemoteMonitor(self, id, submon=None, REQUEST=None):
     'Add an object of sub_class, from a module of the same name'
-    self.manage_addMonitor(id, submon)
+    self.manage_addMonitor(id, submon, None)
     transaction.commit()
     daemons = open('%s/daemons.txt'%zpDir, 'w')
     for daemon in self.dmd.About.getZenossDaemonStates():
@@ -146,8 +151,8 @@ def manage_addRemoteMonitor(self, id, submon=None, REQUEST=None):
     self.dmd.Monitors.Performance[id].renderurl='http://%s:8090/%s'%(socket.getfqdn(),id)
     if REQUEST:
         messaging.IMessageSender(self).sendToBrowser(
-            'Monitor Created',
-            'Monitor %s was created.' % id
+            'Remote Collector Created',
+            'Remote collector %s was created.' % id
         )
         return self.callZenScreen(REQUEST)
 
@@ -165,21 +170,21 @@ def manage_updateRemoteMonitors(self, ids=None, submon="", REQUEST=None):
     os.unlink('%s/daemons.txt'%zpDir)
     if REQUEST:
         messaging.IMessageSender(self).sendToBrowser(
-            'Monitors Updated'
-            'Updated monitors: %s' % (', '.join(ids))
+            'Remote Collectors Updated'
+            'Updated remote collectors: %s' % (', '.join(ids))
         )
         return self.callZenScreen(REQUEST)
 
 @monkeypatch('Products.ZenModel.MonitorClass.MonitorClass')
 def manage_removeRemoteMonitors(self, ids=None, submon="", REQUEST=None):
     'Remove an object from this one'
-    self.manage_removeMonitor(ids, submon)
+    self.manage_removeMonitor(ids, submon, None)
     transaction.commit()
     setupRemoteMonitors(ids, self.commandTestOutput(), REQUEST, remove=True)
     if REQUEST:
         messaging.IMessageSender(self).sendToBrowser(
-            'Monitors Deleted',
-            'Deleted monitors: %s' % (', '.join(ids))
+            'Remote Collectors Deleted',
+            'Deleted remote collectors: %s' % (', '.join(ids))
         )
         return self.callZenScreen(REQUEST)
 

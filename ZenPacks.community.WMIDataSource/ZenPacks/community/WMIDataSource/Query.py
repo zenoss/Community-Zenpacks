@@ -12,14 +12,18 @@
 ###########################################################################
 
 from pysamba.library import *
+
+library.ConnectAndQuery.restype = WERROR
+library.IEnumWbemClassObject_SmartNext.restype = WERROR
+class com_context(Structure): pass
+class IEnumWbemClassObject(Structure): pass
+
 from pysamba.wbem.wbem import *
 from twisted.internet import defer
 from pysamba.talloc import *
 from pysamba.rpc.credentials import *
 from pysamba.twisted.callback import Callback, WMIFailure
 
-library.ConnectAndQuery.restype = WERROR
-library.IEnumWbemClassObject_SmartNext.restype = WERROR
 
 import Globals
 from Products.ZenUtils.Driver import drive
@@ -30,8 +34,6 @@ log = logging.getLogger('zen.pysamba')
 
 WBEM_S_TIMEDOUT = 0x40004L
 
-class com_context(Structure): pass
-class IEnumWbemClassObject(Structure): pass
 WERR_BADFUNC = 1
 
 # struct dcom_client_context *dcom_client_init(struct com_context *ctx,

@@ -1,0 +1,63 @@
+ohai cpu
+[
+  [
+    "real",
+    0
+  ],
+  [
+    "total",
+    1
+  ],
+  [
+    "0",
+    {
+      "flags": [
+        "fpu",
+        "vme",
+        "de",
+        "pse",
+        "tsc",
+        "msr",
+        "pae",
+        "mce",
+        "cx8",
+        "apic",
+        "mtrr",
+        "pge",
+        "mca",
+        "cmov",
+        "pat",
+        "pse36",
+        "clflush",
+        "dts",
+        "acpi",
+        "mmx",
+        "fxsr",
+        "sse",
+        "sse2",
+        "ss",
+        "nx",
+        "lm",
+        "constant_tsc",
+        "up",
+        "arch_perfmon",
+        "pebs",
+        "bts",
+        "tsc_reliable",
+        "pni",
+        "ssse3",
+        "cx16",
+        "sse4_1",
+        "hypervisor",
+        "lahf_lm"
+      ],
+      "model": "23",
+      "model_name": "Intel(R) Core(TM)2 Duo CPU     T8300  @ 2.40GHz",
+      "family": "6",
+      "mhz": "2395.872",
+      "vendor_id": "GenuineIntel",
+      "cache_size": "3072 KB",
+      "stepping": "6"
+    }
+  ]
+]

@@ -1,0 +1,179 @@
+ohai fqdn kernel
+[
+  "ubuntu.zenoss.loc"
+]
+[
+  [
+    "modules",
+    {
+      "vmblock": {
+        "size": "12284",
+        "refcount": "1"
+      },
+      "ppdev": {
+        "size": "6688",
+        "refcount": "0"
+      },
+      "snd_seq_device": {
+        "size": "6920",
+        "refcount": "1"
+      },
+      "pvscsi": {
+        "size": "14436",
+        "refcount": "0"
+      },
+      "intel_agp": {
+        "size": "27484",
+        "refcount": "1"
+      },
+      "ac97_bus": {
+        "size": "1532",
+        "refcount": "1"
+      },
+      "x_tables": {
+        "size": "16544",
+        "refcount": "1"
+      },
+      "vmhgfs": {
+        "size": "50528",
+        "refcount": "2"
+      },
+      "mptbase": {
+        "size": "88132",
+        "refcount": "2"
+      },
+      "lp": {
+        "size": "8964",
+        "refcount": "0"
+      },
+      "snd_ac97_codec": {
+        "size": "101216",
+        "refcount": "1"
+      },
+      "shpchp": {
+        "size": "32272",
+        "refcount": "0"
+      },
+      "i2c_piix4": {
+        "size": "9932",
+        "refcount": "0"
+      },
+      "soundcore": {
+        "size": "7264",
+        "refcount": "1"
+      },
+      "parport_pc": {
+        "size": "31940",
+        "refcount": "1"
+      },
+      "vmxnet": {
+        "size": "17376",
+        "refcount": "0"
+      },
+      "parport": {
+        "size": "35340",
+        "refcount": "3"
+      },
+      "snd_pcm": {
+        "size": "75296",
+        "refcount": "2"
+      },
+      "serio_raw": {
+        "size": "5280",
+        "refcount": "0"
+      },
+      "psmouse": {
+        "size": "56180",
+        "refcount": "0"
+      },
+      "vsock": {
+        "size": "37344",
+        "refcount": "0"
+      },
+      "mptspi": {
+        "size": "17668",
+        "refcount": "2"
+      },
+      "ip_tables": {
+        "size": "11692",
+        "refcount": "1"
+      },
+      "iptable_filter": {
+        "size": "3100",
+        "refcount": "0"
+      },
+      "agpgart": {
+        "size": "34988",
+        "refcount": "1"
+      },
+      "snd_timer": {
+        "size": "22276",
+        "refcount": "1"
+      },
+      "floppy": {
+        "size": "54916",
+        "refcount": "0"
+      },
+      "scsi_transport_spi": {
+        "size": "23036",
+        "refcount": "1"
+      },
+      "vmci": {
+        "size": "28352",
+        "refcount": "1"
+      },
+      "snd_page_alloc": {
+        "size": "9156",
+        "refcount": "1"
+      },
+      "snd": {
+        "size": "59204",
+        "refcount": "6"
+      },
+      "snd_ens1371": {
+        "size": "22016",
+        "refcount": "0"
+      },
+      "acpiphp": {
+        "size": "22480",
+        "refcount": "0"
+      },
+      "vmmemctl": {
+        "size": "9628",
+        "refcount": "0"
+      },
+      "mptscsih": {
+        "size": "34428",
+        "refcount": "1"
+      },
+      "snd_rawmidi": {
+        "size": "22208",
+        "refcount": "1"
+      },
+      "gameport": {
+        "size": "11368",
+        "refcount": "1"
+      }
+    }
+  ],
+  [
+    "machine",
+    "i686"
+  ],
+  [
+    "name",
+    "Linux"
+  ],
+  [
+    "os",
+    "GNU\/Linux"
+  ],
+  [
+    "version",
+    "#48-Ubuntu SMP Fri Oct 16 14:04:26 UTC 2009"
+  ],
+  [
+    "release",
+    "2.6.31-14-generic"
+  ]
+]

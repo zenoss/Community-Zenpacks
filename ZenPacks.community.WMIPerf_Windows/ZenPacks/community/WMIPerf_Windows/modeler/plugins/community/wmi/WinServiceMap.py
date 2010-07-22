@@ -12,7 +12,7 @@ __doc__ = """WinServiceMap
 
 WinServiceMap gathers status of Windows services
 
-$Id: WinServiceMap.py,v 1.0 2010/02/17 10:58:48 egor Exp $"""
+$Id: WinServiceMap.py,v 1.1 2010/07/23 00:09:57 egor Exp $"""
 
 __version__ = '$Revision: 1.0 $'[11:-2]
 
@@ -52,7 +52,7 @@ class WinServiceMap(WMIPlugin):
         """Collect win service info from this device.
         """
         log.info('Processing WinServices for device %s' % device.id)
-        instances = results["Win32_Service"]
+        instances = results.get("Win32_Service", None)
         if not instances: return
         rm = self.relMap()
         for instance in instances:

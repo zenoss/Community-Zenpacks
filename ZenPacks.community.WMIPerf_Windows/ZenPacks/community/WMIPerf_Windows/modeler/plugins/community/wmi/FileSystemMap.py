@@ -12,9 +12,9 @@ __doc__="""FileSystemMap
 
 FileSystemMap maps the CIM_FileSystem class to filesystems objects
 
-$Id: FileSystemMap.py,v 1.1 2010/02/22 14:57:53 egor Exp $"""
+$Id: FileSystemMap.py,v 1.2 2010/07/23 00:00:01 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 import re
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -49,7 +49,7 @@ class FileSystemMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-        instances = results["Win32_LogicalDisk"]
+        instances = results.get("Win32_LogicalDisk", None)
         if not instances: return
         skipfsnames = getattr(device, 'zFileSystemMapIgnoreNames', None)
         skipfstypes = getattr(device, 'zFileSystemMapIgnoreTypes', None)

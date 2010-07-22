@@ -13,9 +13,9 @@ __doc__ = """InterfaceMap
 Gather IP network interface information from WMI, and 
 create DMD interface objects
 
-$Id: InterfaceMap.py,v 1.3 2010/04/28 19:05:39 egor Exp $"""
+$Id: InterfaceMap.py,v 1.4 2010/07/23 00:02:14 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 import re
 import types
@@ -127,7 +127,7 @@ class InterfaceMap(WMIPlugin):
             return rm
         interfaceStat = {}
         interfaceSpeed = {}
-        instances = results["Win32_PerfRawData_Tcpip_NetworkInterface"]
+        instances = results.get("Win32_PerfRawData_Tcpip_NetworkInterface", None)
         if instances:
             for instance in instances:
                 try:
@@ -136,13 +136,13 @@ class InterfaceMap(WMIPlugin):
                     interfaceSpeed[key] = instance['speed']
                 except: continue
         interfaceConf = {}
-        instances = results["Win32_NetworkAdapter"]
+        instances = results.get("Win32_NetworkAdapter", None)
         if instances:
             for instance in instances:
                 key = instance.pop('snmpindex')
                 try: interfaceConf[int(key)] = instance
                 except: continue
-        instances = results["Win32_NetworkAdapterConfiguration"]
+        instances = results.get("Win32_NetworkAdapterConfiguration", None)
         if not instances: return
         for instance in instances:
             if not instance['_ipenabled']: continue

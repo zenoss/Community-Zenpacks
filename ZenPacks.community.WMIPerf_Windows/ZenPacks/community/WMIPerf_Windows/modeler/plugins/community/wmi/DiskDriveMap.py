@@ -12,9 +12,9 @@ __doc__="""DiskDriveMap
 
 DiskDriveMap maps Win32_DiskDrive class to HardDisk class.
 
-$Id: DiskDriveMap.py,v 1.3 2010/04/22 13:57:58 egor Exp $"""
+$Id: DiskDriveMap.py,v 1.4 2010/07/22 23:54:58 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -65,11 +65,11 @@ class DiskDriveMap(WMIPlugin):
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
         perfnames = {}
-        instances = results["Win32_PerfRawData_PerfDisk_PhysicalDisk"]
+        instances = results.get("Win32_PerfRawData_PerfDisk_PhysicalDisk", None)
         if instances:
             for instance in instances:
                 perfnames[instance['name'].split()[0]] = instance['snmpindex']
-        instances = results["Win32_DiskDrive"]
+        instances = results.get("Win32_DiskDrive", None)
         if not instances: return
         for instance in instances:
             om = self.objectMap(instance)

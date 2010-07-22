@@ -12,9 +12,9 @@ __doc__="""ProductMap
 
 ProductMap finds various software packages installed on a device.
 
-$Id: ProductMap.py,v 1.5 2010/04/22 15:30:31 egor Exp $"""
+$Id: ProductMap.py,v 1.6 2010/07/23 00:06:29 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -48,7 +48,8 @@ class ProductMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-        instances = results["Win32_Product"]
+        instances = results.get("Win32_Product", None)
+        if not instances: return
         rm = self.relMap()
         for instance in instances:
             try:

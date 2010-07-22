@@ -12,9 +12,9 @@ __doc__ = """RouteMap
 
 RouteMap gathers and stores routing information.
 
-$Id: RouterMap.py,v 1.0 2010/01/14 09:35:53 egor Exp $"""
+$Id: RouterMap.py,v 1.1 2010/07/23 00:08:37 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -54,7 +54,8 @@ class RouteMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-        routetable = results["Win32_IP4RouteTable"]
+        routetable = results.get("Win32_IP4RouteTable", None)
+        if not routetable: return
         localOnly = getattr(device, 'zRouteMapCollectOnlyLocal', False)
         indirectOnly = getattr(device, 'zRouteMapCollectOnlyIndirect', False)
         maxRoutes = getattr(device, 'zRouteMapMaxRoutes', 500)

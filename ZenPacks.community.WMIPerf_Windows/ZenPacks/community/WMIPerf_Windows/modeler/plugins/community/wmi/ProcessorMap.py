@@ -12,9 +12,9 @@ __doc__="""ProcessorMap
 
 ProcessorMap maps the CIM_Processor class to cpus objects
 
-$Id: ProcessorMap.py,v 1.3 2010/04/22 11:21:18 egor Exp $"""
+$Id: ProcessorMap.py,v 1.4 2010/07/23 00:05:48 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -105,7 +105,7 @@ class ProcessorMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-        instances = results["Win32_Processor"]
+        instances = results.get("Win32_Processor", None)
         if not instances: return
         cores = 1
         sockets = []

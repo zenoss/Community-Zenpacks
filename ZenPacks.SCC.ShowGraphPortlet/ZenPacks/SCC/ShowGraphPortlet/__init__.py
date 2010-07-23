@@ -37,7 +37,7 @@ class ZenPack(ZenPackBase):
                     zpm = app.zport.ZenPortletManager
                     zpm.unregister_portlet('ShowGraphPortlet')
 
-import simplejson
+import json
 import pdb
 
 def getJSONReportList(self, path='/Device Reports'):
@@ -60,7 +60,7 @@ def getJSONReportList(self, path='/Device Reports'):
     try:
         reportClass = self.dmd.unrestrictedTraverse(path)
     except KeyError:
-	return simplejson.dumps(response)
+	return json.dumps(response)
 
     # Get the list of reports under the class as (url, title) pairs
     reports = reportClass.reports()
@@ -84,7 +84,7 @@ def getJSONReportList(self, path='/Device Reports'):
 #        response['data'].append(row)
 
               # Serialize the response and return it
-    return simplejson.dumps(response)
+    return json.dumps(response)
 
             # Monkey-patch onto zport
 from Products.ZenModel.ZentinelPortal import ZentinelPortal
@@ -113,7 +113,7 @@ def getJSONGraphList(self, path='/Device Reports',report='test'):
     try:
         reportClass = self.dmd.unrestrictedTraverse(path)
     except KeyError:
-	return simplejson.dumps(response)
+	return json.dumps(response)
 
     # Get the list of reports under the class as (url, title) pairs
     reports = reportClass.reports()
@@ -179,7 +179,7 @@ def getJSONGraphList(self, path='/Device Reports',report='test'):
     result="%s</table></div>" % (result)
     row={'Report': result}
     response['data'].append(row)
-    return simplejson.dumps(response)
+    return json.dumps(response)
 
 ZentinelPortal.getJSONGraphList = getJSONGraphList
 

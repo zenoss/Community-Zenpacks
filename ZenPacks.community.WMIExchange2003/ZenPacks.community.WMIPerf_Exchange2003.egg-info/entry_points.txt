@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.WMIPerf_Exchange2003 = ZenPacks.community.WMIPerf_Exchange2003
+

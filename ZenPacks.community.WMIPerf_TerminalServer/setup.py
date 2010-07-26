@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.WMIPerf_TerminalServer"
-VERSION = "1.0"
-AUTHOR = "Johan Keskitalo"
+VERSION = "2.0"
+AUTHOR = "R.Esteve"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.WMIPerf_TerminalServer']
-INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=1.0']
-COMPAT_ZENOSS_VERS = ">=2.3"
+INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=2.7']
+COMPAT_ZENOSS_VERS = ">=3.0"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################
@@ -25,32 +25,30 @@ setup(
     version = VERSION,
     author = AUTHOR,
     license = LICENSE,
-
+    
     # This is the version spec which indicates what versions of Zenoss
     # this ZenPack is compatible with
     compatZenossVers = COMPAT_ZENOSS_VERS,
-
+    
     # previousZenPackName is a facility for telling Zenoss that the name
     # of this ZenPack has changed.  If no ZenPack with the current name is
     # installed then a zenpack of this name if installed will be upgraded.
-    prevZenPackName = PREV_ZENPACK_NAME,
-
+    prevZenPackName = PREV_ZENPACK_NAME, 
+    
     # Indicate to setuptools which namespace packages the zenpack
     # participates in
     namespace_packages = NAMESPACE_PACKAGES,
-
+    
     # Tell setuptools what packages this zenpack provides.
     packages = find_packages(),
-
+    
     # Tell setuptools to figure out for itself which files to include
     # in the binary egg when it is built.
     include_package_data = True,
-
+    
     # The MANIFEST.in file is the recommended way of including additional files
     # in your ZenPack. package_data is another.
-    package_data = {
-         '':['../COPYRIGHT.txt','../LICENSE.txt']
-         },
+    #package_data = {}
 
     # Indicate dependencies on other python modules or ZenPacks.  This line
     # is modified by zenoss when the ZenPack edit page is submitted.  Zenoss
@@ -67,5 +65,5 @@ setup(
     },
 
     # All ZenPack eggs must be installed in unzipped form.
-    zip_safe = False,
+    zip_safe = False,    
 )

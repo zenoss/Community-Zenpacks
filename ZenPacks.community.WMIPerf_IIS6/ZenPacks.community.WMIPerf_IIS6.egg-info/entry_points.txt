@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.WMIPerf_IIS6 = ZenPacks.community.WMIPerf_IIS6
+

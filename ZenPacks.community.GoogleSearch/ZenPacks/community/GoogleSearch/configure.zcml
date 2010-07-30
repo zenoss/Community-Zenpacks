@@ -1,0 +1,15 @@
+<!--
+    ######################################################################
+    #
+    # Copyright 2010 Zenoss, Inc.  All Rights Reserved.
+    #
+    ######################################################################
+-->
+
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:browser="http://namespaces.zope.org/browser">
+
+  <include package=".google"/>
+  
+</configure>

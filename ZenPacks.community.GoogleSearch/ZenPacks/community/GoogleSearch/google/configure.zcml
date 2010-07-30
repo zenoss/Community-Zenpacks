@@ -1,0 +1,16 @@
+<!--
+######################################################################
+#
+# Copyright 2010 Zenoss, Inc.  All Rights Reserved.
+#
+######################################################################
+-->
+
+<configure xmlns="http://namespaces.zope.org/zope">
+
+    <subscriber provides="Products.Zuul.search.ISearchProvider"
+        for="Products.ZenModel.DataRoot.DataRoot"
+        factory=".adapters.GoogleSearchProvider"
+        />
+
+</configure>

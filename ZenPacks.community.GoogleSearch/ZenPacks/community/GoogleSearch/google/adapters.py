@@ -19,7 +19,6 @@ from zope.interface import implements
 from Products.ZenModel.DataRoot import DataRoot
 from Products.Zuul.search import ISearchProvider
 from Products.Zuul.search import ISearchResult
-from search import GoogleSearch, SearchError
 
 def doMySearch( operators, keywords ):
     queryString = reconstructQueryString( operators, keywords )

@@ -13,13 +13,14 @@ __doc__="""WMIDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WMIDataSource.py,v 1.5 2010/06/13 19:39:29 egor Exp $"""
+$Id: WMIDataSource.py,v 1.6 2010/08/02 23:22:06 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenUtils.Utils import executeStreamCommand
+from Products.ZenWidgets import messaging
 from AccessControl import ClassSecurityInfo, Permissions
 
 import cgi, time

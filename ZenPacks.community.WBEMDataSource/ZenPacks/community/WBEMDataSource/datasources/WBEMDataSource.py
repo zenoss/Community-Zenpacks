@@ -13,13 +13,14 @@ __doc__="""WBEMDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WBEMDataSource.py,v 1.7 2010/06/13 19:37:31 egor Exp $"""
+$Id: WBEMDataSource.py,v 1.8 2010/08/02 23:23:22 egor Exp $"""
 
-__version__ = "$Revision: 1.7 $"[11:-2]
+__version__ = "$Revision: 1.8 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenUtils.Utils import executeStreamCommand
+from Products.ZenWidgets import messaging
 from AccessControl import ClassSecurityInfo, Permissions
 
 import cgi, time

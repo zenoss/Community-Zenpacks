@@ -3,8 +3,8 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.Memcached"
-VERSION = "1.0"
-AUTHOR = "Braudel Maqueira"
+VERSION = "1.1"
+AUTHOR = "B Maqueira"
 LICENSE = "GPLv2"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.Memcached']

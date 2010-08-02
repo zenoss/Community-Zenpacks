@@ -1,7 +1,8 @@
 """ 
     Memcached.py 
 
-    This library provides "memcached" & "memcachedStats" classes to access 
+    This library is part of the Zenpacks.community.Memcached zenpack by B Maqueira.
+    It provides "memcached" & "memcachedStats" classes to access 
     memcached statistics. It also provides utility classes to handle 
     custom error exceptions.
 
@@ -63,10 +64,10 @@ class memcachedStats(object):
         for statline in statsStack.split("\n"):
             st = statline.split(' ')
             if len(st) > 1:
-                if st[1] != 'version':
-                    self.stats[st[1]] = float(st[2])
-                else:
-                    self.stats[st[1]] = st[2]
+                try:
+                   self.stats[st[1]] = float(st[2])
+                except:
+                   self.stats[st[1]] = st[2]
 
         if self.stats.has_key('get_hits')\
             and self.stats.has_key('cmd_get')\

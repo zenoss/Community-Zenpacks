@@ -1,5 +1,10 @@
-__doc__='''MemcachedDatasource.py
-    Defines datasource for Memcached
+__doc__='''
+
+    MemcachedDatasource.py
+
+    Provides the MemcachedStats datasource for the Zenpacks.community.Memcached
+    zenpack by B Maqueira
+
 '''
 from Globals import InitializeClass
 import Products.ZenModel.BasicDataSource as BasicDataSource
@@ -20,7 +25,7 @@ class MemcachedDataSource(ZenPackPersistence, BasicDataSource.BasicDataSource):
     eventClass = '/Status/Memcached'
     component  = 'Memcached'
     hostname = '${dev/id}'
-    ipAddress = '${dev/managedIp}'
+    ipAddress = '${dev/manageIp}'
     port = 11211
 
     _properties = BasicDataSource.BasicDataSource._properties + (
@@ -28,8 +33,6 @@ class MemcachedDataSource(ZenPackPersistence, BasicDataSource.BasicDataSource):
         {'id':'ipAddress', 'type':'string', 'mode':'w'},
         {'id':'port', 'type':'int', 'mode':'w'},
         {'id':'timeout', 'type':'int', 'mode':'w'},
-        #{'id':'component', 'type':'string', 'mode':'w'},
-        #{'id':'eventClass', 'type':'string', 'mode':'w'},
         )
 
     _relations = BasicDataSource.BasicDataSource._relations + ()

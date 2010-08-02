@@ -3,7 +3,8 @@
 
     check_memcached.py 
 
-    This script connects to memcached instances and retrieves and parses
+    This script is part of the Zenpacks.community.Memcached by B Maqueira.
+    It connects to memcached instances and retrieves and parses
     the stats output
  
 """

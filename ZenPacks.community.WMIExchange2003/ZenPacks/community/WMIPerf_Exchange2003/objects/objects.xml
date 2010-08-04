@@ -516,7 +516,7 @@ True
 5
 </property>
 <tomanycont id='graphPoints'>
-<object id='AddressListsQueueLength' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Length' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -573,7 +573,7 @@ True
 7
 </property>
 <tomanycont id='graphPoints'>
-<object id='messagesDeliveredPermin' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Public - Delivered' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -599,7 +599,7 @@ Exchange Public Delivery_messagesDeliveredPermin
 AVERAGE
 </property>
 </object>
-<object id='messagesDeliveredPermin2' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Mailbox - Delivered' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 2
 </property>
@@ -628,7 +628,7 @@ Exchange Mailbox Delivery_messagesDeliveredPermin
 AVERAGE
 </property>
 </object>
-<object id='messagesSentPermin' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Public - Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -657,7 +657,7 @@ Exchange Public Delivery_messagesSentPermin
 AVERAGE
 </property>
 </object>
-<object id='messagesSentPermin2' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Mailbox - Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 3
 </property>
@@ -717,7 +717,7 @@ True
 6
 </property>
 <tomanycont id='graphPoints'>
-<object id='averageDeliveryTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Mailbox Delivery' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -743,7 +743,7 @@ Exchange Mailbox Delivery_averageDeliveryTime
 AVERAGE
 </property>
 </object>
-<object id='averageDeliveryTime2' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Public Average' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>

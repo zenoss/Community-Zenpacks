@@ -1,0 +1,46 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block 
+    tal:define="tableName string:nodesList;
+    objects here/nodes/objectValuesAll;
+    tabletitle string:Cluster Node Information;
+    batch python:here.ZenTableManager.getBatch(tableName,objects)">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+	      <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'nodeID', 'ID')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'nodeName','Name')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'nodeIP','IP Address')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'nodeStatus','Status')"/>
+    </tr>
+    <tal:block tal:repeat="gd batch">
+    <tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+	      <td class="tablevalues" tal:content="gd/nodeID"/>
+        <td class="tablevalues">
+	        <span tal:content="structure gd/urlLink"/>
+	        <span tal:condition="link" tal:omit-tag>
+            (<span tal:replace="structure gd/managedDeviceLink"/>)
+          </span>
+        </td>
+	      <td class="tablevalues" tal:content="gd/nodeIP"/>
+	      <td class="tablevalues" tal:content="gd/nodeStatus"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+

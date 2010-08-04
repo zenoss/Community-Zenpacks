@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'Cisco ASA') -->
-<object id='/zport/dmd/Devices/Network/rrdTemplates/Cisco ASA' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'Cisco ASA') -->
+<object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/Cisco ASA' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Cisco Adaptive Security Appliance (ASA) template, provides CPU utilization, Free Memory, Active VPN Tunnels, RAS Sessions, and IKE Dropped Packets.
+</property>
 <property type="text" id="description" mode="w" >
 Cisco Adaptive Security Appliance (ASA) template, provides CPU utilization, Free Memory, Active VPN Tunnels, RAS Sessions, and IKE Dropped Packets.
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
 </property>
 <tomanycont id='datasources'>
 <object id='cikeGlobalInDropPkts' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -28,8 +34,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
-<object id='Dropped In' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='cikeGlobalInDropPkts' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -61,8 +70,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
-<object id='Dropped Out' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='cikeGlobalOutDropPkts' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -94,8 +106,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
-<object id='CPU Utilization' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='cpu5min' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -127,8 +142,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
-<object id='Sessions' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='crasNumSessions' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -160,8 +178,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
-<object id='IKE' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='ikeGlobalActiveTunnels' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -193,8 +214,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
-<object id='IPSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='ipSecGlobalActiveTunnels' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -225,6 +249,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='mem5minFree' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -259,6 +286,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -271,102 +301,12 @@ True
 </tomanycont>
 </object>
 </tomanycont>
-<tomanycont id='graphs'>
-<object id='CPU Utilization' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['cpu5min_cpu5min']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-percentage
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Free Memory' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['mem5minFree_mem5minFree']
-</property>
-<property type="int" id="sequence" mode="w" >
-1
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-memory
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-True
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
 <tomanycont id='thresholds'>
 <object id='CPU' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
-['cpu5min_CPU Utilization']
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['cpu5min_cpu5min']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -376,17 +316,17 @@ True
 /Perf/CPU
 </property>
 <property type="int" id="severity" mode="w" >
-3
+4
 </property>
 <property type="int" id="escalateCount" mode="w" >
-0
+10
 </property>
 </object>
 <object id='Memory' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['mem5minFree_mem5minFree']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -453,7 +393,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-ikeGlobalActiveTunnels_IKE
+ikeGlobalActiveTunnels_ikeGlobalActiveTunnels
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -464,7 +404,7 @@ AVERAGE
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -482,7 +422,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-ipSecGlobalActiveTunnels_IPSec
+ipSecGlobalActiveTunnels_ipSecGlobalActiveTunnels
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -498,7 +438,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-percentage
+Percentage
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -507,7 +447,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -547,7 +487,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-cpu5min_CPU Utilization
+cpu5min_cpu5min
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -562,9 +502,6 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
-<property type="string" id="units" mode="w" >
-Memory
-</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -572,7 +509,7 @@ False
 True
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -640,7 +577,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -672,7 +609,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-cikeGlobalInDropPkts_Dropped In
+cikeGlobalInDropPkts_cikeGlobalInDropPkts
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -701,7 +638,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-cikeGlobalOutDropPkts_Dropped Out
+cikeGlobalOutDropPkts_cikeGlobalOutDropPkts
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -726,7 +663,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -758,7 +695,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-crasNumSessions_Sessions
+crasNumSessions_crasNumSessions
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -770,6 +707,9 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Cisco', 'products', '5505 ASA') -->
 <object id='/zport/dmd/Manufacturers/Cisco/products/5505 ASA' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property id='zendoc' type='string'>
+Cisco 5505 Adaptive Security Appliance
+</property>
 <property type="string" id="name" mode="w" >
 5505 ASA
 </property>
@@ -782,12 +722,12 @@ Cisco 5505 Adaptive Security Appliance
 <property type="boolean" id="isOS" mode="w" >
 False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/Firewall/devices/Cisco 5505 ASA/hw'/>
-</tomany>
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Cisco', 'products', '5510 ASA') -->
 <object id='/zport/dmd/Manufacturers/Cisco/products/5510 ASA' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property id='zendoc' type='string'>
+Cisco 5510 Adaptive Security Appliance
+</property>
 <property type="string" id="name" mode="w" >
 5510 ASA
 </property>
@@ -815,6 +755,9 @@ False
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Cisco', 'products', '5540 ASA') -->
 <object id='/zport/dmd/Manufacturers/Cisco/products/5540 ASA' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property id='zendoc' type='string'>
+Cisco 5540 Adaptive Security Appliance
+</property>
 <property type="string" id="name" mode="w" >
 5540 ASA
 </property>
@@ -830,6 +773,9 @@ False
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Cisco', 'products', '5550 ASA') -->
 <object id='/zport/dmd/Manufacturers/Cisco/products/5550 ASA' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property id='zendoc' type='string'>
+Cisco 5550 Adaptive Security Appliance
+</property>
 <property type="string" id="name" mode="w" >
 5550 ASA
 </property>
@@ -845,6 +791,9 @@ False
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Cisco', 'products', '5580-20 ASA') -->
 <object id='/zport/dmd/Manufacturers/Cisco/products/5580-20 ASA' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property id='zendoc' type='string'>
+Cisco 5580-20 Adaptive Security Appliance
+</property>
 <property type="string" id="name" mode="w" >
 5580-20 ASA
 </property>
@@ -860,6 +809,9 @@ False
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Cisco', 'products', '5580-40 ASA') -->
 <object id='/zport/dmd/Manufacturers/Cisco/products/5580-40 ASA' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property id='zendoc' type='string'>
+Cisco 5580-40 Adaptive Security Appliance
+</property>
 <property type="string" id="name" mode="w" >
 5580-40 ASA
 </property>
@@ -27169,5 +27121,21 @@ readonly
 </property>
 </object>
 </tomanycont>
+</object>
+<property id='zendoc' type='string'>
+Cisco 5580-40 Adaptive Security Appliance
+</property>
+<property type="string" id="name" mode="w" >
+5580-40 ASA
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['5580-40 ASA']
+</property>
+<property type="string" id="description" mode="w" >
+Cisco 5580-40 Adaptive Security Appliance
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
 </object>
 </objects>

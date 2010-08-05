@@ -2,14 +2,17 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'WMIPerfMSSQL2000') -->
 <object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/WMIPerfMSSQL2000' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Monitors MSSQL2000 Instance
+</property>
 <property type="text" id="description" mode="w" >
-Monitor MSSQL2000 Instance
+Monitors MSSQL2000 Instance
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
 </property>
 <tomanycont id='datasources'>
-<object id='DiscIOPS' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
+<object id='DiskIOPS' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 WMI
 </property>
@@ -23,10 +26,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name='_Total'
+SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='DiskReadsPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -61,10 +64,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT CacheHitRatio,CacheUseCountsPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}CacheManager WHERE Name='_Total'
+SELECT CacheHitRatio,CacheUseCountsPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}CacheManager WHERE Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='CacheHitRatio' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -99,7 +102,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT UserConnections FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}GeneralStatistics
@@ -129,7 +132,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT FullScansPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}AccessMethods
@@ -159,10 +162,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT LockRequestsPersec,LockTimeoutsPersec,LockWaitTimems,LockWaitsPersec,NumberofDeadLocksPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Locks WHERE Name='_Total'
+SELECT LockRequestsPersec,LockTimeoutsPersec,LockWaitTimems,LockWaitsPersec,NumberofDeadLocksPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Locks WHERE Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='LockRequestsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -221,10 +224,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT TransactionsPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Databases WHERE Name='_Total'
+SELECT TransactionsPersec FROM Win32_PerfRawData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Databases WHERE Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='TransactionsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -238,8 +241,70 @@ True
 </tomanycont>
 </object>
 </tomanycont>
+<tomanycont id='thresholds'>
+<object id='DeadLocks' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['SQLServer_Locks_NumberofDeadLocksPersec']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+1
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+5
+</property>
+</object>
+<object id='LockWait 3s' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['SQLServer_Locks_LockWaitTimems']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+3000
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+5
+</property>
+</object>
+<object id='LockWait' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['SQLServer_Locks_LockWaitTimems']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+1000
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+
+</property>
+</object>
+</tomanycont>
 <tomanycont id='graphDefs'>
-<object id='CacheHitRatio' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Cache Hit Ratio' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -253,7 +318,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -265,7 +330,33 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
-<object id='CacheUseCountsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Cache Hit Ratio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+SQLServer_CacheHitRatio_CacheHitRatio
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Cache Use Counts Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -294,32 +385,6 @@ SQLServer_CacheHitRatio_CacheUseCountsPersec
 AVERAGE
 </property>
 </object>
-<object id='HitRatio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-SQLServer_CacheHitRatio_CacheHitRatio
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 </tomanycont>
 </object>
 <object id='Disk IOPS' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
@@ -328,6 +393,9 @@ AVERAGE
 </property>
 <property type="int" id="width" mode="w" >
 500
+</property>
+<property type="string" id="units" mode="w" >
+IO/sec
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -345,7 +413,7 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='DiskReadsPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -356,7 +424,7 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%3.0lf
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -365,13 +433,13 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-DiscIOPS_DiskReadsPerSec
+DiskIOPS_DiskReadsPerSec
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
 </property>
 </object>
-<object id='DiskWritesPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -385,7 +453,7 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%3.0lf
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -397,7 +465,7 @@ ${graphPoint/id}
 -1,*
 </property>
 <property type="string" id="dpName" mode="w" >
-DiscIOPS_DiskWritesPerSec
+DiskIOPS_DiskWritesPerSec
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -405,7 +473,7 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='FullTableScansSec' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Full Table ScansSec' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -419,7 +487,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -431,7 +499,7 @@ True
 2
 </property>
 <tomanycont id='graphPoints'>
-<object id='FullScansPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Full Scans Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -459,7 +527,7 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='LockRequests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Lock Requests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -473,7 +541,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -485,7 +553,7 @@ True
 3
 </property>
 <tomanycont id='graphPoints'>
-<object id='LockRequestsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Requests Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -513,7 +581,7 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='LockWaitTime' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Lock Wait Time' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -523,11 +591,14 @@ AVERAGE
 <property type="boolean" id="log" mode="w" >
 False
 </property>
+<property type="string" id="units" mode="w" >
+ms
+</property>
 <property type="boolean" id="base" mode="w" >
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -539,7 +610,29 @@ True
 4
 </property>
 <tomanycont id='graphPoints'>
-<object id='LockWaitTimems' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='LocakWait 3s' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+LocakWait 3s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='LockWait' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+LockWait
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='Lock Wait Time' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -593,36 +686,7 @@ True
 5
 </property>
 <tomanycont id='graphPoints'>
-<object id='NumberofDeadLocksPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-2
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-SQLServer_Locks_NumberofDeadLocksPersec
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='TimeoutsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Timeouts Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -648,7 +712,7 @@ SQLServer_Locks_LockTimeoutsPersec
 AVERAGE
 </property>
 </object>
-<object id='WaitsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Waits Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -677,9 +741,38 @@ SQLServer_Locks_LockWaitsPersec
 AVERAGE
 </property>
 </object>
+<object id='Number of DeadLocks Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+SQLServer_Locks_NumberofDeadLocksPersec
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
 </tomanycont>
 </object>
-<object id='TransactionsPerSecond' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Transactions PerSecond' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -693,7 +786,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -705,7 +798,7 @@ True
 6
 </property>
 <tomanycont id='graphPoints'>
-<object id='TransactionsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Transactions Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -733,7 +826,7 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='UserConnections' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='User Connections' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -747,7 +840,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -759,9 +852,9 @@ True
 7
 </property>
 <tomanycont id='graphPoints'>
-<object id='UserConnections' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='User Connections' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -791,8 +884,11 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'WMIPerfMSSQL2005') -->
 <object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/WMIPerfMSSQL2005' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Monitors MSSQL2005 Instance
+</property>
 <property type="text" id="description" mode="w" >
-Monitor MSSQL2005 Instance
+Monitors MSSQL2005 Instance
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
@@ -812,10 +908,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name='_Total'
+SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='DiskReadsPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -850,7 +946,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT FullScansPersec,IndexSearchesPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}AccessMethods
@@ -888,10 +984,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT CacheHitRatio FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}CatalogMetadata where Name='_Total'
+SELECT CacheHitRatio FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}CatalogMetadata where Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='CacheHitRatio' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -918,10 +1014,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT DataFilesSizeKB,LogFilesSizeKB,TransactionsPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Databases where Name='_Total'
+SELECT DataFilesSizeKB,LogFilesSizeKB,TransactionsPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Databases where Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='DataFilesSizeKB' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -964,7 +1060,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT LoginsPersec,LogoutsPersec,UserConnections FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}GeneralStatistics
@@ -978,7 +1074,7 @@ GAUGE
 True
 </property>
 </object>
-<object id='Transactions' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<object id='LogoutsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -1010,10 +1106,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT LockRequestsPersec,LockTimeoutsPersec,LockWaitsPersec,LockWaitTimems,NumberofDeadlocksPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Locks where Name='_Total'
+SELECT LockRequestsPersec,LockTimeoutsPersec,LockWaitsPersec,LockWaitTimems,NumberofDeadlocksPersec FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Locks where Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='LockRequestsPersec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1072,7 +1168,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT TotalServerMemoryKB FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}MemoryManager
@@ -1102,7 +1198,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT LongestTransactionRunningTime FROM Win32_PerfFormattedData_MSSQL${dev/zSQLInstance}_MSSQL${dev/zSQLInstance}Transactions
@@ -1143,10 +1239,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-8
+1
 </property>
 <tomanycont id='graphPoints'>
-<object id='HitRatio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Cache Hit Ratio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1188,10 +1284,10 @@ KB
 False
 </property>
 <property type="boolean" id="base" mode="w" >
-True
+False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -1200,10 +1296,10 @@ True
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-7
+2
 </property>
 <tomanycont id='graphPoints'>
-<object id='DataFilesSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Data Files Size' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -1229,7 +1325,7 @@ SQLServer_Databases_DataFilesSizeKB
 AVERAGE
 </property>
 </object>
-<object id='LogFilesSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Log Files Size' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -1267,6 +1363,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+IO/sec
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -1283,7 +1382,7 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='DiskReadsPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -1294,7 +1393,7 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%3lf%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -1309,7 +1408,7 @@ DiscIOPS_DiskReadsPerSec
 AVERAGE
 </property>
 </object>
-<object id='DiskWritesPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -1323,7 +1422,7 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%3lf%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -1366,10 +1465,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-4
+3
 </property>
 <tomanycont id='graphPoints'>
-<object id='LockRequestsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Requests Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1395,7 +1494,7 @@ SQLServer_Locks_LockRequestsPersec
 AVERAGE
 </property>
 </object>
-<object id='LockTimeoutsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Timeouts Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -1424,7 +1523,7 @@ SQLServer_Locks_LockTimeoutsPersec
 AVERAGE
 </property>
 </object>
-<object id='LockWaitsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Waits Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 2
 </property>
@@ -1453,7 +1552,7 @@ SQLServer_Locks_LockWaitsPersec
 AVERAGE
 </property>
 </object>
-<object id='NumberofDeadlocksPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Number of Deadlocks Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 3
 </property>
@@ -1484,12 +1583,15 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='LocksWaitTime' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Locks WaitTime' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
 <property type="int" id="width" mode="w" >
 500
+</property>
+<property type="string" id="units" mode="w" >
+ms
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1501,16 +1603,16 @@ False
 -1
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+0
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-5
+4
 </property>
 <tomanycont id='graphPoints'>
-<object id='WaitTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Wait Time' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1552,24 +1654,24 @@ KB
 False
 </property>
 <property type="boolean" id="base" mode="w" >
-True
+False
 </property>
 <property type="int" id="miny" mode="w" >
-0
+-1
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+0
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-2
+5
 </property>
 <tomanycont id='graphPoints'>
-<object id='TotalServerMemory' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total Server Memory' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1621,7 +1723,7 @@ True
 6
 </property>
 <tomanycont id='graphPoints'>
-<object id='FullScansPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Full Scans Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1647,7 +1749,7 @@ SQLServer_AccessMethods_FullScansPersec
 AVERAGE
 </property>
 </object>
-<object id='IndexSearchesPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Index Searches Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -1701,68 +1803,13 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-3
+7
 </property>
 <tomanycont id='graphPoints'>
-<object id='LongestTransactionRunningTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-2
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-SQLServer_Transactions_LongestTransactionRunningTime
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Transactions' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Transactions Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-SQLServer_GeneralStatistics_Transactions
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='TransactionsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1788,9 +1835,35 @@ SQLServer_Databases_TransactionsPersec
 AVERAGE
 </property>
 </object>
+<object id='Longest Transaction Running Time' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+SQLServer_Transactions_LongestTransactionRunningTime
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
 </tomanycont>
 </object>
-<object id='UserConnections' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='User Connections' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -1804,7 +1877,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -1813,10 +1886,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-1
+8
 </property>
 <tomanycont id='graphPoints'>
-<object id='LoginsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Logins Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -1842,12 +1915,41 @@ SQLServer_GeneralStatistics_LoginsPersec
 AVERAGE
 </property>
 </object>
-<object id='UserConnections' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Logouts Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+SQLServer_GeneralStatistics_LogoutsPersec
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='User Connections' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1877,8 +1979,11 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'WMIPerfMSSQL2008') -->
 <object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/WMIPerfMSSQL2008' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Monitors MSSQL2008 Instance
+</property>
 <property type="text" id="description" mode="w" >
-Monitor MSSQL2008 Instance
+Monitors MSSQL2008 Instance
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
@@ -1898,10 +2003,10 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name='_Total'
+SELECT DiskReadsPerSec,DiskWritesPerSec FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE Name="_Total"
 </property>
 <tomanycont id='datapoints'>
 <object id='DiskReadsPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1936,7 +2041,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT Directhitratio,DirecthitsPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Cache
@@ -1974,7 +2079,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT Currentconnections,RequestsPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Connection
@@ -2012,7 +2117,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT Currentlocks,LatchwaitsPersec,LockRequestsPersec,LockWaitsPersec,Totaldeadlocksdetected FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Locks
@@ -2074,7 +2179,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT MemoryUsageKB,FilestoreReadsPersec,FilestoreWritesPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Memory
@@ -2120,7 +2225,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT Currentpartitions,RowsPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}ProcIndexes
@@ -2158,7 +2263,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT RowsconvertedPersec,RowsreadPersec,RowswrittenPersec FROM Win32_PerfFormattedData_MSOLAP${dev/zSQLInstance}_MSOLAP${dev/zSQLInstance}Processing
@@ -2192,7 +2297,7 @@ True
 </object>
 </tomanycont>
 <tomanycont id='graphDefs'>
-<object id='CacheHitRatio' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Cache Hit Ratio' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -2206,7 +2311,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2215,10 +2320,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-2
+1
 </property>
 <tomanycont id='graphPoints'>
-<object id='Directhitratio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Direct Hit Ratio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2244,7 +2349,7 @@ SQLServer_CacheHitRatio_Directhitratio
 AVERAGE
 </property>
 </object>
-<object id='DirecthitsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Direct Hits Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -2282,6 +2387,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+IO/sec
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -2298,10 +2406,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <tomanycont id='graphPoints'>
-<object id='ReadsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Filestore Reads Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -2327,7 +2435,7 @@ SQLServer_Memory_FilestoreReadsPersec
 AVERAGE
 </property>
 </object>
-<object id='WritesPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Filestore Writes Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -2368,6 +2476,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+IO/sec
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -2384,9 +2495,9 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='ReadsPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2395,7 +2506,7 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%3lf%
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -2410,12 +2521,12 @@ DiscIOPS_DiskReadsPerSec
 AVERAGE
 </property>
 </object>
-<object id='WritesPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2424,7 +2535,7 @@ AREA
 False
 </property>
 <property type="string" id="format" mode="w" >
-%5.2lf%s
+%3lf%s
 </property>
 <property type="string" id="legend" mode="w" >
 ${graphPoint/id}
@@ -2458,7 +2569,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2470,7 +2581,7 @@ True
 3
 </property>
 <tomanycont id='graphPoints'>
-<object id='LockRequestsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Requests Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2512,7 +2623,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2524,7 +2635,7 @@ True
 4
 </property>
 <tomanycont id='graphPoints'>
-<object id='Currentlocks' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Current Locks' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2550,7 +2661,7 @@ SQLServer_Locks_Currentlocks
 AVERAGE
 </property>
 </object>
-<object id='LatchwaitsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Latch Waits Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -2579,7 +2690,7 @@ SQLServer_Locks_LatchwaitsPersec
 AVERAGE
 </property>
 </object>
-<object id='LockWaitsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Lock Waits Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 2
 </property>
@@ -2608,7 +2719,7 @@ SQLServer_Locks_LockWaitsPersec
 AVERAGE
 </property>
 </object>
-<object id='Totaldeadlocksdetected' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Total Deadlocks Detected' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 3
 </property>
@@ -2653,7 +2764,7 @@ KB
 False
 </property>
 <property type="boolean" id="base" mode="w" >
-True
+False
 </property>
 <property type="int" id="miny" mode="w" >
 0
@@ -2665,12 +2776,12 @@ True
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-6
+5
 </property>
 <tomanycont id='graphPoints'>
-<object id='MemoryUsage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Memory Usage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -2696,7 +2807,7 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='Preformance' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Performance' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -2719,10 +2830,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-7
+6
 </property>
 <tomanycont id='graphPoints'>
-<object id='Indexes Currentpartitions' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Current Partitions' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2748,7 +2859,7 @@ SQLServer_ProcIndexes_Currentpartitions
 AVERAGE
 </property>
 </object>
-<object id='Indexes RowsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Rows Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
@@ -2777,7 +2888,7 @@ SQLServer_ProcIndexes_RowsPersec
 AVERAGE
 </property>
 </object>
-<object id='RowsconvertedPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Rows Converted Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 2
 </property>
@@ -2806,7 +2917,7 @@ SQLServer_Processing_RowsconvertedPersec
 AVERAGE
 </property>
 </object>
-<object id='RowsreadPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Rows Read Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 3
 </property>
@@ -2835,7 +2946,7 @@ SQLServer_Processing_RowsreadPersec
 AVERAGE
 </property>
 </object>
-<object id='RowswrittenPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Rows Written Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 4
 </property>
@@ -2883,16 +2994,16 @@ False
 -1
 </property>
 <property type="int" id="maxy" mode="w" >
--1
+0
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-5
+7
 </property>
 <tomanycont id='graphPoints'>
-<object id='Currentconnections' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Current Connections' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -2918,7 +3029,7 @@ SQLServer_ConnectedUsers_Currentconnections
 AVERAGE
 </property>
 </object>
-<object id='RequestsPersec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Requests Persec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>

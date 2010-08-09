@@ -1,1 +1,0 @@
-ZenPacks.community.WMIDataSource>=2.7

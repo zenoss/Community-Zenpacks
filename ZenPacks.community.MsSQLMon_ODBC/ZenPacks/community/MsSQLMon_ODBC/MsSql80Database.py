@@ -12,14 +12,29 @@ __doc__="""MsSql80Database
 
 MsSql80Database is a MS SQL 2000 Database
 
-$Id: MsSql80Database.py,v 1.1 2010/07/11 17:41:27 egor Exp $"""
+$Id: MsSql80Database.py,v 1.2 2010/08/10 22:36:02 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass
 
 from ZenPacks.community.RDBMS.Database import Database
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
+
+DOT_GREEN    = 'green'
+DOT_PURPLE   = 'purple'
+DOT_BLUE     = 'blue'
+DOT_YELLOW   = 'yellow'
+DOT_ORANGE   = 'orange'
+DOT_RED      = 'red'
+DOT_GREY     = 'grey'
+
+SEV_CLEAN    = 0
+SEV_DEBUG    = 1
+SEV_INFO     = 2
+SEV_WARNING  = 3
+SEV_ERROR    = 4
+SEV_CRITICAL = 5
 
 
 class MsSql80Database(Database):

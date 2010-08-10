@@ -12,14 +12,29 @@ __doc__="""MsSql90Database
 
 MsSql90Database is a MS SQL2005 Database
 
-$Id: MsSql90Database.py,v 1.1 2010/07/11 17:45:51 egor Exp $"""
+$Id: MsSql90Database.py,v 1.2 2010/08/10 22:36:37 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass
 
 from ZenPacks.community.RDBMS.Database import Database
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
+
+DOT_GREEN    = 'green'
+DOT_PURPLE   = 'purple'
+DOT_BLUE     = 'blue'
+DOT_YELLOW   = 'yellow'
+DOT_ORANGE   = 'orange'
+DOT_RED      = 'red'
+DOT_GREY     = 'grey'
+
+SEV_CLEAN    = 0
+SEV_DEBUG    = 1
+SEV_INFO     = 2
+SEV_WARNING  = 3
+SEV_ERROR    = 4
+SEV_CRITICAL = 5
 
 
 class MsSql90Database(Database):

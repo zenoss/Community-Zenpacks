@@ -620,7 +620,4 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Events', 'DB', 'MSSQL') -->
-<object id='/zport/dmd/Events/DB/MSSQL' module='Products.ZenEvents.EventClass' class='EventClass'>
-</object>
 </objects>

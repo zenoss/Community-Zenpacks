@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.Iwillfearnoevil.Domain"
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 AUTHOR = "Chris Hubbard"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Iwillfearnoevil']
 PACKAGES = ['ZenPacks', 'ZenPacks.Iwillfearnoevil', 'ZenPacks.Iwillfearnoevil.Domain']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = ">=2.2"
+COMPAT_ZENOSS_VERS = ">=3.0"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

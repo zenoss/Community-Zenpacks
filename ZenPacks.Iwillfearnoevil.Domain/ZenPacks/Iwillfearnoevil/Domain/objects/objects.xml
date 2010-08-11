@@ -7,6 +7,9 @@ True
 </property>
 <tomanycont id='rrdTemplates'>
 <object id='Device' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Default template to pull Domain expiration data.
+</property>
 <property type="text" id="description" mode="w" >
 Default template to pull Domain expiration data.
 </property>
@@ -59,10 +62,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Domain_notice' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['Domain_Days']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -151,6 +154,9 @@ ${graphPoint/id}
 <object id='SSL' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
 <tomanycont id='rrdTemplates'>
 <object id='Device' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Default template to pull Domain expiration data AND SSL certificate expirations.
+</property>
 <property type="text" id="description" mode="w" >
 Default template to pull Domain expiration data AND SSL certificate expirations.
 </property>
@@ -245,10 +251,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Domain_notice' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['Domain_Days']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -265,10 +271,10 @@ True
 </property>
 </object>
 <object id='SSL_notice' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['SSL_Check_Days']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >

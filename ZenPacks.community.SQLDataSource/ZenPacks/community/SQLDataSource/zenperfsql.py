@@ -12,9 +12,9 @@ __doc__="""zenperfsql
 
 PB daemon-izable base class for creating sql collectors
 
-$Id: zenperfsql.py,v 1.0 2010/06/14 09:10:26 egor Exp $"""
+$Id: zenperfsql.py,v 1.1 2010/08/12 23:00:42 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 import logging
 
@@ -214,55 +214,57 @@ class ZenPerfSqlTask(ObservableMixin):
 
         if not results: return None
         collectorName = self._preferences.collectorName
-        self._eventService.sendEvent(dict(
-            summary="Could not fetch data from source",
-            component=collectorName,
-            eventClass='/Status/PyDBAPI',
-            device=self._devId,
-            severity=Clear,
-            agent=collectorName,
-            ))
-        for tableName, data in results.iteritems():
-            for (dpname, comp, expr, rrdPath, rrdType, rrdCreate,
-                                        minmax) in self._datapoints[tableName]:
+        compstatus = {collectorName:Clear}
+        for tableName, dps in self._datapoints.iteritems():
+            for dpname, comp, expr, rrdPath, rrdType, rrdCreate, minmax in dps:
                 values = []
-                try:
-                    for d in data:
-                        if isinstance(d, Failure):
-                            self._failure(d, comp)
-                            continue
-                        if len(d) == 0: continue
-                        elif type(d[dpname]) is list:
-                            d[dpname] = d[dpname][0]
-                        elif isinstance(d[dpname], DateTime):
-                            d[dpname] = d[dpname]._t
-                        if expr:
-                            if expr.__contains__(':'):
-                                for vmap in expr.split(','):
-                                    var, val = vmap.split(':')
-                                    if var.strip('"') != d[dpname]: continue
-                                    d[dpname] = int(val)
-                                    break
-                            else:
-                                d[dpname] = rrpn(expr, d[dpname])
-                        values.append(d[dpname])
-                    if dpname.endswith('_count'): value = len(values)
-                    elif not values: continue
-                    elif len(values) == 1: value = values[0]
-                    elif dpname.endswith('_avg'):value = sum(values)/len(values)
-                    elif dpname.endswith('_sum'): value = sum(values)
-                    elif dpname.endswith('_max'): value = max(values)
-                    elif dpname.endswith('_min'): value = min(values)
-                    elif dpname.endswith('_first'): value = values[0]
-                    elif dpname.endswith('_last'): value = values[-1]
-                    else: value=sum(values)/len(values)
-                    self._dataService.writeRRD( rrdPath,
-                                                float(value),
-                                                rrdType,
-                                                rrdCreate,
-                                                min=minmax[0],
-                                                max=minmax[1])
-                except: continue
+                if comp not in compstatus: compstatus[comp] = Clear
+                for d in results.get(tableName, []):
+                    if isinstance(d, Failure):
+                        compstatus[comp] = d
+                        break
+                    if len(d) == 0: continue
+                    dpvalue = d.get(dpname, None)
+                    if dpvalue == None: continue
+                    elif type(dpvalue) is list: dpvalue = dpvalue[0]
+                    elif isinstance(dpvalue, DateTime): dpvalue = dpvalue._t
+                    if expr:
+                        if expr.__contains__(':'):
+                            for vmap in expr.split(','):
+                                var, val = vmap.split(':')
+                                if var.strip('"') != dpvalue: continue
+                                dpvalue = int(val)
+                                break
+                        else:
+                            dpvalue = rrpn(expr, dpvalue)
+                    values.append(dpvalue)
+                if dpname.endswith('_count'): value = len(values)
+                elif not values: continue
+                elif len(values) == 1: value = values[0]
+                elif dpname.endswith('_avg'):value = sum(values) / len(values)
+                elif dpname.endswith('_sum'): value = sum(values)
+                elif dpname.endswith('_max'): value = max(values)
+                elif dpname.endswith('_min'): value = min(values)
+                elif dpname.endswith('_first'): value = values[0]
+                elif dpname.endswith('_last'): value = values[-1]
+                else: value = sum(values) / len(values)
+                self._dataService.writeRRD( rrdPath,
+                                            float(value),
+                                            rrdType,
+                                            rrdCreate,
+                                            min=minmax[0],
+                                            max=minmax[1])
+        for comp, status in compstatus.iteritems():
+            if status == Clear:
+                self._eventService.sendEvent(dict(
+                    summary="Could not fetch data from source",
+                    component=comp,
+                    eventClass='/Status/PyDBAPI',
+                    device=self._devId,
+                    severity=Clear,
+                    agent=collectorName,
+                    ))
+            else: self._failure(status, comp)
         return results
 
 

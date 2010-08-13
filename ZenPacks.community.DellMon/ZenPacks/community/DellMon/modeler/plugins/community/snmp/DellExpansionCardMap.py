@@ -12,11 +12,12 @@ __doc__="""DellExpansionCardMap
 
 DellExpansionCardMap maps the pCIDeviceTable table to cards objects
 
-$Id: DellExpansionCardMap.py,v 1.1 2010/02/19 19:36:15 egor Exp $"""
+$Id: DellExpansionCardMap.py,v 1.2 2010/08/14 00:07:15 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 
 class DellExpansionCardMap(SnmpPlugin):
     """Map Dell System Management PCI table to model."""
@@ -89,9 +90,7 @@ class DellExpansionCardMap(SnmpPlugin):
                     om.snmpindex = oid.strip('.')
                 om.id = self.prepId("pci%s" % om.slot)
                 om._manuf = getattr(om, '_manuf', 'Unknown').split('(')[0].strip()
-                if not om._manuf.startswith(om._model.split()[0]):
-                    om._model = "%s %s" % (om._manuf, om._model)
-                om.setProductKey = om._model
+                om.setProductKey = MultiArgs(om._model, om._manuf)
             except AttributeError:
                 continue
             rm.append(om)

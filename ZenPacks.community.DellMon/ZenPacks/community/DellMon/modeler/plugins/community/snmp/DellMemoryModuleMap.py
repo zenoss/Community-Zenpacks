@@ -12,12 +12,13 @@ __doc__="""DellMemoryModuleMap
 
 DellMemoryModuleMap maps the memoryDeviceTable table to DellMemoryModule objects
 
-$Id: DellMemoryModuleMap.py,v 1.1 2010/02/19 20:09:25 egor Exp $"""
+$Id: DellMemoryModuleMap.py,v 1.2 2010/08/14 00:15:57 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 
 class DellMemoryModuleMap(SnmpPlugin):
     """Map Dell System Management Memory Module table to model."""
@@ -78,17 +79,18 @@ class DellMemoryModuleMap(SnmpPlugin):
                 om.id = self.prepId(getattr(om, '_location', 'Unknown').strip())
                 if hasattr(om, 'size'):
                     om.size = om.size * 1024
-                om.moduletype = self.moduletypes.get(getattr(om, 'moduletype', 1), '%s (%d)' % (self.moduletypes[1], om.moduletype))
+                om.moduletype = self.moduletypes.get(getattr(om, 'moduletype', 1),
+                                '%s (%d)' % (self.moduletypes[1], om.moduletype))
                 if om.size > 0:
                     model = []
-                    om._manuf = getattr(om, '_manuf', 'Unknown').split('(')[0].strip()
+                    om._manuf=getattr(om,'_manuf','Unknown').split('(')[0].strip()
                     if not om._manuf: om._manuf = 'Unknown'
                     model.append(om._manuf)
                     model.append(om.moduletype)
                     model.append(convToUnits(om.size))
                     if getattr(om, 'frequency', 0) > 0:
                         model.append("%sMHz" % getattr(om, 'frequency', 0))
-                    om.setProductKey = "%s" % " ".join(model)
+                    om.setProductKey = MultiArgs("%s" % " ".join(model), om._manuf)
                 else:
                     om.monitor = False
             except AttributeError:

@@ -12,12 +12,12 @@ __doc__="""DellHardDiskMap
 
 DellHardDiskMap maps the arrayDisktable to disks objects
 
-$Id: DellHardDiskMap.py,v 1.1 2009/02/19 20:02:04 egor Exp $"""
+$Id: DellHardDiskMap.py,v 1.2 2010/08/14 00:08:40 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
-import re
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap, GetMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 
 class DellHardDiskMap(SnmpPlugin):
     """Map Dell System Management Hard Disk table to model."""
@@ -77,8 +77,10 @@ class DellHardDiskMap(SnmpPlugin):
                 om = self.objectMap(disk)
                 chassis = location.get('chassis', 'Backplane')
                 om.id = self.prepId("%s %s" % (chassis, om.description))
-                om.description = "%s %s" % (getattr(om, '_manuf', 'Unknown'), getattr(om, '_model', 'hard disk'))
-                om.setProductKey = om.description
+                om._model = getattr(om, '_model', 'hard disk')
+                om._manuf = getattr(om, '_manuf', 'Unknown')
+                om.description = "%s %s" % (om._manuf, om._model)
+                om.setProductKey = MultiArgs(om._model, om._manuf)
                 om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
                 om.size = "%d" % (getattr(om, '_sizeM', 0) * 1048576 + getattr(om, 'size', 0))
             except AttributeError:

@@ -3,8 +3,8 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.WMIPerf_TerminalServer"
-VERSION = "2.0"
-AUTHOR = "R.Esteve"
+VERSION = "2.1"
+AUTHOR = "Johan Keskitalo,R.Esteve"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.WMIPerf_TerminalServer']

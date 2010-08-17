@@ -148,7 +148,7 @@ def manage_addRemoteMonitor(self, id, submon=None, REQUEST=None):
     daemons.close()
     setupRemoteMonitors([id,], self.commandTestOutput(), REQUEST, install=True)
     os.unlink('%s/daemons.txt'%zpDir)
-    self.dmd.Monitors.Performance[id].renderurl='http://%s:8090/%s'%(socket.getfqdn(),id)
+    self.dmd.Monitors.Performance[id].renderurl='http://%s:8091' % id
     if REQUEST:
         messaging.IMessageSender(self).sendToBrowser(
             'Remote Collector Created',

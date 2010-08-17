@@ -172,7 +172,7 @@ class WMIDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             command = "python %s -c \"%s\" -q \'%s\' -f \"%s\" -a \"%s\""%(
                                                 zp.path('%sClient.py'%tr),
                                                 str(url%creds),
-                                                inst,
+                                                inst.replace("'",'"'),
                                                 " ".join(properties.keys()),
                                                 " ".join(properties.values()))
             start = time.time()

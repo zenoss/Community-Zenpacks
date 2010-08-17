@@ -13,9 +13,9 @@ __doc__="""WBEMDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WBEMDataSource.py,v 1.8 2010/08/02 23:23:22 egor Exp $"""
+$Id: WBEMDataSource.py,v 1.9 2010/08/17 22:42:14 egor Exp $"""
 
-__version__ = "$Revision: 1.8 $"[11:-2]
+__version__ = "$Revision: 1.9 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -174,7 +174,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             command = "python %s -c \"%s\" -q \'%s\' -f \"%s\" -a \"%s\""%(
                                                 zp.path('%sClient.py'%tr),
                                                 str(url%creds),
-                                                inst,
+                                                inst.replace("'", '"'),
                                                 " ".join(properties.keys()),
                                                 " ".join(properties.values()))
             start = time.time()

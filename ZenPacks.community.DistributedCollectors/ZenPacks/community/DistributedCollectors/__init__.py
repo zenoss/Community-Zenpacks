@@ -170,7 +170,7 @@ def manage_updateRemoteMonitors(self, ids=None, submon="", REQUEST=None):
     os.unlink('%s/daemons.txt'%zpDir)
     if REQUEST:
         messaging.IMessageSender(self).sendToBrowser(
-            'Remote Collectors Updated'
+            'Remote Collectors Updated',
             'Updated remote collectors: %s' % (', '.join(ids))
         )
         return self.callZenScreen(REQUEST)

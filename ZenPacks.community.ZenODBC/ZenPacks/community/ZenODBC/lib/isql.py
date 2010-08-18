@@ -23,7 +23,7 @@
 #***************************************************************************
 
 __author__ = "Egor Puzanov"
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 import types, string, time, datetime, warnings, subprocess, os
 
 ### module constants
@@ -416,7 +416,8 @@ class isqlCnx:
 				while True:
 					line = self._cnx.stdout.readline()
 					if not line: break
-					if line.startswith('['): raise OperationalError, ('00000', line.strip())
+					if line.startswith('[ISQL]INFO:'): pass
+					elif line.startswith('['): raise OperationalError, ('00000', line.strip())
 					elif line.strip().endswith('</font>') and wr:
 						line = line.strip()[:-7]
 						if line != '</font>': tables[-1][-1].append(line.strip())

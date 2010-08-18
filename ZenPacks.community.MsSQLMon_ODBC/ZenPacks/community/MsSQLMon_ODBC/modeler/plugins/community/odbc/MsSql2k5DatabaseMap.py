@@ -12,9 +12,9 @@ __doc__="""MsSql2k5DatabaseMap.py
 
 MsSql2k5DatabaseMap maps the MSSQL 2005 Databases table to Database objects
 
-$Id: MsSqlDatabaseMap.py,v 1.1 2010/07/11 18:36:14 egor Exp $"""
+$Id: MsSqlDatabaseMap.py,v 1.2 2010/08/18 18:52:40 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
@@ -76,7 +76,7 @@ class MsSql2k5DatabaseMap(OdbcPlugin):
                 om = self.objectMap(database)
                 if not dbsize.get(om.dbname): om.monitor = False
                 om.id = self.prepId(om.dbname)
-                om.type = types.get(getattr(on, 'type' , 1), types[1])
+                om.type = types.get(getattr(om, 'type' , 1), types[1])
                 om.blockSize = 8192
                 om.totalBlocks = dbsize.get(om.dbname, 0) / om.blockSize
             except AttributeError:

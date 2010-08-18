@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.MsSQLMon_ODBC"
-VERSION = "2.2"
+VERSION = "2.3"
 AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
@@ -65,5 +65,5 @@ setup(
     },
 
     # All ZenPack eggs must be installed in unzipped form.
-    zip_safe = False,    
+    zip_safe = False,
 )

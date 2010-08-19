@@ -2,8 +2,15 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'MRW') -->
 <object id='/zport/dmd/Devices/Network/rrdTemplates/MRW' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+MRW SNR Count
+Note: install Net::Telnet perl module
+ (execute first  perl -MCPAN -e shell)
+</property>
 <property type="text" id="description" mode="w" >
 MRW SNR Count
+Note: install Net::Telnet perl module
+ (execute first  perl -MCPAN -e shell)
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
@@ -23,7 +30,8 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/usr/bin/perl /monitoring/zenoss/libexec/check_MRW.pl  ${device/manageIp} ${device/zCommandPassword}  |sed -e '1,6d' |sed -e '3,9d' |  tr -d '\n' |sed -e s/Mbps//g |sed 's/[ \t]*//g' | tr ',' ' '
+/usr/bin/perl /opt/zenoss/ZenPacks/ZenPacks.AndreaConsadori.MRV/ZenPacks/AndreaConsadori/MRV/libexec/check_MRW.pl  ${device/manageIp} ${device/zCommandPassword} |sed -e '1,6d' |sed -e '3,9d' | sed -e s/Mbps//g |sed 's/[ \t]*//g' | tr ',' ' ' |  tr '\n' ' '
+
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -69,13 +77,49 @@ True
 </object>
 </tomanycont>
 </object>
+<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.1.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='SNR_LOW' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
-['LinkQuality_AckSignalStrength', 'LinkQuality_RxSignalStrength']
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['LinkQuality_RxSignalStrength']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -245,7 +289,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+RxSignalStrength
 </property>
 <property type="long" id="limit" mode="w" >
 -1

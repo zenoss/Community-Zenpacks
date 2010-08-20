@@ -13,17 +13,17 @@
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 
-class RaytalkDeviceMap(SnmpPlugin):
+class RaytalkCPEDeviceMap(SnmpPlugin):
     """Map mib elements from Raytalk mib to get hw and os products.
     """
 
-    maptype = "RaytalkDeviceMap" 
+    maptype = "RaytalkCPEDeviceMap" 
 
     snmpGetMap = GetMap({ 
-        '.1.2.840.10036.1.1.1.9.0' : 'manufacturer',
-        '.1.2.840.10036.3.1.2.1.3.0' : 'setHWProductKey',
+       # 'Raytalk' : 'manufacturer',
+       # 'cpe2.4' : 'setHWProductKey',
        # '.1.2.840.10036.1.1.1.1.0' : 'setHWSerialNumber',
-        '.1.2.840.10036.3.1.2.1.4.0': 'setOSProductKey',
+       # '.1.2.840.10036.3.1.2.1.4.0': 'setOSProductKey',
          })
 
 

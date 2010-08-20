@@ -2,139 +2,10 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'Raytalk MHAN-Z') -->
 <object id='/zport/dmd/Devices/Network/rrdTemplates/Raytalk MHAN-Z' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
 <tomanycont id='datasources'>
-<object id='RX Dropped packets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.8433.1.1.5.3.1.1.13.1
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='RX Dropped packets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='RX packets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.8433.1.1.5.3.1.1.9.1
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='Rx packets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='TX Dropped packets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.8433.1.1.5.3.1.1.12.1
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='Tx Dropped packets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='Tx packets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.8433.1.1.5.3.1.1.8.1
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='Tx packets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
 <object id='quality' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 COMMAND
@@ -157,6 +28,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='quality' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -168,149 +42,66 @@ True
 </object>
 </tomanycont>
 </object>
-</tomanycont>
-<tomanycont id='graphDefs'>
-<object id='Statistiche Bridge' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
-<property type="int" id="height" mode="w" >
-100
+<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-packets
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
+<property type="boolean" id="enabled" mode="w" >
 True
 </property>
-<tomanycont id='graphPoints'>
-<object id='RX Dropped packets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-RX Dropped packets_RX Dropped packets
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Rx packets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-RX packets_Rx packets
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Tx Dropped packets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-2
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-TX Dropped packets_Tx Dropped packets
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Tx packets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
+<property type="int" id="severity" mode="w" >
 3
 </property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
-<property type="long" id="lineWidth" mode="w" >
-1
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.1.3.0
 </property>
-<property type="boolean" id="stacked" mode="w" >
+<property type="boolean" id="usessh" mode="w" >
 False
 </property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
+<tomanycont id='datapoints'>
+<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
 </property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-Tx packets_Tx packets
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='Link quality low' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['quality_quality']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+55
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Unknown
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
 <object id='link quality' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
@@ -332,9 +123,6 @@ False
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
-</property>
-<property type="long" id="sequence" mode="w" >
-1
 </property>
 <tomanycont id='graphPoints'>
 <object id='quality' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>

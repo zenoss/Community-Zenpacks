@@ -1,17 +1,119 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Firewall', 'Netasq') -->
-<object id='/zport/dmd/Devices/Network/Firewall/Netasq' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
-<property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.snmp.InterfaceMap', 'NetasqDeviceMap', 'zenoss.snmp.IpServiceMap', 'zenoss.snmp.HRFileSystemMap', 'zenoss.snmp.HRSWInstalledMap', 'zenoss.snmp.HRSWRunMap']
-</property>
-<property visible="True" type="string" id="zInterfaceMapIgnoreNames" >
-^lo|^ng|^vlan
-</property>
-</object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'Netasq System Performance') -->
 <object id='/zport/dmd/Devices/Network/rrdTemplates/Netasq System Performance' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
 <tomanycont id='datasources'>
+<object id='CpuIdle' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2021.11.11.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='CpuIdle' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='CpuSystem' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2021.11.10.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='CpuSystem' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='CpuUser' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.2021.11.9.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='CpuUser' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
 <object id='Mem_Aviable_Swap' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 SNMP
@@ -33,6 +135,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='Mem_Aviable_Swap' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -62,10 +167,13 @@ True
 300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.2021.4.14.0
+1.3.6.1.4.1.2021.4.15.0
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='Mem_Cached' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -100,6 +208,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='Mem_Minimum_Swap' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -132,6 +243,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='Mem_Shared' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -166,6 +280,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='Mem_Total_Free' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -199,73 +316,11 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='Mem_Total_Swap' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='Ping' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-/bin/ping -n -q -c 2 ${device/manageIp} | sed -n -e '/loss/p' -e '/rtt/p' | sed -e 's/.*\([0-9].*.% packet loss\).*/PING OK|loss=\1/;s/[0-9] received//;s/%//;s/, //;s/packet loss//' -e 's/rtt min\/avg\/max\/mdev = /min=/;s/ ms//;s/\// avg=/;s/\// max=/;s/\// mdev=/' | sed '/$$/ {;N;s/\n//}'
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<tomanycont id='datapoints'>
-<object id='avg' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='loss' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='max' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='mdev' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='min' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -296,6 +351,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='asqd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -330,6 +388,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='clamavd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -362,6 +423,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='user' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -396,6 +460,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='host' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -428,6 +495,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='dhclient' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -462,6 +532,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='dhcpd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -494,6 +567,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='dhcprelay' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -528,6 +604,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='dns' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -560,6 +639,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='eventd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -594,6 +676,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='hardwared' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -626,6 +711,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='l2tpd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -660,6 +748,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='ldap' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -692,6 +783,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='mpd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -726,6 +820,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='ntp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -758,6 +855,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='racoond' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -792,6 +892,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='serverd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -824,6 +927,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='sld' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -858,6 +964,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='snmpd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -890,6 +999,9 @@ True
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='sshd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -924,6 +1036,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -957,6 +1072,9 @@ True
 <property type="boolean" id="usessh" mode="w" >
 False
 </property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
 <tomanycont id='datapoints'>
 <object id='tproxyd' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
@@ -970,7 +1088,7 @@ True
 </object>
 </tomanycont>
 <tomanycont id='graphDefs'>
-<object id='Latency' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Cpu' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -993,105 +1111,24 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-2
-</property>
-<tomanycont id='graphPoints'>
-<object id='avg' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-Ping_avg
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='loss' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-Ping_loss
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='max' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-2
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-Ping_max
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='mdev' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
 3
 </property>
+<tomanycont id='graphPoints'>
+<object id='CpuIdle' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property type="string" id="color" mode="w" >
+CCCCCC
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
 </property>
 <property type="boolean" id="stacked" mode="w" >
-False
+True
 </property>
 <property type="string" id="format" mode="w" >
 %5.2lf%s
@@ -1103,24 +1140,24 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Ping_mdev
+CpuIdle_CpuIdle
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
 </property>
 </object>
-<object id='min' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='CpuSystem' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-4
+1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
 </property>
 <property type="boolean" id="stacked" mode="w" >
-False
+True
 </property>
 <property type="string" id="format" mode="w" >
 %5.2lf%s
@@ -1132,7 +1169,33 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-Ping_min
+CpuSystem_CpuSystem
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='CpuUser' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+True
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+CpuUser_CpuUser
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1163,7 +1226,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-3
+2
 </property>
 <tomanycont id='graphPoints'>
 <object id='auth_user_user' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -2025,3022 +2088,2279 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Mibs', 'Netasq') -->
-<object id='/zport/dmd/Mibs/Netasq' module='Products.ZenModel.MibOrganizer' class='MibOrganizer'>
-<tomanycont id='mibs'>
-<object id='NETASQ-ALARM-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'Mfiltro') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/Mfiltro' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
 </property>
-<tomanycont id='nodes'>
-<object id='ntqADaddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
+<tomanycont id='datasources'>
+<object id='Cpu_1000' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.6
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="description" mode="w" >
-destination IP address
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqADif' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.3
+1.3.6.1.4.1.25194.1.1.2.1.1.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-destination interface
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='Cpu_1000' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
 </property>
-</object>
-<object id='ntqADname' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.10
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP destination name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqADport' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.8
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Destination port
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-row
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Alarm table entry
-</property>
-</object>
-<object id='ntqAIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.0
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Index of each line in table
-</property>
-<property type="string" id="access" mode="w" >
-noaccess
-</property>
-</object>
-<object id='ntqAMessage' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.11
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Alarm Message
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAProto' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP protocol
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqASaddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.5
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-source IP adress
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqASif' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-source interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqASname' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.9
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP source name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqASport' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.7
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Source port
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqATable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Alarm Table
-</property>
-</object>
-<object id='ntqATime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.0.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-alarm date
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpCode' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.7
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-ICMP code
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpDaddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.5
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP destination address
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpDif' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-destination interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpDname' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.9
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP destination name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-row
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Entry in the ntqAicmpTable.
-</property>
-</object>
-<object id='ntqAicmpIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.0
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-A unique value for phase one table.  Its value
-ranges between 1 and 65535 and may not be contigous. 
-the index has no other meaning but a pure index
-</property>
-<property type="string" id="access" mode="w" >
-noaccess
-</property>
-</object>
-<object id='ntqAicmpMessage' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.10
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Alarm message
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpSaddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP source address
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpSif' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-source interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpSname' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.8
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP source name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-ICMP alarm table
-</property>
-</object>
-<object id='ntqAicmpTime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Alarm date
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAicmpType' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5.1.1.6
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-ICMP type
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-</tomanycont>
-<tomanycont id='notifications'>
-<object id='ntqNotification' module='Products.ZenModel.MibNotification' class='MibNotification'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-ALARM-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-notification
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.6.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-notification
-</property>
-<property type="lines" id="objects" mode="w" >
-{'ntqASif': {'nodetype': 'object', 'module': 'NETASQ-ALARM-MIB'}, 'ntqATime': {'nodetype': 'object', 'module': 'NETASQ-ALARM-MIB'}, 'ntqADaddr': {'nodetype': 'object', 'module': 'NETASQ-ALARM-MIB'}, 'ntqASaddr': {'nodetype': 'object', 'module': 'NETASQ-ALARM-MIB'}, 'ntqAMessage': {'nodetype': 'object', 'module': 'NETASQ-ALARM-MIB'}}
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-AUTHUSERS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='available' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqAuthUsersEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTHUSERS-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-row
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.2.1.1
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqAuthUsersTable holds a set of information (IP, username, and timeout).
-</property>
-</object>
-<object id='ntqAuthUsersIPAddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTHUSERS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.2.1.1.1
+1.3.6.1.4.1.25194.1.1.2.2.1.1.1.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-IP Adress of the authentificated user
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='available' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
 </property>
-</object>
-<object id='ntqAuthUsersName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTHUSERS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.2.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Username
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAuthUsersTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTHUSERS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.2.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-List of authentified users
-</property>
-</object>
-<object id='ntqAuthUsersTimeOut' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTHUSERS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.2.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Timeout
-</property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-AUTOUPDATE-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='bannerHams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqAutoupdateEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTOUPDATE-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-row
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9.1.1
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqAutoupdateTable holds a set of information (subsystem, state, last run).
-</property>
-</object>
-<object id='ntqAutoupdateIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTOUPDATE-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9.1.1.1
+1.3.6.1.4.1.25194.1.1.3.1.2.4.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-A unique value for the table.  Its value
-ranges between 1 and 65535 and may not be contigous. 
-the index has no other meaning but a pure index
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='bannerHams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-</object>
-<object id='ntqAutoupdateLast' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTOUPDATE-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9.1.1.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Date of the last update of a subsystem
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAutoupdateState' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTOUPDATE-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-state of the update of a subsystem
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAutoupdateSubsys' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTOUPDATE-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Subsystem name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqAutoupdateTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-AUTOUPDATE-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-State of autoupdate subsystems
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-HOSTS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='bannerSpams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.5
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-total byte count (incoming + outgoing)
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqConn' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.6
+1.3.6.1.4.1.25194.1.1.3.1.2.5.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-current connection count
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='bannerSpams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-</object>
-<object id='ntqCurThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.7
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-current throughput
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqHostIPAddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-IP Adress of the host
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqHostName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Hostname
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqHostsEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-row
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqHostsTable holds a set of information.
-</property>
-</object>
-<object id='ntqHostsTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-List of hosts
-</property>
-</object>
-<object id='ntqInBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.9
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-total incoming byte count
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqInCurThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.11
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-current incoming throughput
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqInMaxThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.13
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Maximum incoming throughput
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqInterface' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqMaxThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.8
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Maximum throughput
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqOutBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.10
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-total incoming byte count
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqOutCurThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.12
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-current outgoing throughput
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqOutMaxThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.14
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Maximum outgoing throughput
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqPackets' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-HOSTS-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3.1.1.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-total packet count
-</property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-IF-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='bannerVirus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqifAddr' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.4
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Interface Adress
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifColor' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.7
+1.3.6.1.4.1.25194.1.1.3.1.2.6.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-</object>
-<object id='ntqifCurThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
+<tomanycont id='datapoints'>
+<object id='bannerVirus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.9
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-incoming + outgoing current throughput in b/s 
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-row
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqifTable holds a set of information.
-</property>
-</object>
-<object id='ntqifIOutIcmpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.36
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Outgoing ICMP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifIcmpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.20
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-incoming + outgoing ICMP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifInCurThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.25
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Incoming Current throughput in b/s 
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifInIcmpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.35
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Incoming ICMP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifInMaxThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.27
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Incoming maximum throughput in b/s
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifInTcpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.31
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Incoming TCP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifInTotalBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.29
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Incoming data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifInUdpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.33
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Incoming UDP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-A unique value for the table.  Its value
-ranges between 1 and 65535 and may not be contigous. 
-the index has no other meaning but a pure index
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifMacThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.8
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
- 
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifMask' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.5
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Interface mask
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifMaxThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.10
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-incoming + outgoing maximum throughput in b/s
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-System interface name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifOutCurThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.26
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Outgoing Current throughput in b/s 
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifOutMaxThroughput' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.28
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Outgoing maximum throughput in b/s
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifOutTcpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.32
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Outgoing TCP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifOutTotalBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.30
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Outgoing data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifOutUdpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.34
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Outgoing UDP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifPktAccepted' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.11
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-number of accepted packets
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifPktBlocked' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.12
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-number of packets that have been blocked
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifPktFragmented' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.13
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-number of fragmented packets
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifPktIcmp' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.16
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-ICMP packet forwarded
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifPktTcp' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.14
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-TCP packet forwarded
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifPktUdp' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.15
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-UDP packet forwarded
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-List of interface
-</property>
-</object>
-<object id='ntqifTcpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.18
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-incoming + outgoing TCP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifTcpConn' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.21
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-TCP connection established
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifTcpConnCount' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.23
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-current TCP connection count
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifTotalBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.17
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-data bytes forwarded
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifType' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.6
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Interface type
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifUdpBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.19
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-incoming + outgoing UDP data bytes
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifUdpConn' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.22
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-UDP connection established
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifUdpConnCount' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.24
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-current UCP connection count
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqifUserName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-IF-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-User interface name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-POLICY-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='contentHams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqPolicyActive' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1.1.4
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Index of the currently active slot for the current policy
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqPolicyEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-row
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1.1
+1.3.6.1.4.1.25194.1.1.3.1.1.1.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqPolicyTable holds a set of information (name, active index).
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-</object>
-<object id='ntqPolicyIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
+<tomanycont id='datapoints'>
+<object id='contentHams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1.1.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-A unique value for the table.  Its value
-ranges between 1 and 65535 and may not be contigous. 
-the index has no other meaning but a pure index
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqPolicyName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Policy name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqPolicySlotName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Slot name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqPolicySync' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1.1.5
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Sync
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqPolicyTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-POLICY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-List of policies
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-PROPERTY-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='contentSpams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqClone' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-scalar
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.14
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Firewall Led
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqHADialup' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.15
+1.3.6.1.4.1.25194.1.1.3.1.1.2.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Firewall Led
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='contentSpams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-</object>
-<object id='ntqLed' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.13
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Firewall Led
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqModel' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewall model 
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqNbDialup' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.8
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Number of Dialup
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqNbEther' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.6
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Number of ethernet interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqNbLoopback' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.11
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Number of loopback interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqNbPPTP' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.9
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Number of PPTP
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqNbSerial' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.10
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Number of serial port
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqNbVlan' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.7
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Number of VLAN interface
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqSerialNumber' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewall serial number
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqSystemLanguage' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.5
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Firewall language
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqSystemName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewall system Name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqVersion' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewal version
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqWatchdog' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-PROPERTY-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0.12
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Watchdog
-</property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-SERVICES-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='contentVirus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqServicesEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SERVICES-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-row
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7.1.1
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqServicesTable holds a set of information (Service name, status, and uptime).
-</property>
-</object>
-<object id='ntqServicesIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SERVICES-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7.1.1.1
+1.3.6.1.4.1.25194.1.1.3.1.1.3.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-A unique value for the table.  Its value
-ranges between 1 and 65535 and may not be contigous. 
-the index has no other meaning but a pure index
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='contentVirus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-</object>
-<object id='ntqServicesName' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SERVICES-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7.1.1.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Service name
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqServicesState' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SERVICES-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7.1.1.3
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-State value can be 0/1 according as the service is down/up
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqServicesTable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SERVICES-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-table
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7.1
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-List of running services
-</property>
-</object>
-<object id='ntqServicesUptime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SERVICES-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-column
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7.1.1.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Uptime
-</property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-SMI-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv1
+<object id='dataHams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='netasq' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-node
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256
+<property type="int" id="severity" mode="w" >
+3
 </property>
-</object>
-<object id='netasqMIB' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1
+1.3.6.1.4.1.25194.1.1.3.1.2.7.0
 </property>
-</object>
-<object id='ntqAlarm' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="nodetype" mode="w" >
-node
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.5
+<tomanycont id='datapoints'>
+<object id='dataHams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-</object>
-<object id='ntqAutoupdate' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.9
-</property>
-</object>
-<object id='ntqHosts' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.3
-</property>
-</object>
-<object id='ntqNotifications' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.6
-</property>
-</object>
-<object id='ntqPolicy' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.8
-</property>
-</object>
-<object id='ntqProductProperty' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.0
-</property>
-</object>
-<object id='ntqServices' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.7
-</property>
-</object>
-<object id='ntqSystemMonitor' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.10
-</property>
-</object>
-<object id='ntqUsers' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.2
-</property>
-</object>
-<object id='ntqVPN' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1
-</property>
-</object>
-<object id='ntqif' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SMI-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-node
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.4
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-SYSTEM-MONITOR-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='dataSpams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqDate' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SYSTEM-MONITOR-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-scalar
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
 </property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.10.1
+<property type="int" id="severity" mode="w" >
+3
 </property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewall current date (%Y-%m-%d %T)
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqMem' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SYSTEM-MONITOR-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.10.3
+1.3.6.1.4.1.25194.1.1.3.1.2.8.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Netasq Firewall memory left for in percent (host,frag,icmp,conn,dtrack,dyn)
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='dataSpams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
 </property>
-</object>
-<object id='ntqStatTime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SYSTEM-MONITOR-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.10.4
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewall last stat time (%Y-%m-%d %T)
-</property>
-<property type="string" id="access" mode="w" >
-readonly
-</property>
-</object>
-<object id='ntqUptime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-SYSTEM-MONITOR-MIB
-</property>
-<property type="string" id="nodetype" mode="w" >
-scalar
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.10.2
-</property>
-<property type="string" id="status" mode="w" >
-current
-</property>
-<property type="string" id="description" mode="w" >
-Netasq Firewal system running for day:hour:min:sec
-</property>
-<property type="string" id="access" mode="w" >
-readonly
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
 </tomanycont>
 </object>
-<object id='NETASQ-VPNSA-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
-<property type="string" id="language" mode="w" >
-SMIv2
+<object id='dataVirus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<tomanycont id='nodes'>
-<object id='ntqVPNAuth' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+<property type="boolean" id="enabled" mode="w" >
+True
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.10
+1.3.6.1.4.1.25194.1.1.3.1.2.9.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Auth
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='dataVirus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='heloEhloHams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.13
+1.3.6.1.4.1.25194.1.1.3.1.2.10.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Bytes
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='heloEhloHams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNEnc' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='heloEhloSpams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.9
+1.3.6.1.4.1.25194.1.1.3.1.2.11.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Enc
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='heloEhloSpams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNIPDst' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='heloEhloVirus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.3
+1.3.6.1.4.1.25194.1.1.3.1.2.12.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-IP destination
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='heloEhloVirus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNIPSrc' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='mailFromHams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.2
+1.3.6.1.4.1.25194.1.1.3.1.2.13.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-IP source
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='mailFromHams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNLifetime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='mailFromSpams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.12
+1.3.6.1.4.1.25194.1.1.3.1.2.14.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Lifetime
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='mailFromSpams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNMaxBytes' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='mailFromVirus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.15
+1.3.6.1.4.1.25194.1.1.3.1.2.15.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-MaxBytes
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='mailFromVirus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNMaxLifetime' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='msgDropped-2s' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.14
+1.3.6.1.4.1.25194.1.1.1.1.4.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-MaxLifetime
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='msgDropped-2s' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNMode' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='msgReceived-2s' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.5
+1.3.6.1.4.1.25194.1.1.1.1.5.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Mode
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='msgReceived-2s' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNPeerSpi' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='msgSent-2s' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.7
+1.3.6.1.4.1.25194.1.1.1.1.9.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Secure property index
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='msgSent-2s' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNReqID' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='msgStored-2s' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.8
+1.3.6.1.4.1.25194.1.1.1.1.11.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-ReqID
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='msgStored-2s' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNSAEntry' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='rcptToHams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-row
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1
+1.3.6.1.4.1.25194.1.1.3.1.2.16.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Each entry in the ntqVPNSATable holds a set of parameters.
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='rcptToHams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNSAIndex' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='rcptToSpams' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.1
+1.3.6.1.4.1.25194.1.1.3.1.2.17.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-A unique value for phase one table.  Its value
-ranges between 1 and 65535 and may not be contigous. 
-the index has no other meaning but a pure index
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='rcptToSpams' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNSATable' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='rcptToVirus' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-table
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1
+1.3.6.1.4.1.25194.1.1.3.1.2.18
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-List of Security Association
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='rcptToVirus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNSpi' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='sMTPData' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.6
+1.3.6.1.4.1.25194.1.1.1.2.1.1.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Secure property index
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='sMTPData' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNState' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='smtpout-2' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.11
+1.3.6.1.4.1.25194.1.1.1.3.3.3.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-VPN State
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='smtpout-2' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
 </property>
 </object>
-<object id='ntqVPNType' module='Products.ZenModel.MibNode' class='MibNode'>
-<property type="string" id="moduleName" mode="w" >
-NETASQ-VPNSA-MIB
+</tomanycont>
+</object>
+<object id='sysUpTime' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
 </property>
-<property type="string" id="nodetype" mode="w" >
-column
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.11256.1.1.1.1.4
+1.3.6.1.2.1.1.3.0
 </property>
-<property type="string" id="status" mode="w" >
-current
+<property type="boolean" id="usessh" mode="w" >
+False
 </property>
-<property type="string" id="description" mode="w" >
-Type
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
-<property type="string" id="access" mode="w" >
-readonly
+<tomanycont id='datapoints'>
+<object id='sysUpTime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='total' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25194.1.1.2.2.1.1.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='total' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='used' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25194.1.1.2.2.1.1.3.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='used' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='usedpercent' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25194.1.1.2.2.1.1.4.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='usedpercent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='userCPU_1000' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25194.1.1.2.1.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='userCPU_1000' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='workflowData' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.25194.1.1.1.2.1.2.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='workflowData' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Cpu' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+8
+</property>
+<tomanycont id='graphPoints'>
+<object id='1000_Cpu_1000' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Cpu_1000_Cpu_1000
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='1000_userCPU_1000' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+userCPU_1000_userCPU_1000
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Global Statistic' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+6
+</property>
+<tomanycont id='graphPoints'>
+<object id='msgDropped-2s' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+msgDropped-2s_msgDropped-2s
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='msgReceived-2s' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+msgReceived-2s_msgReceived-2s
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='msgSent-2s' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+msgSent-2s_msgSent-2s
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='msgStored-2s' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+msgStored-2s_msgStored-2s
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='smtpout-2' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+smtpout-2_smtpout-2
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='IMP-Content' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+5
+</property>
+<tomanycont id='graphPoints'>
+<object id='contentHams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+contentHams_contentHams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='contentSpams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+contentSpams_contentSpams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='contentVirus' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+contentVirus_contentVirus
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='SMTP-Banner' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='bannerHams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+bannerHams_bannerHams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='bannerSpams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+bannerSpams_bannerSpams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='bannerVirus' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+bannerVirus_bannerVirus
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='SMTP-Data' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='dataHams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dataHams_dataHams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dataSpams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dataSpams_dataSpams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='dataVirus' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+dataVirus_dataVirus
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='SMTP-Helo' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='heloEhloHams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+heloEhloHams_heloEhloHams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='heloEhloSpams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+heloEhloSpams_heloEhloSpams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='heloEhloVirus' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+heloEhloVirus_heloEhloVirus
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='SMTP-MailFrom' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='mailFromHams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+mailFromHams_mailFromHams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='mailFromSpams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+mailFromSpams_mailFromSpams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='mailFromVirus' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+mailFromVirus_mailFromVirus
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='SMTP-RcptTo' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='rcptToHams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rcptToHams_rcptToHams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='rcptToSpams' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rcptToSpams_rcptToSpams
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='rcptToVirus' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rcptToVirus_rcptToVirus
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Stats' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+9
+</property>
+<tomanycont id='graphPoints'>
+<object id='sMTPData' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+sMTPData_sMTPData
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='workflowData' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+workflowData_workflowData
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='log' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+7
+</property>
+<tomanycont id='graphPoints'>
+<object id='available' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+available_available
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+total_total
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='used' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+used_used
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
 </property>
 </object>
 </tomanycont>

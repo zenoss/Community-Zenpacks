@@ -15,13 +15,13 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.AndreaConsadori.Netasq'
-VERSION = '2.3'
+VERSION = '3.0'
 AUTHOR = 'Andrea Consadori'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori']
 PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori', 'ZenPacks.AndreaConsadori.Netasq']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.2'
+COMPAT_ZENOSS_VERS = '>=3.0'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################

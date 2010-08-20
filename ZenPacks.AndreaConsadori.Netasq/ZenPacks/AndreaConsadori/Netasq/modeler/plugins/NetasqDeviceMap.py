@@ -36,5 +36,3 @@ class NetasqDeviceMap(SnmpPlugin):
         return om
 
 
-
-

@@ -1,6 +1,7 @@
 <tal:block metal:define-macro="compList"
     tal:define="tableName string:softwareList;
     objects here/os/software/objectValuesAll;
+    showfilterbox python:True;
     tabletitle string:Installed Software;
     batch python:here.ZenTableManager.getBatch(tableName,objects)">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">

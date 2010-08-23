@@ -3,7 +3,7 @@
 <!-- ('', 'zport', 'dmd', 'Events', 'Change', 'Set', 'Status') -->
 <object id='/zport/dmd/Events/Change/Set/Status' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
-if evt.firstTime == evt.lastTime:
+if evt.firstTime == evt.lastTime and hasattr(evt, 'compClass'):
      for comp in device.getMonitoredComponents(type=evt.compClass):
         if comp.id != evt.component: continue
         comp.status = int(evt.compStatus)
@@ -12,7 +12,7 @@ if evt.firstTime == evt.lastTime:
         break
 </property>
 <property type="text" id="transform" mode="w" >
-if evt.firstTime == evt.lastTime:
+if evt.firstTime == evt.lastTime and hasattr(evt, 'compClass'):
      for comp in device.getMonitoredComponents(type=evt.compClass):
         if comp.id != evt.component: continue
         comp.status = int(evt.compStatus)

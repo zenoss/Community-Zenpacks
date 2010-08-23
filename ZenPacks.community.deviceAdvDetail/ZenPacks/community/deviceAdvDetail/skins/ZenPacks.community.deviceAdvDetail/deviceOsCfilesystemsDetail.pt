@@ -50,7 +50,7 @@
     <tal:block tal:repeat="fsys batch">
     <tr tal:define="odd repeat/fsys/odd"
         tal:attributes="class python:test(odd, 'odd', 'even')">
-        
+
       <td class="tablevalues" align="center">
            <input type="checkbox" name="componentNames:list" 
                   tal:attributes="value fsys/getRelationshipManagerId"/>

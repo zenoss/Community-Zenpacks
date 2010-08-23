@@ -14,7 +14,7 @@
                         tableName,'slot','Slot')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'id','Name')"/>
- 	  	<th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'getManufacturerName','Manufacturer')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                         tableName,'getProductName','Model')"/>

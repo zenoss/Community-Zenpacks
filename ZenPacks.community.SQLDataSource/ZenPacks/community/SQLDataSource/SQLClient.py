@@ -12,9 +12,9 @@ __doc__="""SQLClient
 
 Gets performance data over python DB API.
 
-$Id: SQLClient.py,v 1.0 2010/06/14 08:58:46 egor Exp $"""
+$Id: SQLClient.py,v 1.1 2010/08/24 09:59:42 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -29,6 +29,7 @@ import datetime
 import decimal
 from DateTime import DateTime
 
+import re
 import os
 import sys
 import logging
@@ -184,9 +185,11 @@ class SQLClient(BaseClient):
 
     def sortedQuery(self, queries):
         def _getQueries(txn, query):
+            gostat = re.compile('\bgo\b', re.IGNORECASE)
+            query = gostat.sub('; ', query).replace('\n', ' ')
             for q in query.split(';'):
-                if not q.strip('\n '): continue
-                txn.execute(q.strip('\n '))
+                if not q.strip(): continue
+                txn.execute(q.strip())
             return txn.description, txn.fetchall()
 
         def inner(driver):
@@ -197,15 +200,16 @@ class SQLClient(BaseClient):
                     dbpool = adbapi.ConnectionPool(*args, **kw)
                     for query, resMaps in qs.iteritems():
                         if () not in resMaps:
-                            if len(resMaps.values()[0].values()) > 1: kb = ''
+                            if len(resMaps.values()[0].values()) > 1:
+                                if query.endswith(' AND '):
+                                    query = query[:-5]
                             else:
-                                if query.upper().__contains__('WHERE %s'):
-                                    kb = 'AND '
-                                else: kb = 'WHERE '
-                                kb += ' AND '.join(
-                                    ['='.join(k) for k in zip(resMaps.keys()[0],
-                                    resMaps.values()[0].keys()[0])])
-                            query = query%kb
+                                if not query.endswith(' AND '):
+                                    query = query + ' WHERE '
+                                query = query + ' AND '.join((
+                                        ['='.join(k) for k in zip(
+                                            resMaps.keys()[0],
+                                            resMaps.values()[0].keys()[0])]))
                         try:
                             yield dbpool.runInteraction(_getQueries, query)
                             queryResult.update(self.parseResults(driver.next(),

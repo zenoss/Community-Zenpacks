@@ -13,9 +13,9 @@ __doc__="""SQLDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: SQLDataSource.py,v 1.0 2010/06/14 08:32:54 egor Exp $"""
+$Id: SQLDataSource.py,v 1.1 2010/08/24 20:10:52 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -25,7 +25,6 @@ from AccessControl import ClassSecurityInfo, Permissions
 
 import cgi, time
 import os
-from sqlparse import parse, sql as Sql, tokens as Token
 
 class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
@@ -87,33 +86,27 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             self.sqlparsed, self.sqlkb = self.parseSqlQuery(self.sql)
         return RRDDataSource.RRDDataSource.zmanage_editProperties(self, REQUEST)
 
+
     def parseSqlQuery(self, sql):
         keybindings = {}
-        if sql == '': return sql, keybindings
+        if sql == '': return '', {}
         try:
-            parsed = parse(sql)
-            if parsed[-1].token_next_match(0, Token.Keyword, 'LIMIT'): raise
-            wherestat = parsed[-1].token_next_by_instance(0, Sql.Where)
-            if not wherestat: raise
-            if wherestat.token_next_match(0, Token.Keyword, 'OR'): raise
-            if wherestat.token_next_match(0, Token.Keyword, 'NOT'): raise
-            props = []
-            fromt = parsed[-1].token_next_match(0, Token.Keyword, 'FROM')
-            for t in parsed[-1].tokens_between(parsed[-1].token_first(), fromt):
-                if isinstance(t, Sql.Identifier): props.append(t.to_unicode())
-                elif isinstance(t, Sql.IdentifierList):
-                    props.extend([p.to_unicode() for p in t.get_identifiers()])
-            if not props: raise
+            newsql, where = sql.rsplit(' WHERE ', 1)
+            wheres = ['',]
+            for token in where.split():
+                if token.upper() in ('LIMIT', 'OR', 'NOT'): raise
+                if token.upper() in ('GO', ';'): continue
+                if token.upper() == 'AND': wheres.append('')
+                wheres[-1] = wheres[-1] + ' ' + token
             newwhere = []
-            for comp in wherestat.get_sublists():
-                c = [ t.to_unicode() for t in comp.tokens ]
-                if c[0] in props and c[1] == '=': keybindings[c[0]] = c[2]
-                else: newwhere.append(comp.to_unicode())
+            for kb in wheres:
+                var, val = kb.split('=')
+                if newsql.find('%s'%var.strip()) == -1: newwhere.append(kb)
+                else: keybindings[var.strip()] = val.strip()
             if keybindings:
-                if newwhere: newwhere = 'WHERE %s %%s'%' AND '.join(newwhere)
-                else: newwhere = '%s'
-                sql = sql.replace(wherestat.to_unicode(), newwhere, 1)
-        except: keybindings = {}
+                sql = newsql
+                if newwhere: sql = sql + ' WHERE %s AND '%' AND '.join(newwhere)
+        except: return sql, {}
         return sql, keybindings
 
 

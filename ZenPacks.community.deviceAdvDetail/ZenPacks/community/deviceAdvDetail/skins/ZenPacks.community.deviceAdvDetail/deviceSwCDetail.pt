@@ -1,5 +1,10 @@
-<tal:block metal:define-macro="compList"
-    tal:define="tableName string:softwareList;
+<tal:block metal:define-macro="compList">
+<form method="post" 
+    tal:attributes="action python:here.absolute_url_path() + '/' + template.id"
+    name="softwareListForm">
+
+<tal:block metal:define-macro="softwareList"
+    tal:define="tableName string:softwarelist;
     objects here/os/software/objectValuesAll;
     showfilterbox python:True;
     tabletitle string:Installed Software;
@@ -33,4 +38,6 @@
 
 </tal:block>
 </tal:block>
+</tal:block>
+</form>
 </tal:block>

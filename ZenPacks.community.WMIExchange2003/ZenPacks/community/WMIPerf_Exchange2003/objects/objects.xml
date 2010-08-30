@@ -313,7 +313,7 @@ True
 root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-SELECT RPCAveragedLatency from Win32_PerfRawData_MSExchangeIS_M
+SELECT RPCAveragedLatency from Win32_PerfRawData_MSExchangeIS_MSExchangeIS
 </property>
 <tomanycont id='datapoints'>
 <object id='RPCAveragedLatency' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

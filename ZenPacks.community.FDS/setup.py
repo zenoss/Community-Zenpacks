@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = 'ZenPacks.community.FDS'
-VERSION = '1.0'
+VERSION = '1.1'
 AUTHOR = 'Benny Chitambira'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.FDS']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.4'
+COMPAT_ZENOSS_VERS = '>=3.0'
 PREV_ZENPACK_NAME = ''
 # STOP_REPLACEMENTS
 ################################

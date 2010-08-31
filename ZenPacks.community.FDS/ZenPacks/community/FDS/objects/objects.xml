@@ -2,6 +2,9 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'FDS-LDAPServer') -->
 <object id='/zport/dmd/Devices/Server/rrdTemplates/FDS-LDAPServer' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Monitors FDS based LDAP Server
+</property>
 <property type="text" id="description" mode="w" >
 Monitors FDS based LDAP Server
 </property>
@@ -65,7 +68,7 @@ ldap
 4
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-$$ZENHOME/ZenPacks/ZenPacks.community.FDS-1.0-py2.4.egg/ZenPacks/community/FDS/libexec/ssl-cert-check -n -s ${dev/manageIp} -p 636
+$$ZENHOME/ZenPacks/ZenPacks.community.FDS-1.1-py2.6.egg/ZenPacks/community/FDS/libexec/ssl-cert-check -n -s ${dev/manageIp} -p 636
 </property>
 <property type="int" id="cycletime" mode="w" >
 300
@@ -577,10 +580,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='BrokenLDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['check_ldap_time']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -600,10 +603,10 @@ True
 </property>
 </object>
 <object id='SlowLDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['check_ldap_time']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -1130,10 +1133,11 @@ import re
 if evt.severity&gt;=1:
 # Extract the response time from the summary
    sum = evt.summary
-   m = re.search("threshold of [^:]+: current value ([\d\.]+)", evt.message)
-   currentvalue = float(m.group(1))
-   evt.summary = "LDAP needs attention; Current response time exceeds (%3.1f seconds)" %currentvalue
-   evt.message = evt.summary
+   if (sum.find("threshold of")&gt;=0):
+      m = re.search("threshold of [^:]+: current value ([\d\.]+)", evt.message)
+      currentvalue = float(m.group(1))
+      evt.summary = "LDAP needs attention; Current response time exceeds (%3.1f seconds)" %currentvalue
+      evt.message = evt.summary
 </property>
 <property type="text" id="transform" mode="w" >
 import re
@@ -1141,14 +1145,20 @@ import re
 if evt.severity&gt;=1:
 # Extract the response time from the summary
    sum = evt.summary
-   m = re.search("threshold of [^:]+: current value ([\d\.]+)", evt.message)
-   currentvalue = float(m.group(1))
-   evt.summary = "LDAP needs attention; Current response time exceeds (%3.1f seconds)" %currentvalue
-   evt.message = evt.summary
+   if (sum.find("threshold of")&gt;=0):
+      m = re.search("threshold of [^:]+: current value ([\d\.]+)", evt.message)
+      currentvalue = float(m.group(1))
+      evt.summary = "LDAP needs attention; Current response time exceeds (%3.1f seconds)" %currentvalue
+      evt.message = evt.summary
 </property>
 </object>
 <!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'RHDS-MIB') -->
 <object id='/zport/dmd/Mibs/mibs/RHDS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property id='zendoc' type='string'>
+An implementation of the MADMAN mib for monitoring LDAP/CLDAP and X.500
+directories described in RFC 2788 and 2789
+used for Red Hat and Fedora  Directory Server
+</property>
 <property type="string" id="language" mode="w" >
 SMIv2
 </property>
@@ -1157,12 +1167,16 @@ Red Hat, Inc.
 Website: http://www.redhat.com
 </property>
 <property type="string" id="description" mode="w" >
- An implementation of the MADMAN mib for monitoring LDAP/CLDAP and X.500
+An implementation of the MADMAN mib for monitoring LDAP/CLDAP and X.500
 directories described in RFC 2788 and 2789
 used for Red Hat and Fedora  Directory Server
 </property>
 <tomanycont id='nodes'>
 <object id='dsAddEntryOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of addEntry operations serviced by
+this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1176,7 +1190,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of addEntry operations serviced by
+Number of addEntry operations serviced by
 this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1184,6 +1198,10 @@ readonly
 </property>
 </object>
 <object id='dsAnonymousBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of anonymous  binds to this DS from UAs
+since application start.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1197,7 +1215,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of anonymous  binds to this DS from UAs
+Number of anonymous  binds to this DS from UAs
 since application start.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1205,6 +1223,11 @@ readonly
 </property>
 </object>
 <object id='dsBindSecurityErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of bind operations that have been rejected
+by this DS due to inappropriateAuthentication or
+invalidCredentials.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1218,7 +1241,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of bind operations that have been rejected
+Number of bind operations that have been rejected
 by this DS due to inappropriateAuthentication or
 invalidCredentials.
 </property>
@@ -1227,6 +1250,11 @@ readonly
 </property>
 </object>
 <object id='dsCacheEntries' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of entries cached (non-systematic copies) in
+the DS. This will include the entries that are
+cached partially. The negative cache is not counted.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1240,7 +1268,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of entries cached (non-systematic copies) in
+Number of entries cached (non-systematic copies) in
 the DS. This will include the entries that are
 cached partially. The negative cache is not counted.
 </property>
@@ -1249,6 +1277,11 @@ readonly
 </property>
 </object>
 <object id='dsCacheHits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of operations that were serviced from
+the locally held cache since application
+startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1262,7 +1295,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of operations that were serviced from
+Number of operations that were serviced from
 the locally held cache since application
 startup.
 </property>
@@ -1271,6 +1304,10 @@ readonly
 </property>
 </object>
 <object id='dsChainings' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of operations forwarded by this DS
+to other DSs since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1284,7 +1321,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of operations forwarded by this DS
+Number of operations forwarded by this DS
 to other DSs since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1292,6 +1329,10 @@ readonly
 </property>
 </object>
 <object id='dsCompareOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of compare operations serviced by
+this DS  since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1305,7 +1346,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of compare operations serviced by
+Number of compare operations serviced by
 this DS  since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1313,6 +1354,10 @@ readonly
 </property>
 </object>
 <object id='dsCopyEntries' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of entries for which systematic (slave)
+copies are maintained in the DS.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1326,7 +1371,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of entries for which systematic (slave)
+Number of entries for which systematic (slave)
 copies are maintained in the DS.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1334,6 +1379,10 @@ readonly
 </property>
 </object>
 <object id='dsEntityContact' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Contact person(s)responsible for the directory server at this 
+installation, together with information on how to conact.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1355,6 +1404,9 @@ readonly
 </property>
 </object>
 <object id='dsEntityDescr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+A general textual description of this directory server.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1375,6 +1427,10 @@ readonly
 </property>
 </object>
 <object id='dsEntityEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Entry of general information about an installed instance
+of a directory server
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1393,6 +1449,10 @@ of a directory server
 </property>
 </object>
 <object id='dsEntityLocation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Physical location of this entity (directory server).
+For example: hostname, building  number, lab number, etc.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1414,6 +1474,9 @@ readonly
 </property>
 </object>
 <object id='dsEntityName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Name assigned to this entity at the installation site
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1434,6 +1497,9 @@ readonly
 </property>
 </object>
 <object id='dsEntityOrg' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Organization responsible for directory server at this installation
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1454,6 +1520,10 @@ readonly
 </property>
 </object>
 <object id='dsEntityTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+This table holds general information related to an installed
+instance of a directory server
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1472,6 +1542,9 @@ instance of a directory server
 </property>
 </object>
 <object id='dsEntityVers' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The version of this directory server
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1492,6 +1565,10 @@ readonly
 </property>
 </object>
 <object id='dsEntriesEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Entry containing statistics pertaining to entries
+held by a DS.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1505,11 +1582,15 @@ row
 current
 </property>
 <property type="string" id="description" mode="w" >
- Entry containing statistics pertaining to entries
+Entry containing statistics pertaining to entries
 held by a DS.
 </property>
 </object>
 <object id='dsEntriesTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table holding information related to the
+entry statistics and cache performance of the DSs.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1523,11 +1604,20 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
- The table holding information related to the
+The table holding information related to the
 entry statistics and cache performance of the DSs.
 </property>
 </object>
 <object id='dsErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of operations that could not be serviced
+due to errors other than security errors, and
+referrals.
+A partially serviced operation will not be counted
+as an error.
+The errors include NameErrors, UpdateErrors, Attribute
+errors and ServiceErrors.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1541,7 +1631,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of operations that could not be serviced
+Number of operations that could not be serviced
 due to errors other than security errors, and
 referrals.
 A partially serviced operation will not be counted
@@ -1554,6 +1644,10 @@ readonly
 </property>
 </object>
 <object id='dsFailures' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Cumulative failures since the creation of
+this entry.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1567,7 +1661,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Cumulative failures since the creation of
+Cumulative failures since the creation of
 this entry.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1575,6 +1669,13 @@ readonly
 </property>
 </object>
 <object id='dsFailuresSinceLastSuccess' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The number of failures since the last time an
+attempt to contact this DS was successful. If
+there has been no successful attempts, this counter
+will contain the number of failures since this entry
+was created.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1588,7 +1689,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- The number of failures since the last time an
+The number of failures since the last time an
 attempt to contact this DS was successful. If
 there has been no successful attempts, this counter
 will contain the number of failures since this entry
@@ -1599,6 +1700,11 @@ readonly
 </property>
 </object>
 <object id='dsInOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of operations forwarded to this DS
+from UAs or other DSs since application
+start up.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1612,7 +1718,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of operations forwarded to this DS
+Number of operations forwarded to this DS
 from UAs or other DSs since application
 start up.
 </property>
@@ -1621,6 +1727,10 @@ readonly
 </property>
 </object>
 <object id='dsIntEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Entry containing interaction details of a DS
+with a peer DS.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1634,11 +1744,17 @@ row
 current
 </property>
 <property type="string" id="description" mode="w" >
- Entry containing interaction details of a DS
+Entry containing interaction details of a DS
 with a peer DS.
 </property>
 </object>
 <object id='dsIntIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Together with applIndex it forms the unique key to
+identify the conceptual row which contains useful info
+ on the (attempted) interaction between the DS (referred
+ to by applIndex) and a peer DS.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1652,7 +1768,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Together with applIndex it forms the unique key to
+Together with applIndex it forms the unique key to
 identify the conceptual row which contains useful info
  on the (attempted) interaction between the DS (referred
  to by applIndex) and a peer DS.
@@ -1662,6 +1778,12 @@ noaccess
 </property>
 </object>
 <object id='dsIntTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Each row of this table contains some details
+related to the history of the interaction
+of the monitored DSs with their respective
+peer DSs.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1675,13 +1797,17 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
- Each row of this table contains some details
+Each row of this table contains some details
 related to the history of the interaction
 of the monitored DSs with their respective
 peer DSs.
 </property>
 </object>
 <object id='dsListOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of list operations serviced by
+this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1695,7 +1821,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of list operations serviced by
+Number of list operations serviced by
 this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1703,6 +1829,9 @@ readonly
 </property>
 </object>
 <object id='dsMasterEntries' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of entries mastered in the DS.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1716,13 +1845,17 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of entries mastered in the DS.
+Number of entries mastered in the DS.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
 </property>
 </object>
 <object id='dsModifyEntryOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of modifyEntry operations serviced by
+this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1736,7 +1869,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of modifyEntry operations serviced by
+Number of modifyEntry operations serviced by
 this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1744,6 +1877,10 @@ readonly
 </property>
 </object>
 <object id='dsModifyRDNOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of modifyRDN operations serviced by
+this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1757,7 +1894,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of modifyRDN operations serviced by
+Number of modifyRDN operations serviced by
 this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1765,6 +1902,10 @@ readonly
 </property>
 </object>
 <object id='dsName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Distinguished Name of the peer DS to which this
+entry pertains.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1778,7 +1919,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Distinguished Name of the peer DS to which this
+Distinguished Name of the peer DS to which this
 entry pertains.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1786,6 +1927,10 @@ readonly
 </property>
 </object>
 <object id='dsOneLevelSearchOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of oneLevel search operations serviced
+by this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1799,7 +1944,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of oneLevel search operations serviced
+Number of oneLevel search operations serviced
 by this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1807,6 +1952,10 @@ readonly
 </property>
 </object>
 <object id='dsOpsEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Entry containing operations related statistics  
+for a DS.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1820,11 +1969,15 @@ row
 current
 </property>
 <property type="string" id="description" mode="w" >
- Entry containing operations related statistics  
+Entry containing operations related statistics  
 for a DS.
 </property>
 </object>
 <object id='dsOpsTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table holding information related to the
+DS operations.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1838,11 +1991,15 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
- The table holding information related to the
+The table holding information related to the
 DS operations.
 </property>
 </object>
 <object id='dsReadOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of read operations serviced by
+this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1856,7 +2013,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of read operations serviced by
+Number of read operations serviced by
 this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1864,6 +2021,10 @@ readonly
 </property>
 </object>
 <object id='dsReferrals' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of referrals returned by this DS in response
+to requests for operations since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1877,7 +2038,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of referrals returned by this DS in response
+Number of referrals returned by this DS in response
 to requests for operations since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1885,6 +2046,10 @@ readonly
 </property>
 </object>
 <object id='dsRemoveEntryOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of removeEntry operations serviced by
+this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1898,7 +2063,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of removeEntry operations serviced by
+Number of removeEntry operations serviced by
 this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -1906,6 +2071,11 @@ readonly
 </property>
 </object>
 <object id='dsSearchOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of search operations- baseObject searches,
+oneLevel searches and  wholeSubtree searches,
+serviced by this DS  since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1919,7 +2089,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of search operations- baseObject searches,
+Number of search operations- baseObject searches,
 oneLevel searches and  wholeSubtree searches,
 serviced by this DS  since application startup.
 </property>
@@ -1928,6 +2098,10 @@ readonly
 </property>
 </object>
 <object id='dsSecurityErrors' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of operations forwarded to this DS
+which did not meet the security requirements.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1941,14 +2115,19 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of operations forwarded to this DS
-which did not meet the security requirements. 
+Number of operations forwarded to this DS
+which did not meet the security requirements.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
 </property>
 </object>
 <object id='dsSimpleAuthBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of binds to this DS that were authenticated
+using simple authentication procedures since
+application start.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1962,7 +2141,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of binds to this DS that were authenticated
+Number of binds to this DS that were authenticated
 using simple authentication procedures since
 application start.
 </property>
@@ -1971,6 +2150,11 @@ readonly
 </property>
 </object>
 <object id='dsSlaveHits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of operations that were serviced from
+the locally held object replications ( shadow
+entries) since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -1984,7 +2168,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of operations that were serviced from
+Number of operations that were serviced from
 the locally held object replications ( shadow
 entries) since application startup.
 </property>
@@ -1993,6 +2177,12 @@ readonly
 </property>
 </object>
 <object id='dsStrongAuthBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of binds to this DS that were authenticated
+using the strong authentication procedures since
+application start. This includes the binds that were
+authenticated using external authentication procedures.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2006,7 +2196,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of binds to this DS that were authenticated
+Number of binds to this DS that were authenticated
 using the strong authentication procedures since
 application start. This includes the binds that were
 authenticated using external authentication procedures.
@@ -2016,6 +2206,10 @@ readonly
 </property>
 </object>
 <object id='dsSuccesses' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Cumulative successes since the creation of
+this entry.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2029,7 +2223,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Cumulative successes since the creation of
+Cumulative successes since the creation of
 this entry.
 </property>
 <property type="string" id="access" mode="w" >
@@ -2037,6 +2231,12 @@ readonly
 </property>
 </object>
 <object id='dsTimeOfCreation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The value of sysUpTime when this row was created.
+If the entry was created before the network management
+subsystem was initialized, this object will contain
+a value of zero.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2050,7 +2250,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- The value of sysUpTime when this row was created.
+The value of sysUpTime when this row was created.
 If the entry was created before the network management
 subsystem was initialized, this object will contain
 a value of zero.
@@ -2060,6 +2260,12 @@ readonly
 </property>
 </object>
 <object id='dsTimeOfLastAttempt' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The value of sysUpTime when the last attempt was made
+to contact this DS. If the last attempt was made before
+the network management subsystem was initialized, this
+object will contain a value of zero.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2073,7 +2279,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- The value of sysUpTime when the last attempt was made
+The value of sysUpTime when the last attempt was made
 to contact this DS. If the last attempt was made before
 the network management subsystem was initialized, this
 object will contain a value of zero.
@@ -2083,6 +2289,14 @@ readonly
 </property>
 </object>
 <object id='dsTimeOfLastSuccess' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The value of sysUpTime when the last attempt made to
+contact this DS was successful. If there have
+been no successful attempts this entry will have a value
+of zero. If the last successful attempt was made before
+the network management subsystem was initialized, this
+object will contain a value of zero.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2096,7 +2310,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- The value of sysUpTime when the last attempt made to
+The value of sysUpTime when the last attempt made to
 contact this DS was successful. If there have
 been no successful attempts this entry will have a value
 of zero. If the last successful attempt was made before
@@ -2108,6 +2322,9 @@ readonly
 </property>
 </object>
 <object id='dsURL' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+URL of the DS application.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2121,13 +2338,17 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- URL of the DS application.
+URL of the DS application.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
 </property>
 </object>
 <object id='dsUnAuthBinds' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of un-authenticated binds to this DS since
+application start.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2141,7 +2362,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of un-authenticated binds to this DS since
+Number of un-authenticated binds to this DS since
 application start.
 </property>
 <property type="string" id="access" mode="w" >
@@ -2149,6 +2370,10 @@ readonly
 </property>
 </object>
 <object id='dsWholeSubtreeSearchOps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Number of wholeSubtree search operations serviced
+by this DS since application startup.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2162,7 +2387,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
- Number of wholeSubtree search operations serviced
+Number of wholeSubtree search operations serviced
 by this DS since application startup.
 </property>
 <property type="string" id="access" mode="w" >
@@ -2197,6 +2422,10 @@ current
 </tomanycont>
 <tomanycont id='notifications'>
 <object id='DirectoryServerDown' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+This trap is generated whenever the agent detects the
+directory server to be (potentially) Down.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>
@@ -2218,6 +2447,10 @@ directory server to be (potentially) Down.
 </property>
 </object>
 <object id='DirectoryServerStart' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+This trap is generated whenever the agent detects the
+directory server to have (re)started.
+</property>
 <property type="string" id="moduleName" mode="w" >
 RHDS-MIB
 </property>

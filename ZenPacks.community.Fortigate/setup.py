@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.Fortigate"
-VERSION = "1.2"
-AUTHOR = "José Gerez"
+VERSION = "1.2.1"
+AUTHOR = "Jose Gerez"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.Fortigate']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = ">=2.2"
+COMPAT_ZENOSS_VERS = ">=3.0"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

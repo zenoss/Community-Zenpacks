@@ -23,7 +23,7 @@
 #***************************************************************************
 
 __author__ = "Egor Puzanov"
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 import types, string, time, datetime, warnings, subprocess, os
 
 ### module constants
@@ -177,13 +177,11 @@ class isqlCursor(object):
 		# for this method default value for params cannot be None,
 		# because None is a valid value for format string.
 
-		if (args != () and len(args) != 1):
-			raise TypeError, "execute takes 1 or 2 arguments (%d given)" % (len(args) + 1,)
-
-		if args == (): args = ((),)
-
+		if args != ():
+			if len(args) == 1: operations = operations % args[0]
+			else: raise TypeError, "execute takes 1 or 2 arguments (%d given)" % (len(args) + 1,)
 		try:
-			self.executemany(operation, [args[0],])
+			self._source.execute_queries([operation,])
 		except OperationalError, e:
 			raise OperationalError, e
 		except InterfaceError, e:
@@ -417,6 +415,7 @@ class isqlCnx:
 					line = self._cnx.stdout.readline()
 					if not line: break
 					if line.startswith('[ISQL]INFO:'): pass
+					elif line.strip() == '': pass
 					elif line.startswith('['): raise OperationalError, ('00000', line.strip())
 					elif line.strip().endswith('</font>') and wr:
 						line = line.strip()[:-7]

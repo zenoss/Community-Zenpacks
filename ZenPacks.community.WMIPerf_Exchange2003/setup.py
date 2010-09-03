@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.WMIPerf_Exchange2003"
-VERSION = "1.1"
-AUTHOR = "Johan Keskitalo & Andreas Falk"
+VERSION = "2.0.2"
+AUTHOR = "Johan Keskitalo & Andreas Falk, R.Esteve"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.WMIPerf_Exchange2003']
-INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=1.0']
-COMPAT_ZENOSS_VERS = ">=2.3"
+INSTALL_REQUIRES = ['ZenPacks.community.WMIDataSource>=2.7']
+COMPAT_ZENOSS_VERS = ">=3.0"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

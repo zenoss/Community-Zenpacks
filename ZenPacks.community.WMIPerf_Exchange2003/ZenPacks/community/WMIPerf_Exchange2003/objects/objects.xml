@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'WMIPerfExchange2003') -->
-<object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/WMIPerfExchange2003' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property type="text" id="description" mode="w" >
-Monitors Microsoft Exchange 2003 Performance.
-</property>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'WMIExchange2003') -->
+<object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/WMIExchange2003' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
 </property>
@@ -23,7 +20,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT AddressListsQueueLength FROM Win32_PerfRawData_MSExchangeAL_MSExchangeAL WHERE name='_Total'
@@ -53,7 +50,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT AverageDeliveryTime, MessagesSentPermin, MessagesDeliveredPermin FROM Win32_PerfFormattedData_MSExchangeIS_MSExchangeISMailbox WHERE Name='_Total'
@@ -99,7 +96,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT ReceiveQueueSize, SendQueueSize from Win32_PerfFormattedData_MSExchangeIS_MSExchangeISMailbox WHERE Name='_Total'
@@ -137,7 +134,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT AverageDeliveryTime, MessagesSentPermin, MessagesDeliveredPermin FROM Win32_PerfFormattedData_MSExchangeIS_MSExchangeISPublic WHERE Name='_Total'
@@ -183,7 +180,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT ReceiveQueueSize, SendQueueSize FROM Win32_PerfFormattedData_MSExchangeIS_MSExchangeISPublic WHERE name='_Total'
@@ -221,7 +218,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT CategorizerQueueLength, LocalQueueLength, RemoteQueueLength FROM Win32_PerfRawData_SMTPSVC_SMTPServer WHERE name = '_Total'
@@ -267,7 +264,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT ActiveUserCount, MaximumUsers, UserCount FROM Win32_PerfRawData_MSExchangeIS_MSExchangeIS
@@ -313,7 +310,7 @@ True
 300
 </property>
 <property type="string" id="namespace" mode="w" >
-root\cimv2
+root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
 SELECT RPCAveragedLatency from Win32_PerfRawData_MSExchangeIS_MSExchangeIS
@@ -332,10 +329,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Latency 40 ms' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['RPC Averaged Latency_RPCAveragedLatency']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -352,10 +349,10 @@ True
 </property>
 </object>
 <object id='Latency 50 ms' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['RPC Averaged Latency_RPCAveragedLatency']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -372,10 +369,10 @@ True
 </property>
 </object>
 <object id='Queue Lenght 10' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['Exchange SMTP Queues_CategorizerQueueLength']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -392,10 +389,10 @@ True
 </property>
 </object>
 <object id='Queue Lenght 1000' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['Exchange SMTP Queues_CategorizerQueueLength', 'Exchange SMTP Queues_LocalQueueLength']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -412,10 +409,10 @@ True
 </property>
 </object>
 <object id='Queue Lenght 7' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['Exchange SMTP Queues_CategorizerQueueLength']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -432,10 +429,10 @@ True
 </property>
 </object>
 <object id='Queue Lenght 750' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
-['Exchange SMTP Queues_LocalQueueLength', 'Exchange SMTP Queues_RemoteQueueLength']
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['Exchange SMTP Queues_CategorizerQueueLength', 'Exchange SMTP Queues_LocalQueueLength']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -452,10 +449,10 @@ True
 </property>
 </object>
 <object id='Queue Size 400' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['Exchange Mailbox Queues_ReceiveQueueSize', 'Exchange Mailbox Queues_SendQueueSize', 'Exchange Public Queues_ReceiveQueueSize', 'Exchange Public Queues_SendQueueSize']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -472,10 +469,10 @@ True
 </property>
 </object>
 <object id='Queue Size 500' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
-['Exchange Mailbox Queues_ReceiveQueueSize', 'Exchange Mailbox Queues_SendQueueSize', 'Exchange Public Queues_ReceiveQueueSize', 'Exchange Public Queues_SendQueueSize']
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['Exchange Mailbox Queues_ReceiveQueueSize', 'Exchange Mailbox Queues_SendQueueSize', 'Exchange Public Queues_SendQueueSize', 'Exchange Public Queues_ReceiveQueueSize']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -555,7 +552,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-messages/minute
+Messages/min.
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -576,7 +573,36 @@ True
 7
 </property>
 <tomanycont id='graphPoints'>
+<object id='Public - Delivered' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Exchange Public Delivery_messagesDeliveredPermin
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
 <object id='Mailbox - Delivered' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -602,9 +628,38 @@ Exchange Mailbox Delivery_messagesDeliveredPermin
 AVERAGE
 </property>
 </object>
-<object id='Mailbox - Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Public - Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Exchange Public Delivery_messagesSentPermin
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Mailbox - Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -631,64 +686,6 @@ Exchange Mailbox Delivery_messagesSentPermin
 AVERAGE
 </property>
 </object>
-<object id='Public - Delivered' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-2
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.0lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-Exchange Public Delivery_messagesDeliveredPermin
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Public - Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-3
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-Exchange Public Delivery_messagesSentPermin
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 </tomanycont>
 </object>
 <object id='Email Delivery Time' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
@@ -699,7 +696,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-milliseconds
+ms
 </property>
 <property type="boolean" id="log" mode="w" >
 False

@@ -12,9 +12,9 @@ __doc__="""SQLClient
 
 Gets performance data over python DB API.
 
-$Id: SQLClient.py,v 1.1 2010/08/24 09:59:42 egor Exp $"""
+$Id: SQLClient.py,v 1.2 2010/09/02 21:46:35 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -186,7 +186,9 @@ class SQLClient(BaseClient):
     def sortedQuery(self, queries):
         def _getQueries(txn, query):
             gostat = re.compile('\bgo\b', re.IGNORECASE)
-            query = gostat.sub('; ', query).replace('\n', ' ')
+            try: query = gostat.sub('; ', query)
+            except: pass
+            query = query.replace('\n', ' ')
             for q in query.split(';'):
                 if not q.strip(): continue
                 txn.execute(q.strip())
@@ -210,6 +212,7 @@ class SQLClient(BaseClient):
                                         ['='.join(k) for k in zip(
                                             resMaps.keys()[0],
                                             resMaps.values()[0].keys()[0])]))
+                        log.debug("SQL Query: %s", query)
                         try:
                             yield dbpool.runInteraction(_getQueries, query)
                             queryResult.update(self.parseResults(driver.next(),

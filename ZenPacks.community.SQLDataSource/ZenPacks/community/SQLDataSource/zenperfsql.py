@@ -12,9 +12,9 @@ __doc__="""zenperfsql
 
 PB daemon-izable base class for creating sql collectors
 
-$Id: zenperfsql.py,v 1.1 2010/08/12 23:00:42 egor Exp $"""
+$Id: zenperfsql.py,v 1.2 2010/09/02 21:47:26 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 import logging
 
@@ -225,7 +225,7 @@ class ZenPerfSqlTask(ObservableMixin):
                         break
                     if len(d) == 0: continue
                     dpvalue = d.get(dpname, None)
-                    if dpvalue == None: continue
+                    if dpvalue == None or dpvalue == '': continue
                     elif type(dpvalue) is list: dpvalue = dpvalue[0]
                     elif isinstance(dpvalue, DateTime): dpvalue = dpvalue._t
                     if expr:

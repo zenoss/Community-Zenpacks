@@ -13,9 +13,9 @@ __doc__="""SQLDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: SQLDataSource.py,v 1.1 2010/08/24 20:10:52 egor Exp $"""
+$Id: SQLDataSource.py,v 1.2 2010/09/02 21:52:48 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenModel import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -91,9 +91,9 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         keybindings = {}
         if sql == '': return '', {}
         try:
-            newsql, where = sql.rsplit(' WHERE ', 1)
+            newsql, where = sql.rsplit('WHERE ', 1)
             wheres = ['',]
-            for token in where.split():
+            for token in where.strip('\n ;').split():
                 if token.upper() in ('LIMIT', 'OR', 'NOT'): raise
                 if token.upper() in ('GO', ';'): continue
                 if token.upper() == 'AND': wheres.append('')

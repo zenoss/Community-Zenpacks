@@ -4,3 +4,5 @@ Added event mapping for cpu traps
 Added event mapping for apparent extraneous trap
 Bound template to fortinet device class
 
+8.26.2010 - Dave Noles <dave@noles.co.uk> - 1.2.1
+Fix unicode error for 3.0 compatability

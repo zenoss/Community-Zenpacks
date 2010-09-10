@@ -136,6 +136,14 @@ GAUGE
 True
 </property>
 </object>
+<object id='usedlun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
 <object id='totalsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -314,6 +322,9 @@ ${graphPoint/id}
 <object id='CPU Busy' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 3
+</property>
+<property type="string" id="color" mode="w" >
+FF6600
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
@@ -578,18 +589,21 @@ True
 4
 </property>
 <tomanycont id='graphPoints'>
-<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Used' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 1
 </property>
+<property type="string" id="color" mode="w" >
+FF6600
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
 </property>
 <property type="boolean" id="stacked" mode="w" >
-False
+True
 </property>
 <property type="string" id="format" mode="w" >
 %5.2lf%s
@@ -601,7 +615,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-SP_RLP_totallun
+SP_RLP_usedlun
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -618,7 +632,7 @@ AREA
 1
 </property>
 <property type="boolean" id="stacked" mode="w" >
-False
+True
 </property>
 <property type="string" id="format" mode="w" >
 %5.2lf%s

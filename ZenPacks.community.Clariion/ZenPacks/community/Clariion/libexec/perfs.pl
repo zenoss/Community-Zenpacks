@@ -178,6 +178,9 @@ sub checkRLP
 	@words = split( /\W+/, $lines[2]);
 	my $fluns = "$words[-1]";
 	
+	# uluns (used lun)
+	my $uluns = $tluns-$fluns;
+	
 	# tsize (Total size)
 	@words = split( /\W+/, $lines[4]);
 	my $tsize = "$words[-2].$words[-1]";
@@ -194,7 +197,7 @@ sub checkRLP
 	@words = split( /\W+/, $lines[7]);
 	my $psize = "$words[-2].$words[-1]";
 	
-	print("OK|totallun=$tluns freelun=$fluns totalsize=$tsize unusedsize=$fsize usedsize=$usize percentused=$psize\n");
+	print("OK|totallun=$tluns freelun=$fluns usedlun=$uluns totalsize=$tsize unusedsize=$fsize usedsize=$usize percentused=$psize\n");
 	
 }
 

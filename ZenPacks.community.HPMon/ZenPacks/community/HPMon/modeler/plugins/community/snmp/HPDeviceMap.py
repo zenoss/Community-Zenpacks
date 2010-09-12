@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -13,9 +13,9 @@ __doc__="""HPDeviceMap
 HPDeviceMap map mib elements from HP/Compaq Insight Manager mib to get hw and os
 products.
 
-$Id: HPDeviceMap.py,v 1.0 2009/07/06 09:26:53 egor Exp $"""
+$Id: HPDeviceMap.py,v 1.2 2010/09/12 16:54:40 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 import re
@@ -29,6 +29,7 @@ class HPDeviceMap(SnmpPlugin):
 
     snmpGetMap = GetMap({
         '.1.3.6.1.4.1.232.2.2.2.1.0' : 'setHWSerialNumber',
+        '.1.3.6.1.4.1.232.2.2.2.6.0' : 'setHWTag',
         '.1.3.6.1.4.1.232.2.2.4.2.0' : 'setHWProductKey',
         '.1.3.6.1.4.1.232.11.2.2.1.0' : 'setOSProductKey',
         '.1.3.6.1.4.1.232.11.2.2.2.0' : '_OSVer',

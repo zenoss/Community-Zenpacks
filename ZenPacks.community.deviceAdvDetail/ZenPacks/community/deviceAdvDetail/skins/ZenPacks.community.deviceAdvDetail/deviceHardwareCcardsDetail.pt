@@ -29,7 +29,7 @@
             <tal:block 
              tal:content="structure python:card.urlLink(text=str(card.slot))"/>
         </td>
-        <td class="tablevalues" tal:content="card/id"/>
+        <td class="tablevalues" tal:content="structure python:card.urlLink()"/>
         <td class="tablevalues" 
             tal:content="structure card/getManufacturerLink"/>
         <td class="tablevalues" tal:content="structure card/getProductLink"/>

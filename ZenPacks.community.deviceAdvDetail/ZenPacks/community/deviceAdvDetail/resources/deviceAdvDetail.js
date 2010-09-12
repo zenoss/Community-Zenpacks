@@ -29,7 +29,7 @@ ZC.MemoryModulePanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
             componentType: 'MemoryModule',
-	    autoExpandColumn: 'product',
+            autoExpandColumn: 'product',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},
@@ -157,7 +157,7 @@ ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
             componentType: 'HardDisk',
-	    autoExpandColumn: 'product',
+            autoExpandColumn: 'product',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},
@@ -236,7 +236,7 @@ ZC.ExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
             componentType: 'ExpansionCard',
-	    autoExpandColumn: 'product',
+            autoExpandColumn: 'product',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},

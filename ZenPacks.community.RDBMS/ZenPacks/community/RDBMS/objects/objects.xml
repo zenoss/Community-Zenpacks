@@ -2110,4 +2110,89 @@ True
 </object>
 </tomanycont>
 </object>
+<!-- ('', 'zport', 'dmd', 'zenMenus', 'DBSrvInst') -->
+<object id='/zport/dmd/zenMenus/DBSrvInst' module='Products.ZenModel.ZenMenu' class='ZenMenu'>
+<tomanycont id='zenMenuItems'>
+<object id='addDBSrvInst' module='Products.ZenModel.ZenMenuItem' class='ZenMenuItem'>
+<property type="text" id="description" mode="w" >
+Add Database Server Instance...
+</property>
+<property type="text" id="action" mode="w" >
+dialog_addDBSrvInst
+</property>
+<property type="boolean" id="isglobal" mode="w" >
+True
+</property>
+<property type="lines" id="permissions" mode="w" >
+('Change Device',)
+</property>
+<property type="boolean" id="isdialog" mode="w" >
+True
+</property>
+<property type="float" id="ordering" mode="w" >
+90.0
+</property>
+</object>
+<object id='changeMonitoring' module='Products.ZenModel.ZenMenuItem' class='ZenMenuItem'>
+<property type="text" id="description" mode="w" >
+Monitoring...
+</property>
+<property type="text" id="action" mode="w" >
+dialog_changeMonitoring
+</property>
+<property type="boolean" id="isglobal" mode="w" >
+True
+</property>
+<property type="lines" id="permissions" mode="w" >
+('Change Device',)
+</property>
+<property type="boolean" id="isdialog" mode="w" >
+True
+</property>
+<property type="float" id="ordering" mode="w" >
+0.0
+</property>
+</object>
+<object id='deleteDBSrvInsts' module='Products.ZenModel.ZenMenuItem' class='ZenMenuItem'>
+<property type="text" id="description" mode="w" >
+Delete Databases Server Instances...
+</property>
+<property type="text" id="action" mode="w" >
+dialog_deleteDBSrvInsts
+</property>
+<property type="boolean" id="isglobal" mode="w" >
+True
+</property>
+<property type="lines" id="permissions" mode="w" >
+('Change Device',)
+</property>
+<property type="boolean" id="isdialog" mode="w" >
+True
+</property>
+<property type="float" id="ordering" mode="w" >
+80.0
+</property>
+</object>
+<object id='lockDBSrvInsts' module='Products.ZenModel.ZenMenuItem' class='ZenMenuItem'>
+<property type="text" id="description" mode="w" >
+Lock Database Server Instances...
+</property>
+<property type="text" id="action" mode="w" >
+dialog_lockDBSrvInsts
+</property>
+<property type="boolean" id="isglobal" mode="w" >
+True
+</property>
+<property type="lines" id="permissions" mode="w" >
+('Change Device',)
+</property>
+<property type="boolean" id="isdialog" mode="w" >
+True
+</property>
+<property type="float" id="ordering" mode="w" >
+2.0
+</property>
+</object>
+</tomanycont>
+</object>
 </objects>

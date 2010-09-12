@@ -2,21 +2,21 @@
 <form method="post" tal:define="alink here/absolute_url;
     slink python:alink + '/deviceSoftwareDetail';"
     tal:attributes="action slink" 
-    name="softwaredatabaseListForm">
+    name="softwaredbsrvinstanceListForm">
 
-<tal:block metal:define-macro="softwaredatabasesList"
-    tal:define="tableName string:databaseslist;
-    objects here/os/softwaredatabases/objectValuesAll;
-    tabletitle string:Databases;
+<tal:block metal:define-macro="softwaredbsrvinstancesList"
+    tal:define="tableName string:dbsrvinstanceslist;
+    objects here/os/softwaredbsrvinstances/objectValuesAll;
+    tabletitle string:Database Server Instances;
     batch python:here.ZenTableManager.getBatch(tableName,objects,
                                             sortedHeader='name',
                                             onlyMonitored=True);
     ts python:here.ZenTableManager.getTableState(tableName);
-    menu_id string:Database;
+    menu_id string:DBSrvInst;
     showfilterbox python:True;"
     tal:condition="objects">
 
-<input type="hidden" name="context" value="softwaredatabases"/>
+<input type="hidden" name="context" value="softwaredbsrvinstances"/>
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 <tal:block metal:fill-slot="filterslot">
     <div style="position:absolute;right:200px;top:0px;">
@@ -36,26 +36,12 @@
     <tr tal:condition="objects">
         <th class="tableheader" width="20"></th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'DBSrvInstName','Instance')">Instance
+                            tableName,'dbsiname','Name')">Name
         </th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'dbname','Name')">Name
-        </th>
+                        tableName,'getManufacturerName','Manufacturer')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'type','Type')">Type
-        </th>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'totalBytes','Total bytes')">Total Bytes
-        </th>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'usedBytes','Used bytes')">Used Bytes
-        </th>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'freeBytes','Free bytes')">Free Bytes
-        </th>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'capacity','% Util')">% Util
-        </th>
+                        tableName,'getProductName','Product')"/>
         <th class="tableheader" align="center" width="60">Status</th>
         <th class="tableheader" align="center" width="30">M</th>
         <th class="tableheader" align="center" width="60">Lock</th>
@@ -65,53 +51,37 @@
             No Databases
         </th>
     </tr>
-    <tal:block tal:repeat="db batch">
-    <tr tal:define="odd repeat/db/odd"
+    <tal:block tal:repeat="dbsi batch">
+    <tr tal:define="odd repeat/dbsi/odd"
         tal:attributes="class python:test(odd, 'odd', 'even')">
 
       <td class="tablevalues" align="center">
            <input type="checkbox" name="componentNames:list" 
-                  tal:attributes="value db/getRelationshipManagerId"/>
-      </td>
-      <td class="tablevalues"
-        tal:content="db/dbSrvInstName">Inst
+                  tal:attributes="value dbsi/getRelationshipManagerId"/>
       </td>
       <td class="tablevalues">
            <tal:block 
-           tal:content="structure python:db.urlLink(text=str(db.dbname),
+           tal:content="structure python:dbsi.urlLink(text=str(dbsi.dbsiname),
                                                     attrs={'target':'_top'})"/>
       </td>
-      <td class="tablevalues"
-        tal:content="db/type">vol
-      </td>
-      <td class="tablevalues"
-        tal:content="db/totalString">vol
-      </td>
-      <td class="tablevalues"
-        tal:content="db/usedString">vol
-      </td>
-      <td class="tablevalues"
-        tal:content="db/availString">vol
-      </td>
-      <td class="tablevalues"
-        tal:content="db/capacity">vol
-      </td>
-      <td tal:define="color db/statusDot|string:grey" 
+      <td class="tablevalues" tal:content="structure dbsi/getManufacturerLink"/>
+      <td class="tablevalues" tal:content="structure dbsi/getProductLink"/>
+      <td tal:define="color dbsi/statusDot|string:grey" 
         class="tablevalues" style="text-align:center;">
         <img tal:attributes="src string:img/${color}_dot.png"/>
       </td>
       <td class="tablevalues" align="center">
       <img border="0"
-         tal:attributes="src python:test(db.monitor,
+         tal:attributes="src python:test(dbsi.monitor,
                  here.os.getStatusImgSrc(0),
                  here.os.getStatusImgSrc(3))" />
       </td>
       <td class="tablevalues" align="center" width="60">
-      <img tal:condition="db/isLockedFromDeletion" 
+      <img tal:condition="dbsi/isLockedFromDeletion" 
               border="0" src="locked-delete-icon.png">
-      <img tal:condition="db/isLockedFromUpdates" 
+      <img tal:condition="dbsi/isLockedFromUpdates" 
               border="0" src="locked-update-icon.png">
-      <img tal:condition="db/sendEventWhenBlocked" 
+      <img tal:condition="dbsi/sendEventWhenBlocked" 
               border="0" src="locked-sendevent-icon.png">
       </td>
     </tr>

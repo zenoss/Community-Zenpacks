@@ -12,13 +12,14 @@ __doc__="""info.py
 
 Representation of Databases.
 
-$Id: info.py,v 1.0 2010/07/11 15:53:12 egor Exp $"""
+$Id: info.py,v 1.1 2010/09/06 14:23:39 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
 from Products.Zuul.infos.component import ComponentInfo
+from Products.Zuul.decorators import info
 from ZenPacks.community.RDBMS import interfaces
 
 
@@ -30,6 +31,11 @@ class DatabaseInfo(ComponentInfo):
     @property
     def name(self):
         return self._object.dbname
+
+    @property
+    @info
+    def dbSrvInst(self):
+        return self._object.getDBSrvInst()
 
     @property
     def blockSizeString(self):
@@ -52,6 +58,30 @@ class DatabaseInfo(ComponentInfo):
         cap = self._object.capacity()
         if cap != 'Unknown': cap = '%s%%' % cap
         return cap
+
+    @property
+    def status(self):
+        if not hasattr(self._object, 'statusString'): return 'Unknown'
+        else: return self._object.statusString()
+
+class DBSrvInstInfo(ComponentInfo):
+    implements(interfaces.IDBSrvInstInfo)
+
+    @property
+    @info
+    def manufacturer(self):
+        pc = self._object.productClass()
+        if (pc):
+            return pc.manufacturer()
+
+    @property
+    @info
+    def product(self):
+        return self._object.productClass()
+
+    @property
+    def name(self):
+        return self._object.dbsiname
 
     @property
     def status(self):

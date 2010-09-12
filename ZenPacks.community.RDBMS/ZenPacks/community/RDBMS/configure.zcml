@@ -10,6 +10,11 @@
                  provides=".interfaces.IDatabaseInfo"
                  />
 
+        <adapter factory=".info.DBSrvInstInfo"
+                 for=".DBSrvInst.DBSrvInst"
+                 provides=".interfaces.IDBSrvInstInfo"
+                 />
+
         <browser:resourceDirectory
                  name="rdbms"
                  directory="resources"

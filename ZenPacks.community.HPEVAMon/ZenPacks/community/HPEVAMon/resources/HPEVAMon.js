@@ -112,7 +112,7 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVADiskDrivePanel', ZC.HPEVADiskDrivePanel);
-ZC.registerName('HPEVADiskDrivePanel', _t('Hard Disk'), _t('Hard Disks'));
+ZC.registerName('HPEVADiskDrive', _t('Hard Disk'), _t('Hard Disks'));
 
 ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -190,7 +190,7 @@ ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAFCPortPanel', ZC.HPEVAFCPortPanel);
-ZC.registerName('HPEVAFCPortPanel', _t('FC Port'), _t('FC Ports'));
+ZC.registerName('HPEVAFCPort', _t('FC Port'), _t('FC Ports'));
 
 ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -247,7 +247,7 @@ ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStorageDiskEnclosurePanel', ZC.HPEVAStorageDiskEnclosurePanel);
-ZC.registerName('HPEVAStorageDiskEnclosurePanel', _t('Storage Enclosure'), _t('Storage Enclosures'));
+ZC.registerName('HPEVAStorageDiskEnclosure', _t('Storage Enclosure'), _t('Storage Enclosures'));
 
 ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -330,7 +330,7 @@ ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStoragePoolPanel', ZC.HPEVAStoragePoolPanel);
-ZC.registerName('HPEVAStoragePoolPanel', _t('Disk Group'), _t('Disk Groups'));
+ZC.registerName('HPEVAStoragePool', _t('Disk Group'), _t('Disk Groups'));
 
 ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -402,7 +402,7 @@ ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStorageProcessorCardPanel', ZC.HPEVAStorageProcessorCardPanel);
-ZC.registerName('HPEVAStorageProcessorCardPanel', _t('Controller'), _t('Controllers'));
+ZC.registerName('HPEVAStorageProcessorCard', _t('Controller'), _t('Controllers'));
 
 ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -481,5 +481,5 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStorageVolumePanel', ZC.HPEVAStorageVolumePanel);
-ZC.registerName('HPEVAStorageVolumePanel', _t('Virtual Disk'), _t('Virtual Disks'));
+ZC.registerName('HPEVAStorageVolume', _t('Virtual Disk'), _t('Virtual Disks'));
 })();

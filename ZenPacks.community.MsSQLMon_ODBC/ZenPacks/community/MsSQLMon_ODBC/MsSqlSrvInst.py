@@ -12,9 +12,9 @@ __doc__="""MsSqlSrvInst
 
 MsSqlSrvInst is a MS SQL Server Instance
 
-$Id: MsSqlSrvInst.py,v 1.0 2010/09/08 13:41:47 egor Exp $"""
+$Id: MsSqlSrvInst.py,v 1.1 2010/09/14 14:57:44 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import InitializeClass
 
@@ -92,7 +92,6 @@ class MsSqlSrvInst(DBSrvInst):
         Return manageIp with DB Server Instance name if needed
         """
         manageIp = self.device().manageIp
-        if dbsi: manageIp = '%s\%s' % (manageIp, self.dbsiname)
-        return manageIp
+        return '%s\%s' % (manageIp, self.dbsiname)
 
 InitializeClass(MsSqlSrvInst)

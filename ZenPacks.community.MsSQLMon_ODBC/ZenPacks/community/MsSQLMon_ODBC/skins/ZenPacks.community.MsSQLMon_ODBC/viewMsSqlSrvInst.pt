@@ -1,0 +1,69 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method=post 
+    tal:define="manager here/isManager;"
+    tal:attributes="action string:${here/absolute_url_path}">
+    <input type="hidden" name="zenScreenName"
+        tal:attributes="value template/id" />
+
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:Database Server Instances;
+                menu_id string:Lockable;">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<tr>
+    <td class="tableheader" align=left>Name</td>
+    <td class="tablevalues" tal:content="here/dbsiname"/>
+    <td class="tableheader">Monitor</td>
+    <td class="tablevalues">
+        <select class="tablevalues"  name="monitor:boolean">
+        <option tal:repeat="e python:(True,False)" tal:content="e"
+            tal:attributes="value e; selected python:e==here.monitored()"/>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class="tableheader" align=left>Type</td>
+    <td class="tablevalues" tal:content="here/getProductName">1</td>
+    <td class="tableheader" align=left>Edition</td>
+    <td class="tablevalues" tal:content="here/edition">1</td>
+</tr>
+<tr>
+    <td class="tableheader" align=left>Version</td>
+    <td class="tablevalues" tal:content="here/productVersion">1</td>
+    <td class="tableheader" align=left>Product Level</td>
+    <td class="tablevalues" tal:content="here/productLevel">1</td>
+</tr>
+<tr>
+    <td class="tableheader" align=left>License Type</td>
+    <td class="tablevalues" tal:content="here/licenseType">1</td>
+    <td class="tableheader" align=left>Licenses</td>
+    <td class="tablevalues" tal:content="here/numLicenses">1</td>
+</tr>
+<tr>
+    <td class="tableheader" align=left>Process ID</td>
+    <td class="tablevalues" tal:content="here/processID">1</td>
+    <td class="tableheader" align=left>State</td>
+    <td class="tablevalues" tal:content="here/statusString"/>
+</tr>
+<tr>
+    <td align="left"  class="tableheader" colspan="4">
+        <input class="tableheader" type="submit" value=" Save "
+               name="zmanage_editProperties:method" />
+    </td>
+</tr>
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+<br/>
+<tal:block tal:condition="here/monitored" >
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+</tal:block>
+</tal:block>
+</tal:block>

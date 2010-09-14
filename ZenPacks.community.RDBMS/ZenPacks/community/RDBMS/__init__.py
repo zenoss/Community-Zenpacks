@@ -150,13 +150,16 @@ def lockDBSrvInstsFromUpdates(self, componentNames=[],
 
 from Products.ZenModel.OperatingSystem import OperatingSystem
 from Products.ZenRelations.RelSchema import *
-OperatingSystem._relations += (("softwaredatabases", ToManyCont(ToOne, "ZenPacks.community.RDBMS.Database", "os")), )
+OperatingSystem._relations += (("softwaredatabases", ToManyCont(ToOne,
+                                    "ZenPacks.community.RDBMS.Database", "os")),
+                                ("softwaredbsrvinstances", ToManyCont(ToOne,
+				    "ZenPacks.community.RDBMS.DBSrvInst", "os")),
+			    )
 OperatingSystem.addDatabase = addDatabase
 OperatingSystem.deleteDatabases = deleteDatabases
 OperatingSystem.unlockDatabases = unlockDatabases
 OperatingSystem.lockDatabasesFromDeletion = lockDatabasesFromDeletion
 OperatingSystem.lockDatabasesFromUpdates = lockDatabasesFromUpdates
-OperatingSystem._relations += (("softwaredbsrvinstances", ToManyCont(ToOne, "ZenPacks.community.RDBMS.DBSrvInst", "os")), )
 OperatingSystem.addDBSrvInst = addDBSrvInst
 OperatingSystem.deleteDBSrvInsts = deleteDBSrvInsts
 OperatingSystem.unlockDBSrvInsts = unlockDBSrvInsts
@@ -169,36 +172,53 @@ class ZenPack(ZenPackBase):
     """ Database loader
     """
 
+    def _removeMenu(self, menuName):
+	zm = getattr(self.dmd.zenMenus, menuName, None)
+	if not zm: return
+	for mi in zm.zenMenuItems():
+	    zm.zenMenuItems._delObject(mi.id)
+        self.dmd.zenMenus._delObject(menuName)
+
+    def _addMenu(self, mN, mD):
+	if hasattr(self.dmd.zenMenus, mN): self._removeMenu(mN)
+        self.dmd.zenMenus.manage_addZenMenu(mN)
+	zm = getattr(self.dmd.zenMenus, mN)
+	miparams = (('add%s'%mN, 'Add %s...'%mN, 'dialod_add%s'%mN, 90.0),
+	        ('delete%ss'%mN, 'Delete %s...'%mN, 'dialod_delete%ss'%mN, 80.0),
+	        ('lock%ss'%mN, 'Lock %s...'%mN, 'dialod_lock%ss'%mN, 70.0),
+	        ('changeMonitoring', 'Monitoring...', 'dialod_changeMonitoring', 0.0))
+	for param in miparams:
+            zm.manage_addZenMenuItem(id=param[0],
+	                            description=param[1],
+				    action=param[2], 
+                                    permissions=('View',),
+				    isdialog=True,
+				    isglobal=True, 
+	                            ordering=param[3])
+
     def install(self, app):
-        if hasattr(self.dmd.zenMenus, 'Database'):
-            self.dmd.zenMenus._delObject('Database')
-        self.dmd.zenMenus.manage_addZenMenu('Database')
-        if hasattr(self.dmd.zenMenus, 'DBSrvInst'):
-            self.dmd.zenMenus._delObject('DBSrvInst')
-        self.dmd.zenMenus.manage_addZenMenu('DBSrvInst')
+        self._removeMenu('Database')
+        self._addMenu('Database', 'Database')
+        self._removeMenu('DBSrvInst')
+        self._addMenu('DBSrvInst', 'Database Server Instance')
         ZenPackBase.install(self, app)
         for d in self.dmd.Devices.getSubDevices():
             d.os.buildRelations()
 
     def upgrade(self, app):
-        if hasattr(self.dmd.zenMenus, 'Database'):
-            self.dmd.zenMenus._delObject('Database')
-        self.dmd.zenMenus.manage_addZenMenu('Database')
-        if hasattr(self.dmd.zenMenus, 'DBSrvInst'):
-            self.dmd.zenMenus._delObject('DBSrvInst')
-        self.dmd.zenMenus.manage_addZenMenu('DBSrvInst')
         ZenPackBase.upgrade(self, app)
+        self._removeMenu('Database')
+        self._addMenu('Database', 'Database')
+        self._removeMenu('DBSrvInst')
+        self._addMenu('DBSrvInst', 'Database Server Instance')
         for d in self.dmd.Devices.getSubDevices():
             d.os.buildRelations()
 
     def remove(self, app, junk):
+        self._removeMenu('Database')
+        self._removeMenu('DBSrvInst')
         ZenPackBase.remove(self, app, junk)
-        if hasattr(self.dmd.zenMenus, 'Database'):
-            self.dmd.zenMenus._delObject('Database')
-        OperatingSystem._relations = tuple([x for x in OperatingSystem._relations if x[0] != 'softwaredatabases'])
-        if hasattr(self.dmd.zenMenus, 'DBSrvInst'):
-            self.dmd.zenMenus._delObject('DBSrvInst')
-        OperatingSystem._relations = tuple([x for x in OperatingSystem._relations if x[0] != 'softwaredbsrvinstances'])
+        OperatingSystem._relations = tuple([x for x in OperatingSystem._relations if x[0] not in ('softwaredatabases','softwaredbsrvinstances')])
         for d in self.dmd.Devices.getSubDevices():
             d.os.buildRelations()
 

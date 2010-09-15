@@ -1,7 +1,7 @@
 <tal:block metal:define-macro="compList">
 <form method="post" tal:define="alink here/absolute_url;
     slink python:alink + '/deviceSoftwareDetail';"
-    tal:attributes="action slink" 
+    tal:attributes="action slink"
     name="softwaredbsrvinstanceListForm">
 
 <tal:block metal:define-macro="softwaredbsrvinstancesList"
@@ -87,7 +87,7 @@
     </tr>
     </tal:block>
     <tr>
-        <td colspan="7" class="tableheader" align='center'>
+        <td colspan="10" class="tableheader" align='center'>
         <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
         </td>
     </tr>

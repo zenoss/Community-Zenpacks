@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.SQLDataSource"
-VERSION = "1.2"
+VERSION = "1.3"
 AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

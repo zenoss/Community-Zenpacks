@@ -56,7 +56,7 @@ class MsSqlDatabase(Database):
     sqlsortorder = ''
     dbproperties = []
     status = 0
-    
+
     statusmap ={0: (DOT_GREEN, SEV_CLEAN, 'Online'),
                 1: (DOT_RED, SEV_CRITICAL, 'Offline'),
                 2: (DOT_YELLOW, SEV_WARNING, 'Restoring'),

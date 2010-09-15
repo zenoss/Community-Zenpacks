@@ -47,7 +47,7 @@
     <td class="tableheader" align=left>Collation</td>
     <td class="tablevalues" tal:content="here/collation"/>
     <td class="tableheader" align=left>SQL Sort Order</td>
-    <td class="tablevalues" tal:content="here/statusString"/>
+    <td class="tablevalues" tal:content="here/sqlsortorder"/>
 </tr>
 <tr>
     <td class="tableheader" align=left>Updateability</td>

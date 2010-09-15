@@ -8,9 +8,9 @@
 #
 ################################################################################
 
-__doc__="""MsSql2k5DatabaseMap.py
+__doc__="""MsSqlDatabaseMap.py
 
-MsSql2k5DatabaseMap maps the MSSQL 2005 Databases table to Database objects
+MsSqlDatabaseMap maps the MS SQL Databases table to Database objects
 
 $Id: MsSqlDatabaseMap.py,v 1.3 2010/08/26 16:12:33 egor Exp $"""
 
@@ -46,46 +46,46 @@ class MsSqlDatabaseMap(OdbcPlugin):
         if uid: cs.append('UID=%s'%uid)
         pwd = getattr(device, 'zWinPassword', None)
         if pwd: cs.append('PWD=%s'%pwd)
-	for inst in getattr(device, 'zMsSqlSrvInstances', '').split() or ['']:
-	    if cs[1].startswith('SERVER=') and inst != '':
-	        cs[1] = 'SERVER=%s\%s' % (device.manageIp, inst)
+        for inst in getattr(device, 'zMsSqlSrvInstances', '').split() or ['']:
+            if cs[1].startswith('SERVER=') and inst != '':
+                cs[1] = 'SERVER=%s\%s' % (device.manageIp, inst)
             queries['si_%s'%inst] = (
                 """SELECT CONVERT(Char(128), SERVERPROPERTY('InstanceName')) AS InstanceName,
-		    CONVERT(Char(128), SERVERPROPERTY('Edition')) AS Edition,
-		    CONVERT(Char(128), SERVERPROPERTY('LicenseType')) AS LicenseType,
-		    CONVERT(Int, SERVERPROPERTY('NumLicenses')) AS NumLicenses,
-		    CONVERT(Int, SERVERPROPERTY('ProcessID')) AS ProcessID,
-		    CONVERT(Char(128), SERVERPROPERTY('ProductVersion')) AS ProductVersion,
-		    CONVERT(Char(128), SERVERPROPERTY('ProductLevel')) AS ProductLevel,
-		    RTRIM((CASE WHEN SERVERPROPERTY('isClustered') = 1 THEN 'isClustered ' ELSE '' END) + (CASE WHEN SERVERPROPERTY('IsFullTextInstalled') = 1 THEN 'IsFullTextInstalled ' ELSE '' END) + (CASE WHEN SERVERPROPERTY('IsIntegratedSecurityOnly') = 1 THEN 'IsIntegratedSecurityOnly ' ELSE '' END) + (CASE WHEN SERVERPROPERTY('IsSingleUser') = 1 THEN 'IsSingleUser ' ELSE '' END)) AS dbsiproperties,
-		    @@version AS Version
+                    CONVERT(Char(128), SERVERPROPERTY('Edition')) AS Edition,
+                    CONVERT(Char(128), SERVERPROPERTY('LicenseType')) AS LicenseType,
+                    CONVERT(Int, SERVERPROPERTY('NumLicenses')) AS NumLicenses,
+                    CONVERT(Int, SERVERPROPERTY('ProcessID')) AS ProcessID,
+                    CONVERT(Char(128), SERVERPROPERTY('ProductVersion')) AS ProductVersion,
+                    CONVERT(Char(128), SERVERPROPERTY('ProductLevel')) AS ProductLevel,
+                    RTRIM((CASE WHEN SERVERPROPERTY('isClustered') = 1 THEN 'isClustered ' ELSE '' END) + (CASE WHEN SERVERPROPERTY('IsFullTextInstalled') = 1 THEN 'IsFullTextInstalled ' ELSE '' END) + (CASE WHEN SERVERPROPERTY('IsIntegratedSecurityOnly') = 1 THEN 'IsIntegratedSecurityOnly ' ELSE '' END) + (CASE WHEN SERVERPROPERTY('IsSingleUser') = 1 THEN 'IsSingleUser ' ELSE '' END)) AS dbsiproperties,
+                    @@version AS Version
                 """,
-		None,
-		';'.join(cs),
+                None,
+                ';'.join(cs),
                 {
-		    'InstanceName':'dbsiname',
-		    'Edition':'edition',
-		    'LicenseType':'licenseType',
-		    'NumLicenses':'numLicenses',
-		    'ProcessID':'processID',
-		    'ProductVersion':'productVersion',
-		    'ProductLevel':'productLevel',
-		    'Version':'setProductKey',
-		    'dbsiproperties':'dbsiproperties',
-		})
+                    'InstanceName':'dbsiname',
+                    'Edition':'edition',
+                    'LicenseType':'licenseType',
+                    'NumLicenses':'numLicenses',
+                    'ProcessID':'processID',
+                    'ProductVersion':'productVersion',
+                    'ProductLevel':'productLevel',
+                    'Version':'setProductKey',
+                    'dbsiproperties':'dbsiproperties',
+                })
             queries['db_%s'%inst] = (
                 "sp_helpdb",
-		None,
-		';'.join(cs),
+                None,
+                ';'.join(cs),
                 {
-		    'name':'dbname',
-		    'db_size':'totalBlocks',
-		    'owner':'owner',
-		    'dbid':'dbid',
-		    'created':'created',
-		    'status':'status',
-		    'compatibility_level':'type',
-		})
+                    'name':'dbname',
+                    'db_size':'totalBlocks',
+                    'owner':'owner',
+                    'dbid':'dbid',
+                    'created':'created',
+                    'status':'status',
+                    'compatibility_level':'type',
+                })
         return queries
 
     def process(self, device, results, log):
@@ -98,15 +98,15 @@ class MsSqlDatabaseMap(OdbcPlugin):
                 90: 'SQL Server 2005',
                 100: 'SQL Server 2008',
                 }
-	statuses = {'ONLINE':0,
-	        'OFFLINE':1,
-		'RESTORING':2,
-		'RECOVERING':3,
-		'RECOVERY_PENDING':4,
-		'SUSPECT':5,
-		'EMERGENCY':6,
-	        }
-		
+        statuses = {'ONLINE':0,
+                'OFFLINE':1,
+                'RESTORING':2,
+                'RECOVERING':3,
+                'RECOVERY_PENDING':4,
+                'SUSPECT':5,
+                'EMERGENCY':6,
+                }
+
         maps = [self.relMap()]
         databases = []
         for instname in getattr(device, 'zMsSqlSrvInstances', '').split() or ['']:
@@ -114,17 +114,17 @@ class MsSqlDatabaseMap(OdbcPlugin):
             dbs = results.get('db_%s'%instname, None)
             if not dbs: continue
             if not inst:
-	        databases.extend(dbs)
-		continue
+                databases.extend(dbs)
+                continue
             om = self.objectMap(inst)
             om.id = self.prepId(om.dbsiname)
-	    om.dbsiproperties = om.dbsiproperties.split()
+            om.dbsiproperties = om.dbsiproperties.split()
             pn, arch = om.setProductKey.split(' - ', 1)
             if not arch.__contains__('(X64)'):pn = '%s (%s)' % (pn, om.dbsiname)
             else: pn = '%s (64-Bit) (%s)' % (pn, om.dbsiname)
             om.setProductKey = MultiArgs(pn, 'Microsoft')
             maps[-1].append(om)
-	    for db in dbs:
+            for db in dbs:
                 db['setDBSrvInst'] = om.dbsiname
                 databases.append(db)
         self.relname = "softwaredatabases"
@@ -135,19 +135,19 @@ class MsSqlDatabaseMap(OdbcPlugin):
             try:
                 om = self.objectMap(database)
                 if not om.status: om.status = 1
-		else:
-		    om.dbproperties = []
-		    for dbprop in om.status.split(', '):
-		        try:
-			    var, val = dbprop.split('=')
-			    if var == 'Status': val = statuses.get(val, 0)
-			    setattr(om, var.lower(), val)
-			except: om.dbproperties.append(dbprop)
-		if not hasattr(om, 'setDBSrvInst'):
-		    om.id = self.prepId(om.dbname)
-		else:
+                else:
+                    om.dbproperties = []
+                    for dbprop in om.status.split(', '):
+                        try:
+                            var, val = dbprop.split('=')
+                            if var == 'Status': val = statuses.get(val, 0)
+                            setattr(om, var.lower(), val)
+                        except: om.dbproperties.append(dbprop)
+                if not hasattr(om, 'setDBSrvInst'):
+                    om.id = self.prepId(om.dbname)
+                else:
                     om.id = self.prepId('%s_%s'%(om.setDBSrvInst, om.dbname))
-		om.created = str(om.created)
+                om.created = str(om.created)
                 om.type = types.get(getattr(om, 'type' , 1), types[1])
                 om.blockSize = 8192
                 om.totalBlocks = round(float(om.totalBlocks.split()[0]) * 128)

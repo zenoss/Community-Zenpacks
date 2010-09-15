@@ -3,10 +3,10 @@
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'MsSqlDatabase') -->
 <object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/MsSqlDatabase' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property id='zendoc' type='string'>
-MS SQL 2005 Database Template
+MS SQL Database Template
 </property>
 <property type="text" id="description" mode="w" >
-MS SQL 2005 Database Template
+MS SQL Database Template
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.MsSQLMon_ODBC.MsSqlDatabase
@@ -63,7 +63,7 @@ SELECT [Active Transactions] AS ActiveTransactions,
 (CASE WHEN [Data File(s) Size (KB)] IS NULL THEN NULL WHEN (([Data File(s) Size (KB)] * 1024) &gt;= tt.UnallocatedSpace) THEN (([Data File(s) Size (KB)] * 1024) - tt.UnallocatedSpace) ELSE 0 END) AS SpaceAvailable,
 tt.Status AS Status,
 [Transactions/sec] AS Transactions,
-tt.dbname
+RTRIM(tt.dbname) AS instance_name
 FROM @tt AS tt LEFT JOIN
 (SELECT instance_name, counter_name, cntr_value FROM sysperfinfo WHERE object_name like '%:Databases%') P
 PIVOT (SUM(cntr_value) FOR [counter_name] IN (
@@ -813,6 +813,12 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'Windows', 'rrdTemplates', 'MsSqlSrvInst') -->
 <object id='/zport/dmd/Devices/Server/Windows/rrdTemplates/MsSqlSrvInst' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+MS SQL Server Instance Template
+</property>
+<property type="text" id="description" mode="w" >
+MS SQL Server Instance Template
+</property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.MsSQLMon_ODBC.MsSqlSrvInst
 </property>
@@ -849,7 +855,7 @@ SELECT [Info Errors] AS InfoErrors,
 [Page],
 [RID],
 [_Total] AS Total,
-counter_name
+RTRIM(counter_name) AS counter_name
 FROM
 (SELECT instance_name, counter_name, cntr_value FROM sysperfinfo WHERE object_name like '%:Locks%' OR object_name like '%:SQL Errors%') P
 PIVOT (SUM(cntr_value) FOR [instance_name] IN (
@@ -1039,7 +1045,7 @@ SELECT [Info Errors] AS InfoErrors,
 [Page],
 [RID],
 [_Total] AS Total,
-counter_name
+RTRIM(counter_name) AS counter_name
 FROM
 (SELECT instance_name, counter_name, cntr_value FROM sysperfinfo WHERE object_name like '%:Locks%' OR object_name like '%:SQL Errors%') P
 PIVOT (SUM(cntr_value) FOR [instance_name] IN (
@@ -1229,7 +1235,7 @@ SELECT [Info Errors] AS InfoErrors,
 [Page],
 [RID],
 [_Total] AS Total,
-counter_name
+RTRIM(counter_name) AS counter_name
 FROM
 (SELECT instance_name, counter_name, cntr_value FROM sysperfinfo WHERE object_name like '%:Locks%' OR object_name like '%:SQL Errors%') P
 PIVOT (SUM(cntr_value) FOR [instance_name] IN (
@@ -1419,7 +1425,7 @@ SELECT [Info Errors] AS InfoErrors,
 [Page],
 [RID],
 [_Total] AS Total,
-counter_name
+RTRIM(counter_name) AS counter_name
 FROM
 (SELECT instance_name, counter_name, cntr_value FROM sysperfinfo WHERE object_name like '%:Locks%' OR object_name like '%:SQL Errors%') P
 PIVOT (SUM(cntr_value) FOR [instance_name] IN (
@@ -1609,7 +1615,7 @@ SELECT [Info Errors] AS InfoErrors,
 [Page],
 [RID],
 [_Total] AS Total,
-counter_name
+RTRIM(counter_name) AS counter_name
 FROM
 (SELECT instance_name, counter_name, cntr_value FROM sysperfinfo WHERE object_name like '%:Locks%' OR object_name like '%:SQL Errors%') P
 PIVOT (SUM(cntr_value) FOR [instance_name] IN (

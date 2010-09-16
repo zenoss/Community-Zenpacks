@@ -13,9 +13,9 @@ __doc__="""HPEVADeviceMap
 HPEVADeviceMap maps HPEVA_StorageSystem class to hw and
 os products.
 
-$Id: HPEVADeviceMap.py,v 1.4 2010/06/22 10:19:39 egor Exp $"""
+$Id: HPEVADeviceMap.py,v 1.5 2010/09/16 08:07:40 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.5 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -99,9 +99,11 @@ class HPEVADeviceMap(WBEMPlugin):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
         try:
-            cs = results["HPEVA_StorageControllerChassis"][0]
+            sysname = getattr(device, "snmpSysName", None)
+            for cs in results.get("HPEVA_StorageControllerChassis", []):
+                if not sysname and cs["_tag"].startswith(device.id): break
             if not cs: return
-            for instance in results["HPEVA_StorageSystem"]:
+            for instance in results.get("HPEVA_StorageSystem", []):
                 if not cs["_tag"].startswith(instance["snmpSysName"]): continue
                 cs.update(instance)
                 break
@@ -121,7 +123,7 @@ class HPEVADeviceMap(WBEMPlugin):
             om.setHWProductKey = MultiArgs(om.setHWProductKey, "HP")
             om.setOSProductKey = MultiArgs(om.setOSProductKey, "HP")
             maps.append(om)
-            maps.append(self.iloInterface(device.manageIp))
+            if device.manageIp: maps.append(self.iloInterface(device.manageIp))
         except:
             log.warning("processing error")
             return

@@ -201,17 +201,17 @@ ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'diskType',
                 dataIndex: 'diskType',
                 header: _t('Type'),
-                width: 70,
+                width: 70
             },{
                 id: 'rpm',
                 dataIndex: 'rpm',
                 header: _t('RPM'),
-                width: 70,
+                width: 70
             },{
                 id: 'size',
                 dataIndex: 'size',
                 header: _t('Size'),
-                renderer: Zenoss.render.bytesString,
+                renderer: Zenoss.render.bytesString
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',

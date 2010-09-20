@@ -12,9 +12,9 @@ __doc__="""Database
 
 Database is a Database
 
-$Id: Database.py,v 1.2 2010/09/06 14:28:54 egor Exp $"""
+$Id: Database.py,v 1.3 2010/09/20 23:57:47 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
@@ -133,6 +133,13 @@ class Database(OSComponent, HWStatus):
     def getDBSrvInst(self):
         try: return self.dbsrvinstance()
         except: return None
+
+
+    def getDBSrvInstLink(self):
+        dbsi = self.dbsrvinstance()
+        if dbsi: return dbsi.urlLink(text=str(dbsi.dbsiname),
+                                    attrs={'target':'_top'})
+        else: return ""
 
     def dbSrvInstName(self):
         """

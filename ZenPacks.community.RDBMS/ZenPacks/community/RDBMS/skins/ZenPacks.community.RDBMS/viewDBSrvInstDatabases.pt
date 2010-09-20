@@ -1,12 +1,14 @@
-<tal:block metal:define-macro="compList">
-<form method="post" tal:define="alink here/absolute_url;
-    slink python:alink + '/deviceSoftwareDetail';"
-    tal:attributes="action slink"
-    name="softwaredatabaseListForm">
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" tal:attributes="action string:${here/absolute_url_path}" 
+    tal:define="manager python:here.has_permission('Change Device')">
+
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id" />
 
 <tal:block metal:define-macro="softwaredatabasesList"
     tal:define="tableName string:databaseslist;
-    objects here/os/softwaredatabases/objectValuesAll;
+    objects here/databases;
     tabletitle string:Databases;
     batch python:here.ZenTableManager.getBatch(tableName,objects,
                                             sortedHeader='name',
@@ -16,7 +18,6 @@
     showfilterbox python:True;"
     tal:condition="objects">
 
-<input type="hidden" name="context" value="softwaredatabases"/>
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 <tal:block metal:fill-slot="filterslot">
     <div style="position:absolute;right:200px;top:0px;">
@@ -35,9 +36,6 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr tal:condition="objects">
         <th class="tableheader" width="20"></th>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'DBSrvInstName','Instance')">Instance
-        </th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'dbname','Name')">Name
         </th>
@@ -73,11 +71,8 @@
            <input type="checkbox" name="componentNames:list" 
                   tal:attributes="value db/getRelationshipManagerId"/>
       </td>
-      <td class="tablevalues"
-        tal:content="db/dbSrvInstName">Inst
-      </td>
       <td class="tablevalues">
-           <tal:block
+           <tal:block 
            tal:content="structure python:db.urlLink(text=str(db.dbname),
                                                     attrs={'target':'_top'})"/>
       </td>
@@ -117,7 +112,7 @@
     </tr>
     </tal:block>
     <tr>
-        <td colspan="11" class="tableheader" align='center'>
+        <td colspan="10" class="tableheader" align='center'>
         <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
         </td>
     </tr>
@@ -130,4 +125,5 @@
 
 
 </form>
+</tal:block>
 </tal:block>

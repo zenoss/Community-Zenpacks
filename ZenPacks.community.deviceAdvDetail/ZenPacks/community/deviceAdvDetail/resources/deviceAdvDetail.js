@@ -29,7 +29,7 @@ ZC.MemoryModulePanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
             componentType: 'MemoryModule',
-	    autoExpandColumn: 'product',
+            autoExpandColumn: 'product',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},
@@ -85,6 +85,7 @@ ZC.MemoryModulePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('MemoryModulePanel', ZC.MemoryModulePanel);
+ZC.registerName('MemoryModule', _t('Memory Module'), _t('Memory Modules'));
 
 ZC.LogicalDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -150,12 +151,13 @@ ZC.LogicalDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('LogicalDiskPanel', ZC.LogicalDiskPanel);
+ZC.registerName('LogicalDisk', _t('Logical Disk'), _t('Logical Disks'));
 
 ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
             componentType: 'HardDisk',
-	    autoExpandColumn: 'product',
+            autoExpandColumn: 'product',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},
@@ -199,17 +201,17 @@ ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'diskType',
                 dataIndex: 'diskType',
                 header: _t('Type'),
-                width: 70,
+                width: 70
             },{
                 id: 'rpm',
                 dataIndex: 'rpm',
                 header: _t('RPM'),
-                width: 70,
+                width: 70
             },{
                 id: 'size',
                 dataIndex: 'size',
                 header: _t('Size'),
-                renderer: Zenoss.render.bytesString,
+                renderer: Zenoss.render.bytesString
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',
@@ -228,12 +230,13 @@ ZC.HardDiskPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HardDiskPanel', ZC.HardDiskPanel);
+ZC.registerName('HardDisk', _t('Hard Disk'), _t('Hard Disks'));
 
 ZC.ExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
             componentType: 'ExpansionCard',
-	    autoExpandColumn: 'product',
+            autoExpandColumn: 'product',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},
@@ -292,6 +295,7 @@ ZC.ExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('ExpansionCardPanel', ZC.ExpansionCardPanel);
+ZC.registerName('ExpansionCard', _t('Expansion Card'), _t('Expansion Cards'));
 
 ZC.FanPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -338,11 +342,12 @@ ZC.FanPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('FanPanel', ZC.FanPanel);
+ZC.registerName('Fan', _t('Fan'), _t('Fans'));
 
 ZC.TemperatureSensorPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
         config = Ext.applyIf(config||{}, {
-            componentType: 'TemperatureSensora',
+            componentType: 'TemperatureSensor',
             fields: [
                 {name: 'uid'},
                 {name: 'severity'},
@@ -384,6 +389,7 @@ ZC.TemperatureSensorPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('TemperatureSensorPanel', ZC.TemperatureSensorPanel);
+ZC.registerName('TemperatureSensor', _t('Temperature Sensor'), _t('Temperature Sensors'));
 
 ZC.PowerSupplyPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -440,5 +446,6 @@ ZC.PowerSupplyPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('PowerSupplyPanel', ZC.PowerSupplyPanel);
+ZC.registerName('PowerSupply', _t('Power Supply'), _t('Power Supplies'));
 
 })();

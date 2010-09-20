@@ -12,12 +12,12 @@ __doc__="""Database
 
 Database is a Database
 
-$Id: Database.py,v 1.1 2010/07/11 15:37:46 egor Exp $"""
+$Id: Database.py,v 1.2 2010/09/06 14:28:54 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass, DTMLFile
-
+from AccessControl import ClassSecurityInfo
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenModel.ZenossSecurity import *
@@ -75,6 +75,7 @@ class Database(OSComponent, HWStatus):
 
     _relations = OSComponent._relations + (
         ("os", ToOne(ToManyCont, "Products.ZenModel.OperatingSystem", "softwaredatabases")),
+        ("dbsrvinstance", ToOne(ToMany, "ZenPacks.community.RDBMS.DBSrvInst", "databases")),
         )
 
     factory_type_information = (
@@ -111,6 +112,34 @@ class Database(OSComponent, HWStatus):
             )
           },
         )
+
+    security = ClassSecurityInfo()
+
+    security.declareProtected(ZEN_CHANGE_DEVICE, 'setDBSrvInst')
+    def setDBSrvInst(self, instname):
+        """
+        Set the dbsrvinstance relationship to the DB Server Instance specified
+        by the given instance name.
+        """
+        dbsrvinst = None
+        for inst in self.os().softwaredbsrvinstances():
+            if inst.dbsiname != instname: continue
+            dbsrvinst = inst
+            break
+        if dbsrvinst: self.dbsrvinstance.addRelation(dbsrvinst)
+        else: log.warn("DB Server Instance:%s not found", instname)
+
+    security.declareProtected(ZEN_VIEW, 'getDBSrvInst')
+    def getDBSrvInst(self):
+        try: return self.dbsrvinstance()
+        except: return None
+
+    def dbSrvInstName(self):
+        """
+        Return the Database Server Instance Name
+        """
+        dbsi = self.dbsrvinstance()
+        return dbsi and dbsi.dbsiname or ''
 
     def totalBytes(self):
         """

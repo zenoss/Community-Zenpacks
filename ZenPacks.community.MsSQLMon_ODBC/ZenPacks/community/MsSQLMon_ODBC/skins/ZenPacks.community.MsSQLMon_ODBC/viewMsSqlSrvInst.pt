@@ -8,7 +8,7 @@
         tal:attributes="value template/id" />
 
 <tal:block metal:define-macro="objectperf" tal:define="
-                tabletitle string:Database;
+                tabletitle string:Database Server Instances;
                 menu_id string:Lockable;">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 
@@ -16,7 +16,7 @@
 
 <tr>
     <td class="tableheader" align=left>Name</td>
-    <td class="tablevalues" tal:content="here/dbname"/>
+    <td class="tablevalues" tal:content="here/dbsiname"/>
     <td class="tableheader">Monitor</td>
     <td class="tablevalues">
         <select class="tablevalues"  name="monitor:boolean">
@@ -26,14 +26,26 @@
     </td>
 </tr>
 <tr>
-    <td class="tableheader" align=left>Units Size</td>
-    <td class="tablevalues" tal:content="here/blockSizeString"/>
-    <td class="tableheader" align=left>Size Allocated</td>
-    <td class="tablevalues" tal:content="here/totalString"/>
+    <td class="tableheader" align=left>Type</td>
+    <td class="tablevalues" tal:content="here/getProductName">1</td>
+    <td class="tableheader" align=left>Edition</td>
+    <td class="tablevalues" tal:content="here/edition">1</td>
 </tr>
 <tr>
-    <td class="tableheader" align=left>Type</td>
-    <td class="tablevalues" tal:content="here/type"/>
+    <td class="tableheader" align=left>Version</td>
+    <td class="tablevalues" tal:content="here/productVersion">1</td>
+    <td class="tableheader" align=left>Product Level</td>
+    <td class="tablevalues" tal:content="here/productLevel">1</td>
+</tr>
+<tr>
+    <td class="tableheader" align=left>License Type</td>
+    <td class="tablevalues" tal:content="here/licenseType">1</td>
+    <td class="tableheader" align=left>Licenses</td>
+    <td class="tablevalues" tal:content="here/numLicenses">1</td>
+</tr>
+<tr>
+    <td class="tableheader" align=left>Process ID</td>
+    <td class="tablevalues" tal:content="here/processID">1</td>
     <td class="tableheader" align=left>State</td>
     <td class="tablevalues" tal:content="here/statusString"/>
 </tr>

@@ -12,9 +12,9 @@ __doc__="""SQLClient
 
 Gets performance data over python DB API.
 
-$Id: SQLClient.py,v 1.2 2010/09/02 21:46:35 egor Exp $"""
+$Id: SQLClient.py,v 1.3 2010/09/15 15:28:39 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 import Globals
 from Products.ZenUtils.Utils import zenPath
@@ -103,12 +103,15 @@ class SQLClient(BaseClient):
 
     def parseValue(self, value):
         if isinstance(value, datetime.datetime): return DateTime(value)
-        if isinstance(value, decimal.Decimal): return int(value)
+        if isinstance(value, decimal.Decimal): return long(value)
+        if value == None: return None
         try: return int(value)
         except: pass
         try: return float(value)
         except: pass
         try: return DateTime(value)
+        except: pass
+        try: return value.strip()
         except: return value
 
 
@@ -137,7 +140,7 @@ class SQLClient(BaseClient):
         for row in rows:
             for kbKey, kbVal in resMaps.iteritems():
                 if kbKey == (): kbIns = ()
-                else: kbIns = row[(0 - len(kbKey)):]
+                else: kbIns = tuple([str(t.strip('"\' ')) for t in row[(0 - len(kbKey)):]])
                 for tkey, tables in kbVal.iteritems():
                     if tuple([str(t.strip('"\' ')) for t in tkey]) != kbIns:
                         continue

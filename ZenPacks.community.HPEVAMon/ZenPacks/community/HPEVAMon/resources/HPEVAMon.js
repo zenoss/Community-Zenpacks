@@ -56,23 +56,23 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'name',
                 dataIndex: 'name',
                 header: _t('Name'),
-		sortable: true
+                sortable: true
             },{
                 id: 'enclosure',
                 dataIndex: 'enclosure',
                 header: _t('Enclosure'),
-		sortable: true,
+                sortable: true,
                 renderer: Zenoss.render.default_uid_renderer
             },{
                 id: 'bay',
                 dataIndex: 'bay',
                 header: _t('Bay'),
-		sortable: true
+                sortable: true
             },{
                 id: 'storagePool',
                 dataIndex: 'storagePool',
                 header: _t('Disk Group'),
-		sortable: true,
+                sortable: true,
                 renderer: Zenoss.render.default_uid_renderer
             },{
                 id: 'manufacturer',
@@ -112,6 +112,7 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVADiskDrivePanel', ZC.HPEVADiskDrivePanel);
+ZC.registerName('HPEVADiskDrive', _t('Hard Disk'), _t('Hard Disks'));
 
 ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -141,23 +142,23 @@ ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'controller',
                 dataIndex: 'controller',
                 header: _t('Controller'),
-		sortable: true,
+                sortable: true,
                 renderer: Zenoss.render.default_uid_renderer
             },{
                 id: 'name',
                 dataIndex: 'name',
                 header: _t('Interface Name'),
-		sortable: true
+                sortable: true
             },{
                 id: 'wwn',
                 dataIndex: 'wwn',
                 header: _t('WWN'),
-		sortable: true,
+                sortable: true,
                 width: 160,
             },{
                 id: 'networkAddresses',
                 dataIndex: 'networkAddresses',
-		sortable: true,
+                sortable: true,
                 header: _t('Network'),
             },{
                 id: 'linkTechnology',
@@ -189,6 +190,7 @@ ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAFCPortPanel', ZC.HPEVAFCPortPanel);
+ZC.registerName('HPEVAFCPort', _t('FC Port'), _t('FC Ports'));
 
 ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -216,7 +218,7 @@ ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'name',
                 header: _t('ID'),
                 width: 20,
-		sortable: true
+                sortable: true
             },{
                 id: 'manufacturer',
                 dataIndex: 'manufacturer',
@@ -245,6 +247,7 @@ ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStorageDiskEnclosurePanel', ZC.HPEVAStorageDiskEnclosurePanel);
+ZC.registerName('HPEVAStorageDiskEnclosure', _t('Storage Enclosure'), _t('Storage Enclosures'));
 
 ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -276,7 +279,7 @@ ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'name',
                 dataIndex: 'name',
                 header: _t('Name'),
-		sortable: true
+                sortable: true
             },{
                 id: 'totalDisks',
                 dataIndex: 'totalDisks',
@@ -327,6 +330,7 @@ ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStoragePoolPanel', ZC.HPEVAStoragePoolPanel);
+ZC.registerName('HPEVAStoragePool', _t('Disk Group'), _t('Disk Groups'));
 
 ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -355,12 +359,12 @@ ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'slot',
                 dataIndex: 'slot',
                 header: _t('Slot'),
-		sortable: true
+                sortable: true
             },{
                 id: 'name',
                 dataIndex: 'name',
                 header: _t('Name'),
-		sortable: true
+                sortable: true
             },{
                 id: 'manufacturer',
                 dataIndex: 'manufacturer',
@@ -398,6 +402,7 @@ ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStorageProcessorCardPanel', ZC.HPEVAStorageProcessorCardPanel);
+ZC.registerName('HPEVAStorageProcessorCard', _t('Controller'), _t('Controllers'));
 
 ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
     constructor: function(config) {
@@ -427,12 +432,12 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'name',
                 dataIndex: 'name',
                 header: _t('Name'),
-		sortable: true
+                sortable: true
             },{
                 id: 'storagePool',
                 dataIndex: 'storagePool',
                 header: _t('Disk Group'),
-		sortable: true,
+                sortable: true,
                 renderer: Zenoss.render.default_uid_renderer
             },{
                 id: 'diskType',
@@ -476,4 +481,5 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
 });
 
 Ext.reg('HPEVAStorageVolumePanel', ZC.HPEVAStorageVolumePanel);
+ZC.registerName('HPEVAStorageVolume', _t('Virtual Disk'), _t('Virtual Disks'));
 })();

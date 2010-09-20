@@ -9,7 +9,7 @@
 #*=============================================================================
 #* How to use it: 
 #* 	./perfs.pl [ip] [user] [pass] [type] [id]*
-#*	type = disk | lun | mirror | sp
+#*	type = disk | lun | mirror | rlp | sp
 #*	* disk = [name] - mirror = [name]
 #*=============================================================================
 use strict;
@@ -156,6 +156,52 @@ sub checkMirror
 
 
 #*=============================================================================
+#* Name    : checkRLP
+#* Purpose : Check Reserved Lun Pool state
+#* Inputs  : Nothing
+#* Print   : totallun freelun totalsize unusedsize usedsize percentused
+#*=============================================================================
+sub checkRLP
+{
+	# get RLP
+	open(FIC, "$navicli -Timeout 20 -user $user -password $pass -scope 0 -address $ip reserved -lunpool -list 2>/dev/null|") or die("Unknown|results\n");
+	my @lines = <FIC>;
+	die("Unknown|results\n") unless(@lines);
+	die("Unknown|No response\n") unless($lines[0] !~ m/^Could not connect to the specified host/);
+	die("Unknown|No response\n") unless($lines[0] !~ m/^Invalid server certificate/);
+	
+	# tluns (total lun)
+	my @words = split( /\W+/, $lines[1]);
+	my $tluns  = "$words[-1]";
+	
+	# fluns (free lun)
+	@words = split( /\W+/, $lines[2]);
+	my $fluns = "$words[-1]";
+	
+	# uluns (used lun)
+	my $uluns = $tluns-$fluns;
+	
+	# tsize (Total size)
+	@words = split( /\W+/, $lines[4]);
+	my $tsize = "$words[-2].$words[-1]";
+	
+	# fsize (Unused size)
+	@words = split( /\W+/, $lines[5]);
+	my $fsize = "$words[-2].$words[-1]";
+	
+	# usize (Used size)
+	@words = split( /\W+/, $lines[6]);
+	my $usize = "$words[-2].$words[-1]";
+	
+	# psize (Percent pool size used
+	@words = split( /\W+/, $lines[7]);
+	my $psize = "$words[-2].$words[-1]";
+	
+	print("OK|totallun=$tluns freelun=$fluns usedlun=$uluns totalsize=$tsize unusedsize=$fsize usedsize=$usize percentused=$psize\n");
+	
+}
+
+#*=============================================================================
 #* Name    : checkSP
 #* Purpose : Check busy/idle percent of sp and dirty/owned pages of cache
 #* Inputs  : Nothing
@@ -168,7 +214,6 @@ sub checkSP
 	my @lines = <FIC>;
 	die("Unknown|results\n") unless(@lines);
 	die("Unknown|No response\n") unless($lines[0] !~ m/^Could not connect to the specified host/);
-	die("Unknown|No response\n") unless($lines[0] !~ m/^Invalid server certificate/);
 	die("Unknown|No response\n") unless($lines[0] !~ m/^Invalid server certificate/);
 	
 	# prct busy
@@ -223,8 +268,9 @@ sub checkSP
 #* Main
 #*=============================================================================
 die("\n")   unless($type);
-die("\n")   unless($type eq "disk" || $type eq "lun" || $type eq "mirror" || $type eq "sp");
+die("\n")   unless($type eq "disk" || $type eq "lun" || $type eq "mirror" || $type eq "rlp" || $type eq "sp");
 checkDisk   if($type eq "disk");
 checkLun    if($type eq "lun");
 checkMirror if($type eq "mirror");
+checkRLP	if($type eq "rlp");
 checkSP     if($type eq "sp");

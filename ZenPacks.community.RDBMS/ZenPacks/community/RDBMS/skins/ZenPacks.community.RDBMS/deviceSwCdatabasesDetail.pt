@@ -74,7 +74,7 @@
                   tal:attributes="value db/getRelationshipManagerId"/>
       </td>
       <td class="tablevalues"
-        tal:content="db/dbSrvInstName">Inst
+        tal:content="structure db/getDBSrvInstLink">Inst
       </td>
       <td class="tablevalues">
            <tal:block

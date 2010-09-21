@@ -187,10 +187,10 @@ def manage_removeRemoteMonitors(self, ids=None, submon="", REQUEST=None):
         return self.callZenScreen(REQUEST)
 
 @monkeypatch('Products.ZenModel.PerformanceConf.PerformanceConf')
-def _executeZenModelerCommand(self, zenmodelerOpts, REQUEST=None):
+def _executeZenModelerCommand(self, zenmodelerOpts, *args):
     """
     Execute zenmodeler and return result
-    
+
     @param zenmodelerOpts: zenmodeler command-line options
     @type zenmodelerOpts: string
     @param REQUEST: Zope REQUEST object
@@ -201,49 +201,68 @@ def _executeZenModelerCommand(self, zenmodelerOpts, REQUEST=None):
     zm = binPath('zenmodeler')
     zenmodelerCmd = [zm]
     zenmodelerCmd.extend(zenmodelerOpts)
+    else: background, REQUEST, write = args
     if zenmodelerOpts[3] != 'localhost':
         zenmodelerCmd.extend(['--hubhost', socket.getfqdn()])
         zenmodelerCmd = ['/usr/bin/ssh', zenmodelerOpts[3]] + zenmodelerCmd
-    result = executeCommand(zenmodelerCmd, REQUEST)
+    if len(args) == 1:
+        result = executeCommand(zenmodelerCmd, REQUEST)
+    else:
+        background, REQUEST, write = args
+        if background:
+#            log.info('queued job: %s', " ".join(zenmodelerCmd))
+            result = self.dmd.JobManager.addJob(ShellCommandJob,zenmodelerCmd)
+        else: result = executeCommand(zenmodelerCmd, REQUEST, write)
     return result
 
 @monkeypatch('Products.ZenModel.PerformanceConf.PerformanceConf')
 def _executeZenDiscCommand(self, deviceName, devicePath= "/Discovered", 
-                      performanceMonitor="localhost", discoverProto="snmp",
-                      zSnmpPort=161,zSnmpCommunity="", REQUEST=None):
+                               performanceMonitor="localhost",
+                               background=False, REQUEST=None):
     """
     Execute zendisc on the new device and return result
-    
+
     @param deviceName: Name of a device
     @type deviceName: string
     @param devicePath: DMD path to create the new device in
     @type devicePath: string
     @param performanceMonitor: DMD object that collects from a device
     @type performanceMonitor: DMD object
-    @param discoverProto: auto or none
-    @type discoverProto: string
-    @param zSnmpPort: zSnmpPort
-    @type zSnmpPort: string
-    @param zSnmpCommunity: SNMP community string
-    @type zSnmpCommunity: string
+    @param background: should command be scheduled job?
+    @type background: boolean
     @param REQUEST: Zope REQUEST object
     @type REQUEST: Zope REQUEST object
     @return:
     @rtype:
     """
+    zendiscCmd = self._getZenDiscCommand(deviceName, devicePath,
+                                             performanceMonitor, REQUEST)
+    if background:
+#        log.info('queued job: %s', " ".join(zendiscCmd))
+        result = self.dmd.JobManager.addJob(ShellCommandJob,
+                                                zendiscCmd)
+    else:
+        result = executeCommand(zendiscCmd, REQUEST)
+    return result
+
+@monkeypatch('Products.ZenModel.PerformanceConf.PerformanceConf')
+def _getZenDiscCommand(self, deviceName, devicePath,
+                           performanceMonitor, REQUEST=None):
+
     zm = binPath('zendisc')
     zendiscCmd = [zm]
     zendiscOptions = ['run', '--now','-d', deviceName,
-                     '--monitor', performanceMonitor, 
+                     '--monitor', performanceMonitor,
                      '--deviceclass', devicePath]
-    if REQUEST: 
+    if REQUEST:
         zendiscOptions.append("--weblog")
     zendiscCmd.extend(zendiscOptions)
     if performanceMonitor != 'localhost':
         zendiscCmd.extend(['--hubhost', socket.getfqdn()])
         zendiscCmd = ['/usr/bin/ssh', performanceMonitor] + zendiscCmd
-    result = executeCommand(zendiscCmd, REQUEST)
-    return result
+#    log.info('local zendiscCmd is "%s"' % ' '.join(zendiscCmd))
+    return zendiscCmd
+
 
 from Products.ZenModel.ZenPack import ZenPackBase
 from Products.ZenModel.ZenMenu import ZenMenu

@@ -94,96 +94,6 @@ True
 </object>
 </tomanycont>
 </object>
-<object id='SP_RLP' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-COMMAND
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Storage/SAN
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="string" id="commandTemplate" mode="w" >
-${here/ZenPackManager/packs/ZenPacks.community.Clariion/path}/libexec/perfs.pl ${here/manageIp} ${dev/zCommandUsername} ${dev/zCommandPassword} rlp
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='totallun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='freelun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='usedlun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='totalsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='unusedsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='usedsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-<property type="string" id="rrdmin" mode="w" >
-0
-</property>
-</object>
-<object id='percentused' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-<property type="string" id="rrdmin" mode="w" >
-0
-</property>
-</object>
-</tomanycont>
-</object>
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='75load' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
@@ -224,46 +134,6 @@ True
 </property>
 <property type="int" id="escalateCount" mode="w" >
 5
-</property>
-</object>
-<object id='RLPusedfull' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property label="DataPoints" type="lines" id="dsnames" mode="w" >
-['SP_RLP_percentused']
-</property>
-<property label="Enabled" type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="maxval" mode="w" >
-90
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Storage/SAN
-</property>
-<property type="int" id="severity" mode="w" >
-4
-</property>
-<property type="int" id="escalateCount" mode="w" >
-5
-</property>
-</object>
-<object id='RLPlowdisks' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property label="DataPoints" type="lines" id="dsnames" mode="w" >
-['SP_RLP_freelun']
-</property>
-<property label="Enabled" type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="minval" mode="w" >
-3
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Storage/SAN
-</property>
-<property type="int" id="severity" mode="w" >
-4
-</property>
-<property type="int" id="escalateCount" mode="w" >
-1
 </property>
 </object>
 </tomanycont>
@@ -560,6 +430,153 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
+</tomanycont>
+</object>
+<object id='/zport/dmd/Devices/Storage/SAN/rrdTemplates/EMCClariionRLPPerf' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+EMC Clariion RLP
+</property>
+<property type="text" id="description" mode="w" >
+Monitors EMC Clariion Reserved LUN Pool performances
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='SP_RLP' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Storage/SAN
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.community.Clariion/path}/libexec/perfs.pl ${here/manageIp} ${dev/zCommandUsername} ${dev/zCommandPassword} rlp
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='totallun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='freelun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='usedlun' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='totalsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='unusedsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='usedsize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+<object id='percentused' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='RLPusedfull' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['SP_RLP_percentused']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+90
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Storage/SAN
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+5
+</property>
+</object>
+<object id='RLPlowdisks' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['SP_RLP_freelun']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+3
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Storage/SAN
+</property>
+<property type="int" id="severity" mode="w" >
+4
+</property>
+<property type="int" id="escalateCount" mode="w" >
+1
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
 <object id='RLP LUNs' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100

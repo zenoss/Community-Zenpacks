@@ -21,8 +21,7 @@ if os.path.isdir(skinsDir):
     registerDirectory(skinsDir, globals())
 
 from Products.ZenWidgets import messaging
-from Products.ZenUtils.Utils import monkeypatch
-from Products.ZenUtils.Utils import zenPath
+from Products.ZenUtils.Utils import monkeypatch, zenPath, binPath, executeCommand
 from Products.ZenUtils.Utils import executeStreamCommand
 from Products.ZenModel.PerformanceConf import performancePath
 from Products.ZenModel.ZVersion import VERSION
@@ -134,7 +133,6 @@ def setPerformanceMonitor(self, performanceMonitor,
         )
         return self.callZenScreen(REQUEST)
 
-
 @monkeypatch('Products.ZenModel.MonitorClass.MonitorClass')
 def manage_addRemoteMonitor(self, id, submon=None, REQUEST=None):
     'Add an object of sub_class, from a module of the same name'
@@ -188,6 +186,64 @@ def manage_removeRemoteMonitors(self, ids=None, submon="", REQUEST=None):
         )
         return self.callZenScreen(REQUEST)
 
+@monkeypatch('Products.ZenModel.PerformanceConf.PerformanceConf')
+def _executeZenModelerCommand(self, zenmodelerOpts, REQUEST=None):
+    """
+    Execute zenmodeler and return result
+    
+    @param zenmodelerOpts: zenmodeler command-line options
+    @type zenmodelerOpts: string
+    @param REQUEST: Zope REQUEST object
+    @type REQUEST: Zope REQUEST object
+    @return: results of command
+    @rtype: string
+    """
+    zm = binPath('zenmodeler')
+    zenmodelerCmd = [zm]
+    zenmodelerCmd.extend(zenmodelerOpts)
+    if zenmodelerOpts[3] != 'localhost':
+        zenmodelerCmd.extend(['--hubhost', socket.getfqdn()])
+        zenmodelerCmd = ['/usr/bin/ssh', zenmodelerOpts[3]] + zenmodelerCmd
+    result = executeCommand(zenmodelerCmd, REQUEST)
+    return result
+
+@monkeypatch('Products.ZenModel.PerformanceConf.PerformanceConf')
+def _executeZenDiscCommand(self, deviceName, devicePath= "/Discovered", 
+                      performanceMonitor="localhost", discoverProto="snmp",
+                      zSnmpPort=161,zSnmpCommunity="", REQUEST=None):
+    """
+    Execute zendisc on the new device and return result
+    
+    @param deviceName: Name of a device
+    @type deviceName: string
+    @param devicePath: DMD path to create the new device in
+    @type devicePath: string
+    @param performanceMonitor: DMD object that collects from a device
+    @type performanceMonitor: DMD object
+    @param discoverProto: auto or none
+    @type discoverProto: string
+    @param zSnmpPort: zSnmpPort
+    @type zSnmpPort: string
+    @param zSnmpCommunity: SNMP community string
+    @type zSnmpCommunity: string
+    @param REQUEST: Zope REQUEST object
+    @type REQUEST: Zope REQUEST object
+    @return:
+    @rtype:
+    """
+    zm = binPath('zendisc')
+    zendiscCmd = [zm]
+    zendiscOptions = ['run', '--now','-d', deviceName,
+                     '--monitor', performanceMonitor, 
+                     '--deviceclass', devicePath]
+    if REQUEST: 
+        zendiscOptions.append("--weblog")
+    zendiscCmd.extend(zendiscOptions)
+    if performanceMonitor != 'localhost':
+        zendiscCmd.extend(['--hubhost', socket.getfqdn()])
+        zendiscCmd = ['/usr/bin/ssh', performanceMonitor] + zendiscCmd
+    result = executeCommand(zendiscCmd, REQUEST)
+    return result
 
 from Products.ZenModel.ZenPack import ZenPackBase
 from Products.ZenModel.ZenMenu import ZenMenu

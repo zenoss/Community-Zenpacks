@@ -1,0 +1,352 @@
+<tal:block metal:use-macro="here/page_macros/old-new">
+<tal:block metal:fill-slot="title">Profile Rules</tal:block>
+<tal:block metal:fill-slot="contentPane">
+    
+	<tal:block tal:define="tableName string:ruleproperties;
+	       	menu_id string:RuleModule;
+			tabletitle string:Ruleset Properties">
+			
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <td class="tableheader">Name</td>
+	        <td class="tablevalues" tal:content="here/id"/>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Contacts</td>
+			<td class="tablevalues">
+	        	<span tal:repeat="usr here/addModuleUsersToGroups">
+	            	<a tal:content="usr"/>
+	            	<br/>
+	          	</span>
+	    	</td>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Description</td>
+	        <td class="tablevalues" tal:content="here/description"/>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Ruleset Templates</td>
+			<td class="tablevalues">
+	        	<span tal:repeat="tplt here/moduleTemplates">
+	            	<a tal:content="tplt"/>
+	            	<br/>
+	          	</span>
+	    	</td>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">System Organizers</td>
+			<td class="tablevalues">
+	        	<span tal:repeat="sys here/moduleSystemOrganizers">
+	            	<a tal:content="sys"/>
+	            	<br/>
+	          	</span>
+	    	</td>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Group Organizers</td>
+			<td class="tablevalues">
+	        	<span tal:repeat="grp here/moduleGroupOrganizers">
+	            	<a tal:content="grp"/>
+	            	<br/>
+	          	</span>
+	    	</td>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+
+	</tal:block>
+	</tal:block>
+	</tal:block>
+	
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="post" name="ruleMappingsForm" tal:attributes="action here/absolute_url_path">
+
+	<tal:block tal:define="tableName string:profilemodulenodeslist;
+			ztm here/ZenTableManager;
+			objects here/getRules;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	       	menu_id string:RuleDefinitions;
+	        tabletitle string:Rule Definitions">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!--====Optional titlebar slots=============
+	<tal:block metal:fill-slot="filterslot">
+	</tal:block>
+
+	<tal:block metal:fill-slot="menuslot">
+	</tal:block>
+	==========================================-->
+
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'id','Name')"/>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'propertyType','Rule Type')"/>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'propertyName','Rule Match')"/>      
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'toRemove','Remove')"/>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'enabled','Enabled')"/>     
+	    </tr>
+	    <tal:block tal:repeat="ds batch">
+	    <tr tal:define="odd repeat/ds/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td>
+	            <input type="checkbox" name="ids:list"
+	               tal:attributes="value ds/getId"/>
+	            <a tal:attributes="href ds/getPrimaryUrlPath"
+	                tal:content="ds/getId">name</a>
+	        </td>
+	        <td tal:content="ds/propertyType"/>
+	        <td tal:content="ds/propertyName"/>
+	        <td tal:content="ds/toRemove"/>
+	        <td tal:content="ds/enabled"/>
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="5" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody"/>
+	        </td>
+	    </tr>
+ 	<!-- END TABLE CONTENTS -->
+
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="get" tal:attributes="action here/absolute_url_path" id="groups">
+
+	<tal:block tal:define="tableName string:grouplist;
+			ztm here/ZenTableManager;
+			objects here/getModuleGroupSettings;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	        tabletitle string:Associated User Groups">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!--====Optional titlebar slots=============
+	<tal:block metal:fill-slot="filterslot">
+	</tal:block>
+
+	<tal:block metal:fill-slot="menuslot">
+	</tal:block>
+	==========================================-->
+
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'getId','Group Name')"/>
+	        <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'users','Users')"/>
+	    </tr>
+	    <tal:block tal:repeat="group batch">
+	    <tr tal:define="odd repeat/group/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues">
+	            <a tal:attributes="href group/getPrimaryUrlPath"
+	               tal:condition="group/iseditable"
+	               tal:content="group/getId">edahl</a>
+	            <span tal:condition="not: group/iseditable"
+	                  tal:content="group/getId"/>
+	        </td>
+	        <td class="tablevalues" tal:content="group/printUsers"
+	            tal:on-error="string:Unable to list group members.  Delete this group and re-add" />
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="2" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navtool"/>
+	        </td>
+	    </tr>
+ 	<!-- END TABLE CONTENTS -->
+ 	
+	</tal:block>
+	</tal:block>
+	</tal:block>   
+</form>
+
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="post" tal:attributes="action here/absolute_url_path" name="actionRules">
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+            
+	<tal:block tal:define="tableName string:actionrules;
+			ztm here/ZenTableManager;
+			objects here/getModuleAlertSettings;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	       	menu_id string:ModuleAlerts;
+	        tabletitle string:Associated Alerting Rules">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!--====Optional titlebar slots=============
+	<tal:block metal:fill-slot="filterslot">
+	</tal:block>
+
+	<tal:block metal:fill-slot="menuslot">
+	</tal:block>
+	==========================================-->
+        
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	    <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'getId','Name')"/>
+	    <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'delay','Delay')"/>
+	    <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'repeatTime','Repeat Time')"/>
+	    <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'action','Action')"/>
+	    <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'enabled','Enabled')"/>
+	    <th tal:replace="structure python:ztm.getTableHeader(
+	                            tableName,'sendClear','Send Clear')"/>
+	    </tr>
+	    <tal:block tal:repeat="action batch">
+	    <tr tal:define="odd repeat/action/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues"
+	         tal:condition="python:here.checkRemotePerm('Change Alerting Rules',
+	                here)">
+	            <a tal:attributes="href action/getPrimaryUrlPath"
+	                tal:content="action/getId">action</a>
+	        </td>
+	        <td class="tablevalues"
+	         tal:condition="python:not here.checkRemotePerm('Change Alerting Rules',
+	                here)"
+	            tal:content="action/getId"/>
+	        <td class="tablevalues" tal:content="action/delay"/>
+	        <td class="tablevalues" tal:content="string:Does not repeat"
+	            tal:condition="not:action/repeatTime"/>
+	        <td class="tablevalues" tal:content="action/repeatTime"
+	            tal:condition="action/repeatTime"/>
+	        <td class="tablevalues" tal:content="action/action"/>
+	        <td class="tablevalues" tal:content="action/enabled"/>
+	        <td class="tablevalues" tal:content="action/sendClear"/>
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="6" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody"/>
+	        </td>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="post" name="currentDevicesForm" tal:attributes="action here/absolute_url_path">
+	<tal:block tal:define="tableName string:currentdevices;
+			ztm here/ZenTableManager;
+			objects here/getCurrentDeviceMatches;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	        tabletitle string:Current Device Matches">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'id','Name')"/>
+	    </tr>
+	    
+	    <tal:block tal:repeat="device batch">
+    	<tr tal:define="odd repeat/device/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues">
+	            <a tal:attributes="href device/getPrimaryUrlPath"
+	               tal:content="device/getId">device</a>
+	        </td>
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="1" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+	        </td>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+	
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+	
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="post" name="potentialDevicesForm" tal:attributes="action here/absolute_url_path">
+	<tal:block tal:define="tableName string:potentialdevices;
+			ztm here/ZenTableManager;
+			objects here/getPotentialDeviceMatches;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	        tabletitle string:Potential Device Matches">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'id','Name')"/>
+	    </tr>
+	    <tal:block tal:repeat="device batch">
+	    <tr tal:define="odd repeat/device/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues">
+	            <a tal:attributes="href device/getPrimaryUrlPath"
+	               tal:content="device/getId">device</a>
+	        </td>
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="1" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+	        </td>
+	    </tr>
+	
+	<!-- END TABLE CONTENTS -->
+	
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+
+</tal:block>
+</tal:block>
+

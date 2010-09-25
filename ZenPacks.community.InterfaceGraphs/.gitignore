@@ -1,0 +1,5 @@
+ZenPacks.community.InterfaceGraphs.egg-info
+build/*
+dist/*
+*.pyc
+*.pyo

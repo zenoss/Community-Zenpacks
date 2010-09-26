@@ -12,9 +12,9 @@ __doc__="""DBSrvInst
 
 DBSrvInst is a DBSrvInst
 
-$Id: DBSrvInst.py,v 1.0 2010/09/06 13:29:32 egor Exp $"""
+$Id: DBSrvInst.py,v 1.1 2010/09/26 19:25:46 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import InitializeClass, DTMLFile
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
@@ -53,6 +53,7 @@ class DBSrvInst(DeviceComponent, Software, HWStatus):
     manage_editDBSrvInstForm = DTMLFile('dtml/manageDBSrvInst',globals())
 
     isUserCreatedFlag = False
+    snmpindex = ""
     dbsiname = ""
     status = 0
 
@@ -61,6 +62,7 @@ class DBSrvInst(DeviceComponent, Software, HWStatus):
                 }
 
     _properties = Software._properties + (
+        {'id':'snmpindex', 'type':'string', 'mode':'w'},
         {'id':'dbsiname', 'type':'string', 'mode':'w'},
         {'id':'status', 'type':'int', 'mode':'w'},
         )
@@ -90,7 +92,7 @@ class DBSrvInst(DeviceComponent, Software, HWStatus):
                 },
                 { 'id'            : 'databases'
                 , 'name'          : 'Databases'
-                , 'action'        : 'viewDBSrvInstDatabase'
+                , 'action'        : 'viewDBSrvInstDatabases'
                 , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'events'

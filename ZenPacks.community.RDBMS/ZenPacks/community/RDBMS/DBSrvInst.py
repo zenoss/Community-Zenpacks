@@ -12,9 +12,9 @@ __doc__="""DBSrvInst
 
 DBSrvInst is a DBSrvInst
 
-$Id: DBSrvInst.py,v 1.1 2010/09/26 19:25:46 egor Exp $"""
+$Id: DBSrvInst.py,v 1.2 2010/09/26 23:59:39 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass, DTMLFile
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
@@ -41,7 +41,7 @@ def manage_addDBSrvInst(context, id, userCreated, REQUEST=None):
 
 addDBSrvInst = DTMLFile('dtml/addDBSrvInst',globals())
 
-class DBSrvInst(DeviceComponent, Software, HWStatus):
+class DBSrvInst(ZenPackPersistence, DeviceComponent, Software, HWStatus):
     """
     DBSrvInst object
     """
@@ -55,6 +55,7 @@ class DBSrvInst(DeviceComponent, Software, HWStatus):
     isUserCreatedFlag = False
     snmpindex = ""
     dbsiname = ""
+    contact = ""
     status = 0
 
     statusmap ={0: (DOT_GREEN, SEV_CLEAN, 'Up'),
@@ -64,6 +65,7 @@ class DBSrvInst(DeviceComponent, Software, HWStatus):
     _properties = Software._properties + (
         {'id':'snmpindex', 'type':'string', 'mode':'w'},
         {'id':'dbsiname', 'type':'string', 'mode':'w'},
+        {'id':'contact', 'type':'string', 'mode':'w'},
         {'id':'status', 'type':'int', 'mode':'w'},
         )
 

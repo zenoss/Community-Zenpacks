@@ -118,10 +118,13 @@ Auto
 <tomanycont id='datapoints'>
 <object id='finishedTransactions' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
+DERIVE
 </property>
 <property type="boolean" id="isrow" mode="w" >
 True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
 </property>
 </object>
 </tomanycont>
@@ -321,87 +324,9 @@ True
 </object>
 </tomanycont>
 </object>
-<object id='requestRecvs' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.2.1.39.1.6.1.11
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='requestRecvs' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-DERIVE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-<property type="string" id="rrdmin" mode="w" >
-0
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='requestSends' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.2.1.39.1.6.1.12
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='requestSends' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-DERIVE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-<property type="string" id="rrdmin" mode="w" >
-0
-</property>
-</object>
-</tomanycont>
-</object>
 </tomanycont>
 <tomanycont id='graphDefs'>
-<object id='Disk Operations' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='Operations' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
@@ -418,7 +343,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
-0
+-1
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -427,7 +352,10 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Disk Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -453,12 +381,12 @@ diskReads_diskReads
 AVERAGE
 </property>
 </object>
-<object id='Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Disk Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+4
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -475,6 +403,9 @@ ${graphPoint/id}
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+-1,*
+</property>
 <property type="string" id="dpName" mode="w" >
 diskWrites_diskWrites
 </property>
@@ -482,38 +413,7 @@ diskWrites_diskWrites
 AVERAGE
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Logical Operations' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-operations/sec
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<tomanycont id='graphPoints'>
-<object id='Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Logical Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -539,12 +439,12 @@ logicalReads_logicalReads
 AVERAGE
 </property>
 </object>
-<object id='Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Logical Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -561,6 +461,9 @@ ${graphPoint/id}
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+-1,*
+</property>
 <property type="string" id="dpName" mode="w" >
 logicalWrites_logicalWrites
 </property>
@@ -568,38 +471,10 @@ logicalWrites_logicalWrites
 AVERAGE
 </property>
 </object>
-</tomanycont>
-</object>
-<object id='Pages' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-pages/sec
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
+<object id='Page Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
 2
 </property>
-<tomanycont id='graphPoints'>
-<object id='Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 AREA
 </property>
@@ -625,12 +500,12 @@ pageReads_pageReads
 AVERAGE
 </property>
 </object>
-<object id='Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='Page Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-1
+5
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
+AREA
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -646,6 +521,9 @@ ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+-1,*
 </property>
 <property type="string" id="dpName" mode="w" >
 pageWrites_pageWrites
@@ -682,13 +560,10 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-3
+1
 </property>
 <tomanycont id='graphPoints'>
 <object id='Handled Requests' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-2
-</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -709,61 +584,6 @@ ${graphPoint/id}
 </property>
 <property type="string" id="dpName" mode="w" >
 handledRequests_handledRequests
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Received' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-requestRecvs_requestRecvs
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='Sent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-requestSends_requestSends
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -797,7 +617,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-4
+2
 </property>
 <tomanycont id='graphPoints'>
 <object id='Finished' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -947,10 +767,10 @@ True
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
-1
+2
 </property>
 <property type="boolean" id="stacked" mode="w" >
 False

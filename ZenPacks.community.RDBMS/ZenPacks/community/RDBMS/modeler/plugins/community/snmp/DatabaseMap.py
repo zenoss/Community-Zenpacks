@@ -12,9 +12,9 @@ __doc__="""DatabaseMap.py
 
 DatabaseMap maps the RDBMS Databases table to Database objects
 
-$Id: DatabaseMap.py,v 1.0 2010/09/26 20:34:57 egor Exp $"""
+$Id: DatabaseMap.py,v 1.1 2010/09/27 00:13:04 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -42,12 +42,13 @@ class DatabaseMap(ZenPackPersistence, SnmpPlugin):
                     {
                         '.3': '_vendorName',
                         '.4': 'dbname',
-                        '.5': '_contact',
+                        '.5': 'contact',
                     }),
         GetTableMap('rdbmsDbInfoTable',
                     '.1.3.6.1.2.1.39.1.2.1',
                     {
                         '.1': 'type',
+                        '.2': 'version',
                         '.3': 'blockSize',
                         '.4': 'totalBlocks',
                     }),
@@ -56,11 +57,13 @@ class DatabaseMap(ZenPackPersistence, SnmpPlugin):
                     {
                         '.2': 'vendor',
                         '.3': 'product',
+                        '.4': 'contact',
                     }),
         GetTableMap('rdbmsRelTable',
                     '.1.3.6.1.2.1.39.1.9.1',
                     {
                         '.1': 'state',
+                        '.2': 'activeTime',
                     }),
     )
 
@@ -79,21 +82,23 @@ class DatabaseMap(ZenPackPersistence, SnmpPlugin):
             if 'setDBSrvInst' in databases[dbid]: continue
             databases[dbid]['setDBSrvInst'] = instname.get(instid, instid)
             databases[dbid]['status'] = db['state']
+            databases[dbid]['activeTime'] = self.asdate(db['activeTime'])
         maps = [self.relMap()]
         for oid, inst in tabledata.get('rdbmsSrvTable', {}).iteritems():
             om = self.objectMap()
             om.snmpindex = oid.strip('.')
             om.dbsiname = instname.get(om.snmpindex, None) or om.snmpindex 
             om.id = self.prepId(om.dbsiname)
-            om.setProductKey=MultiArgs(inst.get('product') or 'Database Server',
-                                        inst.get('vendor') or 'Unknown')
+            om.contact = inst.get('contact')
+            om.setProductKey = MultiArgs(
+                                inst.get('product', None) or 'RDBMS Server',
+                                inst.get('vendor', None) or 'Unknown')
             maps[-1].append(om)
         self.relname = "softwaredatabases"
         self.modname = "ZenPacks.community.RDBMS.Database"
         maps.append(self.relMap())
         for oid, database in tabledata.get('rdbmsDbTable', {}).iteritems():
             database.update(databases.get(oid.strip('.'), {}))
-            log.info('processing %s: %s', database['dbname'], database)
             try:
                 om = self.objectMap(database)
                 if not hasattr(om, 'setDBSrvInst'): om.id=self.prepId(om.dbname)

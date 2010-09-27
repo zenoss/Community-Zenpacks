@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of Databases.
 
-$Id: info.py,v 1.1 2010/09/06 14:23:39 egor Exp $"""
+$Id: info.py,v 1.2 2010/09/27 00:04:56 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -27,10 +27,16 @@ class DatabaseInfo(ComponentInfo):
     implements(interfaces.IDatabaseInfo)
 
     type = ProxyProperty("type")
+    contact = ProxyProperty("contact")
+    version = ProxyProperty("version")
 
     @property
     def name(self):
         return self._object.dbname
+
+    @property
+    def activeTime(self):
+        return str(self._object.activeTime)
 
     @property
     @info
@@ -66,6 +72,8 @@ class DatabaseInfo(ComponentInfo):
 
 class DBSrvInstInfo(ComponentInfo):
     implements(interfaces.IDBSrvInstInfo)
+
+    contact = ProxyProperty("contact")
 
     @property
     @info

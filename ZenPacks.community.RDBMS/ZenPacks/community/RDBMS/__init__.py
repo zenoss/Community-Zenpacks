@@ -153,8 +153,8 @@ from Products.ZenRelations.RelSchema import *
 OperatingSystem._relations += (("softwaredatabases", ToManyCont(ToOne,
                                     "ZenPacks.community.RDBMS.Database", "os")),
                                 ("softwaredbsrvinstances", ToManyCont(ToOne,
-				    "ZenPacks.community.RDBMS.DBSrvInst", "os")),
-			    )
+                                    "ZenPacks.community.RDBMS.DBSrvInst", "os")),
+                            )
 OperatingSystem.addDatabase = addDatabase
 OperatingSystem.deleteDatabases = deleteDatabases
 OperatingSystem.unlockDatabases = unlockDatabases
@@ -173,28 +173,28 @@ class ZenPack(ZenPackBase):
     """
 
     def _removeMenu(self, menuName):
-	zm = getattr(self.dmd.zenMenus, menuName, None)
-	if not zm: return
-	for mi in zm.zenMenuItems():
-	    zm.zenMenuItems._delObject(mi.id)
+        zm = getattr(self.dmd.zenMenus, menuName, None)
+        if not zm: return
+        for mi in zm.zenMenuItems():
+            zm.zenMenuItems._delObject(mi.id)
         self.dmd.zenMenus._delObject(menuName)
 
     def _addMenu(self, mN, mD):
-	if hasattr(self.dmd.zenMenus, mN): self._removeMenu(mN)
+        if hasattr(self.dmd.zenMenus, mN): self._removeMenu(mN)
         self.dmd.zenMenus.manage_addZenMenu(mN)
-	zm = getattr(self.dmd.zenMenus, mN)
-	miparams = (('add%s'%mN, 'Add %s...'%mN, 'dialod_add%s'%mN, 90.0),
-	        ('delete%ss'%mN, 'Delete %s...'%mN, 'dialod_delete%ss'%mN, 80.0),
-	        ('lock%ss'%mN, 'Lock %s...'%mN, 'dialod_lock%ss'%mN, 70.0),
-	        ('changeMonitoring', 'Monitoring...', 'dialod_changeMonitoring', 0.0))
-	for param in miparams:
+        zm = getattr(self.dmd.zenMenus, mN)
+        miparams = (('add%s'%mN, 'Add %s...'%mN, 'dialod_add%s'%mN, 90.0),
+                ('delete%ss'%mN, 'Delete %s...'%mN, 'dialod_delete%ss'%mN, 80.0),
+                ('lock%ss'%mN, 'Lock %s...'%mN, 'dialod_lock%ss'%mN, 70.0),
+                ('changeMonitoring', 'Monitoring...', 'dialod_changeMonitoring', 0.0))
+        for param in miparams:
             zm.manage_addZenMenuItem(id=param[0],
-	                            description=param[1],
-				    action=param[2], 
+                                    description=param[1],
+                                    action=param[2], 
                                     permissions=('View',),
-				    isdialog=True,
-				    isglobal=True, 
-	                            ordering=param[3])
+                                    isdialog=True,
+                                    isglobal=True, 
+                                    ordering=param[3])
 
     def install(self, app):
         self._removeMenu('Database')

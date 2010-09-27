@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/08/27 10:15:29 egor Exp $"""
+$Id: interfaces.py,v 1.1 2010/09/27 23:16:12 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from ZenPacks.community.RDBMS.interfaces import IDatabaseInfo, IDBSrvInstInfo
 from Products.Zuul.form import schema
@@ -26,8 +26,8 @@ class IMsSqlDatabaseInfo(IDatabaseInfo):
     Info adapter for MS SQL Database components.
     """
     dbid = schema.Int(title=u"dbid", readonly=True, group=u"Details")
-    owner = schema.Text(title=u"Owner", readonly=True, group=u"Details")
-    created = schema.Text(title=u"Created", readonly=True, group=u"Details")
+    contact = schema.Text(title=u"Owner", readonly=True, group=u"Details")
+    activeTime = schema.Text(title=u"Created", readonly=True, group=u"Details")
     updateability = schema.Text(title=u"Updateability", readonly=True, group=u"Database Properties")
     useraccess = schema.Text(title=u"User Access", readonly=True, group=u"Database Properties")
     recovery = schema.Text(title=u"Recovery", readonly=True, group=u"Database Properties")

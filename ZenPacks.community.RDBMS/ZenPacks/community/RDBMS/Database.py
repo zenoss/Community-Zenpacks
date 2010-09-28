@@ -56,7 +56,7 @@ class Database(ZenPackPersistence, OSComponent, HWStatus):
     type = "RDBMS Database"
     contact = ""
     version = ""
-    _activeTime = ZenDate("1968/1/8")
+    activeTime = ""
     totalBlocks = 0L
     blockSize = 1L
     status = 1
@@ -73,7 +73,7 @@ class Database(ZenPackPersistence, OSComponent, HWStatus):
         {'id':'type', 'type':'string', 'mode':'w'},
         {'id':'contact', 'type':'string', 'mode':'w'},
         {'id':'version', 'type':'string', 'mode':'w'},
-        {'id':'activeTime', 'type':'date', 'mode':'w'},
+        {'id':'activeTime', 'type':'string', 'mode':'w'},
         {'id':'totalBlocks', 'type':'long', 'mode':'w'},
         {'id':'blockSize', 'type':'long', 'mode':'w'},
         {'id':'status', 'type':'int', 'mode':'w'},
@@ -121,21 +121,6 @@ class Database(ZenPackPersistence, OSComponent, HWStatus):
 
     security = ClassSecurityInfo()
 
-    def __getattr__(self, name):
-        if name == 'activeTime':
-            return self._activeTime.getDate()
-        else:
-            raise AttributeError, name
-
-    
-    def _setPropValue(self, id, value):
-        """override from PropertyManager"""
-        self._wrapperCheck(value)
-        if id == 'activeTime':
-            self.setActiveTime(value)
-        else:    
-            OSComponent._setPropValue(self, id, value)
-
     security.declareProtected(ZEN_CHANGE_DEVICE, 'setDBSrvInst')
     def setDBSrvInst(self, instname):
         """
@@ -167,25 +152,6 @@ class Database(ZenPackPersistence, OSComponent, HWStatus):
         """
         dbsi = self.dbsrvinstance()
         return dbsi and dbsi.dbsiname or ''
-
-    def getActiveTimeObj(self):
-        """Return the active time as a DateTime object.
-        """
-        return self._activeTime.getDate()
-
-    def getActiveTime(self):
-        """Return the active time in the form 'YYYY/MM/DD HH:MM:SS'
-        """
-        #1968/01/08 00:00:00.000
-        if self._activeTime.getStringSecsResolution() != "1968/01/08 00:00:00":
-            return self._activeTime.getStringSecsResolution()
-        else:
-            return "Unknown"
-
-    def setActiveTime(self, value):
-        """Set the active time should be string in form 'YYYY/MM/DD HH:MM:SS'
-        """
-        self._activeTime.setDate(value)
 
     def totalBytes(self):
         """

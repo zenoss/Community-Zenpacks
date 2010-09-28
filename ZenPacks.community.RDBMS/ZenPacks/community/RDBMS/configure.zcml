@@ -5,12 +5,12 @@
 
     <configure zcml:condition="installed Products.Zuul">
 
-        <adapter factory=".info.DatabaseInfo"
+        <adapter factory=".info.rdbmsDatabaseInfo"
                  for=".Database.Database"
                  provides=".interfaces.IDatabaseInfo"
                  />
 
-        <adapter factory=".info.DBSrvInstInfo"
+        <adapter factory=".info.rdbmsDBSrvInstInfo"
                  for=".DBSrvInst.DBSrvInst"
                  provides=".interfaces.IDBSrvInstInfo"
                  />

@@ -45,7 +45,7 @@
 </tr>
 <tr>
     <td class="tableheader" align=left>Active Time</td>
-    <td class="tablevalues" tal:content="here/getActiveTime"/>
+    <td class="tablevalues" tal:content="here/activeTime"/>
     <td class="tableheader" align=left>State</td>
     <td class="tablevalues" tal:content="here/statusString"/>
 </tr>

@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.ipSLA.SLADevice"
-VERSION = "1.2"
+VERSION = "2.0.1"
 AUTHOR = "Shane William Scott"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.ipSLA']
 PACKAGES = ['ZenPacks', 'ZenPacks.ipSLA', 'ZenPacks.ipSLA.SLADevice']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = ">=2.4.2"
+COMPAT_ZENOSS_VERS = ">=2.5"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

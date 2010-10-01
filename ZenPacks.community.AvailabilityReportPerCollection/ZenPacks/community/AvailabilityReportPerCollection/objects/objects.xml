@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Performance Reports', 'Availability') -->
+<object id='/zport/dmd/Reports/Performance Reports/Availability' module='Products.ZenModel.ReportClass' class='ReportClass'>
+<object id='Availability Report per Collection' module='Products.ZenModel.Report' class='Report'>
+</object>
+</object>
+</objects>

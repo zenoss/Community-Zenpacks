@@ -3,13 +3,13 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.RomanTykhonov.OracleDB"
-VERSION = "1.4"
+VERSION = "2.0"
 AUTHOR = "Roman Tykhonov"
 LICENSE = "GPLv2"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.RomanTykhonov']
 PACKAGES = ['ZenPacks', 'ZenPacks.RomanTykhonov', 'ZenPacks.RomanTykhonov.OracleDB']
 INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = '>=2.4'
+COMPAT_ZENOSS_VERS = '>=3.0'
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################

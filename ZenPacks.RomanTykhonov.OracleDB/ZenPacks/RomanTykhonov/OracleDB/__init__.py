@@ -15,7 +15,7 @@ class ZenPack(ZenPackBase):
       packZProperties = [
           ('zOracleDBInstance','hpqc','string'),
           ('zOracleUser','sys', 'string'),
-          ('zOraclePass','password','string'),
-          ('zOracleHome','/u01/app/oracle/product/11.2.0/client_1','string'),
+          ('zOraclePass','','password'),
+          ('zOracleHome','/opt/oracle/client','string'),
           ]
 

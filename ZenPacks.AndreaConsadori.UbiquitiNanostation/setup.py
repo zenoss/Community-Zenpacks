@@ -2,12 +2,12 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
-NAME = 'ZenPacks.AndreaConsadori.UbiquityNanostation'
+NAME = 'ZenPacks.AndreaConsadori.UbiquitiNanostation'
 VERSION = '3.0'
 AUTHOR = 'Andrea Consadori'
 LICENSE = 'GPLv2'
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori']
-PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori', 'ZenPacks.AndreaConsadori.UbiquityNanostation']
+PACKAGES = ['ZenPacks', 'ZenPacks.AndreaConsadori', 'ZenPacks.AndreaConsadori.UbiquitiNanostation']
 INSTALL_REQUIRES = []
 COMPAT_ZENOSS_VERS = '>=3.0'
 PREV_ZENPACK_NAME = ''

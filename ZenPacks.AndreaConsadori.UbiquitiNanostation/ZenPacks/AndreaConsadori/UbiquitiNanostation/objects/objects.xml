@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'UbiquityNanoStation') -->
-<object id='/zport/dmd/Devices/Network/rrdTemplates/UbiquityNanoStation' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'rrdTemplates', 'UbiquitiNanoStation') -->
+<object id='/zport/dmd/Devices/Network/rrdTemplates/UbiquitiNanoStation' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
 </property>

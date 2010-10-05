@@ -13,11 +13,11 @@
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 
-class UbiquityDeviceMap(SnmpPlugin):
-    """Map mib elements from Ubiquity mib to get hw and os products.
+class UbiquitiDeviceMap(SnmpPlugin):
+    """Map mib elements from Ubiquiti mib to get hw and os products.
     """
 
-    maptype = "UbiquityDeviceMap"
+    maptype = "UbiquitiDeviceMap"
 
     snmpGetMap = GetMap({
         #'' : 'manufacturer',

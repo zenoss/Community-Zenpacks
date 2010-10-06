@@ -1,0 +1,63 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+	<browser:defaultView
+		for="ZenPacks.community.zenAppProfiler.ProfileOrganizer.ProfileOrganizer"
+		name="viewProfileOrganizer"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileOrganizer.pt"
+		name="viewProfileOrganizer"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:defaultView
+		for="ZenPacks.community.zenAppProfiler.ProfileModule.ProfileModule"
+		name="viewProfileModule"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileModule.pt"
+		name="viewProfileModule"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/editProfileModule.pt"
+		name="editProfileModule"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:defaultView
+		for="ZenPacks.community.zenAppProfiler.ProfileNode.ProfileNode"
+		name="viewProfileNode"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileNode.pt"
+		name="viewProfileNode"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/editProfileNode.pt"
+		name="editProfileNode"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_runAllMembershipRules.pt"
+		name="dialog_runAllMembershipRules"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+</configure>

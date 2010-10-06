@@ -11,6 +11,7 @@
 
 <!-- BEGIN TABLE CONTENTS -->
 	<tr>
+		<th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'instance', 'Instance')"/>
 		<th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'rttMonCtrlAdminTag', 'Name/Tag')"/>
 		<th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'rttMonCtrlAdminOwner','Owner')"/>
 		<th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'rttMonCtrlAdminRttType','Type')"/>
@@ -25,6 +26,7 @@
 	<tal:block tal:repeat="gd batch">
 		<tr tal:define="odd repeat/gd/odd; link gd/managedDeviceLink"
 			tal:attributes="class python:test(odd, 'odd', 'even')">
+                <td class="tablevalues" tal:content="gd/instance"/>
 		<td class="tablevalues">
 			<span tal:content="structure gd/urlLink"/>
 			<span tal:condition="link" tal:omit-tag>

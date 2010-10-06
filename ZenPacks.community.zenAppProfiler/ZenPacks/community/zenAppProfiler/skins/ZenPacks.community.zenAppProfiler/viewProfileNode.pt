@@ -1,0 +1,125 @@
+<tal:block metal:use-macro="here/page_macros/old-new">
+<tal:block metal:fill-slot="title">Profile Rule</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+
+	<tal:block tal:define="tableName string:ruleproperties;
+			menu_id string:RuleAlerts;
+			tabletitle string:Rule Definition">
+			
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	      <td class="tableheader">Name</td>
+	      <td class="tablevalues" tal:content="here/id" />
+	    </tr>
+	    <tr>
+	      <td class="tableheader">Rule Meta Type</td>
+	      <td class="tablevalues" tal:content="here/propertyType" />
+	    </tr>
+	    <tr>
+	      <td class="tableheader">Rule Match</td>
+	      <td class="tablevalues" tal:content="here/propertyName"/>
+	    </tr>
+	    <tr>
+	      <td class="tableheader">Remove</td>
+	      <td class="tablevalues" tal:content="here/toRemove" />
+	    </tr>
+	    <tr>
+	      <td class="tableheader">Enabled</td>
+	      <td class="tablevalues" tal:content="here/enabled"/>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+	</tal:block>
+	</tal:block>
+	</tal:block>
+	
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="post" name="currentDevicesForm" tal:attributes="action here/absolute_url_path">
+	<tal:block tal:define="tableName string:currentdevices;
+			ztm here/ZenTableManager;
+			objects here/getRuleCurrentMatches;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	        tabletitle string:Current Device Matches">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'id','Name')"/>
+	    </tr>
+	    <tal:block tal:repeat="dev batch">
+	    <tr tal:define="odd repeat/dev/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues">
+	            <a tal:attributes="href dev/getPrimaryUrlPath"
+	               tal:content="dev/getId">device</a>
+	        </td>
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="1" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+	        </td>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+	
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+	
+<span metal:use-macro="here/templates/macros/contentSeparator"/>
+
+<form method="post" name="potentialDevicesForm" tal:attributes="action here/absolute_url_path">
+	<tal:block tal:define="tableName string:potentialdevices;
+			ztm here/ZenTableManager;
+			objects here/getRulePotentialMatches;
+	        showfilterbox python:False;
+	       	batch python:ztm.getBatch(tableName, objects);
+	        tabletitle string:Potential Device Matches">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'id','Name')"/>
+	    </tr>
+	    <tal:block tal:repeat="dev batch">
+	    <tr tal:define="odd repeat/dev/odd"
+        	tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues">
+	            <a tal:attributes="href dev/getPrimaryUrlPath"
+	               tal:content="dev/getId">device</a>
+	        </td>
+	    </tr>
+	    </tal:block>
+	    <tr>
+	        <td colspan="1" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+	        </td>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+	
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+
+</tal:block>
+</tal:block>
+

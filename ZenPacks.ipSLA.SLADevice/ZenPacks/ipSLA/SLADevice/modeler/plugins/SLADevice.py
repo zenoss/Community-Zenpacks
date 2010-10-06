@@ -96,15 +96,21 @@ class SLADevice(SnmpPlugin):
 
                 log.info('processing %s for device %s', self.name(), device.id)
                 log.info("SLA (entries) results: %r", results)
+		#log.info('TEST: %s', results[1]["MonOperEntry"])
                 getdata, tabledata = results
                 table = tabledata.get("MonOperEntry")
-
                 rm = self.relMap()
-                
+                count=-1 
+		#for key in table.keys():
+		#	log.info('TEST: %s', key)
+ 
 		for info in table.values():
+			keys = table.keys()
+			count=count+1
+			log.info('TESTB: %s', keys[count])
 			omA = self.objectMap(info)
                         omA.id = self.prepId("SLA_" + str(omA.rttMonCtrlAdminTag))
-			
+			omA.instance = keys[count]
 			if omA.rttMonCtrlAdminRttType == 9:
 				omA.rttMonCtrlAdminRttType = "VoIP"	
        

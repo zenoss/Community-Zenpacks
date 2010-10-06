@@ -23,6 +23,7 @@ class SLAS(DeviceComponent, ManagedEntity):
         """IP-SLA Onject"""
 
         portal_type = meta_type = 'SLAS'
+	instance = ""
         rttMonCtrlAdminOwner = ""
         rttMonCtrlAdminTag = ""
         rttMonCtrlAdminRttType = ""
@@ -90,6 +91,7 @@ class SLAS(DeviceComponent, ManagedEntity):
         rttMonEchoAdminTargetEVC = ""
 
         _properties = (
+                {'id':'instance', 'type':'string', 'mode':''},
                 {'id':'rttMonCtrlAdminOwner', 'type':'string', 'mode':''},
                 {'id':'rttMonCtrlAdminTag', 'type':'string', 'mode':''},
                 {'id':'rttMonCtrlAdminRttType', 'type':'string', 'mode':''},

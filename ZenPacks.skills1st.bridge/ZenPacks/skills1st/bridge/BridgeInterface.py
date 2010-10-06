@@ -27,7 +27,8 @@ log = logging.getLogger('BridgeInterface')
 class BridgeInterface(DeviceComponent, ManagedEntity):
     """Bridge Interface object"""
 
-    event_key = portal_type = meta_type = 'BridgeInterface'
+#    event_key = portal_type = meta_type = 'BridgeInterface'
+    portal_type = meta_type = 'BridgeInterface'
     
     #**************Custom data Variables here from modeling************************
     

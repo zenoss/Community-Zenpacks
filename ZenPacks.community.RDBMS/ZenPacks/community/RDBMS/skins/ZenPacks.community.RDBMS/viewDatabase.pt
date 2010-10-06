@@ -26,14 +26,26 @@
     </td>
 </tr>
 <tr>
+    <td class="tableheader" align=left>Type</td>
+    <td class="tablevalues" tal:content="here/type"/>
+    <td class="tableheader" align=left>Version</td>
+    <td class="tablevalues" tal:content="here/version"/>
+</tr>
+<tr>
+    <td class="tableheader" align=left>DB Server Instance</td>
+    <td class="tablevalues" tal:content="here/dbSrvInstName"/>
+    <td class="tableheader" align=left>Contact</td>
+    <td class="tablevalues" tal:content="here/contact"/>
+</tr>
+<tr>
     <td class="tableheader" align=left>Units Size</td>
     <td class="tablevalues" tal:content="here/blockSizeString"/>
     <td class="tableheader" align=left>Size Allocated</td>
     <td class="tablevalues" tal:content="here/totalString"/>
 </tr>
 <tr>
-    <td class="tableheader" align=left>Type</td>
-    <td class="tablevalues" tal:content="here/type"/>
+    <td class="tableheader" align=left>Active Time</td>
+    <td class="tablevalues" tal:content="here/activeTime"/>
     <td class="tableheader" align=left>State</td>
     <td class="tablevalues" tal:content="here/statusString"/>
 </tr>

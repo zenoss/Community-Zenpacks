@@ -12,9 +12,9 @@ __doc__="""MsSqlDatabase
 
 MsSqlDatabase is a MS SQL Database
 
-$Id: MsSqlDatabase.py,v 1.0 2010/08/26 16:04:50 egor Exp $"""
+$Id: MsSqlDatabase.py,v 1.1 2010/09/27 23:12:35 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import InitializeClass
 
@@ -46,12 +46,9 @@ class MsSqlDatabase(Database):
     ZENPACKID = 'ZenPacks.community.MsSQLMon_ODBC'
 
     dbid = 0
-    owner = ""
-    created = ""
     updateability = ''
     useraccess = ''
     recovery = ''
-    version = ''
     collation = ''
     sqlsortorder = ''
     dbproperties = []
@@ -68,12 +65,9 @@ class MsSqlDatabase(Database):
 
     _properties = Database._properties + (
         {'id':'dbid', 'type':'int', 'mode':'w'},
-        {'id':'owner', 'type':'string', 'mode':'w'},
-        {'id':'created', 'type':'string', 'mode':'w'},
         {'id':'updateability', 'type':'string', 'mode':'w'},
         {'id':'useraccess', 'type':'string', 'mode':'w'},
         {'id':'recovery', 'type':'string', 'mode':'w'},
-        {'id':'version', 'type':'string', 'mode':'w'},
         {'id':'collation', 'type':'string', 'mode':'w'},
         {'id':'sqlsortorder', 'type':'string', 'mode':'w'},
         {'id':'dbproperties', 'type':'lines', 'mode':'w'},

@@ -309,7 +309,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Data Files Size
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -338,7 +338,7 @@ True
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Log Files Size
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -367,7 +367,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Log Files Used Size
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -396,7 +396,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Space Available
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -456,7 +456,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Log Flush Waits
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -482,7 +482,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Log Flushes
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -536,7 +536,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Active Transactions
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -596,7 +596,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Backup/Restore Throughput
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -625,7 +625,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Bulk Copy Throughput
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -654,7 +654,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+DBCC Logical Scan
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -680,7 +680,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Log Flushed
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -709,7 +709,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Shrink Data Movement
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -769,7 +769,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Replication Transactions
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -795,7 +795,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Transactions
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2051,7 +2051,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Buffer Cache Hit Ratio
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2108,7 +2108,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+User Connections
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2541,7 +2541,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+DB Offline Errors
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2570,7 +2570,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Info Errors
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2599,7 +2599,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Kill Connection Errors
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2628,7 +2628,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Total
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -2657,7 +2657,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+User Errors
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3842,7 +3842,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Checkpoint Pages
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3871,7 +3871,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Lazy Writes
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3897,7 +3897,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Page Reads
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3926,7 +3926,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Page Splits
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3955,7 +3955,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Page Writes
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -3984,7 +3984,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Readahead Pages
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4041,7 +4041,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Page Life Expectancy
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4101,7 +4101,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Free Space Scans
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4130,7 +4130,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Full Scans
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4156,7 +4156,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Index Searches
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4185,7 +4185,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Probe Scans
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4214,7 +4214,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Range Scans
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4274,7 +4274,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Free Server Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4303,7 +4303,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+SQL Cache Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4332,7 +4332,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Target Server Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4358,7 +4358,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Total Server Memory
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4415,7 +4415,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+Batch Requests
 </property>
 <property type="long" id="limit" mode="w" >
 -1
@@ -4444,7 +4444,7 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-${graphPoint/id}
+SQL Compilations
 </property>
 <property type="long" id="limit" mode="w" >
 -1

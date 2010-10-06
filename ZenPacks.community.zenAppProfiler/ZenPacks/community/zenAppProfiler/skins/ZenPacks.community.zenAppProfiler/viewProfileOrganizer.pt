@@ -1,0 +1,70 @@
+<tal:block metal:use-macro="here/page_macros/old-new">
+<tal:block metal:fill-slot="title">Profiles</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" name="rulesForm" id="rules_form" tal:attributes="action here/absolute_url_path">
+
+	<tal:block tal:define="objects here/rulesets;
+			menu_id string:ModuleMenu;
+			tableName string:rulesets;
+	        showfilterbox python:False;
+	        tabletitle string:Profile Rulesets;
+	       	batch python:here.ZenTableManager.getBatch(tableName, objects);">
+	        
+	<input type='hidden' name='tableName' tal:attributes="value tableName" />
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>      
+	 
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	
+	<!--====================
+	Optional titlebar stuff
+	
+	<tal:block metal:fill-slot="menuslot">
+	</tal:block>
+	<tal:block metal:fill-slot="filterslot">
+	</tal:block>
+	  ====================-->
+	  
+	<tal:block metal:fill-slot="zentablecontents">
+
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'getId','Name')"/>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'description','Description')"/>
+	        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+	                    tableName,'ruleCount','Rules')"/>
+	    </tr>
+	    
+    <tal:block tal:repeat="rule batch">
+    <tr tal:define="odd repeat/rule/odd"
+        tal:attributes="class python:odd and 'odd' or 'even'">
+	        <td class="tablevalues">
+	            <input 
+	                type="checkbox" name="ids:list"
+	                tal:attributes="value rule/getId"/>
+	            <a tal:attributes="href rule/getPrimaryUrlPath"
+	            tal:content="rule/getId">Name</a>
+	        </td>
+	        <td class="tablevalues" tal:content="python:rule.description[:64]"/>
+	        <td class="tablevalues" tal:content="rule/ruleCount"/>
+	    </tr>
+	    <tr>
+	        <td colspan="3" class="tableheader">
+	            <span metal:use-macro="here/zenTableNavigation/macros/navbody" />
+	        </td>
+	    </tr>
+	</tal:block>
+	<!-- END TABLE CONTENTS -->
+	
+	</tal:block>
+	</tal:block>
+	</tal:block>
+	
+</form>
+
+</tal:block>
+</tal:block>
+

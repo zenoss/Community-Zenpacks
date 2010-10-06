@@ -2,24 +2,19 @@
 ####################
 # Roman@Tikhonov.org
 ####################
-#Sitronics
-#2009
 #
 
 
 export CONNECT_STRING=$1
-#export CONNECT_STRING="sys/sys@DB as sysdba"
-export ORACLE_BASE=/opt/zenoss/oracle
 if [ x$2 == x ]
-       then export ORACLE_HOME=$ORACLE_BASE/client
+       then echo First Parameter is connection string to DB and Second parameter have to be ORACLE_HOME variable && exit 1
        else export ORACLE_HOME=$2
 fi
 export ORACLE_SID=OMEGA #fake
 export PATH=$ORACLE_HOME/bin:$PATH
+RAND=$$
 
-#USAGE : COMMAND CONNECT_STRING
-
-sqlplus -s /nolog <<-EOF > /tmp/sql_add.temp
+sqlplus -s /nolog <<-EOF > /tmp/${RAND}.sql_add.temp
 
 connect $CONNECT_STRING
 set HEADING OFF
@@ -103,8 +98,7 @@ EOF
 
 
 
-sed -e '/^$/d' -e '/^[123456789]/d' -e 's/+/ASMVOLUME-/g'  -e 's/\//-/g' -e 's/--/-/g' -e 's/ORA-12541:/ListenerIsOut:1 / ' /tmp/sql_add.temp > /tmp/sql_add.temp.1
-#sed -ni 'H;${x;s/\n/ /g;p}' /tmp/sql_add.temp.1
+sed -e '/^$/d' -e '/^[123456789]/d' -e 's/+/ASMVOLUME-/g'  -e 's/\//-/g' -e 's/--/-/g' -e 's/ORA-12541:/ListenerIsOut:1 / ' /tmp/${RAND}.sql_add.temp > /tmp/${RAND}.sql_add.temp.1
 
-cat /tmp/sql_add.temp.1
-rm  /tmp/sql_add.*
+cat /tmp/${RAND}.sql_add.temp.1
+rm  /tmp/${RAND}.sql_add.*

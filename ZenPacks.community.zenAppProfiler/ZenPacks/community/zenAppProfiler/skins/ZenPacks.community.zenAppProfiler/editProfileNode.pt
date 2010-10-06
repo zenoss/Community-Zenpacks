@@ -1,0 +1,89 @@
+<tal:block metal:use-macro="here/page_macros/old-new">
+<tal:block metal:fill-slot="contentPane"
+    tal:define="editable here/isManager">
+    	
+<form method="post" tal:attributes="action here/absolute_url_path">
+     
+	<tal:block tal:define="message request/message | string:State at time:;
+			tabletitle string:Edit Rule Properties">
+			
+	<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+	
+	<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+	<tal:block metal:fill-slot="zentablecontents">
+	
+	<!--====================
+	Optional titlebar stuff
+	
+	<tal:block metal:fill-slot="menuslot">
+	</tal:block>
+	<tal:block metal:fill-slot="filterslot">
+	</tal:block>
+	  ====================-->
+
+	<!-- BEGIN TABLE CONTENTS -->
+	    <tr>
+	        <td class="tableheader">Name</td>
+	        <td class="tablevalues" tal:condition="editable">
+	            <input class="tablevalues" type="text" name="newId" size="40"
+	                tal:attributes="value here/id" />
+	        </td>
+	    </tr>
+	    <tr>
+	    <td class="tableheader" align="left">Rule Meta Type</td>
+	    <td class="tablevalues" align="left" colspan=3 tal:condition="editable">
+	           <select class="tablevalues" name="propertyType">
+	                <option 
+	                		tal:repeat="alltypes here/getRuleTypes"
+	                		tal:content="alltypes"
+	                    	tal:attributes="selected python:alltypes==here.propertyType"/>
+	           </select>
+	        </td>
+	        <td class="tablevalues" tal:condition="not:editable"
+	            tal:content="here/propertyType"/>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Rule Match</td>
+	        <td class="tablevalues" tal:condition="editable">
+	            <input class="tablevalues" type="text" name="propertyName" size="40"
+	            	tal:condition="editable"
+	                tal:attributes="value here/propertyName" />
+	        </td>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Remove non-matches</td>
+	        <td class="tablevalues" tal:condition="editable">
+	        <select class="tablevalues" name="toRemove:boolean">
+	            <option tal:repeat="r python:(True,False)" tal:content="r"
+	                    tal:attributes="value r; selected python:r==here.toRemove"/>
+	        </select>
+	        </td>
+	        <td class="tablevalues" tal:condition="not:editable"
+	            tal:content="here/toRemove"/>
+	    </tr>
+	    <tr>
+	        <td class="tableheader">Enabled</td>
+	        <td class="tablevalues" tal:condition="editable">
+	        <select class="tablevalues" name="enabled:boolean">
+	            <option tal:repeat="e python:(True,False)" tal:content="e"
+	                    tal:attributes="value e; selected python:e==here.enabled"/>
+	        </select>
+	        </td>
+	        <td class="tablevalues" tal:condition="not:editable"
+	            tal:content="here/enabled"/>
+	    </tr>
+	    <tr>
+	        <td class="tableheader" colspan="2">
+	            <input class="tableheader" type="submit" value="Save"
+	                name="zmanage_editProperties:method" />
+	        </td>
+	    </tr>
+	<!-- END TABLE CONTENTS -->
+
+	</tal:block>
+	</tal:block>
+	</tal:block>
+</form>
+
+</tal:block>
+</tal:block>

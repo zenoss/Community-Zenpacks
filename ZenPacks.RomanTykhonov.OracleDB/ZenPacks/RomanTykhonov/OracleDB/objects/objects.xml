@@ -2,6 +2,9 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'ORACLE_INSTANCE') -->
 <object id='/zport/dmd/Devices/Server/rrdTemplates/ORACLE_INSTANCE' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Oracle Base Perfomance and Monitoring Parameters from GV$SYSMETRIC
+</property>
 <property type="text" id="description" mode="w" >
 Oracle Base Perfomance and Monitoring Parameters from GV$SYSMETRIC
 </property>
@@ -176,10 +179,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Cluster get block time' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['oracle_status.sh_Global_Cache_Average_CR_Get_Time']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -199,10 +202,10 @@ True
 </property>
 </object>
 <object id='Database_Time_Ratio' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['oracle_status.sh_Database_Wait_Time_Ratio']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -222,10 +225,10 @@ True
 </property>
 </object>
 <object id='Inter-Cluster ERRORS' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['oracle_status.sh_Global_Cache_Blocks_Lost']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -245,10 +248,10 @@ True
 </property>
 </object>
 <object id='Shared Pool Free' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['oracle_status.sh_Shared_Pool_Free_']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -268,10 +271,10 @@ True
 </property>
 </object>
 <object id='User_Transaction_Per_Sec' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['oracle_status.sh_User_Transaction_Per_Sec']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >
@@ -959,6 +962,9 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'ORACLE_INSTANCE_ADDITIONAL') -->
 <object id='/zport/dmd/Devices/Server/rrdTemplates/ORACLE_INSTANCE_ADDITIONAL' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Oracle Additional Perfomance ans Monitoring Parameters from different views.
+</property>
 <property type="text" id="description" mode="w" >
 Oracle Additional Perfomance ans Monitoring Parameters from different views.
 </property>
@@ -1017,22 +1023,6 @@ True
 </property>
 </object>
 <object id='ASM-REDO2-Percent_Used' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='ASM-REDO3-Percent_Used' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='ASM-REDO4-Percent_Used' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -1128,6 +1118,46 @@ GAUGE
 True
 </property>
 </object>
+<object id='TBS-RDIDX-FILE_ID-10-Used_Percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TBS-RDTAB-FILE_ID-9-Used_Percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TBS-SCPIDX-FILE_ID-8-Used_Percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TBS-SCPLOG-FILE_ID-7-Used_Percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='TBS-SCPTAB-FILE_ID-6-Used_Percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
 <object id='TBS-SYSAUX-FILE_ID-3-Used_Percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -1205,10 +1235,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Blocking_Sessions' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['oracle_status_additional.sh_BlockingSessions']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="maxval" mode="w" >
@@ -2233,6 +2263,9 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'TNS_TEST') -->
 <object id='/zport/dmd/Devices/Server/rrdTemplates/TNS_TEST' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Pinging DB listeners
+</property>
 <property type="text" id="description" mode="w" >
 Pinging DB listeners
 </property>
@@ -2303,10 +2336,10 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Negative_answer_TNS' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
 ['tns_test.sh_ERROR']
 </property>
-<property type="boolean" id="enabled" mode="w" >
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
 True
 </property>
 <property type="string" id="minval" mode="w" >

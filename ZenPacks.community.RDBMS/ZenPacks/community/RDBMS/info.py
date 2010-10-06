@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of Databases.
 
-$Id: info.py,v 1.1 2010/09/06 14:23:39 egor Exp $"""
+$Id: info.py,v 1.3 2010/09/28 16:18:47 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -24,9 +24,11 @@ from ZenPacks.community.RDBMS import interfaces
 
 
 class DatabaseInfo(ComponentInfo):
-    implements(interfaces.IDatabaseInfo)
 
     type = ProxyProperty("type")
+    contact = ProxyProperty("contact")
+    version = ProxyProperty("version")
+    activeTime = ProxyProperty("activeTime")
 
     @property
     def name(self):
@@ -64,8 +66,12 @@ class DatabaseInfo(ComponentInfo):
         if not hasattr(self._object, 'statusString'): return 'Unknown'
         else: return self._object.statusString()
 
+class rdbmsDatabaseInfo(DatabaseInfo):
+    implements(interfaces.IDatabaseInfo)
+
 class DBSrvInstInfo(ComponentInfo):
-    implements(interfaces.IDBSrvInstInfo)
+
+    contact = ProxyProperty("contact")
 
     @property
     @info
@@ -87,4 +93,7 @@ class DBSrvInstInfo(ComponentInfo):
     def status(self):
         if not hasattr(self._object, 'statusString'): return 'Unknown'
         else: return self._object.statusString()
+
+class rdbmsDBSrvInstInfo(DBSrvInstInfo):
+    implements(interfaces.IDBSrvInstInfo)
 

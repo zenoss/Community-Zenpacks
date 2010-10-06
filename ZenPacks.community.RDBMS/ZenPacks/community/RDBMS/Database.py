@@ -12,20 +12,20 @@ __doc__="""Database
 
 Database is a Database
 
-$Id: Database.py,v 1.3 2010/09/20 23:57:47 egor Exp $"""
+$Id: Database.py,v 1.4 2010/09/27 00:02:29 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
+from Products.ZenModel.OSComponent import OSComponent
+from Products.ZenModel.ZenDate import ZenDate
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenModel.ZenossSecurity import *
 from Products.ZenUtils.Utils import convToUnits, prepId
 from Products.ZenRelations.RelSchema import *
 from Products.ZenWidgets import messaging
-
-from Products.ZenModel.OSComponent import OSComponent
 
 
 def manage_addDatabase(context, id, userCreated, REQUEST=None):
@@ -41,7 +41,7 @@ def manage_addDatabase(context, id, userCreated, REQUEST=None):
 
 addDatabase = DTMLFile('dtml/addDatabase',globals())
 
-class Database(OSComponent, HWStatus):
+class Database(ZenPackPersistence, OSComponent, HWStatus):
     """
     Database object
     """
@@ -54,6 +54,9 @@ class Database(OSComponent, HWStatus):
 
     dbname = ""
     type = "RDBMS Database"
+    contact = ""
+    version = ""
+    activeTime = ""
     totalBlocks = 0L
     blockSize = 1L
     status = 1
@@ -68,6 +71,9 @@ class Database(OSComponent, HWStatus):
     _properties = OSComponent._properties + (
         {'id':'dbname', 'type':'string', 'mode':'w'},
         {'id':'type', 'type':'string', 'mode':'w'},
+        {'id':'contact', 'type':'string', 'mode':'w'},
+        {'id':'version', 'type':'string', 'mode':'w'},
+        {'id':'activeTime', 'type':'string', 'mode':'w'},
         {'id':'totalBlocks', 'type':'long', 'mode':'w'},
         {'id':'blockSize', 'type':'long', 'mode':'w'},
         {'id':'status', 'type':'int', 'mode':'w'},
@@ -133,7 +139,6 @@ class Database(OSComponent, HWStatus):
     def getDBSrvInst(self):
         try: return self.dbsrvinstance()
         except: return None
-
 
     def getDBSrvInstLink(self):
         dbsi = self.dbsrvinstance()

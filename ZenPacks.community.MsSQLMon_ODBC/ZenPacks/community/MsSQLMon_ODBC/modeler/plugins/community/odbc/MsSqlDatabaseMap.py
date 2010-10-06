@@ -12,9 +12,9 @@ __doc__="""MsSqlDatabaseMap.py
 
 MsSqlDatabaseMap maps the MS SQL Databases table to Database objects
 
-$Id: MsSqlDatabaseMap.py,v 1.3 2010/08/26 16:12:33 egor Exp $"""
+$Id: MsSqlDatabaseMap.py,v 1.4 2010/09/27 23:19:36 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -80,9 +80,9 @@ class MsSqlDatabaseMap(OdbcPlugin):
                 {
                     'name':'dbname',
                     'db_size':'totalBlocks',
-                    'owner':'owner',
+                    'owner':'contact',
                     'dbid':'dbid',
-                    'created':'created',
+                    'created':'activeTime',
                     'status':'status',
                     'compatibility_level':'type',
                 })
@@ -147,7 +147,7 @@ class MsSqlDatabaseMap(OdbcPlugin):
                     om.id = self.prepId(om.dbname)
                 else:
                     om.id = self.prepId('%s_%s'%(om.setDBSrvInst, om.dbname))
-                om.created = str(om.created)
+                om.activeTime = str(om.activeTime)
                 om.type = types.get(getattr(om, 'type' , 1), types[1])
                 om.blockSize = 8192
                 om.totalBlocks = round(float(om.totalBlocks.split()[0]) * 128)

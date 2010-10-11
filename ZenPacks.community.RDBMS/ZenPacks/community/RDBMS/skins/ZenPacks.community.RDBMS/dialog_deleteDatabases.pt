@@ -1,0 +1,14 @@
+<h2>Delete Database</h2>
+<br/><br/>
+<p>
+Are you sure you want to remove these Database?<br/>
+</p>
+<br/>
+<div id="dialog_buttons">
+<input type="submit" name="deleteDatabases:method"
+    value="OK"
+    tal:attributes="onclick string:return $$('dialog').submit_form(
+                        '${here/os/absolute_url_path}')" />
+<input id="dialog_cancel" type="button" value="Cancel"
+        onclick="$('dialog').hide()"/>
+</div>

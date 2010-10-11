@@ -1,0 +1,96 @@
+<tal:block tal:define="
+    tableName string: databaseutilreport;
+    tm here/ZenTableManager;
+    tableState python:tm.getTableState(tableName, sortedHeader='percentFull',
+                                           sortedSence='desc');
+
+    sts python:here.ZenTableManager.setReqTableState;
+    zem python:here.dmd.ZenEventManager;
+    startDate python:sts(tableName, 'startDate', 
+                         zem.defaultAvailabilityStart());
+    endDate python:sts(tableName, 'endDate', 
+                       zem.defaultAvailabilityEnd());
+    how python:sts(tableName, 'how', 'AVERAGE');
+    summaryOptions python:('AVERAGE', 'MAXIMUM');
+    deviceClass python:sts(tableName, 'deviceClass', '/');
+    deviceFilter python:sts(tableName, 'deviceFilter', '');
+
+    objects python:here.ReportServer.plugin('databases', tableState);
+        batch python:here.ZenTableManager.getBatch(tableName,objects,
+        sortedHeader='percentFull', sortedSence='desc');
+        exportFields python:['deviceName', 'instance', 'dbname', 'type',
+        'totalBytes', 'usedBytes', 'availableBytes', 'percentFull'];">
+<tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
+<tal:block metal:fill-slot="report">
+
+<tal:block metal:use-macro="here/templates/macros/page1">
+<tal:block metal:fill-slot="breadCrumbPane">
+    <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>    
+</tal:block>
+<tal:block metal:fill-slot="contentPane">
+
+<tal:block metal:use-macro="here/reportMacros/macros/utilizationForm"/>
+
+<form method="POST" tal:attributes="action request/URL; name string:deviceList"
+                        tal:define="tabletitle string:Database Utilization;
+                        showfilterbox python:True;
+                        tblcolspan string:8">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'deviceName','Device')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'instance','Instance')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'dbname','Database')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'type','Type')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'totalBytes','Total bytes')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'usedBytes','Used bytes')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'availableBytes','Free bytes')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'percentFull','% Util')"/>
+    </tr>
+    <tal:block tal:repeat="obj batch">
+    <tr>
+      <td class="tablevalues" 
+tal:content="structure python:obj.component.getDeviceLink('deviceOsDetail')"/>
+      <td class="tablevalues"
+        tal:content="structure obj/instance"/>
+      <td class="tablevalues">
+          <a class=tablevalues tal:content="python: obj.dbname"
+             tal:attributes="href python: obj.component.getPrimaryUrlPath()"/>
+      </td>
+      <td class="tablevalues"
+        tal:content="obj/type"/>
+      <td class="tablevalues"
+        tal:content="python:obj.humanBytes(obj.totalBytes)"/>
+      <td class="tablevalues"
+        tal:content="python:obj.humanBytes(obj.usedBytes)"/>
+      <td class="tablevalues"
+        tal:content="python:obj.humanBytes(obj.availableBytes)"/>
+      <td class="tablevalues"
+        tal:content="python:obj.percentString(obj.percentFull)"/>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"/>
+        </td>
+    </tr>
+
+</tal:block>
+</tal:block>
+</form>
+
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+</tal:block>

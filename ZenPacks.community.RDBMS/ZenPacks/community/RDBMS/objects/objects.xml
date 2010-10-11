@@ -1,0 +1,3533 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'DBSrvInst') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/DBSrvInst' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+RDBMS Database Server Instance Statistics
+</property>
+<property type="text" id="description" mode="w" >
+RDBMS Database Server Instance Statistics
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.RDBMS.DBSrvInst
+</property>
+<tomanycont id='datasources'>
+<object id='diskReads' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.3
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='diskReads' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='diskWrites' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.5
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='diskWrites' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='finishedTransactions' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.2
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='finishedTransactions' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='handledRequests' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.10
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='handledRequests' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='logicalReads' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.4
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='logicalReads' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='logicalWrites' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.6
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='logicalWrites' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='pageReads' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.7
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='pageReads' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='pageWrites' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.8
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='pageWrites' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Operations' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+operations/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Disk Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+diskReads_diskReads
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Disk Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+-1,*
+</property>
+<property type="string" id="dpName" mode="w" >
+diskWrites_diskWrites
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Logical Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+logicalReads_logicalReads
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Logical Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+-1,*
+</property>
+<property type="string" id="dpName" mode="w" >
+logicalWrites_logicalWrites
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Page Reads' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+pageReads_pageReads
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Page Writes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+5
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+-1,*
+</property>
+<property type="string" id="dpName" mode="w" >
+pageWrites_pageWrites
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Requests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+requests/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='Handled Requests' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+handledRequests_handledRequests
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Transactions' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+transactions
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='Finished' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+finishedTransactions_finishedTransactions
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'Database') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/Database' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+RDBMS Database Statistics
+</property>
+<property type="text" id="description" mode="w" >
+RDBMS Database Statistics
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.RDBMS.Database
+</property>
+<tomanycont id='datasources'>
+<object id='Total' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.4
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='Total' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='sizeUsed' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.5
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='sizeUsed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Usage' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Total' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Total_Total
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='Used' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+sizeUsed_sizeUsed
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'RDBMS-MIB') -->
+<object id='/zport/dmd/Mibs/mibs/RDBMS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property id='zendoc' type='string'>
+The MIB module to describe objects for generic relational
+databases.
+</property>
+<property type="string" id="language" mode="w" >
+SMIv2
+</property>
+<property type="string" id="contact" mode="w" >
+David Brower
+
+Postal: The ASK Group, INGRES DBMS Development
+        1080 Marina Village Parkway
+        Alameda, CA  94501
+        US
+
+   Tel: +1 510 748 3418
+   Fax: +1 510 748 2770
+
+E-mail: daveb@ingres.com
+</property>
+<property type="string" id="description" mode="w" >
+The MIB module to describe objects for generic relational
+databases.
+</property>
+<tomanycont id='nodes'>
+<object id='rdbmsCompliances' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.3.1
+</property>
+</object>
+<object id='rdbmsConformance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.3
+</property>
+</object>
+<object id='rdbmsDbContact' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The textual identification of the contact person for this
+managed database, together with information on how to contact
+this person.
+
+Note: if there is no server associated with this database, an
+agent may need to keep this in other persistent storage,
+e.g., a configuration file.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The textual identification of the contact person for this
+managed database, together with information on how to contact
+this person.
+
+Note: if there is no server associated with this database, an
+agent may need to keep this in other persistent storage,
+e.g., a configuration file.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsDbEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry for a single database on the host.  Whether a
+particular database is represented by a row in rdbmsDbTable
+may be dependent on the activity level of that database,
+according to the product's implementation.  An instance of
+rdbmsRelState having the value active, other, or restricted
+implies that an entry, corresponding to that instance, will
+be present.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry for a single database on the host.  Whether a
+particular database is represented by a row in rdbmsDbTable
+may be dependent on the activity level of that database,
+according to the product's implementation.  An instance of
+rdbmsRelState having the value active, other, or restricted
+implies that an entry, corresponding to that instance, will
+be present.
+</property>
+</object>
+<object id='rdbmsDbIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+A numeric index, unique among all the databases from all
+products on this host.  This value is a surrogate for the
+conceptually unique key, which is {PrivateMibOID,
+databasename}
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A numeric index, unique among all the databases from all
+products on this host.  This value is a surrogate for the
+conceptually unique key, which is {PrivateMibOID,
+databasename}
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsDbInfoEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Information that must be present if the database is actively
+opened.  If the database is not actively opened, then
+attempts to access corresponding instances in this table may
+result in either noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).  'Actively opened' means at least one of the
+rdbmsRelState entries for this database in the rdbmsRelTable
+is active(2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Information that must be present if the database is actively
+opened.  If the database is not actively opened, then
+attempts to access corresponding instances in this table may
+result in either noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).  'Actively opened' means at least one of the
+rdbmsRelState entries for this database in the rdbmsRelTable
+is active(2).
+</property>
+</object>
+<object id='rdbmsDbInfoLastBackup' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The date and time that the latest complete or partial backup
+of the database was taken. If a database has never been
+backed up, then attempts to access this object will
+result in either noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The date and time that the latest complete or partial backup
+of the database was taken. If a database has never been
+backed up, then attempts to access this object will
+result in either noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbInfoProductName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The textual product name of the server that created or last
+restructured this database.  The format is product specific.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The textual product name of the server that created or last
+restructured this database.  The format is product specific.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbInfoSizeAllocated' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The estimated size of this database (in
+rdbmsDbInfoSizeUnits), which is the disk space that has been
+allocated to it and is no longer available to users on this
+host.  rdbmsDbInfoSize does not necessarily indicate the
+amount of space actually in use for database data.  Some
+databases may support extending allocated size, and others
+may not.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The estimated size of this database (in
+rdbmsDbInfoSizeUnits), which is the disk space that has been
+allocated to it and is no longer available to users on this
+host.  rdbmsDbInfoSize does not necessarily indicate the
+amount of space actually in use for database data.  Some
+databases may support extending allocated size, and others
+may not.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsDbInfoSizeUnits' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Identification of the units used to measure the size of this
+database in rdbmsDbInfoSizeAllocated and rdbmsDbInfoSizeUsed.
+bytes(1) indicates individual bytes, kbytes(2) indicates
+units of kilobytes, mbytes(3) indicates units of megabytes,
+gbytes(4) indicates units of gigabytes, and tbytes(5)
+indicates units of terabytes.  All are binary multiples -- 1K
+= 1024.  If writable, changes here are reflected in the get
+values of the associated objects.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Identification of the units used to measure the size of this
+database in rdbmsDbInfoSizeAllocated and rdbmsDbInfoSizeUsed.
+bytes(1) indicates individual bytes, kbytes(2) indicates
+units of kilobytes, mbytes(3) indicates units of megabytes,
+gbytes(4) indicates units of gigabytes, and tbytes(5)
+indicates units of terabytes.  All are binary multiples -- 1K
+= 1024.  If writable, changes here are reflected in the get
+values of the associated objects.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbInfoSizeUsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The estimated size of this database, in rdbmsDbInfoSizeUnits,
+which is actually in use for database data.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The estimated size of this database, in rdbmsDbInfoSizeUnits,
+which is actually in use for database data.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbInfoTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of additional information about databases present
+on the host.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of additional information about databases present
+on the host.
+</property>
+</object>
+<object id='rdbmsDbInfoVersion' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The version number of the server that created or last
+restructured this database.  The format is product specific.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The version number of the server that created or last
+restructured this database.  The format is product specific.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceCurrent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The current value for the resource.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current value for the resource.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceDescription' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+A description of the resource and the meaning of the integer
+units used for Limit, Current, and Highwater.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A description of the resource and the meaning of the integer
+units used for Limit, Current, and Highwater.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry for a single limited resource kept per-database.
+A limited resource has maximum use determined by a parameter
+that might or might not be changeable at run time, or visible
+in the rdbmsDbParamTable. Examples would be the number of
+available locks, or disk space on a partition.  Arrays of
+resources are supported through an integer sub index, which
+should have the value of one for single-instance names.
+
+Limited resources that are shared across databases, are best
+put in the rdbmsSvrLimitedResourceTable instead of this one.
+If the database is not actively opened, then attempts to
+access corresponding instances in this table may result in
+either noSuchName (SNMPv1) or noSuchInstance (SNMPv2).
+'Actively opened' means at least one of the rdbmsRelState
+entries for this database in the rdbmsRelTable is active(2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry for a single limited resource kept per-database.
+A limited resource has maximum use determined by a parameter
+that might or might not be changeable at run time, or visible
+in the rdbmsDbParamTable. Examples would be the number of
+available locks, or disk space on a partition.  Arrays of
+resources are supported through an integer sub index, which
+should have the value of one for single-instance names.
+
+Limited resources that are shared across databases, are best
+put in the rdbmsSvrLimitedResourceTable instead of this one.
+If the database is not actively opened, then attempts to
+access corresponding instances in this table may result in
+either noSuchName (SNMPv1) or noSuchInstance (SNMPv2).
+'Actively opened' means at least one of the rdbmsRelState
+entries for this database in the rdbmsRelTable is active(2).
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceFailures' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The number of times the system wanted to exceed the limit of
+the resource since applUpTime was reset for the earliest
+server which has the database actively opened.
+
+If there are two servers with the DB open, and the
+oldest one dies, the proper way to invalidate the value is by
+resetting sysUpTime.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of times the system wanted to exceed the limit of
+the resource since applUpTime was reset for the earliest
+server which has the database actively opened.
+
+If there are two servers with the DB open, and the
+oldest one dies, the proper way to invalidate the value is by
+resetting sysUpTime.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceHighwater' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The maximum value of the resource seen since applUpTime
+was reset for the earliest server which has the database
+actively opened.
+
+If there are two servers with the database open, and the
+oldest one dies, the proper way to invalidate the value is by
+resetting sysUpTime.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The maximum value of the resource seen since applUpTime
+was reset for the earliest server which has the database
+actively opened.
+
+If there are two servers with the database open, and the
+oldest one dies, the proper way to invalidate the value is by
+resetting sysUpTime.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The ID of the resource which may be described in some other
+MIB (e.g., an enterprise-specific MIB module).  If there is
+no ID for this rdbmsDbLimitedResourceName, attempts to access
+this object will return noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the resource which may be described in some other
+MIB (e.g., an enterprise-specific MIB module).  If there is
+no ID for this rdbmsDbLimitedResourceName, attempts to access
+this object will return noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceLimit' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The maximum value the resource use may attain.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The maximum value the resource use may attain.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of the resource, for instance 'global locks' or
+'locks for the FOO database', or 'data space on /dev/rdsk/5s0
+for FOO'. The length is limited to 64 characters to constrain
+the number of sub-identifiers needed for instance
+identification (and to minimize network traffic).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the resource, for instance 'global locks' or
+'locks for the FOO database', or 'data space on /dev/rdsk/5s0
+for FOO'. The length is limited to 64 characters to constrain
+the number of sub-identifiers needed for instance
+identification (and to minimize network traffic).
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsDbLimitedResourceTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of limited resources that are kept per-database.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of limited resources that are kept per-database.
+</property>
+</object>
+<object id='rdbmsDbName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of this database, in a product specific format.  The
+product may need to qualify the name in some way to resolve
+conflicts if it is possible for a database name to be
+duplicated on a host.  It might be necessary to construct a
+hierarchical name embedding the RDBMS instance/installation
+on the host, and/or the owner of the database.  For instance,
+'/test-installation/database-owner/database-name'.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of this database, in a product specific format.  The
+product may need to qualify the name in some way to resolve
+conflicts if it is possible for a database name to be
+duplicated on a host.  It might be necessary to construct a
+hierarchical name embedding the RDBMS instance/installation
+on the host, and/or the owner of the database.  For instance,
+'/test-installation/database-owner/database-name'.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbParamComment' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Annotation which describes the purpose of a configuration
+parameter or the reason for a particular parameter's
+setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Annotation which describes the purpose of a configuration
+parameter or the reason for a particular parameter's
+setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsDbParamCurrValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The value for a configuration parameter now in effect, the
+actual setting for the database.  While there may multiple
+values in the temporal domain of interest (for instance, the
+value to take effect at the next restart), this is the
+current setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value for a configuration parameter now in effect, the
+actual setting for the database.  While there may multiple
+values in the temporal domain of interest (for instance, the
+value to take effect at the next restart), this is the
+current setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsDbParamEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry for a single configuration parameter for a database.
+Parameters with single values have a subindex value of one.
+If the parameter is naturally considered to contain a
+variable number of members of a class, e.g.  members of the
+DBA user group, or files which are part of the database, then
+it must be presented as a set of rows.  If, on the other
+hand, the parameter represents a set of choices from a class,
+e.g. the permissions on a file or the options chosen out of
+the set of all options allowed, AND is guaranteed to always
+fit in the 255 character length of a DisplayString, then it
+may be presented as a comma separated list with a subindex
+value of one.  Zero may not be used as a subindex value.
+
+If the database is not actively opened, then attempts
+to access corresponding instances in this table may result in
+either noSuchName (SNMPv1) or noSuchInstance (SNMPv2).
+'Actively opened' means at least one of the
+rdbmsRelState entries for this database in the rdbmsRelTable
+is active(2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry for a single configuration parameter for a database.
+Parameters with single values have a subindex value of one.
+If the parameter is naturally considered to contain a
+variable number of members of a class, e.g.  members of the
+DBA user group, or files which are part of the database, then
+it must be presented as a set of rows.  If, on the other
+hand, the parameter represents a set of choices from a class,
+e.g. the permissions on a file or the options chosen out of
+the set of all options allowed, AND is guaranteed to always
+fit in the 255 character length of a DisplayString, then it
+may be presented as a comma separated list with a subindex
+value of one.  Zero may not be used as a subindex value.
+
+If the database is not actively opened, then attempts
+to access corresponding instances in this table may result in
+either noSuchName (SNMPv1) or noSuchInstance (SNMPv2).
+'Actively opened' means at least one of the
+rdbmsRelState entries for this database in the rdbmsRelTable
+is active(2).
+</property>
+</object>
+<object id='rdbmsDbParamID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The ID of the parameter which may be described in some other
+MIB (e.g., an enterprise-specific MIB module).  If there is
+no ID for this rdbmsDbParamName, attempts to access this
+object will return noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the parameter which may be described in some other
+MIB (e.g., an enterprise-specific MIB module).  If there is
+no ID for this rdbmsDbParamName, attempts to access this
+object will return noSuchName (SNMPv1) or noSuchInstance
+(SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbParamName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of a configuration parameter for a database.  This
+name is product-specific.  The length is limited to 64
+characters to constrain the number of sub-identifiers needed
+for instance identification (and to minimize network
+traffic).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of a configuration parameter for a database.  This
+name is product-specific.  The length is limited to 64
+characters to constrain the number of sub-identifiers needed
+for instance identification (and to minimize network
+traffic).
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsDbParamSubIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The subindex value for this parameter.  If the parameter is
+naturally considered to contain a variable number of members
+of a class, e.g.  members of the DBA user group, or files
+which are part of the database, then it must be presented as
+a set of rows.  If, on the other hand, the parameter
+represents a set of choices from a class, e.g. the
+permissions on a file or the options chosen out of the set of
+all options allowed, AND is guaranteed to always fit in the
+255 character length of a DisplayString, then it may be
+presented as a comma separated list with a subindex value of
+one.  Zero may not be used as a value.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The subindex value for this parameter.  If the parameter is
+naturally considered to contain a variable number of members
+of a class, e.g.  members of the DBA user group, or files
+which are part of the database, then it must be presented as
+a set of rows.  If, on the other hand, the parameter
+represents a set of choices from a class, e.g. the
+permissions on a file or the options chosen out of the set of
+all options allowed, AND is guaranteed to always fit in the
+255 character length of a DisplayString, then it may be
+presented as a comma separated list with a subindex value of
+one.  Zero may not be used as a value.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsDbParamTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of configuration parameters for a database.
+Entries should be populated according to the following
+guidelines:
+(1) The value should be specified through administrative
+    (human) intervention.
+(2) It should be configured on a per-database basis.
+(3) One of the following is true:
+    (a) The parameter has a non-numeric value;
+    (b) The current value is numeric, but it only changes due
+        to human intervention;
+    (c) The current value is numeric and dynamic, but the
+        RDBMS does not track access/allocation failures
+        related to the parameter;
+    (d) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, but the failure has no
+        significant impact on RDBMS performance or
+        availability.
+    (e) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, the failure has
+        significant impact on RDBMS performance or
+        availability, and is shown in the
+        rdbmsDbLimitedResource table.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of configuration parameters for a database.
+Entries should be populated according to the following
+guidelines:
+(1) The value should be specified through administrative
+    (human) intervention.
+(2) It should be configured on a per-database basis.
+(3) One of the following is true:
+    (a) The parameter has a non-numeric value;
+    (b) The current value is numeric, but it only changes due
+        to human intervention;
+    (c) The current value is numeric and dynamic, but the
+        RDBMS does not track access/allocation failures
+        related to the parameter;
+    (d) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, but the failure has no
+        significant impact on RDBMS performance or
+        availability.
+    (e) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, the failure has
+        significant impact on RDBMS performance or
+        availability, and is shown in the
+        rdbmsDbLimitedResource table.
+</property>
+</object>
+<object id='rdbmsDbPrivateMibOID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The authoritative identification for the private MIB for
+this database, presumably based on the vendor, e.g., {
+enterprises 111 &lt;optional subidentifiers&gt;} for Oracle
+databases, {enterprises 757 &lt;optional subidentifiers&gt;} for
+Ingres databases, { enterprises 897 &lt;optional
+subidentifiers&gt;} for Sybase databases, etc.
+
+If no OBJECT IDENTIFIER exists for the private MIB, attempts
+to access this object will return noSuchName (SNMPv1)
+or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The authoritative identification for the private MIB for
+this database, presumably based on the vendor, e.g., {
+enterprises 111 &lt;optional subidentifiers&gt;} for Oracle
+databases, {enterprises 757 &lt;optional subidentifiers&gt;} for
+Ingres databases, { enterprises 897 &lt;optional
+subidentifiers&gt;} for Sybase databases, etc.
+
+If no OBJECT IDENTIFIER exists for the private MIB, attempts
+to access this object will return noSuchName (SNMPv1)
+or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsDbTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of databases installed on a system.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of databases installed on a system.
+</property>
+</object>
+<object id='rdbmsDbVendorName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of the vendor whose RDBMS manages this database,
+for informational purposes.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the vendor whose RDBMS manages this database,
+for informational purposes.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsGroups' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.3.2
+</property>
+</object>
+<object id='rdbmsLogSpace' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Storage allocated for redo and undo logs.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.10.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Storage allocated for redo and undo logs.
+</property>
+</object>
+<object id='rdbmsMIB' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+</object>
+<object id='rdbmsObjects' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1
+</property>
+</object>
+<object id='rdbmsRelActiveTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The time the database was made active by the server.  If an
+instance of rdbmsRelState is not active(1), then attempts to
+access the corresponding instance of this object may result
+in either noSuchName (SNMPv1) or noSuchInstance (SNMPv2)
+being returned by the agent.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.9.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The time the database was made active by the server.  If an
+instance of rdbmsRelState is not active(1), then attempts to
+access the corresponding instance of this object may result
+in either noSuchName (SNMPv1) or noSuchInstance (SNMPv2)
+being returned by the agent.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsRelEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry relating a single database server to a single
+database to which it may provide access.  The table is
+indexed first by the index of rdbmsDbTable, and then
+rdbmsSrvTable, so that all servers capable of providing
+access to a given database may be found by SNMP traversal
+operations (get-next and get-bulk).  The makeup of this table
+depends on the product's architecture, e.g. if it is one
+server - many databases, then each server will appear n
+times, where n is the number of databases it may access, and
+each database will appear once.  If the architecture is one
+database - many servers, then each server will appear once
+and each database will appear n times, where n is the number
+of servers that may be accessing it.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.9.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry relating a single database server to a single
+database to which it may provide access.  The table is
+indexed first by the index of rdbmsDbTable, and then
+rdbmsSrvTable, so that all servers capable of providing
+access to a given database may be found by SNMP traversal
+operations (get-next and get-bulk).  The makeup of this table
+depends on the product's architecture, e.g. if it is one
+server - many databases, then each server will appear n
+times, where n is the number of databases it may access, and
+each database will appear once.  If the architecture is one
+database - many servers, then each server will appear once
+and each database will appear n times, where n is the number
+of servers that may be accessing it.
+</property>
+</object>
+<object id='rdbmsRelState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The state of this server's access to this database.
+Active(2) means the server is actively using the database.
+Available(3) means the server could use the database if
+necessary.  Restricted(4) means the database is in some
+administratively determined state of less-than-complete
+availability.  Unavailable(5) means the database is not
+available through this server.  Other(1) means the
+database/server is in some other condition, possibly
+described in the vendor private MIB.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.9.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The state of this server's access to this database.
+Active(2) means the server is actively using the database.
+Available(3) means the server could use the database if
+necessary.  Restricted(4) means the database is in some
+administratively determined state of less-than-complete
+availability.  Unavailable(5) means the database is not
+available through this server.  Other(1) means the
+database/server is in some other condition, possibly
+described in the vendor private MIB.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsRelTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+A table relating databases and servers present on a host.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table relating databases and servers present on a host.
+</property>
+</object>
+<object id='rdbmsSrvContact' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The textual identification of the contact person for this
+managed server, together with information on how to contact
+this person.
+
+Note: if there is no active server associated with this
+object, an agent may need to keep this in other persistent
+storage, e.g., a configuration file.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.5.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The textual identification of the contact person for this
+managed server, together with information on how to contact
+this person.
+
+Note: if there is no active server associated with this
+object, an agent may need to keep this in other persistent
+storage, e.g., a configuration file.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsSrvEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry for a single database server.  A server is an
+independent entity that provides access to one or more
+databases.  Failure of one does not affect access to
+databases through any other servers.  There might be one or
+more servers providing access to a database.  A server may be
+a 'process' or collection of 'processes', as interpreted by
+the product.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry for a single database server.  A server is an
+independent entity that provides access to one or more
+databases.  Failure of one does not affect access to
+databases through any other servers.  There might be one or
+more servers providing access to a database.  A server may be
+a 'process' or collection of 'processes', as interpreted by
+the product.
+</property>
+</object>
+<object id='rdbmsSrvInfoDiskOutOfSpaces' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of times the server has been unable to
+obtain disk space that it wanted, since server startup.  This
+would be inspected by an agent on receipt of an
+rdbmsOutOfSpace trap.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of times the server has been unable to
+obtain disk space that it wanted, since server startup.  This
+would be inspected by an agent on receipt of an
+rdbmsOutOfSpace trap.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoDiskReads' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of reads of database files issued to the
+operating system by this server since startup.  Numbers are
+not comparable between products.  What constitutes a
+readand how it is accounted is product-specific.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of reads of database files issued to the
+operating system by this server since startup.  Numbers are
+not comparable between products.  What constitutes a
+readand how it is accounted is product-specific.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoDiskWrites' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of writes to database files issued to the
+operating system by this server since startup.  Numbers are
+not comparable between products.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of writes to database files issued to the
+operating system by this server since startup.  Numbers are
+not comparable between products.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Information that must be present for a single 'up' database
+server, with visibility determined by the value of the
+corresponding applOperStatus object.  If an instance of
+applOperStatus is not up(1), then attempts to access
+corresponding instances in this table may result in either
+noSuchName (SNMPv1) or noSuchInstance (SNMPv2) being returned
+by the agent.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Information that must be present for a single 'up' database
+server, with visibility determined by the value of the
+corresponding applOperStatus object.  If an instance of
+applOperStatus is not up(1), then attempts to access
+corresponding instances in this table may result in either
+noSuchName (SNMPv1) or noSuchInstance (SNMPv2) being returned
+by the agent.
+</property>
+</object>
+<object id='rdbmsSrvInfoFinishedTransactions' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The number of transactions visible to this server that have
+been completed by either commit or abort.  Some database
+operations, such as read-only queries, may not result in the
+creation of a transaction.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of transactions visible to this server that have
+been completed by either commit or abort.  Some database
+operations, such as read-only queries, may not result in the
+creation of a transaction.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoHandledRequests' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of requests made to the server on inbound
+associations.  The meaning of 'requests' is product specific,
+and is not comparable between products.
+
+This is intended to encapsulate high level semantic
+operations between clients and servers, or between peers.
+For instance, one request might correspond to a 'select' or
+an 'insert' statement.  It is not intended to capture disk
+i/o described in rdbmsSrvInfoDiskReads and
+rdbmsSrvInfoDiskWrites.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of requests made to the server on inbound
+associations.  The meaning of 'requests' is product specific,
+and is not comparable between products.
+
+This is intended to encapsulate high level semantic
+operations between clients and servers, or between peers.
+For instance, one request might correspond to a 'select' or
+an 'insert' statement.  It is not intended to capture disk
+i/o described in rdbmsSrvInfoDiskReads and
+rdbmsSrvInfoDiskWrites.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoHighwaterInboundAssociations' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The greatest number of inbound associations that have been
+simultaneously open to this server since startup.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The greatest number of inbound associations that have been
+simultaneously open to this server since startup.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoLogicalReads' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of logical reads of database files made
+internally by this server since startup.  The values of this
+object and those of rdbmsSrvInfoDiskReads reveal the effect
+of caching on read operation. Numbers are not comparable
+between products, and may only be meaningful when aggregated
+across all servers sharing a common cache.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of logical reads of database files made
+internally by this server since startup.  The values of this
+object and those of rdbmsSrvInfoDiskReads reveal the effect
+of caching on read operation. Numbers are not comparable
+between products, and may only be meaningful when aggregated
+across all servers sharing a common cache.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoLogicalWrites' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of times parts of the database files have
+been marked 'dirty' and in need of writing to the disk.  This
+value and rdbmsSrvInfoDiskWrites give some indication of the
+effect of 'write-behind' strategies in reducing the number of
+disk writes compared to database operations.  Because the
+writes may be done by servers other than those marking the
+parts of the database files dirty, these values may only be
+meaningful when aggregated across all servers sharing a
+common cache.  Numbers are not comparable between products.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of times parts of the database files have
+been marked 'dirty' and in need of writing to the disk.  This
+value and rdbmsSrvInfoDiskWrites give some indication of the
+effect of 'write-behind' strategies in reducing the number of
+disk writes compared to database operations.  Because the
+writes may be done by servers other than those marking the
+parts of the database files dirty, these values may only be
+meaningful when aggregated across all servers sharing a
+common cache.  Numbers are not comparable between products.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoMaxInboundAssociations' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The greatest number of inbound associations that can be
+simultaneously open with this server.  If there is no limit,
+then the value should be zero.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The greatest number of inbound associations that can be
+simultaneously open with this server.  If there is no limit,
+then the value should be zero.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsSrvInfoPageReads' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of pages in database files read by this
+server since startup.  'Pages' are product specific units of
+disk i/o operations.  This value, along with
+rdbmsSrvInfoDiskReads, reveals the effect of any grouping
+read-ahead that may be used to enhance performance of some
+queries, such as scans.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of pages in database files read by this
+server since startup.  'Pages' are product specific units of
+disk i/o operations.  This value, along with
+rdbmsSrvInfoDiskReads, reveals the effect of any grouping
+read-ahead that may be used to enhance performance of some
+queries, such as scans.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoPageWrites' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The total number of pages in database files written by this
+server since startup.  Pages are product-specific units of
+disk I/O.  This value, with rdbmsSrvInfoDiskWrites, shows the
+effect of write strategies that collapse logical writes of
+contiguous pages into single calls to the operating system.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The total number of pages in database files written by this
+server since startup.  Pages are product-specific units of
+disk I/O.  This value, with rdbmsSrvInfoDiskWrites, shows the
+effect of write strategies that collapse logical writes of
+contiguous pages into single calls to the operating system.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoRequestRecvs' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The number of receive operations made processing any requests
+on inbound associations. The meaning of operations is product
+specific, and is not comparable between products.
+
+This is intended to capture lower-level i/o operations than
+shown by HandledRequests, between clients and servers, or
+between peers.  For instance, it might roughly correspond to
+the amount of data given with an 'insert' statement.  It is
+not intended to capture disk i/o described in
+rdbmsSrvInfoDiskReads and rdbmsSrvInfoDiskWrites.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of receive operations made processing any requests
+on inbound associations. The meaning of operations is product
+specific, and is not comparable between products.
+
+This is intended to capture lower-level i/o operations than
+shown by HandledRequests, between clients and servers, or
+between peers.  For instance, it might roughly correspond to
+the amount of data given with an 'insert' statement.  It is
+not intended to capture disk i/o described in
+rdbmsSrvInfoDiskReads and rdbmsSrvInfoDiskWrites.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoRequestSends' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The number of send operations made processing requests
+handled on inbound associations.  The meaning of operations
+is product specific, and is not comparable between products.
+This is intended to capture lower-level i/o operations than
+shown by HandledRequests, between between clients and
+servers, or between peers.  It might roughly correspond to
+the number of rows returned by a 'select' statement.  It is
+not intended to capture disk i/o described in DiskReads.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of send operations made processing requests
+handled on inbound associations.  The meaning of operations
+is product specific, and is not comparable between products.
+This is intended to capture lower-level i/o operations than
+shown by HandledRequests, between between clients and
+servers, or between peers.  It might roughly correspond to
+the number of rows returned by a 'select' statement.  It is
+not intended to capture disk i/o described in DiskReads.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoStartupTime' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The date and time at which this server was last started.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The date and time at which this server was last started.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvInfoTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of additional information about database servers.
+
+Entries in this table correspond to applications in the
+APPLICATION-MIB applTable.  Some objects in that table are
+application-specific.  When they are associated with an RDBMS
+server in this table, the objects have the following
+meanings.
+
+applName - The name of this server, i.e., the process or
+group of processes providing access to this database.  The
+exact format will be product and host specific.
+
+applVersion - The version number of this server, in product
+specific format.
+
+applOperStatus - up(1) means operational and available for
+general use.  down(2) means the server is not available for
+use, but is known to the agent.  The other states have broad
+meaning, and may need to be supplemented by the vendor
+private MIB.  Halted(3) implies an administrative state of
+unavailability.  Congested(4) implies a resource or or
+administrative limit is prohibiting new inbound associations.
+The 'available soon' description of restarting(5) may include
+an indeterminate amount of recovery.
+
+applLastChange is the time the agent noticed the most recent
+change to applOperStatus.
+
+applInboundAssociation is the number of currently active
+local and remote conversations (usually SQL connects).
+
+applOutboundAssociations is not provided by this MIB.
+
+applAccumulatedInboundAssociations is the total number of
+local and remote conversations started since the server came
+up.
+
+applAccumulatedOutbound associations is not provided by this
+MIB.
+
+applLastInboundActivity is the time the most recent local or
+remote conversation was attempted or disconnected.
+
+applLastOutboundActivity is not provided by this MIB.
+
+applRejectedInboundAssociations is the number of local or
+remote conversations rejected by the server for
+administrative reasons or because of resource limitations.
+
+applFailedOutboundAssociations is not provided by this MIB.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of additional information about database servers.
+
+Entries in this table correspond to applications in the
+APPLICATION-MIB applTable.  Some objects in that table are
+application-specific.  When they are associated with an RDBMS
+server in this table, the objects have the following
+meanings.
+
+applName - The name of this server, i.e., the process or
+group of processes providing access to this database.  The
+exact format will be product and host specific.
+
+applVersion - The version number of this server, in product
+specific format.
+
+applOperStatus - up(1) means operational and available for
+general use.  down(2) means the server is not available for
+use, but is known to the agent.  The other states have broad
+meaning, and may need to be supplemented by the vendor
+private MIB.  Halted(3) implies an administrative state of
+unavailability.  Congested(4) implies a resource or or
+administrative limit is prohibiting new inbound associations.
+The 'available soon' description of restarting(5) may include
+an indeterminate amount of recovery.
+
+applLastChange is the time the agent noticed the most recent
+change to applOperStatus.
+
+applInboundAssociation is the number of currently active
+local and remote conversations (usually SQL connects).
+
+applOutboundAssociations is not provided by this MIB.
+
+applAccumulatedInboundAssociations is the total number of
+local and remote conversations started since the server came
+up.
+
+applAccumulatedOutbound associations is not provided by this
+MIB.
+
+applLastInboundActivity is the time the most recent local or
+remote conversation was attempted or disconnected.
+
+applLastOutboundActivity is not provided by this MIB.
+
+applRejectedInboundAssociations is the number of local or
+remote conversations rejected by the server for
+administrative reasons or because of resource limitations.
+
+applFailedOutboundAssociations is not provided by this MIB.
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceCurrent' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The current value for the resource.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current value for the resource.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceDescription' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+A description of the resource and the meaning of the integer
+units used for Limit, Current, and Highwater.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A description of the resource and the meaning of the integer
+units used for Limit, Current, and Highwater.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry for a single limited resource kept by the server.
+A limited resource has maximum use determined by a parameter
+that might or might not changeable at run time, or visible in
+the rbmsSrvParamTable.  Examples would be the number of
+available locks, or number of concurrent executions allowed
+in a server.  Arrays of resources are supported through an
+integer subindex, which should have the value of one for
+single-instance names.
+
+Limited resources that are shared across servers or databases
+are best duplicated in this table across
+all servers accessing the resource.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry for a single limited resource kept by the server.
+A limited resource has maximum use determined by a parameter
+that might or might not changeable at run time, or visible in
+the rbmsSrvParamTable.  Examples would be the number of
+available locks, or number of concurrent executions allowed
+in a server.  Arrays of resources are supported through an
+integer subindex, which should have the value of one for
+single-instance names.
+
+Limited resources that are shared across servers or databases
+are best duplicated in this table across
+all servers accessing the resource.
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceFailures' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The number of times the system wanted to exceed the limit of
+the resource since applUpTime was reset.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The number of times the system wanted to exceed the limit of
+the resource since applUpTime was reset.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceHighwater' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The maximum value of the resource seen since applUpTime
+was reset.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The maximum value of the resource seen since applUpTime
+was reset.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The ID of the resource which may be described in some other
+MIB.  If there is no ID for this rdbmsSrvLimitedResourceName,
+attempts to access this object will return noSuchName
+(SNMPv1) or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the resource which may be described in some other
+MIB.  If there is no ID for this rdbmsSrvLimitedResourceName,
+attempts to access this object will return noSuchName
+(SNMPv1) or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceLimit' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The maximum value the resource use may attain.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The maximum value the resource use may attain.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of the resource, for instance 'threads' or
+'semaphores', or 'buffer pages'
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the resource, for instance 'threads' or
+'semaphores', or 'buffer pages'
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsSrvLimitedResourceTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of limited resources relevant to a server.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of limited resources relevant to a server.
+</property>
+</object>
+<object id='rdbmsSrvParamComment' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Annotation which describes the purpose of a configuration
+parameter or the reason for a particular parameter's
+setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Annotation which describes the purpose of a configuration
+parameter or the reason for a particular parameter's
+setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsSrvParamCurrValue' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The value for a configuration parameter now in effect, the
+actual setting for the server.  While there may multiple
+values in the temporal domain of interest (for instance, the
+value to take effect at the next restart), this is the
+current setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The value for a configuration parameter now in effect, the
+actual setting for the server.  While there may multiple
+values in the temporal domain of interest (for instance, the
+value to take effect at the next restart), this is the
+current setting.
+
+Note that a compliant agent does not need to
+allow write access to this object.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='rdbmsSrvParamEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+An entry for a single configuration parameter for a server.
+Parameters with single values have a subindex value of one.
+If the parameter is naturally considered to contain a
+variable number of members of a class, e.g.  members of the
+DBA user group, or tracepoints active in the server, then it
+must be presented as a set of rows.  If, on the other hand,
+the parameter represents a set of choices from a class,
+e.g. the permissions on a file or the options chosen out of
+the set of all options allowed, AND is guaranteed to always
+fit in the 255 character length of a DisplayString, then it
+may be presented as a comma separated list with a subindex
+value of one.  Zero may not be used as a subindex value.
+
+Entries for a server must be present if the value of the
+corresponding applOperStatus object is up(1).  If an instance
+of applOperStatus is not up(1), then attempts to access
+corresponding instances in this table may result in either
+noSuchName (SNMPv1) or noSuchInstance (SNMPv2) being returned
+by the agent.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An entry for a single configuration parameter for a server.
+Parameters with single values have a subindex value of one.
+If the parameter is naturally considered to contain a
+variable number of members of a class, e.g.  members of the
+DBA user group, or tracepoints active in the server, then it
+must be presented as a set of rows.  If, on the other hand,
+the parameter represents a set of choices from a class,
+e.g. the permissions on a file or the options chosen out of
+the set of all options allowed, AND is guaranteed to always
+fit in the 255 character length of a DisplayString, then it
+may be presented as a comma separated list with a subindex
+value of one.  Zero may not be used as a subindex value.
+
+Entries for a server must be present if the value of the
+corresponding applOperStatus object is up(1).  If an instance
+of applOperStatus is not up(1), then attempts to access
+corresponding instances in this table may result in either
+noSuchName (SNMPv1) or noSuchInstance (SNMPv2) being returned
+by the agent.
+</property>
+</object>
+<object id='rdbmsSrvParamID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The ID of the parameter which may be described in some
+other MIB.  If there is no ID for this rdbmsSrvParamName,
+attempts to access this object will return noSuchName
+(SNMPv1) or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The ID of the parameter which may be described in some
+other MIB.  If there is no ID for this rdbmsSrvParamName,
+attempts to access this object will return noSuchName
+(SNMPv1) or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvParamName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of a configuration parameter for a server.  This
+name is product-specific. The length is limited to 64
+characters to constrain the number of sub-identifiers needed
+for instance identification (and to minimize network
+traffic).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of a configuration parameter for a server.  This
+name is product-specific. The length is limited to 64
+characters to constrain the number of sub-identifiers needed
+for instance identification (and to minimize network
+traffic).
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsSrvParamSubIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The subindex value for this parameter.  If the parameter is
+naturally considered to contain a variable number of members
+of a class, e.g.  members of the DBA user group, or files
+which are part of the database, then it must be presented as
+a set of rows.  If, on the other hand, the parameter
+represents a set of choices from a class, e.g. the
+permissions on a file or the options chosen out of the set of
+all options allowed, AND is guaranteed to always fit in the
+255 character length of a DisplayString, then it may be
+presented as a comma separated list with a subindex value of
+one.  Zero may not be used as a value.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The subindex value for this parameter.  If the parameter is
+naturally considered to contain a variable number of members
+of a class, e.g.  members of the DBA user group, or files
+which are part of the database, then it must be presented as
+a set of rows.  If, on the other hand, the parameter
+represents a set of choices from a class, e.g. the
+permissions on a file or the options chosen out of the set of
+all options allowed, AND is guaranteed to always fit in the
+255 character length of a DisplayString, then it may be
+presented as a comma separated list with a subindex value of
+one.  Zero may not be used as a value.
+</property>
+<property type="string" id="access" mode="w" >
+noaccess
+</property>
+</object>
+<object id='rdbmsSrvParamTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of configuration parameters for a server.  Entries
+should be populated according to the following guidelines:
+(1) The value should be specified through administrative
+    (human) intervention.
+(2) It should be configured on a per-server or a more global
+    basis, with duplicate entries for each server sharing
+    use of the parameter.
+(3) One of the following is true:
+    (a) The parameter has a non-numeric value;
+    (b) The current value is numeric, but it only changes due
+        to human intervention;
+
+    (c) The current value is numeric and dynamic, but the
+        RDBMS does not track access/allocation failures
+        related to the parameter;
+    (d) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, but the failure has no
+        significant impact on RDBMS performance or
+        availability.
+    (e) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, the failure has
+        significant impact on RDBMS performance or
+        availability, and is shown in the
+        rdbmsSrvLimitedResource table.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of configuration parameters for a server.  Entries
+should be populated according to the following guidelines:
+(1) The value should be specified through administrative
+    (human) intervention.
+(2) It should be configured on a per-server or a more global
+    basis, with duplicate entries for each server sharing
+    use of the parameter.
+(3) One of the following is true:
+    (a) The parameter has a non-numeric value;
+    (b) The current value is numeric, but it only changes due
+        to human intervention;
+
+    (c) The current value is numeric and dynamic, but the
+        RDBMS does not track access/allocation failures
+        related to the parameter;
+    (d) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, but the failure has no
+        significant impact on RDBMS performance or
+        availability.
+    (e) The current value is numeric and dynamic, the
+        RDBMS tracks changes in access/allocation failures
+        related to the parameter, the failure has
+        significant impact on RDBMS performance or
+        availability, and is shown in the
+        rdbmsSrvLimitedResource table.
+</property>
+</object>
+<object id='rdbmsSrvPrivateMibOID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The authoritative identification for the private MIB for this
+server, presumably based on the vendor, e.g., { enterprises
+111 &lt;optional subidentifiers&gt;} for Oracle servers, {
+enterprises 757 &lt;optional subidentifiers&gt;} for Ingres
+servers, { enterprises 897 &lt;optional subidentifiers&gt;} for
+Sybase servers, etc.
+
+If no OBJECT IDENTIFIER exists for the private MIB, attempts
+to access this object will return noSuchName (SNMPv1)
+or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.5.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The authoritative identification for the private MIB for this
+server, presumably based on the vendor, e.g., { enterprises
+111 &lt;optional subidentifiers&gt;} for Oracle servers, {
+enterprises 757 &lt;optional subidentifiers&gt;} for Ingres
+servers, { enterprises 897 &lt;optional subidentifiers&gt;} for
+Sybase servers, etc.
+
+If no OBJECT IDENTIFIER exists for the private MIB, attempts
+to access this object will return noSuchName (SNMPv1)
+or noSuchInstance (SNMPv2).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvProductName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The product name of this server.  This is normally the
+vendor's formal name for the product, in product specific
+format.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.5.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The product name of this server.  This is normally the
+vendor's formal name for the product, in product specific
+format.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsSrvTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The table of database servers running or installed
+on a system.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The table of database servers running or installed
+on a system.
+</property>
+</object>
+<object id='rdbmsSrvVendorName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The name of the vendor whose RDBMS manages this database,
+for informational purposes.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.5.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The name of the vendor whose RDBMS manages this database,
+for informational purposes.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='rdbmsTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.2
+</property>
+</object>
+<object id='rdbmsWellKnownLimitedResources' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.1.10
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='rdbmsOutOfSpace' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+An rdbmsOutOfSpace trap signifies that one of the database
+servers managed by this agent has been unable to allocate
+space for one of the databases managed by this agent.  Care
+should be taken to avoid flooding the network with these
+traps.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An rdbmsOutOfSpace trap signifies that one of the database
+servers managed by this agent has been unable to allocate
+space for one of the databases managed by this agent.  Care
+should be taken to avoid flooding the network with these
+traps.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'rdbmsSrvInfoDiskOutOfSpaces': {'nodetype': 'object', 'module': 'RDBMS-MIB'}}
+</property>
+</object>
+<object id='rdbmsStateChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+An rdbmsStateChange trap signifies that one of the database
+server/databases managed by this agent has changed its
+rdbmsRelState in a way that makes it less accessible for use.
+For these purposes, both active(2) and available(3) are
+considered fully accessible.  The state sent with the trap is
+the new, less accessible state.
+</property>
+<property type="string" id="moduleName" mode="w" >
+RDBMS-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.39.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+An rdbmsStateChange trap signifies that one of the database
+server/databases managed by this agent has changed its
+rdbmsRelState in a way that makes it less accessible for use.
+For these purposes, both active(2) and available(3) are
+considered fully accessible.  The state sent with the trap is
+the new, less accessible state.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'rdbmsRelState': {'nodetype': 'object', 'module': 'RDBMS-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Performance Reports', 'Database Util Report') -->
+<object id='/zport/dmd/Reports/Performance Reports/Database Util Report' module='Products.ZenModel.Report' class='Report'>
+</object>
+</objects>

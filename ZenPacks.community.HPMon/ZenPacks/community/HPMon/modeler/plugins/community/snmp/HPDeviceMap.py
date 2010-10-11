@@ -13,9 +13,9 @@ __doc__="""HPDeviceMap
 HPDeviceMap map mib elements from HP/Compaq Insight Manager mib to get hw and os
 products.
 
-$Id: HPDeviceMap.py,v 1.2 2010/09/12 16:54:40 egor Exp $"""
+$Id: HPDeviceMap.py,v 1.3 2010/10/06 19:58:40 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 import re
@@ -50,11 +50,13 @@ class HPDeviceMap(SnmpPlugin):
         elif re.search(r'Red\s*Hat', om.setOSProductKey, re.I):
             manuf = "Red Hat"
         elif re.search(r'VMware', om.setOSProductKey, re.I):
-            om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
+            if '-' in om.setOSProductKey:
+                om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
             om.setOSProductKey = "%s %s" %(om.setOSProductKey, om._OSVer)
             manuf = "VMware"
         elif re.search(r'SuSE', om.setOSProductKey, re.I):
-            om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
+            if '-' in om.setOSProductKey:
+                om.setOSProductKey = om.setOSProductKey.split('-', 1)[1].strip()
             om.setOSProductKey = "Novell %s %s" %(om.setOSProductKey, om._OSVer)
             manuf = "Novell"
         try:

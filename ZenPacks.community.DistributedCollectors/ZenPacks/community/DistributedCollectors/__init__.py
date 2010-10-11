@@ -201,18 +201,17 @@ def _executeZenModelerCommand(self, zenmodelerOpts, *args):
     zm = binPath('zenmodeler')
     zenmodelerCmd = [zm]
     zenmodelerCmd.extend(zenmodelerOpts)
-    else: background, REQUEST, write = args
     if zenmodelerOpts[3] != 'localhost':
         zenmodelerCmd.extend(['--hubhost', socket.getfqdn()])
         zenmodelerCmd = ['/usr/bin/ssh', zenmodelerOpts[3]] + zenmodelerCmd
-    if len(args) == 1:
-        result = executeCommand(zenmodelerCmd, REQUEST)
-    else:
+    if len(args) == 3:
         background, REQUEST, write = args
         if background:
 #            log.info('queued job: %s', " ".join(zenmodelerCmd))
             result = self.dmd.JobManager.addJob(ShellCommandJob,zenmodelerCmd)
         else: result = executeCommand(zenmodelerCmd, REQUEST, write)
+    else:
+        result = executeCommand(zenmodelerCmd, args[0])
     return result
 
 @monkeypatch('Products.ZenModel.PerformanceConf.PerformanceConf')

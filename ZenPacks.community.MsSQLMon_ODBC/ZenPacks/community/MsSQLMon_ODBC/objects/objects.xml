@@ -503,6 +503,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+transactions
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -510,7 +513,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1

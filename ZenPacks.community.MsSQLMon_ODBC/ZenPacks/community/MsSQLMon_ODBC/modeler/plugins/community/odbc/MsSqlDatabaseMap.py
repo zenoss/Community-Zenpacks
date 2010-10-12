@@ -12,15 +12,15 @@ __doc__="""MsSqlDatabaseMap.py
 
 MsSqlDatabaseMap maps the MS SQL Databases table to Database objects
 
-$Id: MsSqlDatabaseMap.py,v 1.4 2010/09/27 23:19:36 egor Exp $"""
+$Id: MsSqlDatabaseMap.py,v 1.7 2010/10/06 19:06:07 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.7 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.DataCollector.plugins.DataMaps import MultiArgs
 from ZenPacks.community.ZenODBC.OdbcPlugin import OdbcPlugin
 
-class MsSqlDatabaseMap(OdbcPlugin):
+class MsSqlDatabaseMap(ZenPackPersistence, OdbcPlugin):
 
     ZENPACKID = 'ZenPacks.community.MsSQLMon_ODBC'
 
@@ -38,13 +38,14 @@ class MsSqlDatabaseMap(OdbcPlugin):
 
     def queries(self, device):
         queries = {}
-        cs = [getattr(device, 'zMsSqlConnectionString', 'DRIVER={FreeTDS}')]
-        if not cs[0].upper().__contains__('SERVER='):
-            cs.append('SERVER=%s'%device.manageIp)
+        uid = pwd = None
+        cs = [getattr(device, 'zMsSqlConnectionString', 'DRIVER={FreeTDS};TDS_Version=8.0')]
+        options = [opt.split('=')[0].strip().upper() for opt in cs[0].split(';')]
+        if 'SERVER' not in options: cs.append('SERVER=%s'%device.manageIp)
         cs.append('DATABASE=master')
-        uid = getattr(device, 'zWinUser', None)
+        if 'UID' not in options: uid = getattr(device, 'zWinUser', None)
         if uid: cs.append('UID=%s'%uid)
-        pwd = getattr(device, 'zWinPassword', None)
+        if 'PWD' not in options: pwd = getattr(device, 'zWinPassword', None)
         if pwd: cs.append('PWD=%s'%pwd)
         for inst in getattr(device, 'zMsSqlSrvInstances', '').split() or ['']:
             if cs[1].startswith('SERVER=') and inst != '':
@@ -117,6 +118,7 @@ class MsSqlDatabaseMap(OdbcPlugin):
                 databases.extend(dbs)
                 continue
             om = self.objectMap(inst)
+            if not om.dbsiname: om.dbsiname = instname or 'MSSQLSERVER'
             om.id = self.prepId(om.dbsiname)
             om.dbsiproperties = om.dbsiproperties.split()
             pn, arch = om.setProductKey.split(' - ', 1)

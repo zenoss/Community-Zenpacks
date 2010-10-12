@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'MySQL') -->
-<object id='/zport/dmd/Devices/Server/rrdTemplates/MySQL' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'MySqlDatabase') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/MySqlDatabase' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+MySQL Server Database Statistics
+</property>
 <property type="text" id="description" mode="w" >
-MySQL Server Instance Statistics
+MySQL Server Database Statistics
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Device
+ZenPacks.community.MySQLMon_ODBC.MySqlDatabase
 </property>
 <tomanycont id='datasources'>
-<object id='server MySQL' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
+<object id='sizeUsed' module='ZenPacks.community.MySQLMon_ODBC.datasources.MySQLDataSource' class='MySQLDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-ODBC
+MySQL
 </property>
 <property type="boolean" id="enabled" mode="w" >
 True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/App/MySQL
 </property>
 <property type="int" id="severity" mode="w" >
 3
@@ -25,11 +25,186 @@ True
 <property type="int" id="cycletime" mode="w" >
 300
 </property>
-<property type="string" id="cs" mode="w" >
-${here/zMySqlConnectionString};DATABASE=information_schema;SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
+<property type="string" id="sql" mode="w" >
+SELECT sum(data_length) as dataSize, sum(index_length) as indexSize, sum( data_length + index_length ) as sizeUsed, table_schema FROM TABLES GROUP BY table_schema WHERE table_schema='${here/dbname}'
+</property>
+<property type="string" id="dbname" mode="w" >
+information_schema
+</property>
+<property type="string" id="hostname" mode="w" >
+${here/hostname}
+</property>
+<property type="string" id="port" mode="w" >
+${here/port}
+</property>
+<property type="string" id="username" mode="w" >
+${here/zMySqlUsername}
+</property>
+<property type="string" id="password" mode="w" >
+${here/zMySqlPassword}
+</property>
+<property type="int" id="timeout" mode="w" >
+15
+</property>
+<tomanycont id='datapoints'>
+<object id='dataSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='indexSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='sizeUsed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='MySQL - Database Size' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='dataSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+sizeUsed_dataSize
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='indexSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+True
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+sizeUsed_indexSize
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'MySqlSrvInst') -->
+<object id='/zport/dmd/Devices/Server/rrdTemplates/MySqlSrvInst' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+MySQL Server Instance Statistics
+</property>
+<property type="text" id="description" mode="w" >
+MySQL Server Instance Statistics
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.MySQLMon_ODBC.MySqlSrvInst
+</property>
+<tomanycont id='datasources'>
+<object id='globalStatus' module='ZenPacks.community.MySQLMon_ODBC.datasources.MySQLDataSource' class='MySQLDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+MySQL
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
 </property>
 <property type="string" id="sql" mode="w" >
 SHOW GLOBAL STATUS
+</property>
+<property type="string" id="dbname" mode="w" >
+information_schema
+</property>
+<property type="string" id="hostname" mode="w" >
+${here/hostname}
+</property>
+<property type="string" id="port" mode="w" >
+${here/port}
+</property>
+<property type="string" id="username" mode="w" >
+${here/zMySqlUsername}
+</property>
+<property type="string" id="password" mode="w" >
+${here/zMySqlPassword}
+</property>
+<property type="int" id="timeout" mode="w" >
+15
 </property>
 <tomanycont id='datapoints'>
 <object id='Bytes_received' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -362,7 +537,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_delete
+globalStatus_Com_delete
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -394,7 +569,7 @@ DELETE
 Com_delete,+
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_delete_multi
+globalStatus_Com_delete_multi
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -423,7 +598,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_insert
+globalStatus_Com_insert
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -455,7 +630,7 @@ INSERT
 Com_insert,+
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_insert_select
+globalStatus_Com_insert_select
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -481,7 +656,7 @@ SELECT
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_select
+globalStatus_Com_select
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -510,7 +685,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_update
+globalStatus_Com_update
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -542,7 +717,7 @@ UPDATE
 Com_update,+
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Com_update_multi
+globalStatus_Com_update_multi
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -602,7 +777,7 @@ Delete
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_delete
+globalStatus_Handler_delete
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -628,7 +803,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_read_first
+globalStatus_Handler_read_first
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -657,7 +832,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_read_key
+globalStatus_Handler_read_key
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -686,7 +861,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_read_next
+globalStatus_Handler_read_next
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -718,7 +893,7 @@ Read (Keyed)
 Handler_read_first,Handler_read_key,Handler_read_next,+,+,+
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_read_prev
+globalStatus_Handler_read_prev
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -747,7 +922,7 @@ ${graphPoint/id}
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_read_rnd
+globalStatus_Handler_read_rnd
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -779,7 +954,7 @@ Read (Unkeyed)
 Handler_read_rnd,+
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_read_rnd_next
+globalStatus_Handler_read_rnd_next
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -808,7 +983,7 @@ Update
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_update
+globalStatus_Handler_update
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -837,7 +1012,7 @@ Write
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Handler_write
+globalStatus_Handler_write
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -894,7 +1069,7 @@ Received
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Bytes_received
+globalStatus_Bytes_received
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -923,7 +1098,7 @@ Sent
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Bytes_sent
+globalStatus_Bytes_sent
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -983,7 +1158,7 @@ Full Join
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Select_full_join
+globalStatus_Select_full_join
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1012,7 +1187,7 @@ Full Range Join
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Select_full_range_join
+globalStatus_Select_full_range_join
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1041,7 +1216,7 @@ Range
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Select_range
+globalStatus_Select_range
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1070,7 +1245,7 @@ Range Check
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Select_range_check
+globalStatus_Select_range_check
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1096,149 +1271,7 @@ Scan
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-server MySQL_Select_scan
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-</tomanycont>
-</object>
-</tomanycont>
-</object>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'MySqlDatabase') -->
-<object id='/zport/dmd/Devices/Server/rrdTemplates/MySqlDatabase' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property type="text" id="description" mode="w" >
-MySQL Server Database Statistics
-</property>
-<property type="string" id="targetPythonClass" mode="w" >
-ZenPacks.community.MySQLMon_ODBC.MySqlDatabase
-</property>
-<tomanycont id='datasources'>
-<object id='sizeUsed' module='ZenPacks.community.ZenODBC.datasources.OdbcDataSource' class='OdbcDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-ODBC
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="cs" mode="w" >
-${here/zMySqlConnectionString};DATABASE=information_schema;SERVER=${here/manageIp};UID=${here/zMySqlUsername};PWD=${here/zMySqlPassword}
-</property>
-<property type="string" id="sql" mode="w" >
-SELECT sum(data_length) as dataSize, sum(index_length) as indexSize, sum( data_length + index_length ) as sizeUsed FROM TABLES WHERE table_schema='${here/dbname}' GROUP BY table_schema
-</property>
-<tomanycont id='datapoints'>
-<object id='dataSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='indexSize' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='sizeUsed' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='graphDefs'>
-<object id='MySQL - Database Size' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-bytes
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-<tomanycont id='graphPoints'>
-<object id='dataSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-sizeUsed_dataSize
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='indexSize' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-True
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-sizeUsed_indexSize
+globalStatus_Select_scan
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -1396,6 +1429,20 @@ MyODBC-2.50.39-19.1
 False
 </property>
 </object>
+<object id='MySQL Server 5.0.45 (x86_64)' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+MySQL Server 5.0.45 (x86_64)
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['MySQL Server 5.0.45 (x86_64)']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
+<tomany id='instances'>
+<link objid='/zport/dmd/Devices/Server/Linux/devices/RS-MGM-07.bmg.local/os/softwaredbsrvinstances/0'/>
+</tomany>
+</object>
 <object id='MySQL-client-standard-5.0.24a-0.rhel4' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
 <property type="string" id="name" mode="w" >
 MySQL-client-standard-5.0.24a-0.rhel4
@@ -1515,6 +1562,9 @@ True
 </property>
 <tomanycont id='osProcessClasses'>
 <object id='mysqld' module='Products.ZenModel.OSProcessClass' class='OSProcessClass'>
+<property id='zendoc' type='string'>
+MySQL Server Process
+</property>
 <property type="string" id="name" mode="w" >
 mysqld
 </property>

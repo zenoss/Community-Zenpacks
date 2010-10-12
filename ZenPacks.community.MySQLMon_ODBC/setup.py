@@ -3,12 +3,12 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.MySQLMon_ODBC"
-VERSION = "2.2"
+VERSION = "3.0"
 AUTHOR = "Egor Puzanov"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.MySQLMon_ODBC']
-INSTALL_REQUIRES = ['ZenPacks.community.RDBMS>=1.2', 'ZenPacks.community.ZenODBC>=2.1']
+INSTALL_REQUIRES = ['ZenPacks.community.RDBMS>=2.0', 'ZenPacks.community.SQLDataSource>=1.3']
 COMPAT_ZENOSS_VERS = ">=2.5"
 PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS

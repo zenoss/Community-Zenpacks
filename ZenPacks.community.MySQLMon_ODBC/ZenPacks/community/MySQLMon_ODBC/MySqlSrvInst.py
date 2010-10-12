@@ -8,59 +8,72 @@
 #
 ################################################################################
 
-__doc__="""MySqlDatabase
+__doc__="""MySqlSrvInst
 
-MySqlDatabase is a Database
+MySqlSrvInst is a SrvInst
 
-$Id: MySqlDatabase.py,v 1.2 2010/10/05 21:20:30 egor Exp $"""
+$Id: MySqlSrvInst.py,v 1.0 2010/10/05 21:19:17 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.0 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ZenossSecurity import *
-from ZenPacks.community.RDBMS.Database import Database
+from ZenPacks.community.RDBMS.DBSrvInst import DBSrvInst
 
 
-class MySqlDatabase(Database):
+class MySqlSrvInst(DBSrvInst):
     """
-    MySQL Database object
+    MySQL SrvInst object
     """
 
     ZENPACKID = 'ZenPacks.community.MySQLMon_ODBC'
 
-    collation = ''
+    hostname = ''
+    port = 0
+    version = ''
+    license = ''
+    have = []
 
 
-    _properties = Database._properties + (
-        {'id':'collation', 'type':'string', 'mode':'w'},
+    _properties = DBSrvInst._properties + (
+        {'id':'hostname', 'type':'string', 'mode':'w'},
+        {'id':'port', 'type':'int', 'mode':'w'},
+        {'id':'version', 'type':'string', 'mode':'w'},
+        {'id':'license', 'type':'string', 'mode':'w'},
+        {'id':'have', 'type':'lines', 'mode':'w'},
         )
 
 
     factory_type_information = (
         {
-            'id'             : 'MySqlDatabase',
-            'meta_type'      : 'MySqlDatabase',
+            'id'             : 'MySqlSrvInst',
+            'meta_type'      : 'MySqlSrvInst',
             'description'    : """Arbitrary device grouping class""",
             'icon'           : 'FileSystem_icon.gif',
             'product'        : 'MySQLMon_ODBC',
-            'factory'        : 'manage_addDatabase',
-            'immediate_view' : 'viewMySqlDatabase',
+            'factory'        : 'manage_addDBSrvInst',
+            'immediate_view' : 'viewMySqlSrvInst',
             'actions'        :
             (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
-                , 'action'        : 'viewMySqlDatabase'
+                , 'action'        : 'viewMySqlSrvInst'
+                , 'permissions'   : (ZEN_VIEW,)
+                },
+                { 'id'            : 'databases'
+                , 'name'          : 'Databases'
+                , 'action'        : 'viewDBSrvInstDatabases'
                 , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'events'
                 , 'name'          : 'Events'
                 , 'action'        : 'viewEvents'
-                , 'permissions'   : (ZEN_VIEW, )
+                , 'permissions'   : (ZEN_VIEW,)
                 },
                 { 'id'            : 'perfConf'
                 , 'name'          : 'Template'
                 , 'action'        : 'objTemplates'
-                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
+                , 'permissions'   : (ZEN_CHANGE_DEVICE,)
                 },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
@@ -71,36 +84,13 @@ class MySqlDatabase(Database):
           },
         )
 
-
-    def totalBytes(self):
-        """
-        Return the number of total bytes
-        """
-        su = self.cacheRRDValue('sizeUsed_sizeUsed', 0)
-        return long(su) * long(self.blockSize)
-
-    def hostname(self):
-        """
-        Return the hostname attribute of DBSrvInst
-        """
-        inst = self.getDBSrvInst()
-        if inst: return inst.hostname
-        else: return self.device().manageIp
-        
-    def port(self):
-        """
-        Return the port attribute of DBSrvInst
-        """
-        inst = self.getDBSrvInst()
-        if inst: return inst.port
-        else: return 3306
-        
     def zMySqlConnectionString(self):
         """
         Return the ODBC connection string
         """
-        inst = self.getDBSrvInst()
-        if inst: return inst.zMySqlConnectionString()
-        else: return 'DRIVER={MySQL}'
+        cs = getattr(self.device().primaryAq(),
+                    'zMySqlConnectionString',
+                    ['DRIVER={MySQL}'])
+        return cs[int(self.dbsiname)]
 
-InitializeClass(MySqlDatabase)
+InitializeClass(MySqlSrvInst)

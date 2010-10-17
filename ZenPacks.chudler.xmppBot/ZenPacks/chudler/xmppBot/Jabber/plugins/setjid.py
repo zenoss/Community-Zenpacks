@@ -10,8 +10,9 @@ class SetJid(Plugin):
 
   name = 'mapuser'
   capabilities = ['setjid', 'mapuser', 'help']
+  private = False
 
-  def call(self, args, sender, log, **kw):
+  def call(self, args, client, sender, messageType, log, **kw):
     log.debug('mapuser plugin running with %s' % args)
     opts = self.options()
 
@@ -20,13 +21,16 @@ class SetJid(Plugin):
         (options, arguments) = opts.parse_args(args)
         log.debug('Done parsing arguments.  Options are "%s", arguments expanded to %s' % (options, arguments))
     except OptionError, message:
-        return str(message)
+        client.sendMessage(message, sender, messageType)
+        return False
     if options.zenUser is None or options.jabberId is None:
-        return 'NO.  -u and -j are both required.'
+        client.sendMessage('No.  -u and -j are both required', sender, messageType)
+        return False
 
     adapter = ZenAdapter()
 
     jabberId = options.jabberId.lower()
+
     haveUser = False
     for user in adapter.userSettings():
         if user.id.lower() == options.zenUser.lower():
@@ -39,24 +43,37 @@ class SetJid(Plugin):
                 if options.jabberId == currentId.lower():
                     if options.force:
                         self.mapIds(jabberId, user)
-                        return 'This user mapping already looks like this.  Forced option was used, so I set it anyway.'
+                        message = 'This user mapping already looks like this.  Forced option was used, so I set it anyway.'
+                        client.sendMessage(message, sender, messageType)
+                        return
                     else:
-                        return 'This user mapping already looks like this.'
+                        message = 'This user mapping already looks like this.'
+                        client.sendMessage(message, sender, messageType)
+                        return
                 if '/' in sender:
                     sender = sender.split('/')[0]
                 if currentId.lower() == sender.lower():
                     if options.force:
-                        return 'This is your Zenoss user id, and the mapping is already set correctly.  Changing it will prevent you from communicating with me.  If you really want to change it, do so from the Zenoss interface or -f.'
+                        message = 'This is your Zenoss user id, and the mapping is already set correctly.  Changing it will prevent you from communicating with me.  If you really want to change it, do so from the Zenoss interface or -f.'
+                        client.sendMessage(message, sender, messageType)
+                        return
                     else:
                         self.mapIds(jabberId, user)
-                        return 'This is your Zenoss user id, and the mapping is already set correctly.  However, the force option was used, so I set it anyway.  Since this will probably break communication with me, you can change it back from the Zope interface.'
+                        message = 'This is your Zenoss user id, and the mapping is already set correctly.  However, the force option was used, so I set it anyway.  Since this will probably break communication with me, you can change it back from the Zope interface.'
+                        client.sendMessage(message, sender, messageType)
+                        return
             log.debug('Setting the jabberid mapping property to %s for zenuser %s' % (jabberId, user))
             self.mapIds(jabberId, user)
             break
+
     if haveUser:
-        return 'JabberId for this user has been saved.  Thanks.'
+        message = 'JabberId for this user has been saved.  Thanks.'
+        client.sendMessage(message, sender, messageType)
+        return
     else:
-        return 'Sorry! I Could not find a Zenoss user by the name %s' % options.zenUser
+        message = 'Sorry! I Could not find a Zenoss user by the name %s' % options.zenUser
+        client.sendMessage(message, sender, messageType)
+        return
 
   def mapIds(self, jabberId, zenUser):
     self.setPropertyIfNeeded(zenUser)
@@ -71,11 +88,6 @@ class SetJid(Plugin):
         zenUser.getProperty('JabberId')
     except AttributeError:
         zenUser.manage_addProperty('JabberId', '', 'string')
-        # unnecessary?
-        #zenUser._setProperty('JabberId', '', 'string')
-
-  def private(self):
-    return False
 
   def options(self):
     parser = Options(description = 'Acknowledge events by eventid', prog = 'ack')

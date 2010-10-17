@@ -7,14 +7,14 @@ log = logging.getLogger('zen.xmppBot')
 from Products.ZenUtils.ZCmdBase import ZCmdBase
 from Products.AdvancedQuery import MatchGlob, Eq, Or
 
+class ZenAdapter:
 """Thin wrapper for accessing and controlling parts of zenoss"""
 
-class ZenAdapter:
-
     def __init__(self):
-        # I don't know a suitable way to get dmd, so
-        # ask ZCmdBase for it.
-        # FIXME 09JUN09:  This can have side-effects
+        """I don't know a suitable way to get dmd, so
+         ask ZCmdBase for it.
+        """
+        # FIXME 09JUN09:  This can have side-effects?
         cmd = ZCmdBase(noopts = True)
         self.dmd = cmd.dmd
         self.evManager = self.dmd.ZenEventManager
@@ -37,7 +37,7 @@ class ZenAdapter:
 
     def ackEvents(self, user, eventsToAck):
         """Change list of events to acknowledged"""
-	self.dmd.ZenEventManager.manage_setEventStates(1, eventsToAck, user)
+        self.dmd.ZenEventManager.manage_setEventStates(1, eventsToAck, user)
 
     def events(self):
         return self.evManager.getEventList()

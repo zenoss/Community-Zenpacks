@@ -1,103 +1,85 @@
 #!/usr/bin/python
 """jabber bot"""
+# TODO:
+# * fix notification about ivalid messages when direct-chatting
 
-"""This needs to be rewritten so that TwistedJabberClient and JabberAdapter are
-One class.  They are very promiscuous as it is, and are lacking a real design."""
-
-import re
 import logging
-
-log = logging.getLogger('zen.xmppBot')
-log.setLevel(10)
-
-from twisted.words.xish import xmlstream
-from twisted.words.protocols.jabber import client, jid
-from twisted.words.xish import domish
-from twisted.internet import reactor, protocol
+import re
+import StringIO, csv
+import random
 
 try:
     from twisted.internet import ssl
 except ImportError:
     pass
-    
+
+from twisted.words.protocols.jabber import client, jid
+from twisted.words.xish import domish
+from twisted.internet import reactor
 from Plugins import getPluginsByCapability
 from twisted.internet.task import LoopingCall
 
 JABBER_CLIENT_NS = 'jabber:client'
 
-   
 class TwistedJabberClient:
 
-    def __init__(self, dialogHandler, server, userId, userPassword, groupServer, realHost, wants_ssl, firstRoom, debug):
-        self.dialogHandler = dialogHandler
+    def __init__(self, server, username, password,
+                 groupServer, chatrooms, ssl, realHost, resource, port = None):
         self.server = server
-        try:
-            self.host, self.port = server.split(':')
-        except ValueError:
-            self.host = server
-            self.port = 5222
+        self.ssl = ssl
+
+        if not port:
+            if self.ssl:
+                self.port = 5223
+            else:
+                self.port = 5222
         else:
-            self.port = int(self.port)
-        self.userId = userId
-        self.userPassword = userPassword
-        self.wants_ssl = wants_ssl
+            self.port = int(port)
+
+        self.username = username
+        self.password = password
+        self.resource = resource
+
+        self.mute = False
+
+        self._send = None
+
+        if not isinstance(chatrooms, list):
+            chatrooms = [ chatrooms ]
+        self.chatrooms = chatrooms
+        self._waitingRoster = False
+
+        self.logger = logging.getLogger('zen.xmppBot')
+        self.pluginLogger = logging.getLogger('zen.xmppBot.plugins')
+        self.logger.setLevel(10)
+        self.pluginLogger.setLevel(10)
 
         if realHost:
             self.realHost = realHost
         else:
-            self.realHost = self.host
+            self.realHost = self.server
 
         if groupServer:
             if '.' in groupServer:
                 self.groupServer = groupServer
             else:
-                self.groupServer = '%s.%s' % (groupServer, realHost)
+                self.groupServer = '%s.%s' % (groupServer, self.realHost)
         else:
-            self.groupServer = 'conference.%s' % realHost
+            self.groupServer = 'conference.%s' % self.realHost
 
-        self.firstRoom = firstRoom
-        self._fact = None
-        self._send = None
-        self.debug = debug
-        self._waitingRoster = False
-        self.connected = False
+        self.myJid = self.jidString(self.username)
 
-    def dprint(self, message):
-      if self.debug:
-        log.debug(message)
-        
-    def jidString(self, user, conf=False, resource=True):
-        """make and return a Jabber identifier (jid) for a user's nick.
 
-        if conf is a non empty string, use this string as the conference room
-        and go through the conferences server
-
-        if resource is true, append the 'bot' resource to the jid
-        """
-        if conf:
-            if '@' not in conf:
-              if resource:
-                  return '%s@%s/%s' % (conf, self.groupServer, user)
-              return '%s@%s' % (conf, self.groupServer)
-        if '@' not in user:
-          if resource:
-              return '%s@%s/bot' % (user, self.realHost)
-          return '%s@%s' % (user, self.realHost)
-        return user
-    
     def connect(self):
         """connect to the jabber server"""
-        self.dprint('Starting to connect')
-        self.dprint('Building context factory for jid %s' % self.jidString(self.userId))
-        jidStr = self.jidString(self.userId)
-        self._fact = factory = client.basicClientFactory(jid.JID(jidStr), self.userPassword)
+        self.logger.debug('Starting to connect')
+        self.logger.debug('Building context factory for jid %s' % self.myJid)
+        factory = client.basicClientFactory(jid.JID(self.myJid), self.password)
         factory.addBootstrap('//event/stream/authd', self.authenticate)
-        factory.addBootstrap(client.BasicAuthenticator.INVALID_USER_EVENT, self.invalidUser)
-        factory.addBootstrap(client.BasicAuthenticator.AUTH_FAILED_EVENT, self.fatalError)
-        factory.addBootstrap(client.BasicAuthenticator.REGISTER_FAILED_EVENT, self.fatalError)
 
-        self.dprint('connecting to server %s using id %s...' % (self.server, self.userId))
-        if self.wants_ssl:
+        self.logger.debug('Connecting to server %s (port %d) using id %s...' % (self.server, self.port, self.myJid))
+        if self.ssl:
+
             class contextFactory:
                 isClient = 1
                 method = ssl.SSL.SSLv3_METHOD
@@ -106,101 +88,307 @@ class TwistedJabberClient:
                     context = ssl.SSL.Context(self.method)
                     return context
 
-            self.dprint('Connecting with ssl...')
-            ctxFactory = contextFactory()
-            reactor.connectSSL(self.host, self.port, factory, ctxFactory)
+            self.logger.debug('Connecting with ssl...')
+            reactor.connectSSL(self.server, self.port, factory, contextFactory())
         else:
-            reactor.connectTCP(self.host, self.port, factory)
+            reactor.connectTCP(self.server, self.port, factory)
         return reactor
 
-    def stop(self):
-        """disconnect from the jabber server"""
-        reactor.disconnectAll()
-        self.connected = False
-        reactor.stop()
+    def jidString(self, user, conference = False, resource = True):
+        """make and return a Jabber identifier (jid) for a user's nick.
 
-    def send(self, twxml):
-        """send a twisted xml element"""
-        self.dprint('-> sending %s' % twxml.toXml())
-        self._send(twxml)
-        
-    def authenticate(self, twxml):
+        if conf is a non empty string, use this string as the conference room
+        and go through the conference server
+
+        if resource is true, append the resource to the jid
+        """
+
+        result = user
+
+        if conference:
+            if '@' not in conference:
+                result = '%s@%s/%s' % (conference, self.groupServer, user)
+        elif '@' not in user:
+            result = '%s@%s' % (user, self.realHost)
+
+        if resource:
+            result += '/%s' % self.resource
+
+        return result
+
+    def authenticate(self, twistedStanza):
         """authentication callback"""
-        # bind twxml.send to self
-        self._send = twxml.send
-        # add observer for incoming message / presence requests
-        twxml.addObserver('/iq',       self.iqHandler)
-        twxml.addObserver('/presence', self.dialogHandler.presenceHandler)
-        twxml.addObserver('/message',  self.dialogHandler.messageHandler)
-        self.dprint('connected')
+
+        self._send = twistedStanza.send
+
+        # add observers for incoming message / presence requests
+        #twistedStanza.addObserver('/iq',       self.iqHandler)
+        #twistedStanza.addObserver('/presence', self.dialogHandler.presenceHandler)
+        twistedStanza.addObserver('/presence', self.presenceHandler)
+        twistedStanza.addObserver('//event/stream/error', self.streamErrorHandler)
+        #twistedStanza.addObserver('//event/stream/error', self.streamErrorHandler)
+
+        #twistedStanza.addObserver('/message',  self.dialogHandler.messageHandler)
+        twistedStanza.addObserver('/message',  self.messageHandler)
+
         self.requestRoster()
+
+        # let'em know we are online
+        presence = domish.Element((JABBER_CLIENT_NS, 'presence'))
+        presence.addElement('status').addContent('Online')
+        self.send(presence)
+
         keepalive = LoopingCall(self.loopEntry)
         keepalive.start(60)
-        self.connected = True
-        if self.firstRoom:
-          # join a chatroom.
-          self.dprint('First chatroom to join %s.  Joining...' % (self.firstRoom))
-          forum = self.jidString(self.userId, self.firstRoom)
-          self.send(presenceElement(self.jidString(self.userId), forum))
-          self.dprint('Done sending presence to room %s' % (self.firstRoom))
+
+        self.joinChatrooms(self.chatrooms)
 
     def loopEntry(self):
-      self.sendPresence()
+        """Periodic actions that need to be taken independent of jabber activity"""
+        # let the server know we are still here
+        self.keepAlive()
+        self.processAlerts()
+
+    def joinChatrooms(self, chatrooms = ()):
+        """Join the chatrooms given in +chatrooms+ argument"""
+        # coerce chatrooms into iterable or obtain the iterator
+        rooms = getattr(chatrooms, '__iter__', getattr((chatrooms,), '__iter__')) 
+        for roomName in rooms():
+            self.logger.debug('Username %s will join %s.' % (self.username, roomName))
+            roomJid = self.jidString(self.username, roomName, False)
+            self.logger.debug('Joining %s MUC.' % roomJid)
+            self.send(self.presenceElement(self.myJid, roomJid))
+
+    def presenceElement(self, from_, to, presenceType=None):
+        """create and return an xml presence element"""
+        twistedStanza = domish.Element((JABBER_CLIENT_NS, 'presence'))
+        twistedStanza['from'] = from_
+        twistedStanza['to'] = to
+        if presenceType:
+            twistedStanza['type'] = presenceType
+        return twistedStanza
+
+    def keepAlive(self):
+        """Send a iq ping to the server.  Used as a keepalive."""
+        iqPing = domish.Element((JABBER_CLIENT_NS, 'iq'))
+        iqPing['type'] = 'get'
+        iqPing['id'] = 'fmb222_' + str(random.randrange(1000000))
+        iqPing.addElement(('urn:xmpp:ping', 'ping'))
+        self.logger.debug('SENDING PING %s' % iqPing)
+        self.send(iqPing)
+
+    def processAlerts(self):
+        """this is called periodically by LoopingCall to wake up the plugins that are not driven by user input"""
+        for plugin in getPluginsByCapability('alert', self):
+            self.logger.debug('Calling alert plugin %s' % plugin)
+            reactor.callInThread(plugin.alert, client=self, log=self.pluginLogger)
+
+    def presenceHandler(self, twistedStanza):
+        """handle a presence packet and take action on it if necessary"""
+        self.logger.debug('-< received %s' % twistedStanza.toXml())
+        self.logger.debug('Checking presence access for %s' % twistedStanza['from'])
+        sender = self.checkAccess(twistedStanza['from'], 'presence')
+        if sender:
+            messageType = twistedStanza.attributes.get('type', 'nothing')
+            if messageType == 'subscribe':
+                self.send(self.presenceElement(self.jidString(self.username), sender, 'subscribed'))
+
+    def streamErrorHandler(self, twistedStanza):
+        """handle an error"""
+        self.logger.debug('-< received %s' % twistedStanza.toXml())
+
+    def shouldDrop(self, twistedStanza):
+        """ignore delayed messages or error messages"""
+        for element in twistedStanza.elements():
+            if element.uri == 'jabber:x:delay':
+                self.logger.debug('*** should drop delayed msg %s' % twistedStanza.toXml())
+                return True
+            elif element.getAttribute('type') == 'error':
+                self.logger.debug('*** should drop ERROR msg %s' % twistedStanza.toXml())
+                return True
+
+    def messageHandler(self, twistedStanza):
+        """handle a message packet and take appropriate action"""
+
+        if self.shouldDrop(twistedStanza):
+            self.logger.debug('*** dropping the message')
+            return
+
+        self.logger.debug('-< received %s' % twistedStanza.toXml())
+        fromJid = twistedStanza['from']
+        messageType = twistedStanza.attributes.get('type', 'nothing')
+        self.logger.debug('Checking message type %s access control for %s' % (messageType, fromJid))
+
+        if not self.checkAccess(fromJid, messageType): return
+
+        if '/' not in fromJid:
+            for element in twistedStanza.elements():
+                self.logger.debug("ELEMENT %s" % element)
+                if element.uri == 'jabber:x:conference':
+                    self.checkInvite(twistedStanza)
+                    return
+            self.logger.debug('*** dropping message from %s (no resource set)' % fromJid)
+            return
+
+        if fromJid.split('/', 1)[1] == self.username:
+            self.logger.debug('*** dropping request from %s, is self' % fromJid)
+            return
+
+        self.checkCommand(twistedStanza)
+
+    def checkCommand(self, twistedStanza):
+        """Check the message for a command and dispatch it if it contains one"""
+        fromJid = twistedStanza['from']
+        messageType = twistedStanza.attributes.get('type', 'nothing')
+        for element in twistedStanza.elements():
+            if element.name == 'body':
+                self.logger.debug('Processing chat FROm:%s BODy:%s' % (fromJid, element.toXml()))
+                try:
+                    message = element.children[0]
+                except IndexError:
+                    continue
+                command = self.findCommand(message, messageType)
+                room = fromJid.split('@', 1)[0]
+                self.logger.debug('RETURNED command "%s"' % command)
+                if command:
+                    self.dispatchCommand(command, fromJid,  message,
+                                         twistedStanza, room, messageType)
+                else:
+                    for plugin in getPluginsByCapability('default', self):
+                        self.logger.debug('Calling default plugin %s sender:%s, room:%s, message:%s' % (plugin, fromJid, room, message))
+                        plugin.default(client = self, message = message, sender = fromJid,
+                                       room = room, twistedStanza = twistedStanza, log = self.pluginLogger)
+                break
+
+    def findCommand(self, message, messageType):
+        """Take the message body and return a dict of its parts for command dispatching"""
+        self.logger.debug('Checking message %s' % message)
+        commandPart = None
+
+        if '!.' in message:
+            _, _, commandPart = message.partition('!.')
+        elif self.username in message:
+            _, _, commandPart = message.partition('%s:' % self.username)
+        elif messageType == 'chat':
+            commandPart = message
+            self.logger.debug('A command came in from a NON-MUC without command key sequence %s' % commandPart)
+        self.logger.debug('Found command "%s" from message "%s"' % (commandPart, message))
+        if commandPart:
+            self.logger.debug('Found command "%s" from message "%s"' % (commandPart, message))
+            return self.getListOfTokens(commandPart.strip())
+
+    def dispatchCommand(self, command, sender, originalMessage, twistedStanza, room, messageType):
+        """Find plugins that can respond to the command or execute all the plugins responding to default"""
+        self.logger.debug('Dispatching command %s' % command)
+        """Command is meant for the bot"""
+        self.logger.debug('This is our command')
+        plg = command.pop(0).lower()
+        args = []
+        for arg in command:
+            args.append(arg.strip())
+        message = ''
+        """Handle a few high level commands: help, mute, unmute"""
+        if plg == 'help':
+            self.logger.debug('Finding plugins with help')
+            message = 'In a groupchat, all commands start with "%s:" or "!."\nIn private chat, simply type the command.\nThese are the commands available.  For help on a command, try -h\n' % self.username
+            pluginNames = []
+            for plugin in getPluginsByCapability('help', self):
+                self.logger.debug('plugins %s has help' % plugin)
+                try:
+                    pluginNames.append(plugin.name)
+                except AttributeError:
+                    # baaad plugin, doesn't assign a name for itself
+                    pass
+            message += ', '.join(pluginNames)
+            self.sendMessage(message, sender, messageType)
+            return
+        if plg == 'default':
+            # this is necessary to prevent users from invoking the catchall (default) plugins
+            self.sendMessage('Unknown command.  Try help.', sender, messageType)
+        else:
+            # find the plugins having the command name
+            plugin_arguments = { 'args':args, 'command':'something', 'client':self,
+                               'message':originalMessage, 'messageType':messageType,
+                               'sender':sender, 'twxml':twistedStanza,
+                               'room':room, 'log':self.pluginLogger }
+            foundCommand = False
+            for plugin in getPluginsByCapability(plg, self):
+                if not plugin.private:
+                    foundCommand = True
+                    self.logger.debug('Calling plugin %s with %s' % (plg, plugin_arguments))
+
+                    plugin_arguments['command'] = plg
+
+                    if plugin.threadsafe:
+                        self.logger.debug('%s is marked as threadsafe' % plg)
+                        reactor.callInThread(plugin.call, **plugin_arguments)
+                    else:
+                        plugin.call(**plugin_arguments)
+
+                else:
+                    self.logger.debug('Would have called plugins %s, but it is private' % plg)
+
+            if not foundCommand:
+                self.sendMessage('Unknown command.  Try help.', sender, messageType)
+
+    # TODO:
+    # -check if user is the room already if inviting
+    # -check if client supports the feature using iq: http://xmpp.org/extensions/xep-0249.html#support
+    # -assembling all stanzas separately seems dumb, maybe fix
+
+    def assembleInvite(self, message, to, room):
+        self.logger.debug('Assembling invite to: %s' % (to)) 
+        twistedStanza = domish.Element((JABBER_CLIENT_NS, 'message'))
+        twistedStanza['from'] = self.jidString(self.username)
+        twistedStanza['to'] = to
+        x = domish.Element(('jabber:x:conference','x'))
+        x['jid'] = room
+        x.addElement('reason', content = message)
+        twistedStanza.addChild(x)
+        return twistedStanza
+
+    def sendInvite(self, message, to, room):
+        if not self.mute:
+            msgStanza = self.assembleInvite(message, to, room)
+            self.send(msgStanza)
+
+    def assembleMessage(self, message, to, messageType):
+        """create and return an xml message element"""
+        self.logger.debug('Assembling message to: %s of type: %s' % (to, messageType)) 
+        twistedStanza = domish.Element((JABBER_CLIENT_NS, 'message'))
+        inForum = None
+        if self.fromRoom(to) :
+            inForum = to.split('@', 1)[0]
+            if messageType.lower() == 'groupchat':
+                to = to.split('/', 1)[0]
+
+        twistedStanza['from'] = self.jidString(self.username, inForum)
+        twistedStanza['to'] = to
+        if messageType:
+            twistedStanza['type'] = messageType
+
+        body = domish.Element((JABBER_CLIENT_NS, 'body'))
+        body.addChild(message)
+        twistedStanza.addChild(body)
+        return twistedStanza
+
+    def sendMessage(self, message, to, messageType):
+        if not self.mute:
+            msgStanza = self.assembleMessage(message, to, messageType)
+            reactor.callFromThread(self.send, msgStanza)
 
     def requestRoster(self):
-      if self._waitingRoster:
-        return
-      self._waitingRoster = True
-      iq = domish.Element((JABBER_CLIENT_NS, 'iq'))
-      iq['type'] = 'get'
-      iq.addElement(('jabber:iq:roster', 'query'))
-      self.send(iq)
-      # reset the timer
+        if self._waitingRoster:
+            return
+        self._waitingRoster = True
+        iq = domish.Element((JABBER_CLIENT_NS, 'iq'))
+        iq['type'] = 'get'
+        iq.addElement(('jabber:iq:roster', 'query'))
+        self.send(iq)
+        # reset the timer
 
-    def sendPresence(self):
-      """Let client know we are still here"""
-      presence = domish.Element((JABBER_CLIENT_NS, 'presence'))
-      presence.addElement('status').addContent('Online')
-      self.send(presence)
-
-    def invalidUser(self, twxml):
-        """invalid user callback"""
-        self.fatalError(twxml)
-
-    def fatalError(self, twxml):
-        """unrecoverable error callback"""
-        print 'unrecoverable error:'
-        print twxml.toXml()
-        self.stop()
-
-    def iqHandler(self, twxml):
-        """handle a iq packet
-        TODO 09JUN09: test this.
-        :type twxml: `twisted.xish.domish.Element`
-        :param twxml: the xml stream containing a iq element
-        """
-        if self._waitingRoster and twxml.query.uri == 'jabber:iq:roster':
-            # got roster, send presence so clients know we're actually online
-            self.sendPresence()
-            self._waitingRoster = False
-
-
-class JabberAdapter:
-    """actions for the jabber client"""
-
-    def __init__(self, debug=True):
-        self.debug = debug
-        self.mute = False # mute chat command acts globally
-        self.client = None # will be set later due to a cyclic dependency
-
-    def dprint(self, message):
-      if self.debug:
-        log.debug(message.encode('ascii', 'ignore'))
-
-    def checkAccess(self, twxml):
+    def checkAccess(self, fromJid, messageType):
         """Access control plugins"""
-        fromJid = twxml['from']
-        messageType = twxml.attributes.get('type', 'nothing')
         if messageType == 'groupchat':
             # no access control for group chat.
             # need a way to tell exactly which user sent a message, but is it
@@ -208,213 +396,54 @@ class JabberAdapter:
             return fromJid
         elif messageType == 'presence':
             pass
-        # do something with these
-        elif messageType == 'nothing':
-            for elmt in twxml.elements():
-                for child in elmt.children:
-                    try:
-                        if child.name == 'invite':
-                            fromJid = child['from']
-                            log.debug('Invited to a room from %s.  Need to see if this user is authorized.' % fromJid)
-                            break
-                    except AttributeError:
-                        pass
+            # do something with these
         authorized = False
         user = fromJid
-        for plugin in getPluginsByCapability('accessControl'):
-            self.dprint('Calling access control plugin %s for %s' % (plugin, user))
-            authorized = plugin.call(sender = user, xmppAdapter = self, client = self.client, log = log)
-        self.dprint('Done looking for access control plugin.')
-        self.dprint('The user %s authorization result is %s' % (fromJid, authorized))
-        if authorized:
-          return fromJid
-        else:
-          return False
+        for plugin in getPluginsByCapability('accessControl', self):
+            self.logger.debug('Calling access control plugin %s for %s' % (plugin, user))
+            authorized = plugin.call(sender = user, xmppAdapter = self, 
+                                    log = self.pluginLogger)
+            self.logger.debug('The user %s authorization result is %s' % (fromJid, authorized))
+            # return the first positive response
+            if authorized:
+                return fromJid
+        self.logger.debug('Done looking for access control plugin.')
+        self.logger.debug('The user %s authorization result is %s' % (fromJid, authorized))
+        return False
 
-    def sendAction(self, action):
-        """give xml object to the jabber client"""
-        self.client.send(action)
-
-    def presenceHandler(self, twxml):
-        """jabber client hook: handle a presence packet, transform it
-        into the right action and give it back
-
-        :type twxml: `twisted.xish.domish.Element`
-        :param twxml: the xml stream containing a presence element
-        """
-        self.dprint('-< received %s' % twxml.toXml())
-        sender = self.checkAccess(twxml)
-        if sender:
-            messageType = twxml.attributes.get('type', 'nothing')
-            if messageType == 'subscribe':
-                self.sendAction(presenceElement(self.client.jidString(self.client.userId), twxml['from'], 'subscribed'))
-        
-    def messageHandler(self, twxml):
-        """jabber client hook: handle a message packet, transform it
-        into the right action and give it back to the dialog tester
-
-        :type twxml: `twisted.xish.domish.Element`
-        :param twxml: the xml stream containing a message element
-        """
-        # ignore delayed / error messages
-        for elmt in twxml.elements():
-          if elmt.uri == 'jabber:x:delay' or elmt.getAttribute('type') == 'error':
-            self.dprint('*** dropped delayed msg %s' % twxml.toXml())
-            return
-        fromJid = twxml['from']
-        self.dprint('-< received %s' % twxml.toXml())
-        messageType = twxml.attributes.get('type', 'nothing')
-        sender = self.checkAccess(twxml)
-        if sender:
-            for elmt in twxml.elements():
-                # invited in a group chat ?
-                if elmt.uri == 'jabber:x:conference':
-                    room = elmt['jid'].split('@', 1)[0]
-                    self.dprint('Processing invitation to %s' % room)
-                    self.sendAction(self.acceptInvitation2twxml(room))
-                    self.inForum = room
-                    break
-            try:
-                quser, resource = fromJid.split('/', 1)
-            except ValueError:
-                self.dprint('*** dropping message from %s (no resource set)' % fromJid)
-                return
-            sender = fromJid.split('/', 1)[1]
-            if sender == self.client.userId:
-                self.dprint('*** dropping request from %s, is self' % fromJid)
-                return
-            sender = self.checkAccess(twxml)
-            if sender:
-              for elmt in twxml.elements():
-                if elmt.name == 'body':
-                  self.dprint('Processing chat body %s' % elmt.toXml())
-                  body = elmt.children[0]
-                  command = self.checkCommand(body, twxml['from'], messageType)
-                  message = self.dispatchCommand(command, twxml['from'], body, twxml)
-                  if message:
-                    self.sendMessage(message, twxml['from'], messageType)
-                  break
-
-    def sendMessage(self, message, to, messageType):
-      if not self.mute:
-        msgStanza = self.sendMessage2twxml(message, to, messageType)
-        self.sendAction(msgStanza)
-
-    def checkCommand(self, message, fromJid, messageType):
-        """Take the message and return a dict of its parts for command dispatching"""
-        self.dprint('Checking message %s' % message)
-        command = {}
-        # TODO 19MAY09: switch to str.partition() when Zenoss gets to python 2.5
-        commandPart = None
-        to = None
-        if '!.' in message:
-          to, commandPart = message.split('!.')
-        elif self.client.userId in message:
-          to, commandPart = message.split('%s:' % self.client.userId)
-        if commandPart is None:
-          if not self.fromRoom(fromJid) or messageType == 'chat':
-            commandPart = message
-            to = self.client.userId
-            self.dprint('Found command %s' % commandPart)
-            command = {'parts':commandPart.strip().split(), 'to':to}
-            return command
-          else:
-              return { 'parts':[message] }
-        else:
-          self.dprint('Someone addressed us with command %s' % commandPart)
-          return {'parts':commandPart.strip().split(), 'to':'me'}
-
-    def dispatchCommand(self, command, sender, originalMessage, twxml):
-        """Find plugins that can respond to the command or execute all the plugins responding to default"""
-        self.dprint('Dispatching command %s' % command)
-        if command.has_key('to'):
-          """Command is meant for the bot"""
-          self.dprint('This is our command')
-          plg = command['parts'].pop(0).lower()
-          args = ''
-          for arg in command['parts']:
-            args += ' ' + arg.strip()
-          message = ''
-          """Handle a few high level commands: help, mute, unmute"""
-          if plg == 'help':
-            self.dprint('Finding plugins with help')
-            message = 'In a groupchat, all commands start with "%s:" or "!."\nIn private chat, simply type the command.\nThese are the commands available.  For help on a command, try -h\n' % self.client.userId
-            for plugin in getPluginsByCapability('help'):
-              self.dprint('plugins %s has help' % plugin)
-              message += plugin.name + '\n'
-            return message
-          elif plg == 'mute':
-            self.mute = True
-          elif plg == 'unmute':
-            self.mute = False
-            return 'At your service.'
-          elif plg == 'default':
-            # this is necessary to prevent users from invoking the catchall (default) plugins
-            message = 'Unknown command.  Try help.'
-          else:
-            # find the plugins having the command name
-            for plugin in getPluginsByCapability(plg):
-              if not plugin.private():
-                self.dprint('Calling plugin %s with %s' % (plg, args))
-                message += plugin.call(args = args.strip().split(), xmppAdapter = self, client = self.client, message = originalMessage, sender = sender, twxml = twxml, log = log)
-              else:
-                self.dprint('Would have called plugins %s, but it is private' % plg)
-            if not message:
-              """Plugins that return no result
-                 TODO:  give the plugin system tighter integration"""
-              return 'Unknown command.  Try help.'
-            return message
-        else:
-          # if the message is not a command, run every plugin with a default capability
-          for plugin in getPluginsByCapability('default'):
-            self.dprint('Calling default plugin %s sender:%s, room:%s, message:%s' % (plugin, sender, '', originalMessage))
-            plugin.default(sender, '', originalMessage, self, self.client)
-          return False
+    def checkInvite(self, twistedStanza):
+        """Check a message for a room invite.  Honor the request if it does"""
+        for element in twistedStanza.elements():
+            if element.uri == 'jabber:x:conference':
+                room = element['jid'].split('@', 1)[0]
+                self.logger.debug('Processing invitation to %s' % room)
+                self.joinChatrooms(room)
+                break
 
     def fromRoom(self, sender):
-        return re.search(self.client.groupServer, sender)
+        return re.search(self.groupServer, sender)
 
-    def sendMessage2twxml(self, message, sender, messageType):
-        """transform a SendMessage action into a twisted xml element"""
-        inForum = False
-        resource = False
-        twxml = domish.Element((JABBER_CLIENT_NS, 'message'))
-        if self.fromRoom(sender) :
-          inForum = sender.split('@', 1)[0]
-          if messageType.lower() == 'groupchat':
-            twxml['type'] = 'groupchat'
-            self.dprint('We are in a forum and this message should go back to %s' % inForum)
-          else:
-            twxml['type'] = 'chat'
-            resource = sender = sender.split('/')[-1]
-        twxml['from'] = self.client.jidString(self.client.userId, inForum)
-        twxml['to'] = self.client.jidString(sender, inForum, resource)
-        body = domish.Element((JABBER_CLIENT_NS, 'body'))
-        body.addChild(message)
-        twxml.addChild(body)
-        return twxml
+    def getMUCJID(self, twistedStanza):
+        sender = None
+        # Get the actual sender JID if in muc or 121 muc
+        for element in twistedStanza.elements():
+            self.logger.debug('Looking at element %s' % element.toXml())
+            if element.uri == 'http://jabber.org/protocol/nick':
+                sender = element.children[0]
+                break
+        if sender is None:
+            self.logger.debug('Could not find the MUC nick for jabber message %s' % twistedStanza.toXml())
+            sender = twistedStanza['from'].partition('/')[0]
+        return sender.encode('ascii', 'ignore')
 
-    def acceptInvitation2twxml(self, room):
-        """transform a SendPresence action into a twisted xml element"""
-        forum = self.client.jidString(self.client.userId, room)
-        """FIXME 09JUN09:  What userId goes in the next call?"""
-        return presenceElement(self.client.jidString(self.client.userId), forum)
+    def getListOfTokens(self, s):
+        self.logger.debug('Tokenizing string: %s' % s)
+        # ensure the string is ascii chars only, or tokenizing will fail
+        s = s.encode('ascii', 'ignore')
+        tokenize = StringIO.StringIO(s)
+        return csv.reader(tokenize, delimiter=' ').next()
 
-    def quitForum2twxml(self, action):
-        """transform a SendPresence action into a twisted xml element"""
-        """TODO 19JUNE09:  Test. Should work, but not called from anywhere yet."""
-        forum = self.client.jidString(self.client.userId, action.content)
-        return presenceElement(self.client.jidString(self.client.userId), forum, 'unavailable')
-
-
-def presenceElement(from_, to, presenceType=None):
-    """create and return a xml presence element"""
-    twxml = domish.Element((JABBER_CLIENT_NS, 'presence'))
-    twxml['from'] = from_
-    twxml['to'] = to
-    if presenceType:
-        twxml['type'] = presenceType
-    return twxml
-
-class Plugin(object): 
-    pass
+    def send(self, twistedStanza):
+        """send a twisted stanza element"""
+        self.logger.debug('-> sending %s' % twistedStanza.toXml())
+        self._send(twistedStanza)

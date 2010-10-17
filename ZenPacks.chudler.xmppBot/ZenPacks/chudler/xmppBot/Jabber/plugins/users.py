@@ -9,14 +9,16 @@ class Users(Plugin):
 
   name = 'users'
   capabilities = ['users', 'zenusers', 'help']
+  private = False
 
-  def call(self, args, log, **kw):
+  def call(self, args, log, client, sender, messageType, **kw):
     log.debug('Users plugin running with arguments %s' % args)
     # TODO switch this to optparse and make sure help works.
     adapter = ZenAdapter()
     users = []
     message = 'No Users'
     haveUser = False
+
     for user in adapter.userSettings():
         haveUser = True
         try:
@@ -26,11 +28,9 @@ class Users(Plugin):
         users.append('%s (%s)' % (user.id, jabberId))
     if haveUser:
         message = '\n'.join(users)
-    return message
 
+    client.sendMessage(message, sender, messageType)
 
-  def private(self):
-    return False
 
   def help(self):
     return """

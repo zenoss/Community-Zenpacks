@@ -1,13 +1,13 @@
-import sys
 import Globals
 import os.path
-import transaction
 
 skinsDir = os.path.join(os.path.dirname(__file__), 'skins')
 from Products.CMFCore.DirectoryView import registerDirectory
 if os.path.isdir(skinsDir):
     registerDirectory(skinsDir, globals())
 
+import sys
+import transaction
 from Products.ZenEvents import ActionRule
 from Products.ZenModel import UserSettings
 from Products.ZenModel.ZenPack import ZenPackBase
@@ -31,7 +31,6 @@ oldProperties.append({'id':'JabberId', 'type':'string', 'mode':'w'})
 newProperties = tuple(oldProperties)
 setattr(target, '_properties', newProperties)
 
-
 """
 # This simply will not work!
 from Products.ZenUtils.ZCmdBase import ZCmdBase
@@ -46,16 +45,16 @@ for user in cmd.dmd.ZenUsers.getAllUserSettings():
 transaction.commit()
 """
 
-
 class ZenPack(ZenPackBase):
 
     def install(self, app):
         ZenPackBase.install(self, app)
         configFileName = zenPath('etc', 'xmppBot.conf')
         if not os.path.exists(configFileName):
-           configFile = open(configFileName, 'w')
-           configFile.write('# populate this file by running $ZENHOME/bin/xmppBot genconf > $ZENHOME/etc/xmppBot.conf\n')
-           configFile.close()
+            configFile = open(configFileName, 'w')
+            configFile.write('# populate this file by running $ZENHOME/bin/xmppBot genconf > $ZENHOME/etc/xmppBot.conf\n')
+            configFile.close()
+
         # add the JabberId property to existing users
         for user in app.dmd.ZenUsers.getAllUserSettings():
             if not user.hasProperty('JabberId'):
@@ -79,6 +78,6 @@ class ZenPack(ZenPackBase):
 
         # remove JabberID user propery
         for user in self.dmd.ZenUsers.getAllUserSettings():
-            if not user.hasProperty('JabberId'):
+            if user.hasProperty('JabberId'):
                 user.manage_delProperty('JabberId')
         transaction.commit()

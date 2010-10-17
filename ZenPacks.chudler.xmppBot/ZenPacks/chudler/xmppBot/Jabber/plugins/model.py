@@ -9,23 +9,35 @@ class Model(Plugin):
 
   name = 'model'
   capabilities = ['model', 'create', 'help']
+  private = False
 
-  def call(self, args, xmppAdapter, sender, twxml, log, **kw):
+  def call(self, args, log, client, sender, messageType, **kw):
+
     log.debug('Modeler plugin running with arguments: %s' % args)
-    
+
     adapter = ZenAdapter()
     opts = self.options()
+
     try:
         (options, arguments) = opts.parse_args(args)
         log.debug('Done parsing arguments.  Options are "%s", arguments expanded to %s' % (options, arguments))
     except OptionError, message:
-        return str(message)
+        client.sendMessage(str(message), sender, messageType)
+        return False
+
     if options.deviceName is None:
-        return 'No.  -H or --host is required.'
+        message = 'No.  -H or --host is required.'
+        client.sendMessage(message, sender, messageType)
+        return False
+
     log.debug('Starting to load device.')
-    xmppAdapter.sendMessage('Please wait while the device is loaded.', sender, twxml['type'])
+    message = 'Please wait while the device is loaded.'
+    client.sendMessage(message, sender, messageType)
+
     adapter.loadDevice(**options.__dict__)
-    return 'Done discovering %s.' % options.deviceName
+
+    message = 'Done discovering %s.' % options.deviceName
+    client.sendMessage(message, sender, messageType)
 
   def options(self):
     parser = Options(description = 'Create a new device to monitor', prog = 'model')
@@ -42,9 +54,6 @@ class Model(Plugin):
     parser.add_option('-l', '--location', dest='locationPath', help='Zenoss tree location, NOT physical location.')
     parser.add_option('-d', '--protocol', dest='discoverProto', default='snmp', help='Discovery protocol.  Defaults to snmp.')
     return parser
-    
-  def private(self):
-    return False
 
   def help(self):
     opts = self.options()

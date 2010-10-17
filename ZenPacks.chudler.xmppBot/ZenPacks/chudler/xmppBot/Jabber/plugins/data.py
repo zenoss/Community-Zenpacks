@@ -9,8 +9,10 @@ class Data(Plugin):
 
   name = 'data'
   capabilities = ['data', 'info', 'help']
+  private = False
 
-  def call(self, args, log, **kw):
+  def call(self, args, log, client, sender, messageType, **kw):
+
     log.debug('Data extraction plugin running with arguments %s' % args)
 
     opts = self.options()
@@ -20,14 +22,22 @@ class Data(Plugin):
         (options, arguments) = opts.parse_args(args)
         log.debug('Done parsing arguments.  Options are "%s", arguments expanded to %s' % (options, arguments))
     except OptionError, message:
-        return str(message)
+        client.sendMessage(str(message), sender, messageType)
+        return False
+
     if options.deviceName is None or (not options.list and options.dataPointName is None):
-        return 'NO.  You must specify both device and datapoint with -d and -p.'
+        message = 'NO.  You must specify both device and datapoint with -d and -p.'
+        client.sendMessage(message, sender, messageType)
+        return False
 
     devices = adapter.devices(options.deviceName)
     if len(devices) == 0:
-        return 'Cannot find a device, ip or mac for "%s"' % options.deviceName
+        message = 'Cannot find a device, ip or mac for "%s"' % options.deviceName
+        client.sendMessage(message, sender, messageType)
+        return False
+
     log.debug('Found %d devices matching %s' % (len(devices), devices))
+
     if options.list:
         dataPoints = {}
         if options.subComponent:
@@ -41,39 +51,53 @@ class Data(Plugin):
             for device in devices:
                 for validPoint in device.getRRDDataPoints():
                     dataPoints[validPoint.id] = '_'.join([ pathTuple[1] for pathTuple in validPoint.breadCrumbs()])
-        message = 'Valid datapoints:\n'
+
+        client.sendMessage('Valid datapoints:', sender, messageType)
+
         for name, path in dataPoints.iteritems():
-            message += '%s (%s)\n' % (name, path)
-        return message
+            message = '%s (%s)\n' % (name, path)
+            client.sendMessage(message, sender, messageType)
+
+        return True
+
     log.debug('Going to look for datapoint %s' % options.dataPointName)
     # rrdtool cannot accept arguments in unicode, so convert dataPointName to ascii first
-    message = self.obtainValues(devices, options.dataPointName.encode('ascii', 'ignore'), options.subComponent, log)
-    return message
+    self.obtainValues(client, sender, messageType, devices, options.dataPointName.encode('ascii', 'ignore'), options.subComponent, log)
 
   def subDevices(self, device):
     return device.getSubObjects()
 
-  def obtainValues(self, devices, dataPoint, component, log):
-    message = ''
+  def obtainValues(self, client, sender, messageType, devices, dataPoint, component, log):
     log.debug('Have %d devices to check for %s' % (len(devices), dataPoint))
+
     for device in devices:
         log.debug('Checking %s. For the dataPoint %s' % (device.id, dataPoint))
+
         # try to get it directly from the device first.
         if self.hasDataPoint(device, dataPoint):
             log.debug('The device %s does have the dataPoint %s' % (device, dataPoint))
             value = device.getRRDValue(dataPoint)
-            message += '%s: %s\n' % (device.id, value)
+            message = '%s: %s\n' % (device.id, value)
+            client.sendMessage(message, sender, messageType)
+
         elif component is not None:
+
             if self.findComponent(device, component) is None:
-                return 'Sorry.  Cannot find a component %s on %s' % (component, device)
+                message = 'Sorry.  Cannot find a component %s on %s' % (component, device)
+                client.sendMessage(message, sender, messageType)
+                return False
+
             if self.hasDataPoint(component, dataPoint):
                 value = component.getRRDValue(dataPoint)
-                message += '%s %s: %s\n' % (device.id, component.id, value)
+                message = '%s %s: %s\n' % (device.id, component.id, value)
+                client.sendMessage(message, sender, messageType)
+
             else:
-                message += '%s %s: Does not have a datapoint named %s.  Remember, spelling and case matter.  Try -l for a list of datapoint' % (device.id, component.id, dataPoint)
+                message = '%s %s: Does not have a datapoint named %s.  Remember, spelling and case matter.  Try -l for a list of datapoint' % (device.id, component.id, dataPoint)
+                client.sendMessage(message, sender, messageType)
         else:
-            message += '%s: Unable to find the datapoint %s. Remember, spelling and case matter.  Try -l for a list of datapoints' % (device.id, dataPoint)
-    return message
+            message = '%s: Unable to find the datapoint %s. Remember, spelling and case matter.  Try -l for a list of datapoints' % (device.id, dataPoint)
+            client.sendMessage(message, sender, messageType)
 
   def hasDataPoint(self, entity, dataPoint):
     hasPoint = False
@@ -82,7 +106,7 @@ class Data(Plugin):
             hasPoint = True
             break
     return hasPoint
-    
+
   def findComponent(self, device, components):
     componentList = []
     try:
@@ -92,10 +116,10 @@ class Data(Plugin):
             componentList = getattr(device.os, components.split('.')).pop()()
         except AttributeError:
             """the user can specifiy dot-seperated components N level deep with -s os.someCard.somePort.interfaces.
-            In practice, device associations are rarely more than on level.  In any case, we
+            In practice, device associations are rarely more than one level deep.  In any case, we
             will take the last part of the association to be the actual component, and everything
             between to be an association.  So in this example os, someCard, somdPort would be walked, and
-            interfaces() would be called to extract the value requested.  User's are likely to screw this up, 
+            interfaces() would be called to extract the value requested.  User's are likely to make an error,
             but I don't have a better way to do it right now.
             """
             component = self.walkComponents(device, components.split('.')[:-1])
@@ -117,10 +141,6 @@ class Data(Plugin):
         except AttributeError:
             return None
     return entity
-
-  def private(self):
-    return False
-
 
     # parse the options
   def options(self):

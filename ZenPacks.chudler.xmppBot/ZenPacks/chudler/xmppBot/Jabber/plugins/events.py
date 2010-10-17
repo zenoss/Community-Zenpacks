@@ -9,17 +9,24 @@ class Events(Plugin):
 
   name = 'events'
   capabilities = ['events', 'issues', 'help']
+  private = False
 
-  def call(self, args, log, **kw):
+  def call(self, args, log, client, sender, messageType, **kw):
+
     log.debug('Event plugin running with %s' % args)
 
     opts = self.options()
+
     # parse the options
     try:
         (options, arguments) = opts.parse_args(args)
         log.debug('Done parsing arguments.  Options are "%s", arguments expanded to %s' % (options, arguments))
     except OptionError, message:
-        return str(message)
+        client.sendMessage(str(message), sender, messageType)
+        return False
+    except TypeError:
+        client.sendMessage('Unknown option, use -h for help', sender, messageType)
+        return False
 
     adapter = ZenAdapter()
 
@@ -33,22 +40,24 @@ class Events(Plugin):
     if options.device:
         devices = adapter.devices(options.device)
         if len(devices) == 0:
-            return 'Cannot find a device, ip or mac named "%s"' % options.device
+            message = 'Cannot find a device, ip or mac named "%s"' % options.device
+            client.sendMessage(message, sender, messageType)
+            return False
         deviceIds = [device.id for device in devices]
-        print 'Found %d devices machting %s' % (len(devices), devices)
+        log.debug('Found %d devices machting %s' % (len(devices), devices))
         events = filter(lambda event: event.device in deviceIds, events)
 
     if len(events) == 0:
-        return 'Congratulations.  No events!'
+        message = 'Congratulations.  No events!'
+        client.sendMessage(message, sender, messageType)
+        return True
+
     for event in events:
         if event.component:
             message += '%s %s (%s): (id:%s)\n' % (event.device, event.component, event.summary, event.evid)
         else:
             message += '%s: %s (id:%s)\n' % (event.device, event.summary, event.evid)
-    return message
-
-  def private(self):
-    return False
+    client.sendMessage(message, sender, messageType)
 
   def options(self):
     parser = Options(description = 'Acknowledge events by eventid', prog = 'ack')

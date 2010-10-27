@@ -1,0 +1,120 @@
+#!/bin/bash 
+# 
+# mq_monitor_web_service          Start/Stop mq_monitor_web_service.py
+# 
+# chkconfig: 345 95 65 
+# description: mq_monitor_web_service  
+# processname: mq_monitor_web_serviced 
+# 
+
+# ENVIRONMENT 
+# Edit these for your configuration 
+
+# Name for the service, used in logging 
+NAME=mq_monitor_web_service
+
+# Name of the user to be used to execute the service 
+SCRIPT_USER=mqm
+
+PARAMS="-c /opt/support/mq_monitor_web_service.properties"
+
+# In which directory is the shell script that this service will execute 
+PYTHON_SCRIPTS_DIR=/opt/support/
+
+# The command the will cd into the right directory, and invoke the script 
+DAEMON_COMMAND="cd $PYTHON_SCRIPTS_DIR; ./mq_monitor_launcher.sh $PARAMS" 
+
+# The script to be identified if it appears in a 'ps' command via grep? 
+DAEMON_PROCESS_TYPE=python
+
+# The log file for the deamon echos
+DAEMON_SVC_LOG_FILE=/tmp/mq_monitor_web_service_daemon.log 
+
+# Where to write the process identifier - this is used to track if the service is already running 
+# Note: the script noted in the COMMAND must actually write this file 
+PID_FILE=$PYTHON_SCRIPTS_DIR/mq_monitor_web_service.pid
+
+# Load system specific optional arguments 
+# Create and populate this file with machine specific settings 
+if [ -f /etc/sysconfig/mq_monitor_web_serviced ]; then 
+    . /etc/sysconfig/mq_monitor_web_serviced 
+fi 
+
+# Is the service already running? If so, capture the process id 
+if [ -f $PID_FILE ]; then 
+    PID=`cat $PID_FILE` 
+else 
+    PID="" 
+fi 
+
+# SERVICE ENTRY POINTS (START/STOP) 
+
+# Start Command 
+start() { 
+    if [ "${PID}" != "" ]; then 
+        # Check to see if the /proc dir for this process exists 
+        if [ -a /proc/${PID} ]; then 
+            # check to make sure this is likely the running service 
+            ps aux | grep ${PID} | grep $DAEMON_PROCESS_TYPE >> /dev/null 
+            # If it is a process of the right type assume that it is mq_monitor_web_service and just exit 
+            # otherwise remove the subsys lock file and start mq_monitor_web_service 
+            if [ "$?" = "0" ]; then 
+                exit 1 
+            else 
+                echo "mq_monitor_web_service lock file still exists, removing..." 
+                rm /var/lock/mq_monitor_web_serviced 
+            fi 
+        else 
+            # The process running as pid $PID is not a process of the right type, remove subsys 
+            # lock and start mq_monitor_web_service 
+            echo "mq_monitor_web_service lock file still exists, removing..." 
+            rm /var/lock/mq_monitor_web_serviced 
+        fi 
+    fi 
+    echo -n "Starting mq_monitor_web_service: "    
+    su - $SCRIPT_USER -c "/bin/sh -c \"$DAEMON_COMMAND > $DAEMON_SVC_LOG_FILE 2>&1\"" & RETVAL=$? 
+    sleep 3 
+    touch /var/lock/mq_monitor_web_serviced 
+    exit 0 
+} 
+
+stop() { 
+
+    echo -n $"Stopping mq_monitor_web_service: " 
+    if [ "${PID}" != "" ]; then 
+        echo -n "killing " $PID 
+        kill ${PID} 
+        for i in {1..30} 
+        do 
+            if [ -n "`ps aux | grep $DAEMON_PROCESS_TYPE | grep mq_monitor_web_service `" ]; then 
+                sleep 1 # Still running, wait a second. 
+                echo -n . 
+            else 
+                # stopped 
+                rm -f /var/lock/mq_monitor_web_serviced 
+                rm -f $PID_FILE 
+                echo 
+                exit 0 
+            fi 
+        done 
+    else 
+        echo "$NAME is not running" 
+        exit 1 
+    fi 
+    echo "Failed to stop in 30 seconds." 
+    kill -QUIT ${PID} # Request a thread dump so we can diagnose a hung shutdown 
+    exit 1 
+} 
+
+case "$1" in 
+  start) 
+      start 
+    ;; 
+  stop) 
+      stop 
+    ;; 
+  *) 
+    echo $"Usage: $0 {start|stop}" 
+    exit 1 
+esac
+

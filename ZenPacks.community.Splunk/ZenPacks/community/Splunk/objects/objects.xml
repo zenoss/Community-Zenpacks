@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Splunk Example') -->
+<object id='/zport/dmd/Devices/rrdTemplates/Splunk Example' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Example usage of a Splunk data source.
+</property>
+<property type="text" id="description" mode="w" >
+Example usage of a Splunk data source.
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='failedPasswords' module='ZenPacks.community.Splunk.datasources.SplunkDataSource' class='SplunkDataSource'>
+<property id='zendoc' type='string'>
+Number of failed passwords during the last 5 minutes.
+</property>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+Splunk
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+failed passwords
+</property>
+<property type="string" id="eventClass" mode="w" >
+/App/Splunk
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<property type="string" mode="w" id="splunkServer" >
+splunk.example.com
+</property>
+<property type="string" mode="w" id="splunkPort" >
+8089
+</property>
+<property type="string" mode="w" id="splunkUsername" >
+admin
+</property>
+<property type="string" mode="w" id="splunkPassword" >
+changeme
+</property>
+<property type="string" mode="w" id="splunkSearch" >
+minutesago=5 "failed password"
+</property>
+<tomanycont id='datapoints'>
+<object id='count' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property id='zendoc' type='string'>
+Number of failed passwords during the last 5 minutes.
+</property>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='too many failures' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property id='zendoc' type='string'>
+Example threshold that will be breached when there are more than 20 failed password attempts within a 5 minute period.
+</property>
+<property type="lines" id="dsnames" mode="w" >
+['failedPasswords_count']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+20
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Security/Login/BadPass
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Splunk - Failed Passwords' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+attempts
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='count' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%7.2lf
+</property>
+<property type="string" id="legend" mode="w" >
+Failed Password Rate
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+300,/
+</property>
+<property type="string" id="dpName" mode="w" >
+failedPasswords_count
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='too many failures' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+too many failures
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'App', 'Splunk') -->
+<object id='/zport/dmd/Events/App/Splunk' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property id='zendoc' type='string'>
+Destination event class for events related to the Splunk application.
+</property>
+</object>
+</objects>

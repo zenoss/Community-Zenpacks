@@ -1,15 +1,15 @@
 ################################
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
-NAME = "ZenPacks.MJW.BarracudaMonitor-1.0"
+NAME = "ZenPacks.MJW.BarracudaMonitor"
 VERSION = "1.0"
 AUTHOR = "Matt Whitney"
 LICENSE = "LGPL"
-NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.MJW', 'ZenPacks.MJW.BarracudaMonitor-1']
-PACKAGES = ['ZenPacks', 'ZenPacks.MJW', 'ZenPacks.MJW.BarracudaMonitor-1', 'ZenPacks.MJW.BarracudaMonitor-1.0']
+NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.MJW', 'ZenPacks.MJW.BarracudaMonitor']
+PACKAGES = ['ZenPacks', 'ZenPacks.MJW', 'ZenPacks.MJW.BarracudaMonitor']
 INSTALL_REQUIRES = []
 COMPAT_ZENOSS_VERS = ">= 3.0"
-PREV_ZENPACK_NAME = "0"
+PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################
 # Zenoss will not overwrite any changes you make below here.

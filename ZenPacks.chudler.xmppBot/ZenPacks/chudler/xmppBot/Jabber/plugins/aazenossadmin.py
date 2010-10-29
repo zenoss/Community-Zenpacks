@@ -7,6 +7,7 @@ from Jabber.ZenAdapter import ZenAdapter
 class AAZenossAdminPlugin(Plugin):
 
   capabilities = ['accessControl']
+  private = True
 
   def call(self, sender, log, **kw):
     log.debug('Zenoss Admin user plugin running with %s' % sender)
@@ -19,8 +20,12 @@ class AAZenossAdminPlugin(Plugin):
 
     adapter = ZenAdapter()
 
-    if sender == None: return False
+    if sender == None:
+        log.warn('Failed to extract sender from %s.  Will not authorize communications.' % sender)
+        return False
+
     log.debug('Got a message from %s.  Going to look for a Zenoss user to map it to.' % sender)
+
     # look through all zenoss users until we find one with the sender's JabberID
     for user in adapter.userSettings():
         try:
@@ -31,8 +36,5 @@ class AAZenossAdminPlugin(Plugin):
             log.debug('JabberID %s maps to the sender: %s.  This user is authorized.' % (jabberProperty, sender))
             return True
 
-    log.debug('Unable to find a Zenoss user with jabberId!  This sender is NOT authorized: %s' % sender)
+    log.warn('Unable to find a Zenoss user with jabberId!  This sender is NOT authorized: %s' % sender)
     return False
-
-  def private(self):
-    return True

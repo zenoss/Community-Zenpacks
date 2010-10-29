@@ -6,7 +6,7 @@ import sys
 import os, glob
 import transaction
 
-from Jabber.Adapter import JabberAdapter, TwistedJabberClient
+from Jabber.Adapter import TwistedJabberClient
 from Jabber.Plugins import initPluginSystem, findPlugins
 
 HAVE_SSL = False
@@ -20,22 +20,23 @@ from Products.ZenUtils.ZCmdBase import ZCmdBase
 from Products.ZenHub.PBDaemon import PBDaemon 
 from Products.ZenEvents.zenactions import *
 
-class XmppBot(ZenActions,ZCmdBase, PBDaemon):
+class XmppBot(ZenActions, ZCmdBase, PBDaemon):
 
     def buildOptions(self):
         ZCmdBase.buildOptions(self)
-        self.parser.add_option( '--jabber_pass', dest='jabber_pass', help='Password used to connect to the XMPP server')
-        self.parser.add_option( '--jabber_user', dest='jabber_user', help='Username used to connect to the XMPP server')
-        self.parser.add_option( '--jabber_host', dest='jabber_host', default='localhost', help='XMPP server to connect')
-        self.parser.add_option( '--jabber_port', dest='jabber_port', default='5222', help='Port used to connect to the XMPP server')
-        self.parser.add_option( '--first_user', dest='first_user', help='User mapping to bootstrap the bot with at least on authorized user.  Example specification myzenossname,myjabberid@server.example.com')
-        self.parser.add_option( '--im_host', dest='im_host', help='Optional option for addressing IM users when the server is not known.  If this is ommitted, jabber_host will be used.')
-        self.parser.add_option( '--ssl', dest='ssl', action='store_true', help='Use ssl.')
-        self.parser.add_option( '--group_server', dest='group_server', help='Conference/groupchat server.  If the name has no dots, it will use group_server.jabber_host')
-        self.parser.add_option( '--chatroom', dest='chatroom', help='First chatroom joined to when connecting')
-        self.parser.add_option('--cycletime', dest='cycletime', default=60, type='int', help='check events every cycletime seconds')
-        self.parser.add_option( '--zopeurl', dest='zopeurl', default='http://%s:%d' % (socket.getfqdn(), 8080), help='http path to the root of the zope server')
-        self.parser.add_option('--monitor', dest='monitor', default=DEFAULT_MONITOR, help='Name of monitor instance to use for heartbeat events. Default is %s.' % DEFAULT_MONITOR)
+        self.parser.add_option( '--jabber_pass', dest='jabber_pass', type='string', help='Password used to connect to the XMPP server')
+        self.parser.add_option( '--jabber_user', dest='jabber_user', type='string', help='Username used to connect to the XMPP server')
+        self.parser.add_option( '--jabber_host', dest='jabber_host', type='string', default='localhost', help='(OPTIONAL) XMPP server to connect')
+        self.parser.add_option( '--jabber_port', dest='jabber_port', type='int', help='(OPTIONAL) Port used to connect to the XMPP server')
+        self.parser.add_option( '--first_user', dest='first_user', type='string', help='User mapping to bootstrap the bot with at least on authorized user.  Example specification myzenossname,myjabberid@server.example.com')
+        self.parser.add_option( '--resource', dest='resource', type='string', default='xmppbot', help='(OPTIONAL) jabber resource name.')
+        self.parser.add_option( '--im_host', dest='im_host', type='string', help='(OPTIONAL) option for addressing IM users when the server is not known.  If this is ommitted, jabber_host will be used.')
+        self.parser.add_option( '--ssl', dest='ssl', action='store_true', help='(OPTIONAL) ssl.')
+        self.parser.add_option( '--group_server', type='string', dest='group_server', help='(OPTIONAL) Conference/groupchat server.  If the name has no dots, it will use group_server.jabber_host')
+        self.parser.add_option( '--chatrooms', dest='chatrooms', action='append', type='string', help='(OPTIONAL) First chatroom joined to when connecting.  May be specified multiple times to join multiple rooms.')
+        self.parser.add_option('--cycletime', dest='cycletime', default=60, type='int', help='(OPTIONAL) check events every cycletime seconds')
+        self.parser.add_option( '--zopeurl', type='string', dest='zopeurl', default='http://%s:%d' % (socket.getfqdn(), 8080), help='(OPTIONAL) http path to the root of the zope server')
+        self.parser.add_option('--monitor', type='string', dest='monitor', default=DEFAULT_MONITOR, help='(OPTIONAL) Name of monitor instance to use for heartbeat events. Default is %s.' % DEFAULT_MONITOR)
 
     def __init__(self):
         PBDaemon.__init__(self, keeproot=True)
@@ -60,8 +61,8 @@ class XmppBot(ZenActions,ZCmdBase, PBDaemon):
             except ValueError:
                 self.log.error('--first_user option must contain both zenuser and jabberid separated by a comma.  Example: chudler,chudler@im.example.com')
                 sys.exit(2)
-                
-            if zenUser and jabberId:    
+
+            if zenUser and jabberId:
                 self.setFirstUser(zenUser, jabberId)
             else:
                 self.log.error('--first_user option must contain both zenuser and jabberid separated by a comma.  Example: chudler,chudler@im.example.com')
@@ -75,42 +76,41 @@ class XmppBot(ZenActions,ZCmdBase, PBDaemon):
 
         self.sendEvent(Event.Event(device=self.options.monitor,
         eventClass=App_Start, summary='Jabber Bot started', severity=0, component='xmppbot'))
-        self.adapter = JabberAdapter(True)
+
         password = self.options.jabber_pass
-        chatroom = self.options.chatroom
+        chatrooms = self.options.chatrooms
         username = self.options.jabber_user
-        host = self.options.jabber_host
+        server = self.options.jabber_host
         port = self.options.jabber_port
         groupServer = self.options.group_server
         realHost = self.options.im_host
-        server = '%s:%s' % (host, port)
+        resource = self.options.resource
 
-        client = TwistedJabberClient(dialogHandler = self.adapter, 
-        server = server,
-        userId = username, userPassword = password, 
-        firstRoom = chatroom, debug = True, 
-        groupServer = groupServer, realHost = realHost, wants_ssl = wants_ssl)
-
-        self.adapter.client = client
+        self.client = TwistedJabberClient(server=server, username=username, password=password,
+                                 port=port,
+                                 groupServer=groupServer,
+                                 chatrooms=chatrooms, ssl=wants_ssl,
+                                 realHost=realHost, resource=resource)
 
         path = os.path.realpath(sys.argv[0])
         pluginPath = os.path.dirname(path) + '/Jabber/plugins'
         self.log.info("xmppBot plugins will be loaded from %s" % pluginPath)
 
         plugins = [pluginFile.split('/')[-1].split('.py')[0] for pluginFile in glob.glob( os.path.join(pluginPath, '*.py') )]
-        initPluginSystem({'pluginPath': pluginPath, 'plugins': plugins})
 
-        self.log.info('started')
+        self.log.debug("xmppBot loading pugins  %s" % ', '.join(plugins))
+        initPluginSystem(pluginPath=pluginPath, plugins=plugins, jabberClient=self.client)
 
         # connect to the jabber server
-        jabber_reactor = client.connect()
+        self.log.info('Connecting to server')
+        reactor = self.client.connect()
 
         # begin looking for zenevents
         self.schedule.start()
         self.runCycle()
 
-        # start event loop which will process jabber messages and zenevents
-        jabber_reactor.run()
+        reactor.suggestThreadPoolSize(10)
+        reactor.run()
 
     def setFirstUser(self, zenUser, jabberId):
         zenUser = zenUser.lower()
@@ -169,42 +169,43 @@ class XmppBot(ZenActions,ZCmdBase, PBDaemon):
         message, body = self.format(action, data, clear)
         recipients = self.getAddress(action)
         if not recipients:
-          self.log.warning('failed to send message %s on rule %s: %s', action.getUser().id, action.id, 'Unspecified recipient.')
-          return True
+            self.log.warning('failed to send message %s on rule %s: %s', action.getUser().id, action.id, 'Unspecified recipient.')
+            return True
         for recipient in recipients:
-          self.log.debug('Sending message to %s: %s', recipient, message)
-          if recipient.lower().endswith('/groupchat'):
-              messageType = 'groupchat'
-          else:
-              messageType = 'chat'
-          self.adapter.sendMessage(message, recipient, messageType)
-        return True
+            self.log.debug('Sending message to %s: %s', recipient, message)
+            if recipient.lower().endswith('/groupchat'):
+                messageType = 'groupchat'
+            else:
+                messageType = 'chat'
+            self.client.sendMessage(message, recipient, messageType)
+            return True
 
     def getAddress(self, action):
         if action.targetAddr:
             return [action.targetAddr]
         else:
-	    results = []
+            results = []
             zenUser = action.getUser()
-	    # attempt to detect a group and resolve its users, otherwise see if it is a user
+            # attempt to detect a group and resolve its users, otherwise see if it is a user
             if 'getMemberUserIds' in dir(zenUser):
-            	for username in zenUser.getMemberUserIds():
-                        try:
-            			results.append(zenUser.getUserSettings(username).getProperty('JabberId').strip())
- 			except None:
-				self.log.error('Unable to send xmpp alert message to %s.  This might happen if they are missing the jabberId property.  Try the bot command "setjid"' % username)
+                for username in zenUser.getMemberUserIds():
+                    try:
+                        results.append(zenUser.getUserSettings(username).getProperty('JabberId').strip())
+                    except None:
+                        self.log.error('Unable to send xmpp alert message to %s.  This might happen if they are missing the jabberId property.  Try the bot command "setjid"' % username)
 
             # getEmailAddresses should at least identify an entity that would have a jabberId on it, unless it was a group (above)
-	    elif 'getEmailAddresses' in dir(zenUser):
-            	try:
-			results.append(zenUser.getProperty('JabberId').lower())
-		except None:
-			self.log.error('Unable to send xmpp alert message to %s.  This might happen if they are missing the jabberId property.  Try the bot command "setjid"' % zenUser)
-	    else:
-		self.log.error('Unable to send xmpp alert message to %s.  Please report this error to the author of this plugin' % zenUser)
+            elif 'getEmailAddresses' in dir(zenUser):
+                try:
+                    results.append(zenUser.getProperty('JabberId').lower())
+                except None:
+                    self.log.error('Unable to send xmpp alert message to %s.  This might happen if they are missing the jabberId property.  Try the bot command "setjid"' % zenUser)
+            else:
+                self.log.error('Unable to send xmpp alert message to %s.  Please report this error to the author of this plugin' % zenUser)
+
             return results
 
-if __name__=='__main__':
+if __name__ == '__main__':
     import logging
     logging.getLogger('zen.Events').setLevel(80)
     bot = XmppBot()

@@ -10,8 +10,10 @@ class Ack(Plugin):
 
   name = 'ack'
   capabilities = ['ack', 'acknowledge', 'help']
+  private = False
 
-  def call(self, args, sender, log, **kw):
+  def call(self, args, log, client, sender, messageType, **kw):
+
     log.debug('Alert Ack plugin running with arguments: %s' % args)
 
     adapter = ZenAdapter()
@@ -23,9 +25,13 @@ class Ack(Plugin):
         (options, arguments) = opts.parse_args(args)
         log.debug('Done parsing arguments.  Options are "%s", arguments expanded to %s' % (options, arguments))
     except OptionError, message:
-        return str(message)
+        client.sendMessage(str(message), sender, messageType)
+        return False
+
     if options.eventIds is None and not options.all:
-        return 'NO.  -e or --eventids is required if -a is not specified.'
+        message = 'NO.  -e or --eventids is required if -a is not specified.'
+        client.sendMessage(message, sender, messageType)
+        return False
 
     # we will build this list of matching eventids, then ack them using acknowledge()
     acking = []
@@ -35,8 +41,8 @@ class Ack(Plugin):
         for event in adapter.events():
             acking.append(event.evid)
             log.debug('Queuing %s event to ack.' % event.evid)
-        return self.acknowledge(adapter, options.test, options.verbose, acking, sender, log)
-    
+        return self.acknowledge(client, adapter, options.test, options.verbose, acking, sender, log)
+
     idsToAck = options.eventIds.lower().split(',')
     for event in adapter.events():
         # python 2.5 will accept tuple instead of this.
@@ -48,34 +54,43 @@ class Ack(Plugin):
                 acking.append(eventid)
 
     if len(acking) > 0:
-        return self.acknowledge(adapter, options.test, options.verbose, acking, sender, log)
+        return self.acknowledge(client, adapter, options.test, options.verbose, acking, sender, log)
     else:
-        return 'Sorry.  Found no events to acknowledge.'
+        message = 'Sorry.  Found no events to acknowledge.'
+        client.sendMessage(str(message), sender, messageType)
+        return False
 
-  def acknowledge(self, adapter, dryrun, verbose, events, sender, log):
+  def acknowledge(self, client, adapter, dryrun, verbose, events, sender, log):
         if dryrun:
             log.debug('Test mode is activated, so events will not be acknowledged.')
             message = 'Test mode: %d WOULD have been acknowledged.' % len(events)
+            client.sendMessage(str(message), sender, messageType)
+
         else:
             log.debug('Acking all queued events.')
-	    zenUser = self.findUser(sender, adapter)
+            zenUser = self.findUser(sender, adapter)
             adapter.ackEvents(zenUser, events)
             log.debug('Done Acking all queued events.')
             transaction.commit()
             message = 'Acknowledged %d' % len(events)
+            client.sendMessage(message, sender, messageType)
+
         if verbose:
             message += '\n'
             message += ', '.join(events)
-        return message
+            client.sendMessage(message, sender, messageType)
 
   def findUser(self, sender, adapter):
         for user in adapter.userSettings():
+            try:
                 jabberProperty = user.getProperty('JabberId').lower()
                 if jabberProperty == sender:
                         return user.id
-        return 'unknown_user'
+            except AttributeError:
+                pass
 
-    
+        return sender
+
   def options(self):
     parser = Options(description = 'Acknowledge events by eventid', prog = 'ack')
     parser.add_option('-e', '--eventids', dest='eventIds', help='Complete or partial eventids to ack.  Ids can be sepratated by commas.  Partial ids can match either the beginning or end of the eventid.')
@@ -84,9 +99,6 @@ class Ack(Plugin):
     parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False, help='Send list of all acknowledged events.  Can be noisy.  USE WITH CAUTION.')
     parser.add_option('-t', '--test', dest='test', action='store_true', default=False, help='Do not acknowledge events, but show what would be done.  Works with -v.')
     return parser
-
-  def private(self):
-    return False
 
   def help(self):
     opts = self.options()

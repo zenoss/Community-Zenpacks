@@ -17,6 +17,7 @@ from Products.ZenUtils.Driver import drive, driveLater
 from twisted.internet import defer
 from Products.ZenEvents import Event
 from email.MIMEText import MIMEText
+from ZenPacks.community.EmailPing.EmailPingStats import EmailPingStats
 
 import sys
 import poplib
@@ -38,23 +39,238 @@ POP_LOGIN_TYPES = {
 
 QUEUE_LENGTH_GRAPH_NAME = 'EmailPing Queue Lengths'
 TRANSIT_TIME_GRAPH_NAME = 'EmailPing Transit Times'
+RECEIVED_MAIL_GRAPH_NAME = 'EmailPing Received Mail Count'
+GRAPH_NAMES = [QUEUE_LENGTH_GRAPH_NAME, TRANSIT_TIME_GRAPH_NAME,
+               RECEIVED_MAIL_GRAPH_NAME]
 
 MAX_EMAIL_CHUNK = 10
 MAX_INT = sys.maxint
+
+GRAPH_COLORS = [ '0000FF',  #blue
+                 'FF7F00',  #orange
+                 '00FF00',  #green
+                 'FF0000',  #red
+                 'FF00FF',  #magenta
+                 '00FFFF',  #cyan
+                 '00FF7F' ] #light green
+                 
+class Email( object ):
     
+    def __init__( self, timeStamp ):
+        self.timeStamp = timeStamp
+        self.retrieved = False
+        self.transitTime = 0
+        self.age = 0
+        
+    def _computeTransitTime( self, message ):
+        """
+        Compute the number of seconds between when the mail was sent and when
+        it was received
+        """
+        receivedList = message.get_all( 'Received', None )
+        if not receivedList: 
+            msg = 'Could not compute TransitTime. No \'Received\' values.'
+            self.log.warning( msg )
+            return 0
+        
+        try:        
+            start = receivedList[-1].split( ';' )[-1].strip()
+            startTuple = email.Utils.parsedate_tz( start )
+            startTime = time.mktime( startTuple[:9] )
+            if startTuple[9]:
+                startTime += startTuple[9]
+                
+            end = receivedList[0].split( ';' )[-1].strip()
+            endTuple = email.Utils.parsedate_tz( end )
+            endTime = time.mktime( endTuple[:9] )
+            if endTuple[9]:
+                endTime += endTuple[9]
+            
+            difference = endTime - startTime
+        except:
+            return 0
+            
+        return difference
+
+    def markRetrieved( self, message ):
+        """
+        Mark this email as one that has been received
+        """
+        self.retrieved = True
+        self.transitTime = self._computeTransitTime( message )
     
+    def ageEmail( self ):
+        self.age += 1
+        
+class EmailManager( object ):
+    """
+    A EmailManager object is used to manage a group of EMail
+    objects. Each "EmailManager" possesses an emails dictionary in order
+    to track the emails that have been sent to that address.
+    """
     
-class ToAddress( object ):
-    
-    def __init__( self, address ):
+    def __init__( self, address, log, maxQueueLength ):
         self.address = address
-        self.mailFound = True
-        self.receiveFailure = False
-        self.sendFailure = False
-        self.subjects = []
-        self.transitTimes = {}
+        self.log = log
+        self.maxQueueLength = maxQueueLength
+        
+        self.retrievedEmailCount = 0 # number of retrieved emails in this cycle
+        self.subjects = []           # a list of the subject lines from the emails in the queue
+        self.emails = {}             # the queue { subject: Email object }
+        self.receiveFailure = False  # tracks errors between cycles
+        self.sendFailure = False     # tracks errors between cycles
+        
+    def add( self, subject, timeStamp ):
+        """
+        Insert a new email into the queue
+        """
+        # if queue is full, delete oldest email
+        if self.emailsInQueue() == self.maxQueueLength:
+            msg = 'Email queue for %s is full' % self.address
+            self.log.debug( msg )
+            self._delete( self.subjects[0] )
+        
+        self.subjects.append( subject )
+        self.emails[subject] = Email( timeStamp )
+        
+        msg = 'Added email \'%s\', timeStamp: %d, to queue: %s' % \
+            ( subject, timeStamp, self.address )
+        self.log.debug( msg )
+        
+    def _delete( self, subject ):
+        """
+        Remove an email from dictionaries and lists
+        """
+        del self.emails[subject]
+        del self.subjects[self.subjects.index( subject )]
+        
+    def ageEmails( self ):
+        """
+        
+        """
+        for subject in self.subjects:
+            email = self.emails[subject]
+            # must drop old emails because rrd only waits so long before it
+            # assumes that a value is lost
+            if email.age >= self.maxQueueLength-1: 
+                msg = '%s: aging out email \'%s\'' % ( self.address, subject )
+                self.log.debug( msg )
+                self._delete( subject )
+            else:
+                email.ageEmail()
 
-
+    def clearRetrievedMail( self ):
+        """
+        Remove retrieved mail from dictionaries and lists
+        """
+        
+        self.retrievedEmailCount = 0
+        while self.emailsInQueue() > 0:
+            subject = self.subjects[0]
+            email = self.emails[subject]
+            if email.retrieved: 
+                self._delete( subject )
+            else:
+                break
+        
+    def emailsInQueue( self ):
+        """
+        Return the number of objects in the queue
+        """
+        return len( self.subjects )
+    
+    def emailsNotRetrievedCount( self ):
+        """
+        Return the number of emails that have not been marked retrieved
+        """
+        count = 0
+        for email in self.emails.values():
+            if not email.retrieved: count += 1
+            
+        return count
+        
+    def getTransitTimes( self ):
+        """
+        Return a tuple of tuples ((timeStamp, transitTime), (timeStamp, transitTime))
+        """
+        retVal = ()
+        for subject in self.subjects:
+            email = self.emails[subject]
+            if not email.retrieved: break
+            retVal += ( ( email.timeStamp, email.transitTime ), )
+            
+        return retVal
+            
+    def markMailRetrieved( self, message ):
+        """
+        Search queue for matching message. If found, mark it, save statistics, 
+        return True. If not found, return false.
+        """
+        subject = message['Subject']
+        
+        if not str(subject) in self.subjects:
+            msg = 'Email \'%s\' to %s is not in the queue' % ( subject, self.address )
+            self.log.debug( msg )
+            return False
+        
+        email = self.emails[subject]
+        email.markRetrieved( message )
+        self.retrievedEmailCount += 1
+        
+        msg = 'Email \'%s\' to %s was found in the queue at index %d' % \
+            ( subject, self.address, self.subjects.index( subject ) )
+        self.log.debug( msg )
+        
+        return True
+        
+    def subjectsWithStatus( self ):
+        """
+        Return a list of the subjects in the queue with (R) appended to 
+        those that have been received but are still in the queue
+        """
+        subjects = []
+        for subject in self.subjects:
+            email = self.emails[subject]
+            subjects.append( subject + '(R)' if email.retrieved else subject )
+            
+        return subjects
+        
+        
+    # def retrievedEmailCount( self ):
+        # """
+        # Returns the number of emails retrieved in this cycle
+        # """
+        # count = 0
+        # for email in self.emails.values():
+            # if email.retrieved and email.age == 0: count += 1
+        
+        # return count
+                
+class EmailManagerCollection( object ):
+    
+    managers = {}
+    
+    def __init__( self, log, queueLength ):
+        self.log = log
+        self.queueLength = queueLength
+        
+    def __call__( self, address=None ):
+        """
+        If called, return either a list of all managers or a specific manager
+        """
+        if not address:
+            return self.managers.values()
+        elif address in self.managers.keys():
+            return self.managers[address]
+        else:
+            return None
+            
+    def add( self, address ):
+        self.managers[address] = EmailManager( address, self.log, self.queueLength )
+        return self.managers[address]
+        
+    def addresses( self ):
+        return self.managers.keys()
 
 class EmailPing( PBDaemon ):
     """
@@ -76,13 +292,13 @@ class EmailPing( PBDaemon ):
                              address during this cycle
     """
 
-    isFirstCycle = True
     lastCycleTime = 0
     
-    popReceiveFailure = False
     popConnectionFailure = False
+    popReceiveFailure = False
     recordPerformanceData = True
     
+    name = 'emailping'
     """
     Method Sequence: 
     
@@ -93,15 +309,13 @@ class EmailPing( PBDaemon ):
     PBDaemon.run()
         EmailPing.connected()
             connected() creates a deferred that spawns periodic calls from the
-            reactor to emailCycle() and 
+            reactor to emailCycle()
     """
     
     def __init__( self ):
         
-        self.name = 'emailping'
-    
         super( EmailPing, self ).__init__( keeproot=True )
-
+        
         # get a connection to the DMD
         from Products.ZenUtils.ZCmdBase import ZCmdBase
         zcmdbase = ZCmdBase( noopts=True )
@@ -110,18 +324,29 @@ class EmailPing( PBDaemon ):
         # seed the number used for a subject line
         from random import random
         self.emailNumber = int( random() * MAX_INT )
+        
+        self.rrdStats = EmailPingStats()
 
     def connected( self ):
         
         if not self.validateOptions():
             self.stop()
             return
-                        
+        
+        # For some reason that I can't figure out, the severity level does not
+        # get set in the Products.ZenUtils.CmdBase setupLogging method.
+        # It always starts at the INFO level. I have to manually set the
+        # logging level here.
+        try:
+            loglevel = int(self.options.logseverity)
+        except ValueError:
+            loglevel = getattr(logging, self.options.logseverity.upper(), logging.INFO)
+        self.log.setLevel(loglevel)
+        
         self.log.info( 'Starting EmailPing. Instance: %s' % self.name )
         self.configureOptions()
         deferred = drive( self.configurePerformanceData )
         deferred.addErrback( self.logError )
-        deferred.addCallback( self.startClearMailbox )
         deferred.addCallback( self.startEmailCycle )
         # NOTE: Last addCallback deferred must have the following line on it
         # to terminate the deferred
@@ -159,10 +384,10 @@ class EmailPing( PBDaemon ):
             # delattr( self.options, 'original_instancename' )
         # self.name = self.options.instancename.lower()
             
-        # create ToAddress objects for each address
-        self.toAddresses = {}
+        # create EmailManager object for each address
+        self.emailManagers = EmailManagerCollection( self.log, self.options.emailqueuelength )
         for address in self.options.toaddress:
-            self.toAddresses[address] = ToAddress( address )
+            self.emailManagers.add( address )
         
         # if popport not specified, use the default
         if self.options.popport == 0:
@@ -176,28 +401,31 @@ class EmailPing( PBDaemon ):
         else:
             self.popaccount = '%s@%s' % ( self.options.popusername, 
                                           self.options.pophost )
-        
+
+        # Daemons cycle a little longer than the cycle interval on each cycle.
+        # Since we want to keep our cycles aligned with rrd data slots, we use
+        # a mechanism to realign every 24 hours
+        self.alignmentInterval = int(24*60*60 / self.options.emailcycleinterval) * \
+            self.options.emailcycleinterval
+
     def configurePerformanceData( self, driver ):
-        
-        cyclesPerHour = int( 60*60 / self.options.emailcycleinterval )
-        cyclesPerDay = int( 24*60*60 / self.options.emailcycleinterval )
-        # 14 days of raw data are stored
-        # Next, 4 hours are compressed into 1 datapoint, leaving 6 datapoints
-        # per day * 90 days.
-        createCommand = ( 
-            'RRA:AVERAGE:0.5:1:%d' % int( cyclesPerDay * 14 ), 
-            'RRA:MAX:0.5:%d:%d' % ( int( cyclesPerHour * 4 ), int( 6 * 90 ) ) )
             
-        self.rrdStats.config( self.options.monitor, self.name, [], createCommand )
+        self.rrdStats.config( self.log, 
+                              self.name, 
+                              self.options.monitor, 
+                              self.options.emailcycleinterval )
         
         #set up all the data points in the default PerformanceConf
         try:
             self.changedZope = False
             template = self.dmd.Monitors.rrdTemplates.PerformanceConf
             dataSource = self.configureDataSource( template )
-            self.configureDataPoints( dataSource )
-            self.configureGraphs( template )
-            self.configureGraphPoints( dataSource )
+            yield defer.succeed( self.configureDataPoints( dataSource ) )
+            driver.next()
+            yield defer.succeed( self.configureGraphs( template ) )
+            driver.next()
+            yield defer.succeed( self.configureGraphPoints( dataSource ) )
+            driver.next()
             if self.changedZope:
                 import transaction
                 transaction.commit()
@@ -225,24 +453,89 @@ class EmailPing( PBDaemon ):
         return datasource
         
     def configureDataPoints( self, datasource ):
-        usedDataPoints = ['cycleTime']
+        cyclesPerHour = 3600 / self.options.emailcycleinterval
+        rras = []
+
+        # 2 days of raw data
+        # 5 days of data @ 1 data point / 1 hour
+        # 83 days of data @ 1 data point / 6 hours
+        # 450 days of data @ 1 data point / day
+        rras += ['--step', str( self.options.emailcycleinterval )]
+        rras.append( 'DS:ds0:GAUGE:%s:U:U' % \
+            str( self.options.emailcycleinterval * 
+            (self.options.emailqueuelength + 2) ) )
+        rras.append( 'RRA:AVERAGE:0.5:1:%d' % ( 48 * cyclesPerHour ) )
+        rras.append( 'RRA:MAX:0.5:%d:120' % cyclesPerHour )
+        rras.append( 'RRA:MAX:0.5:%d:332' % ( cyclesPerHour * 6 ) )
+        rras.append( 'RRA:MAX:0.5:%d:450' % ( cyclesPerHour * 24 ) )
+        RRD_CREATE_COMMAND_AVG = rras    
         
+        # same data points, but save MAX value, not average
+        rras = []
+        rras += ['--step', str( self.options.emailcycleinterval )]
+        rras.append( 'DS:ds0:GAUGE:%s:U:U' % \
+            str( self.options.emailcycleinterval * 
+            (self.options.emailqueuelength + 2) ) )
+        rras.append( 'RRA:MAX:0.5:1:%d' % ( 48 * cyclesPerHour ) )
+        rras.append( 'RRA:MAX:0.5:%d:120' % cyclesPerHour )
+        rras.append( 'RRA:MAX:0.5:%d:332' % ( cyclesPerHour * 6 ) )
+        rras.append( 'RRA:MAX:0.5:%d:450' % ( cyclesPerHour * 24 ) )
+        RRD_CREATE_COMMAND_MAX = rras    
+
+        # cycle time must be configured the same as the other data points on the
+        # cycle time graph, so we use defaults
+        performanceConf = self.dmd.Monitors.Performance._getOb( 
+            self.options.monitor )
+        
+        rras = []
+        rras += ['--step', str( performanceConf.perfsnmpCycleInterval )]
+        rras.append( 'DS:ds0:GAUGE:%s:U:U' % \
+            str( performanceConf.perfsnmpCycleInterval * 3 ) )
+        rras += performanceConf.defaultRRDCreateCommand
+        RRD_CREATE_COMMAND_CT = rras    # rrd for cycle times
+        
+        
+        # add cycleTime data source
+        usedDataPointIds = ['cycleTime']
+        self.rrdStats.createRRDFile( 'cycleTime', RRD_CREATE_COMMAND_CT )
         if 'cycleTime' not in datasource.datapoints.objectIds():
             datasource.manage_addRRDDataPoint( 'cycleTime' )
             msg = 'Added data point cycleTime to data source %s' % self.name
             self.log.info( msg )
             self.changedZope = True
 
-        for address in self.toAddresses:
+        # add unknown_rec data source
+        usedDataPointIds.append( 'unknown_rec' )
+        self.rrdStats.createRRDFile( 'unknown_rec', RRD_CREATE_COMMAND_MAX )
+        if 'unknown_rec' not in datasource.datapoints.objectIds():
+            datasource.manage_addRRDDataPoint( 'unknown_rec' )
+            msg = 'Added data point unknown_rec to data source %s' % self.name
+            self.log.info( msg )
+            self.changedZope = True
+        
+        # add address_ql, address_tt, address_rec data sources for each "toaddress"
+        for address in self.emailManagers.addresses():
             name = '%s_ql' % address
-            usedDataPoints.append( name )
+            usedDataPointIds.append( name )
+            self.rrdStats.createRRDFile( name, RRD_CREATE_COMMAND_MAX )
             if name not in datasource.datapoints.objectIds():
                 datasource.manage_addRRDDataPoint( name )
                 msg = 'Added data point %s to data source %s' % ( name, self.name )
                 self.log.info( msg )
                 self.changedZope = True
+                
+            name = '%s_rec' % address
+            usedDataPointIds.append( name )
+            self.rrdStats.createRRDFile( name, RRD_CREATE_COMMAND_MAX )
+            if name not in datasource.datapoints.objectIds():
+                datasource.manage_addRRDDataPoint( name )
+                msg = 'Added data point %s to data source %s' % ( name, self.name )
+                self.log.info( msg )
+                self.changedZope = True
+                
             name = '%s_tt' % address
-            usedDataPoints.append( name )
+            usedDataPointIds.append( name )
+            self.rrdStats.createRRDFile( name, RRD_CREATE_COMMAND_AVG )
             if name not in datasource.datapoints.objectIds():
                 datasource.manage_addRRDDataPoint( name )
                 msg = 'Added data point %s to data source %s' % ( name, self.name )
@@ -250,23 +543,32 @@ class EmailPing( PBDaemon ):
                 self.changedZope = True
                 
         # remove unused data points
-        for datapoint in datasource.datapoints.objectIds():
-            if datapoint not in usedDataPoints:
-                datasource.datapoints._delObject( datapoint )
-                msg = 'Removed datapoint %s from datasource %s' % ( datapoint, self.name )
+        for datapointId in datasource.datapoints.objectIds():
+            if datapointId not in usedDataPointIds:
+                datasource.datapoints._delObject( datapointId, suppress_events=True )
+                msg = 'Removed datapoint %s from datasource %s' % ( datapointId, self.name )
                 self.log.info( msg )
                 self.changedZope = True
-                
+        
     def configureGraphs( self, template ):
     
         if not QUEUE_LENGTH_GRAPH_NAME in template.graphDefs.objectIds():
             graph = template.manage_addGraphDefinition( QUEUE_LENGTH_GRAPH_NAME )
             graph.units = 'emails'
+            msg = 'Created graph %s' % QUEUE_LENGTH_GRAPH_NAME
+            self.log.info( msg )
             
         if not TRANSIT_TIME_GRAPH_NAME in template.graphDefs.objectIds():
             graph = template.manage_addGraphDefinition( TRANSIT_TIME_GRAPH_NAME )
             graph.units = 'seconds'
+            msg = 'Created graph %s' % TRANSIT_TIME_GRAPH_NAME
+            self.log.info( msg )
         
+        if not RECEIVED_MAIL_GRAPH_NAME in template.graphDefs.objectIds():
+            graph = template.manage_addGraphDefinition( RECEIVED_MAIL_GRAPH_NAME )
+            graph.units = 'emails'
+            msg = 'Created graph %s' % RECEIVED_MAIL_GRAPH_NAME
+            self.log.info( msg )
         
     def configureGraphPoints( self, template ):
     
@@ -281,51 +583,117 @@ class EmailPing( PBDaemon ):
         
         graphQL = template.graphDefs._getOb( QUEUE_LENGTH_GRAPH_NAME )
         graphTT = template.graphDefs._getOb( TRANSIT_TIME_GRAPH_NAME )
-        for address in self.toAddresses:
+        graphREC = template.graphDefs._getOb( RECEIVED_MAIL_GRAPH_NAME )
+        
+        if not 'unknown' in graphREC.graphPoints.objectIds():
+            graphPoint = graphREC.createGraphPoint( DataPointGraphPoint, 'unknown' )
+            graphPoint.dpName = '%s_unknown_rec' % self.name
+            graphPoint.cFunc = 'MAX'
+            graphPoint.lineType = 'AREA'
+            graphPoint.stacked = True
+            graphPoint.color = 'BABABA' #gray
+            graphPoint.sequence = 40
+            self.log.info( 'Added graph point unknown to graph \'%s\'' % RECEIVED_MAIL_GRAPH_NAME )
+            self.changedZope = True
+
+        # used to make all the graphs consistent
+        class graphPointData():
+            def __init__( self, sequence, color ):
+                self.sequence = sequence
+                self.color = color
+        
+        graphPoints = {}
+        sequence = 0
+        for address in self.emailManagers.addresses():
+            graphPoints[address] = graphPointData( sequence, GRAPH_COLORS[sequence] )
+            sequence += 1
+
+        # make sure each current address has a graph point.
+        for address in self.emailManagers.addresses():
             if not address in graphQL.graphPoints.objectIds():
                 graphPoint = graphQL.createGraphPoint( DataPointGraphPoint, address )
                 graphPoint.dpName = '%s_%s_ql' % ( self.name, address )
-                msg = 'Added graph point %s to graph %s' % \
+                graphPoint.cFunc = 'MAX'
+                graphPoint.sequence = graphPoints[address].sequence
+                graphPoint.color = graphPoints[address].color
+                msg = 'Added graph point %s to graph \'%s\'' % \
                     ( address, QUEUE_LENGTH_GRAPH_NAME )
                 self.log.info( msg )
                 self.changedZope = True
+            else:
+                graphPoint = graphQL.graphPoints._getOb( address )
+                if graphPoint.sequence != graphPoints[address].sequence:
+                    graphPoint.sequence = graphPoints[address].sequence
+                    graphPoint.color = graphPoints[address].color
+                    self.changedZope = True
                 
             if not address in graphTT.graphPoints.objectIds():
                 graphPoint = graphTT.createGraphPoint( DataPointGraphPoint, address )
                 graphPoint.dpName = '%s_%s_tt' % ( self.name, address )
-                msg = 'Added graph point %s to graph %s' % \
+                graphPoint.sequence = graphPoints[address].sequence
+                graphPoint.color = graphPoints[address].color
+                msg = 'Added graph point %s to graph \'%s\'' % \
                     ( address, TRANSIT_TIME_GRAPH_NAME )
                 self.log.info( msg )
                 self.changedZope = True
+            else:
+                graphPoint = graphTT.graphPoints._getOb( address )
+                if graphPoint.sequence != graphPoints[address].sequence:
+                    graphPoint.sequence = graphPoints[address].sequence
+                    graphPoint.color = graphPoints[address].color
+                    self.changedZope = True
+        
+            if not address in graphREC.graphPoints.objectIds():
+                graphPoint = graphREC.createGraphPoint( DataPointGraphPoint, address )
+                graphPoint.dpName = '%s_%s_rec' % ( self.name, address )
+                graphPoint.cFunc = 'MAX'
+                graphPoint.lineType = 'AREA'
+                graphPoint.stacked = True
+                graphPoint.sequence = graphPoints[address].sequence
+                graphPoint.color = graphPoints[address].color
+                msg = 'Added graph point %s to graph \'%s\'' % \
+                    ( address, RECEIVED_MAIL_GRAPH_NAME )
+                self.log.info( msg )
+            else:
+                graphPoint = graphREC.graphPoints._getOb( address )
+                if graphPoint.sequence != graphPoints[address].sequence:
+                    graphPoint.sequence = graphPoints[address].sequence
+                    graphPoint.color = graphPoints[address].color
+                    self.changedZope = True
+                self.changedZope = True
         
         # remove unused graph points 
-        for graphPoint in graphQL.graphPoints.objectIds():
-            if graphPoint not in self.toAddresses:
-                graphQL.graphPoints._delObject( graphPoint )
-                msg = 'Removed graphpoint %s from graph %s' % \
-                    ( graphPoint, QUEUE_LENGTH_GRAPH_NAME )
+        for graphPointId in graphQL.graphPoints.objectIds():
+            if graphPointId not in self.emailManagers.addresses():
+                graphQL.graphPoints._delObject( graphPointId, suppress_events=True )
+                msg = 'Removed graphpoint %s from graph \'%s\'' % \
+                    ( graphPointId, QUEUE_LENGTH_GRAPH_NAME )
                 self.log.info( msg )
                 self.changedZope = True
                 
-        for graphPoint in graphTT.graphPoints.objectIds():
-            if graphPoint not in self.toAddresses:
-                graphTT.graphPoints._delObject( graphPoint )
-                msg = 'Removed graphpoint %s from graph %s' % \
-                    ( graphPoint, TRANSIT_TIME_GRAPH_NAME )
+        for graphPointId in graphTT.graphPoints.objectIds():
+            if graphPointId not in self.emailManagers.addresses():
+                graphTT.graphPoints._delObject( graphPointId, suppress_events=True )
+                msg = 'Removed graphpoint %s from graph \'%s\'' % \
+                    ( graphPointId, TRANSIT_TIME_GRAPH_NAME )
                 self.log.info( msg )
                 self.changedZope = True
-                
+        
+        usedGraphPointIds = self.emailManagers.addresses() + ['unknown']
+        for graphPointId in graphREC.graphPoints.objectIds():
+            if graphPointId not in usedGraphPointIds:
+                graphREC.graphPoints._delObject( graphPointId, suppress_events=True )
+                msg = 'Removed graphpoint %s from graph \'%s\'' % \
+                    ( graphPointId, RECEIVED_MAIL_GRAPH_NAME )
+                self.log.info( msg )
+                self.changedZope = True
+
                 
     def logError( self, error ):
     
         self.log.exception( error.getErrorMessage() )
-    
-    def startClearMailbox( self, ignored = None ):
-    
-        deferred = drive( self.clearMailbox )
-        deferred.addErrback( self.logError )
-        
-    def clearMailbox( self, driver ):
+            
+    def clearMailbox( self ):
     
         """
         Connect to a POP mailbox and delete all existing messages
@@ -334,26 +702,47 @@ class EmailPing( PBDaemon ):
         @type driver: Driver object
         """
         
-        yield defer.succeed( self.openPopConnection() )
-        connection = driver.next()
+        connection = self.openPopConnection()
+        if connection is None: return
         
-        if connection is None:
-            raise StopIteration()
-        
-        yield defer.succeed( self.eraseAllMessagesInMailbox( connection ) )
-        driver.next()
-        
-        yield defer.succeed( self.closePopConnection( connection ) )
-        driver.next()
+        self.eraseAllMessagesInMailbox( connection )
+        self.closePopConnection( connection )
     
     def startEmailCycle( self, ignored = None ):
     
-        deferred = drive( self.emailCycle )
-        deferred.addErrback( self.logError )
+        self.log.info( 'Beginning emailping cycle' )
+            
+        # retrieve the timeStamp for this cycle
+        self.cycleTimeStamp = self.rrdStats.getCurrentTimeStamp( 
+            '%s_ql' % self.emailManagers.addresses()[0] )
+        self.log.debug( 'TimeStamp for this cycle is %d' % self.cycleTimeStamp )
+        
+        self.nextAlignmentTimeStamp = self.cycleTimeStamp + self.alignmentInterval
+        
+        # If we are less than 20 seconds from the next rrd aligned time cycle,
+        # just use that as the current cycle time stamp. Run the next cycle
+        # at one interval + difference + 10 seconds
+        nextCycleTimeStamp = self.cycleTimeStamp + self.options.emailcycleinterval
+        if nextCycleTimeStamp - time.time() < 20:
+            self.cycleTimeStamp = nextCycleTimeStamp
+            nextCycleInterval = nextCycleTimeStamp - time.time() + \
+                self.options.emailcycleinterval + 10
+        else:
+            nextCycleInterval = nextCycleTimeStamp - time.time() + 10
+            
+        if self.options.cycle:
+            deferred = driveLater( nextCycleInterval, self.emailCycle )
+            deferred.addErrback( self.logError )
+                    
+        # erase all messages in mailbox
+        self.clearMailbox()
+        
+        # send out emails
+        self.sendEmail()
         
         if not self.options.cycle:
-            deferred.addBoth( lambda unused: self.stop() )
-            
+            self.stop()
+        
     def emailCycle( self, driver ):
         
         """
@@ -364,21 +753,41 @@ class EmailPing( PBDaemon ):
         Step 3: Record performance data
         """
         
-        self.heartbeat()
+        # retrieve the timeStamp for this cycle
+        self.cycleTimeStamp = self.rrdStats.getCurrentTimeStamp( 
+            '%s_ql' % self.emailManagers.addresses()[0] )
+            
+        if self.cycleTimeStamp == self.nextAlignmentTimeStamp:
+            offset = self.cycleTimeStamp + 10 - time.time()
+            self.log.info( 'Aligning cycle by %f seconds.' % offset )
+            
+            nextCycleInterval = self.cycleTimeStamp + \
+                self.options.emailcycleinterval + 10 - time.time()
+            self.nextAlignmentTimeStamp = self.cycleTimeStamp + self.alignmentInterval
+        else:
+            nextCycleInterval = self.options.emailcycleinterval
+            
+        deferred = driveLater( nextCycleInterval, self.emailCycle )
+        deferred.addErrback( self.logError )
+        self.log.info( '' )
+        self.log.info( 'Beginning emailping cycle' )
         
         startTime = time.time()
-        
-        if self.options.cycle:
-            deferred = driveLater( self.options.emailcycleinterval, 
-                                   self.emailCycle )
-            deferred.addErrback( self.logError )
-        
+        self.unknownEmailCount = 0
+        self.heartbeat()
+
         # How many emails have been sent but not retrieved?
-        yield defer.succeed( self.getEmailsInFlight() )
-        sentMail = driver.next()
-        
+        yield defer.succeed( self.getEmailsNotRetrievedCount() )
+        emailsNotRetrievedCount = driver.next()
+
         # if one or more, try and get them
-        if sentMail:
+        if emailsNotRetrievedCount:
+            msg = 'The queues contain %d emails to be retrieved' % emailsNotRetrievedCount
+            self.log.debug( msg )
+            
+            # age all outstanding emails by one cycle
+            self.ageEmails()
+            
             yield defer.succeed( self.openPopConnection() )
             connection = driver.next()
             
@@ -398,24 +807,26 @@ class EmailPing( PBDaemon ):
                             retrievedEmailCount = driver.next()
                     except StopIteration:
                         self.closePopConnection( connection )
-                        
+                
+                self.unknownEmailCount = newMailCount - retrievedEmailCount
+                
                 # analyze the mail that was received and determine
                 # if we need to send any events
                 yield defer.succeed( self.sendRetrievedEvents( retrievedEmailCount ) )
                 driver.next()
-        
+        else:
+            self.log.warning( 'No emails in queue(s) to retrieve' )
+            
         # send new email messages
         yield defer.succeed( self.sendEmail() )
         driver.next()
         
         # update performance data
         self.lastCycleTime = time.time() - startTime
-        if self.isFirstCycle:
-            self.isFirstCycle = False
-        else:
-            if self.recordPerformanceData:
-                self.updatePerformanceData()
-            
+        
+        if self.recordPerformanceData:
+            self.updatePerformanceData()
+                
         yield defer.succeed( 0 )
         driver.next()
         
@@ -460,24 +871,20 @@ class EmailPing( PBDaemon ):
         that is saved until the email has been received.
         """
         
-        sentMail = False
         subject = str( self.emailNumber )
         
+        msg = 'Sending email \'%s\', timeStamp: %d to %s' % \
+            ( subject, self.cycleTimeStamp, '; '.join( self.emailManagers.addresses() ) )
+        self.log.info( msg )
+        
         # loop thru each "to" address
-        for address in self.toAddresses:
-            
-            # Check to see if this "to" address queue is full. If so,
-            # delete the oldest from the queue
-            if len( self.toAddresses[address].subjects ) == \
-                    self.options.emailqueuelength:
-                self.log.warning( 'Email queue %s full.' % address )
-                del self.toAddresses[address].subjects[0]
-            
+        for emailManager in self.emailManagers():
+                        
             # set up new mail message
             emsg = MIMEText('')
             emsg['From'] = self.dmd.getEmailFrom()
             emsg['Subject'] = subject
-            emsg['To'] = address
+            emsg['To'] = emailManager.address
 
             # send it
             result, errorMsg = Utils.sendEmail( emsg, 
@@ -488,27 +895,23 @@ class EmailPing( PBDaemon ):
                                                 self.dmd.smtpPass )
             # if successful send
             if result:
-                msg = "Sent email \'%s\' to %s" % ( subject, address )
-                self.log.info( msg )
-                self.toAddresses[address].subjects.append( subject )
-                sentMail = True
+                emailManager.add( subject, self.cycleTimeStamp )
                 # If this address was previously flagged with a failure, but
-                # now succeeded, send event
-                if self.toAddresses[address].sendFailure:
-                    msg = 'Sent email to %s' % address
-                    self.sendEmailPingEvent( 'epSendClear', address, msg )
-                    self.toAddresses[address].sendFailure = False
+                # now succeeded, send clear event
+                if emailManager.sendFailure:
+                    msg = 'Sent email to %s' % emailManager.address
+                    self.sendEmailPingEvent( 'epSendClear', emailManager.address, msg )
+                    emailManager.sendFailure = False
             
-            # if not successful send
+            # if send failed
             else:
-                msg = "Failed to send email \'%s\' to %s" % ( subject, address )
+                msg = "Failed to send email \'%s\' to %s" % ( subject, emailManager.address )
                 self.log.warning( msg )
-                msg = 'Failed to send email to %s' % address
-                self.sendEmailPingEvent( 'epSendFailure', address, msg )
-                self.toAddresses[address].sendFailure = True
+                msg = 'Failed to send email to %s' % emailManager.address
+                self.sendEmailPingEvent( 'epSendFailure', emailManager.address, msg )
+                emailManager.sendFailure = True
        
-        if sentMail:
-            self.incrementEmailNumber()
+        self.incrementEmailNumber()
         
     def incrementEmailNumber( self ):
     
@@ -593,6 +996,8 @@ class EmailPing( PBDaemon ):
     
         try:
             connection.quit()
+            msg = 'Closed connection to POP server %s' % self.options.pophost
+            self.log.debug( msg )
         except:
             msg = 'Error while closing connection to POP server %s.' % \
                    self.options.pophost
@@ -612,40 +1017,34 @@ class EmailPing( PBDaemon ):
             msg = 'Unable to clear mailbox: %s' % ( e.args )
             self.log.error( msg )
     
-    def getEmailsInFlight( self ):
+    def getEmailsNotRetrievedCount( self ):
     
-        sentCount = 0
-
-        # If this is the first cycle, no messages have been sent, so just
-        # return 0.
-        if self.isFirstCycle:
-            return 0
-        
-        for address in self.toAddresses:
-            sentCount += len( self.toAddresses[address].subjects )
+        notRetrievedCount = 0
+       
+        for emailManager in self.emailManagers():
+            self.log.debug( 'EmailManager %s has %d items in the queue: %s' % \
+                ( emailManager.address, 
+                  emailManager.emailsInQueue(),
+                  ', '.join( emailManager.subjectsWithStatus() ) ) )
+            notRetrievedCount += emailManager.emailsNotRetrievedCount()
             
-        if sentCount == 0:
-            self.log.warning( 'No emails in queue to retrieve' )
-        else:
-            msg = 'The queues contain %d emails to be retrieved' % sentCount 
-            self.log.debug( msg )
+        return notRetrievedCount
         
-        return sentCount
-        
+    def ageEmails( self ):
+        for emailManager in self.emailManagers():
+            emailManager.ageEmails()
+            
     def retrieveEmail( self, connection, newMailCount ):
     
+        retrievedEmailCount = 0
+        
         msg = 'Retrieving email. Host: %s Account: %s' % \
               ( self.options.pophost, self.options.popusername )
         self.log.debug( msg )
         
-        retrievedEmailCount = 0
-        maxIndexes = {}
-        
-        for address in self.toAddresses:
-            maxIndexes[address] = 0
-            self.toAddresses[address].mailFound = False
-
-            
+        addressPatterns = [r'.*<(?P<address>[^>]+).*',  # "My Name" <myname@domain.com>
+                           r'(?P<address>.+@.+\..+)']   # myname@domain.com
+                           
         # loop thru each email in the inbox and match with emails sent
         for messageIndex in range( 1, newMailCount + 1 ):
         
@@ -658,52 +1057,29 @@ class EmailPing( PBDaemon ):
             
             if message is None: break
             
-            self.log.debug( 'TO string: %s' % message['To'] )
-            
             # retrieve the To address 
-            addressPatterns = [r'.*<(?P<address>[^>]+).*',  # "My Name" <myname@domain.com>
-                               r'(?P<address>.+@.+\..+)']    # myname@domain.com
             for pattern in addressPatterns:
                 match = re.match( pattern , message['To'] )
                 if match: break
                     
-            if match is None: continue
+            if match is None: 
+                msg = 'Could not match TO field \'%s\' to an email address type' % message['To']
+                self.log.warning( msg )
+                continue
             
             # if "to" address is not one of ours, skip
-            address = match.group('address')
-            if not address in self.toAddresses: 
+            address = match.group( 'address' )
+            if not address in self.emailManagers.addresses(): 
+                msg = 'Received email from unknown sender: %s' % address
+                self.log.info( msg )
                 continue
-            toAddress = self.toAddresses[address]
+            
+            emailManager = self.emailManagers( address )
             
             # if the subject of the email is not one we sent, skip to next email
-            if not message['Subject'] in toAddress.subjects: 
-                continue
+            if not emailManager.markMailRetrieved( message ): continue
 
-            # record state of email from this address and overall number
-            # of emails retrieved (matched to ones we know we sent) during
-            # this cycle
-            toAddress.mailFound = True
             retrievedEmailCount += 1
-            
-            # If this is the most recent message retreived, save it's position
-            # in the subjects list. Later we will remove [:maxindex] entries
-            index = toAddress.subjects.index( message['Subject'] )
-            if index > maxIndexes[address]:
-                maxIndexes[address] = index
-            
-            # save the round trip time of this email for statistics
-            transmitTime = self.getTransmitTime( message )
-            toAddress.transitTimes[index] = transmitTime
-            msg = 'Transmit time for message \'%s\' to %s was %d' % \
-                  ( message['Subject'], address, transmitTime )
-            self.log.debug( msg )
-            
-        # Delete subject lines from the queue
-        # We delete from the most recent message retrieved back to the oldest
-        # one sent.
-        for address in maxIndexes:
-            index = maxIndexes[address] + 1
-            del self.toAddresses[address].subjects[:index]
             
         self.log.info( 'Retrieved %d sent messages.' % retrievedEmailCount )
             
@@ -719,31 +1095,6 @@ class EmailPing( PBDaemon ):
         except Exception, e:
             self.log.error( 'Error while retrieving messages: %s' % e.args )
             return None
-    
-    def getTransmitTime( self, message ):
-    
-        receivedList = message.get_all( 'Received', None )
-        if not receivedList: 
-            return 0
-        
-        try:        
-            start = receivedList[-1].split( ';' )[-1].strip()
-            startTuple = email.Utils.parsedate_tz( start )
-            startTime = time.mktime( startTuple[:9] )
-            if startTuple[9]:
-                startTime += startTuple[9]
-                
-            end = receivedList[0].split( ';' )[-1].strip()
-            endTuple = email.Utils.parsedate_tz( end )
-            endTime = time.mktime( endTuple[:9] )
-            if endTuple[9]:
-                endTime += endTuple[9]
-            
-            difference = endTime - startTime
-        except:
-            return 0
-            
-        return difference
     
     def sendRetrievedEvents( self, retrievedEmailCount ):
 
@@ -764,50 +1115,54 @@ class EmailPing( PBDaemon ):
         # If no messages received from a "to" address, send alarm event.
         # Conversely, if "to" address flagged with alarm state and mail was
         # received, send clear event
-        for address in self.toAddresses:
-            if not self.toAddresses[address].mailFound:
-                self.toAddresses[address].receiveFailure = True
+        for emailManager in self.emailManagers():
+            if emailManager.retrievedEmailCount == 0:
+                emailManager.receiveFailure = True
                 self.sendEmailPingEvent( 'epAccountReceiveFailure',
-                                          address,
-                                         '0 messages received from %s' % address )
-                self.log.warning( 'Did not receive mail from %s' % address )
+                                          emailManager.address,
+                                         '0 messages received from %s' % emailManager.address )
+                self.log.warning( 'Did not receive mail from %s' % emailManager.address )
             else:
-                if self.toAddresses[address].receiveFailure:
+                if emailManager.receiveFailure:
+                    emailManager.receiveFailure = False
                     self.sendEmailPingEvent( 'epAccountReceiveClear',
-                                              address,
-                                             'Message(s) received from %s' % address )
-                self.log.info( 'Received mail from %s' % address )
+                                              emailManager.address,
+                                             'Message(s) received from %s' % emailManager.address )
 
     def updatePerformanceData( self ):
         
-        # write the queue length and transmit time data
-        for address in self.toAddresses:
-            toAddress = self.toAddresses[address]
-            
-            # queue length
-            datapoint = '%s_ql' % address
-            self.rrdStats.gauge( datapoint,
-                                 self.options.emailcycleinterval,
-                                 len( toAddress.subjects ) )
+        for emailManager in self.emailManagers():
 
-            # transmit time
-            if len( toAddress.transitTimes ) == 0: 
-                continue
-            keys = toAddress.transitTimes.keys()
-            keys.sort()
-            for key in keys:
-                datapoint = '%s_tt' % address 
-                self.rrdStats.gauge( datapoint,
-                                     self.options.emailcycleinterval,
-                                     toAddress.transitTimes[key] )
-            toAddress.transitTimes = {}
-        
+            # record number of emails received in this cycle
+            datapoint = '%s_rec' % emailManager.address
+            self.rrdStats.write( datapoint, 
+                                 float( emailManager.retrievedEmailCount ), 
+                                 self.cycleTimeStamp )
+                                 
+            # transit times must be written to rrd in chronological order. If
+            # emails arrive out of order, must wait and record the oldest first.
+            datapoint = '%s_tt' % emailManager.address
+            for timeStamp, transitTime in emailManager.getTransitTimes():
+                self.rrdStats.write( datapoint, float( transitTime ), timeStamp )
+                
+            # now that transit times on retrieved emails have been recorded,
+            # they can finally be disposed of
+            emailManager.clearRetrievedMail()
+            
+            # Record number of emails that have yet to be retrieved. 
+            datapoint = '%s_ql' % emailManager.address
+            self.rrdStats.write( datapoint, 
+                                 float( emailManager.emailsNotRetrievedCount() ),
+                                 self.cycleTimeStamp )
             
         # write the last cycle time
-        self.rrdStats.gauge( 'cycleTime',
-                             self.options.emailcycleinterval,
-                             self.lastCycleTime )
-                             
+        self.rrdStats.write( 'cycleTime', self.lastCycleTime )
+        
+        # record the number of emails received that couldn't be matched
+        self.rrdStats.write( 'unknown_rec', 
+                             float( self.unknownEmailCount ), 
+                             self.cycleTimeStamp )
+    
     #TODO: Allow emailping to run multiple instances
     # def setupLogging(self):
     
@@ -913,7 +1268,6 @@ class EmailPing( PBDaemon ):
             # dest='instancename',
             # help='Name of this instance of EmailPing' )
         # self.parser.set_defaults( instancename='EmailPing' )
-        
             
 if __name__ == '__main__':
     emailping = EmailPing()

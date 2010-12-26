@@ -1,15 +1,12 @@
-###########################################################################
+################################################################################
 #
-# This program is part of Zenoss Core, an open source monitoring platform.
-# Copyright (C) 2007, 2008, Zenoss Inc.
+# This program is part of the HPMon Zenpack for Zenoss.
+# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
 #
-# This program is free software; you can redistribute it and/or modify it
-# under the terms of the GNU General Public License version 2 as published by
-# the Free Software Foundation.
+# This program can be used under the GNU General Public License version 2
+# You can find full information here: http://www.zenoss.com/oss
 #
-# For complete information please visit: http://www.zenoss.com/oss/
-#
-###########################################################################
+################################################################################
 
 import Globals
 from Products.ZenModel.ZenPack import ZenPackMigration
@@ -27,8 +24,6 @@ class updateTemplatesWithStatusThreshold( ZenPackMigration ):
 
 
     def migrate(self, pack):
-        dmd = pack.__primary_parent__.__primary_parent__
-
         hpTemplates = [ 'cpqDaCntlr',
                         'cpqDaLogDrv',
                         'cpqDaPhyDrv',
@@ -58,7 +53,7 @@ class updateTemplatesWithStatusThreshold( ZenPackMigration ):
                         ]
 
         # Update existing templates to use the new StatusThreshold
-        for template in dmd.Devices.Server.getAllRRDTemplates():
+        for template in pack.dmd.Devices.Server.getAllRRDTemplates():
             if template.id not in hpTemplates: continue
             for threshold in template.thresholds():
                 if isinstance(threshold, StatusThreshold): continue

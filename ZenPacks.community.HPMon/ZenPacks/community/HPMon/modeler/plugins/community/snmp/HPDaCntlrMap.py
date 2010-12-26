@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPDaCntlrMap
 
 HPDaCntlrMap maps the cpqDaCntlrTable table to cpqDaCntlr objects
 
-$Id: HPDaCntlrMap.py,v 1.1 2009/08/18 16:38:53 egor Exp $"""
+$Id: HPDaCntlrMap.py,v 1.2 2010/11/05 14:33:55 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
@@ -33,8 +33,8 @@ class HPDaCntlrMap(HPExpansionCardMap):
                         '.2': 'model',
                         '.3': 'FWRev',
                         '.5': 'slot',
+                        '.6': 'status',
                         '.9': 'role',
-                        '.10': 'status',
                         '.15': 'serialNumber',
                         '.16': 'redundancyType',
                     }

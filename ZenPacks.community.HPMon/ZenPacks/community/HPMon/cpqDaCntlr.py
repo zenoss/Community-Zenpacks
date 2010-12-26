@@ -12,10 +12,11 @@ __doc__="""cpqDaCntlr
 
 cpqDaCntlr is an abstraction of a HP Smart Array Controller.
 
-$Id: cpqDaCntlr.py,v 1.1 2010/06/29 10:44:38 egor Exp $"""
+$Id: cpqDaCntlr.py,v 1.2 2010/11/05 14:29:40 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
+import inspect
 from HPExpansionCard import *
 
 class cpqDaCntlr(HPExpansionCard):
@@ -27,15 +28,15 @@ class cpqDaCntlr(HPExpansionCard):
     FWRev = ""
     role = 1
     redundancyType = ""
-
+    __ifindex = "1"
+    
     # we monitor RAID Controllers
     monitor = True
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
                 2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
-                3: (DOT_RED, SEV_CRITICAL, 'General Failure'),
-                4: (DOT_ORANGE, SEV_ERROR, 'Cable Problem'),
-                5: (DOT_RED, SEV_CRITICAL, 'Powered Off'),
+                3: (DOT_ORANGE, SEV_ERROR, 'Degraded'),
+                4: (DOT_RED, SEV_CRITICAL, 'Failed'),
                 }
 
     _properties = HPExpansionCard._properties + (
@@ -83,5 +84,29 @@ class cpqDaCntlr(HPExpansionCard):
                 4: 'Backup',
                 }
         return roles.get(self.role, roles[1])
+
+    def getRRDTemplates(self):
+        templates = []
+        tnames = ['cpqDaCntlr', 'cpqDaAccelCntlr', 'cpqDaCntlrPerf']
+        for tname in tnames:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
+
+    def _getSnmpIndex(self):
+        frame = inspect.currentframe(2)
+        try:
+            if 'templ' in frame.f_locals:
+                if frame.f_locals['templ'].id != 'cpqDaCntlrPerf': ifindex = ''
+                else: ifindex = '.' + self.__ifindex
+        finally: del frame
+        return self.snmpindex + ifindex
+
+    def _setSnmpIndex(self, value):
+        self.__ifindex = value
+
+    ifindex = property(fget=lambda self: self._getSnmpIndex(),
+                        fset=lambda self, v: self._setSnmpIndex(v)
+                        )
 
 InitializeClass(cpqDaCntlr)

@@ -80,4 +80,10 @@ class cpqSm2Cntlr(HPExpansionCard):
           },
         )
 
+    def getDeviceProductName(self):
+        return self.device().hw.getProductName()
+
+    def getDeviceProductLink(self):
+        return self.device().hw.getProductLink()
+
 InitializeClass(cpqSm2Cntlr)

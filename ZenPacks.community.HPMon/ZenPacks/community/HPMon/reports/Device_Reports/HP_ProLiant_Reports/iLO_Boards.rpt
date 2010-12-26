@@ -3,6 +3,7 @@
         tableName string: iloboards;
         batch python:here.ZenTableManager.getBatch(tableName,objects);
         exportFields python:[('getParentDeviceName','Device'), 
+                            ('getDeviceProductName','Model'), 
                             ('name','Component'), 
                             ('systemId', 'System ID'),
                             ('hwVer', 'HW Ver'),
@@ -22,13 +23,15 @@
 <form method="POST" tal:attributes="action request/URL;"
                         tal:define="tabletitle string:iLO Boards;
                         showfilterbox python:True;
-                        tblcolspan string:8">
+                        tblcolspan string:9">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 <tal:block metal:fill-slot="zentablecontents">
 
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'hostname','Device')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getDeviceProductName','Model')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'name','Component')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
@@ -47,6 +50,8 @@
     <tr tal:repeat="comp batch">
         <td class="tablevalues" 
           tal:content="structure comp/getDeviceLink"/>
+        <td class="tablevalues"
+	  tal:content="structure comp/getDeviceProductLink"/>
         <td class="tablevalues">
             <a class="tablevalues" tal:attributes="href comp/getPrimaryUrlPath"
                 tal:content="comp/name">smtp</a>
@@ -59,7 +64,7 @@
         <td class="tablevalues" tal:content="comp/macaddress"/>
     </tr>
     <tr>
-        <td colspan="8" class="tableheader" align='center'>
+        <td colspan="9" class="tableheader" align='center'>
         <form metal:use-macro="here/zenTableNavigation/macros/navtool"/>
         </td>
     </tr>

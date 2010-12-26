@@ -12,16 +12,18 @@ __doc__="""cpqDaLogDrv
 
 cpqDaLogDrv is an abstraction of a HP DA Logical Disk.
 
-$Id: cpqDaLogDrv.py,v 1.1 2010/06/30 16:18:48 egor Exp $"""
+$Id: cpqDaLogDrv.py,v 1.2 2010/11/10 16:56:46 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-#from Globals import InitializeClass
+import inspect
 from HPLogicalDisk import *
 
 class cpqDaLogDrv(HPLogicalDisk):
     """cpqDaLogDrv object
     """
+
+    __ifindex = "1"
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
                 2: (DOT_GREEN, SEV_CLEAN, 'Ok'),
@@ -39,5 +41,29 @@ class cpqDaLogDrv(HPLogicalDisk):
                 14:(DOT_YELLOW, SEV_WARNING, 'Queued For Expansion'),
                 15:(DOT_ORANGE, SEV_ERROR, 'Multi-path Access Degraded'),
                 }
+
+    def getRRDTemplates(self):
+        templates = []
+        tnames = ['cpqDaLogDrv', 'cpqDaLogDrvPerf']
+        for tname in tnames:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates
+
+    def _getSnmpIndex(self):
+        frame = inspect.currentframe(2)
+        try:
+            if 'templ' in frame.f_locals:
+                if frame.f_locals['templ'].id != 'cpqDaLogDrvPerf': ifindex = ''
+                else: ifindex = '.' + self.__ifindex
+        finally: del frame
+        return self.snmpindex + ifindex
+
+    def _setSnmpIndex(self, value):
+        self.__ifindex = value
+
+    ifindex = property(fget=lambda self: self._getSnmpIndex(),
+                        fset=lambda self, v: self._setSnmpIndex(v)
+                        )
 
 InitializeClass(cpqDaLogDrv)

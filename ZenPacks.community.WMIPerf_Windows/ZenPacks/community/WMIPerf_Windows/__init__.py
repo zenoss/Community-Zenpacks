@@ -43,6 +43,7 @@ class ZenPack(ZenPackBase):
                 'lines',
             ),
             'zWmiMonitorIgnore': (False, 'boolean'),
+            'zIcon': ('/zport/dmd/img/icons/server-windows.png', 'string'),
         },
         '/CIM/WMI/Win2000': {
             'description': ('', 'string'),
@@ -63,6 +64,7 @@ class ZenPack(ZenPackBase):
                 'lines',
             ),
             'zWmiMonitorIgnore': (False, 'boolean'),
+            'zIcon': ('/zport/dmd/img/icons/server-windows.png', 'string'),
         },
     }
 

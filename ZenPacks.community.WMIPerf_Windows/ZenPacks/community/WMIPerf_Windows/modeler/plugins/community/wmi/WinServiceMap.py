@@ -12,13 +12,12 @@ __doc__ = """WinServiceMap
 
 WinServiceMap gathers status of Windows services
 
-$Id: WinServiceMap.py,v 1.1 2010/07/23 00:09:57 egor Exp $"""
+$Id: WinServiceMap.py,v 1.2 2010/10/14 20:28:35 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
-from Products.ZenUtils.Utils import prepId
 
 class WinServiceMap(WMIPlugin):
 
@@ -52,13 +51,15 @@ class WinServiceMap(WMIPlugin):
         """Collect win service info from this device.
         """
         log.info('Processing WinServices for device %s' % device.id)
-        instances = results.get("Win32_Service", None)
-        if not instances: return
         rm = self.relMap()
-        for instance in instances:
-            om = self.objectMap(instance)
-            om.id = prepId(om._name)
-            om.setServiceClass = {'name':om._name, 'description':om._description}
-            rm.append(om)
+        for instance in results.get("Win32_Service", []):
+            try:
+                om = self.objectMap(instance)
+                om.id = self.prepId(om._name)
+                om.setServiceClass = {'name':om._name,
+                                      'description':om._description,
+                                      }
+                rm.append(om)
+            except: continue
         return rm
 

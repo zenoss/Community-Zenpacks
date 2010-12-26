@@ -12,13 +12,12 @@ __doc__="""ProductMap
 
 ProductMap finds various software packages installed on a device.
 
-$Id: ProductMap.py,v 1.6 2010/07/23 00:06:29 egor Exp $"""
+$Id: ProductMap.py,v 1.7 2010/10/14 19:44:47 egor Exp $"""
 
-__version__ = '$Revision: 1.6 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
-from Products.DataCollector.EnterpriseOIDs import EnterpriseOIDs
 
 class ProductMap(WMIPlugin):
 
@@ -48,10 +47,8 @@ class ProductMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-        instances = results.get("Win32_Product", None)
-        if not instances: return
         rm = self.relMap()
-        for instance in instances:
+        for instance in results.get("Win32_Product", []):
             try:
                 if instance['setInstallDate']:
                     instance['setInstallDate'] = str(instance['setInstallDate'])
@@ -62,10 +59,10 @@ class ProductMap(WMIPlugin):
                                                 instance['_setInstallDate'][6:8])
                 else: instance['setInstallDate'] = '1968/01/08 00:00:00'
                 om = self.objectMap(instance)
+                if not om.setProductKey: continue
                 om.id = self.prepId(om.setProductKey)
                 if om._vendor: om._vendor = om._vendor.split()[0]
-                if om._vendor not in EnterpriseOIDs.values():
-                    om._vendor = 'Unknown'
+                else: om._vendor = 'Unknown'
                 om.setProductKey = MultiArgs(om.setProductKey, om._vendor)
                 rm.append(om)
             except AttributeError:

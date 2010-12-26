@@ -18,7 +18,6 @@ __version__ = '$Revision: 1.4 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
-from Products.ZenUtils.Utils import prepId
 
 import re
 PROCCACHELEVEL = re.compile(r'.*(\d).*(\d).*')
@@ -125,7 +124,7 @@ class ProcessorMap(WMIPlugin):
             om = self.objectMap(instance)
             if om._status == 0: continue
             try:
-                om.id = prepId(om.id)
+                om.id = self.prepId(om.id)
                 om.socket = om.id[3:]
                 if not om.extspeed: om.extspeed = om._extspeed
                 om.voltage = om.voltage * 100

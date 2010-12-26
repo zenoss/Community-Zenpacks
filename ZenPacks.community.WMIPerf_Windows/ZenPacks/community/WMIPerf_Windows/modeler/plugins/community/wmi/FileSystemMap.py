@@ -12,13 +12,12 @@ __doc__="""FileSystemMap
 
 FileSystemMap maps the CIM_FileSystem class to filesystems objects
 
-$Id: FileSystemMap.py,v 1.2 2010/07/23 00:00:01 egor Exp $"""
+$Id: FileSystemMap.py,v 1.3 2010/10/14 20:03:21 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 import re
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
-from Products.ZenUtils.Utils import prepId
 
 class FileSystemMap(WMIPlugin):
 
@@ -49,11 +48,9 @@ class FileSystemMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         rm = self.relMap()
-        instances = results.get("Win32_LogicalDisk", None)
-        if not instances: return
         skipfsnames = getattr(device, 'zFileSystemMapIgnoreNames', None)
         skipfstypes = getattr(device, 'zFileSystemMapIgnoreTypes', None)
-        for instance in instances:
+        for instance in results.get("Win32_LogicalDisk", []):
             try:
                 if skipfsnames and re.search(skipfsnames, instance['mount']):
                     log.info("Skipping %s as it matches zFileSystemMapIgnoreNames.",
@@ -64,10 +61,9 @@ class FileSystemMap(WMIPlugin):
                         instance['mount'], instance['type'])
                     continue
                 om = self.objectMap(instance)
-                om.id = prepId(om.mount)
+                om.id = self.prepId(om.mount)
                 om.snmpindex = om.id
-                if getattr(om, 'blockSize', None) or om.blockSize == 0:
-                    om.blockSize = 512
+                om.blockSize = getattr(om, 'blockSize', 512) or 512
                 if not om.totalBlocks: continue
                 om.totalBlocks = om.totalBlocks / om.blockSize
             except AttributeError:

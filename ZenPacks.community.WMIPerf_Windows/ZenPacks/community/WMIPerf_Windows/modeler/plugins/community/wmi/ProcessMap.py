@@ -12,7 +12,7 @@ __doc__="""ProcessMap
 
 ProcessMap finds various software packages installed on a device.
 
-$Id: ProcessMap.py,v 1.5 2010/07/23 00:04:51 egor Exp $"""
+$Id: ProcessMap.py,v 1.6 2010/10/14 20:17:12 egor Exp $"""
 
 __version__ = '$Revision: 1.5 $'[11:-2]
 
@@ -44,9 +44,8 @@ class ProcessMap(WMIPlugin):
     def process(self, device, results, log):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-        instances = results.get("Win32_Process", None)
         rm = self.relMap()
-        for instance in instances:
+        for instance in results.get("Win32_Process", []):
             try:
                 om = self.objectMap(instance)
                 if not getattr(om, 'procName', False): 

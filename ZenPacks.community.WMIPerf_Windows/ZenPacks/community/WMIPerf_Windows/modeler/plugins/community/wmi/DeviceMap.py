@@ -13,14 +13,13 @@ __doc__="""DeviceMap
 DeviceMap maps CIM_ComputerSystem and CIM_OperationSystem classes to get hw and
 os products.
 
-$Id: DeviceMap.py,v 1.2 2010/04/23 07:41:12 egor Exp $"""
+$Id: DeviceMap.py,v 1.3 2010/10/14 19:49:24 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
-from Products.DataCollector.plugins.DataMaps import ObjectMap
-from Products.DataCollector.plugins.DataMaps import MultiArgs
+from Products.DataCollector.plugins.DataMaps import MultiArgs, ObjectMap
 
 class DeviceMap(WMIPlugin):
     """DeviceMap maps CIM_ComputerSystem and CIM_OperationSystem classes to get hw and
@@ -70,9 +69,9 @@ class DeviceMap(WMIPlugin):
         """collect WMI information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         try:
-            cs = results['Win32_ComputerSystem'][0]
+            cs = results.get('Win32_ComputerSystem', [None])[0]
             if not cs: return
-            os = results['Win32_OperatingSystem'][0]
+            os = results.get('Win32_OperatingSystem', [None])[0]
             if not os: return
             sn = results.get('Win32_SystemEnclosure',({'sn':None},))[0]['sn']
             maps = []

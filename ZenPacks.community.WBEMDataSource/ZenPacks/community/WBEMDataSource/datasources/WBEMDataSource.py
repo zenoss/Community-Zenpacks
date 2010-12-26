@@ -13,20 +13,20 @@ __doc__="""WBEMDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: WBEMDataSource.py,v 1.9 2010/08/17 22:42:14 egor Exp $"""
+$Id: WBEMDataSource.py,v 1.10 2010/11/23 22:14:37 egor Exp $"""
 
-__version__ = "$Revision: 1.9 $"[11:-2]
+__version__ = "$Revision: 1.10 $"[11:-2]
 
-from Products.ZenModel import RRDDataSource
+from Products.ZenModel.RRDDataSource import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenUtils.Utils import executeStreamCommand
 from Products.ZenWidgets import messaging
 from AccessControl import ClassSecurityInfo, Permissions
 
-import cgi, time
-import os
+import cgi
+import time
 
-class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
+class WBEMDataSource(ZenPackPersistence, RRDDataSource):
 
     ZENPACKID = 'ZenPacks.community.WBEMDataSource'
 
@@ -35,12 +35,12 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
     namespace = 'root/cimv2'
     instance = ''
 
-    _properties = RRDDataSource.RRDDataSource._properties + (
+    _properties = RRDDataSource._properties + (
         {'id':'namespace', 'type':'string', 'mode':'w'},
         {'id':'instance', 'type':'string', 'mode':'w'},
         )
 
-    _relations = RRDDataSource.RRDDataSource._relations + (
+    _relations = RRDDataSource._relations + (
         )
 
     # Screen action bindings (and tab definitions)
@@ -81,31 +81,51 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         if REQUEST:
             self.namespace = REQUEST.get('namespace', '')
             self.instance = REQUEST.get('instance', '')
-        return RRDDataSource.RRDDataSource.zmanage_editProperties(
-                                                                self, REQUEST)
+        return RRDDataSource.zmanage_editProperties(self, REQUEST)
 
-    def getInstanceInfo(self, context):
-        classname = RRDDataSource.RRDDataSource.getCommand(self, context,
-                                                            self.instance)
-        namespace = RRDDataSource.RRDDataSource.getCommand(self, context,
-                                                            self.namespace)
-        transport = self.sourcetype
-        if classname.upper().startswith('SELECT '):
-            return (transport, classname, {}, namespace)
+
+    def parseSqlQuery(self, sql):
+        keybindings = {}
+        try:
+            newsql, where = sql.rsplit('WHERE ', 1)
+            wheres = ['',]
+            for token in where.strip('\n ;').split():
+                if token.upper() in ('LIMIT', 'OR', 'NOT'): raise
+                if token.upper() in ('GO', ';'): continue
+                if token.upper() == 'AND': wheres.append('')
+                wheres[-1] = wheres[-1] + ' ' + token
+            newwhere = []
+            for kb in wheres:
+                var, val = kb.split('=')
+                if newsql.find('%s'%var.strip()) == -1: newwhere.append(kb)
+                else: keybindings[var.strip()] = val.strip()
+            if keybindings:
+                sql = newsql
+                if newwhere: sql = sql + ' WHERE %s AND '%' AND '.join(newwhere)
+        except: return sql, {}
+        return sql, keybindings
+
+
+    def parseInstanceName(self, classname, namespace):
         kb = classname.split('.', 1)
         cn = kb[0].split(':', 1)
-        if len(cn) > 1:
-            classname = cn[1]
-            namespace = cn[0]
-        else: classname = cn[0]
-        if len(kb) > 1: kb = kb[1]
-        else: return (transport, classname, {}, namespace)
-        keybindings = {}
-        for key in kb.split(','):
-            try: var, val = key.split('=', 1)
-            except: continue
-            keybindings[var] = val
-        return (transport, classname, keybindings, namespace)
+        if len(cn) == 1: cn.insert(0, namespace)
+        if len(kb) == 1: return cn[1], {}, cn[0]
+        try: return cn[1],dict([k.split('=',1) for k in kb[1].split(',')]),cn[0]
+        except: return classname, {}, namespace
+
+
+    def getInstanceInfo(self, context):
+        try:
+            classname = self.getCommand(context, self.wql)
+            namespace = self.getCommand(context, self.namespace)
+            if classname.upper().startswith('SELECT '):
+                classname, kbs = self.parseSqlQuery(classname)
+            else:
+                classname, kbs, namespace = self.parseInstanceName(classname,
+                                                                    namespace)
+        except: return '', '', {}, ''
+        return self.sourcetype, classname, kbs, namespace.replace("\\", "/")
 
 
     def testDataSourceAgainstDevice(self, testDevice, REQUEST, write, errorLog):
@@ -157,8 +177,8 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
         try:
             tr, inst, kb, namespace = self.getInstanceInfo(device)
-            inst = RRDDataSource.RRDDataSource.getCommand(self, device,
-                                                            self.instance)
+            if not tr: raise
+            inst = self.getCommand(device, self.wql)
             if inst.startswith("%s:"%namespace): inst = inst[len(namespace)+1:]
             properties = dict([(
                         dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,

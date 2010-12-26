@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDriveMap
 
 HPEVADiskDriveMap maps HPEVA_DiskDrive class to HardDisk class.
 
-$Id: HPEVA_DiskDriveMap.py,v 1.0 2010/03/11 08:08:31 egor Exp $"""
+$Id: HPEVA_DiskDriveMap.py,v 1.1 2010/10/12 17:47:31 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -75,7 +75,7 @@ class HPEVADiskDriveMap(WBEMPlugin):
         instances = results["HPEVA_DiskDrive"]
         if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", 'None')
+        sysname = getattr(device, "snmpSysName", None) or device.id
         for instance in instances:
             if instance["_sname"] != sysname: continue
             try:

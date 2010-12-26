@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageDiskEnclosureMap
 HPEVAStorageDiskEnclosureMap maps HPEVA_StorageDiskEnclosure class to
 HPEVAStorageDiskEnclosure class.
 
-$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.2 2010/07/06 22:59:16 egor Exp $"""
+$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.3 2010/10/12 17:48:13 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -66,7 +66,7 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
         instances = results.get("HPEVA_StorageDiskEnclosure", None)
         if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, 'snmpSysName', 'None')
+        sysname = getattr(device, 'snmpSysName', None) or device.id
         for instance in instances:
             if instance["_sname"] != sysname: continue
             sysmodel = sysmodels.get(sysname, 'Unknown')

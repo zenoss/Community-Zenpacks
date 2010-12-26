@@ -13,9 +13,9 @@ __doc__="""HPEVADeviceMap
 HPEVADeviceMap maps HPEVA_StorageSystem class to hw and
 os products.
 
-$Id: HPEVADeviceMap.py,v 1.5 2010/09/16 08:07:40 egor Exp $"""
+$Id: HPEVADeviceMap.py,v 1.6 2010/10/12 17:24:52 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -32,27 +32,15 @@ class HPEVADeviceMap(WBEMPlugin):
     deviceProperties = WBEMPlugin.deviceProperties + ('snmpSysName',)
 
     def queries(self, device):
-        keybindings = {}
-        sysname = getattr(device, "snmpSysName", None)
-        if sysname:
-            keybindings = {
-                "HPEVA_StorageSystem":
-                    {
-                    "CreationClassName": "HPEVA_StorageSystem",
-                    "Name": sysname,
-                    },
-                "HPEVA_StorageControllerChassis":
-                    {
-                    "CreationClassName": "HPEVA_StorageControllerChassis",
-                    "Tag":"%s.\Hardware\Controller Enclosure\Controller 1"%sysname,
-                    },
-                }
-
+        sysname = getattr(device, "snmpSysName", None) or device.id
         return {
             "HPEVA_StorageSystem":
                 (
                 "HPEVA_StorageSystem",
-                keybindings.get("HPEVA_StorageSystem", None),
+                {
+                    "CreationClassName": "HPEVA_StorageSystem",
+                    "Name": sysname,
+                },
                 "root/eva",
                     {
                     "Comment":"comments",
@@ -66,7 +54,10 @@ class HPEVADeviceMap(WBEMPlugin):
             "HPEVA_StorageControllerChassis":
                 (
                 "HPEVA_StorageControllerChassis",
-                keybindings.get("HPEVA_StorageControllerChassis", None),
+                {
+                    "CreationClassName": "HPEVA_StorageControllerChassis",
+                    "Tag":"%s.\Hardware\Controller Enclosure\Controller 1"%sysname,
+                },
                 "root/eva",
                     {
 #                    "SerialNumber":"setHWSerialNumber",
@@ -99,14 +90,9 @@ class HPEVADeviceMap(WBEMPlugin):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
         try:
-            sysname = getattr(device, "snmpSysName", None)
-            for cs in results.get("HPEVA_StorageControllerChassis", []):
-                if not sysname and cs["_tag"].startswith(device.id): break
+            cs = results.get("HPEVA_StorageControllerChassis", [{}])[0]
+            cs.update(results.get("HPEVA_StorageSystem", [{}])[0])
             if not cs: return
-            for instance in results.get("HPEVA_StorageSystem", []):
-                if not cs["_tag"].startswith(instance["snmpSysName"]): continue
-                cs.update(instance)
-                break
             maps = []
             om = self.objectMap(cs)
 #            om.snmpLocation = ""

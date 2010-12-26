@@ -13,9 +13,9 @@ __doc__="""HPEVAHostFCPortMap
 HPEVAHostFCPortMap maps HPEVA_HostFCPort class to
 HPEVAHostFCPort class.
 
-$Id: HPEVA_HostFCPortMap.py,v 1.0 2010/05/07 16:29:33 egor Exp $"""
+$Id: HPEVA_HostFCPortMap.py,v 1.1 2010/10/12 17:46:57 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -61,7 +61,7 @@ class HPEVAHostFCPortMap(WBEMPlugin):
         instances = results["HPEVA_HostFCPort"]
         if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", 'None')
+        sysname = getattr(device, "snmpSysName", None) or device.id
         for instance in instances:
             if not instance["setController"].startswith(sysname): continue
             try:

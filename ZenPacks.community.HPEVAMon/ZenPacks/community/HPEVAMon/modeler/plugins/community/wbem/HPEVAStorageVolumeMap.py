@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageVolumeMap
 HPEVAStorageVolumeMap maps HPEVA_StorageVolume class to
 HPEVAStorageVolume class.
 
-$Id: HPEVA_StorageVolumeMap.py,v 1.1 2010/10/12 17:50:33 egor Exp $"""
+$Id: HPEVA_StorageVolumeMap.py,v 1.2 2010/10/15 21:03:32 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -58,11 +58,9 @@ class HPEVAStorageVolumeMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-        instances = results["HPEVA_StorageVolume"]
-        if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", None) or device.id
-        for instance in instances:
+        sysname = getattr(device,"snmpSysName","") or device.id.replace("-","")
+        for instance in results.get("HPEVA_StorageVolume", []):
             if instance["_sname"] != sysname: continue
             try:
                 om = self.objectMap(instance)

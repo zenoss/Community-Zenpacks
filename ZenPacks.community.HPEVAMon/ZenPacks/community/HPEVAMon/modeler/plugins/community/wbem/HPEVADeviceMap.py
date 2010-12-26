@@ -13,9 +13,9 @@ __doc__="""HPEVADeviceMap
 HPEVADeviceMap maps HPEVA_StorageSystem class to hw and
 os products.
 
-$Id: HPEVADeviceMap.py,v 1.6 2010/10/12 17:24:52 egor Exp $"""
+$Id: HPEVADeviceMap.py,v 1.7 2010/10/15 19:22:39 egor Exp $"""
 
-__version__ = '$Revision: 1.6 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -32,7 +32,7 @@ class HPEVADeviceMap(WBEMPlugin):
     deviceProperties = WBEMPlugin.deviceProperties + ('snmpSysName',)
 
     def queries(self, device):
-        sysname = getattr(device, "snmpSysName", None) or device.id
+        sysname = getattr(device,"snmpSysName","") or device.id.replace("-","")
         return {
             "HPEVA_StorageSystem":
                 (
@@ -54,14 +54,11 @@ class HPEVADeviceMap(WBEMPlugin):
             "HPEVA_StorageControllerChassis":
                 (
                 "HPEVA_StorageControllerChassis",
-                {
-                    "CreationClassName": "HPEVA_StorageControllerChassis",
-                    "Tag":"%s.\Hardware\Controller Enclosure\Controller 1"%sysname,
-                },
+                None,
                 "root/eva",
                     {
 #                    "SerialNumber":"setHWSerialNumber",
-                    "Tag":"_tag",
+                    "Tag":"_t",
                     "Version":"setOSProductKey",
                     },
                 ),
@@ -90,9 +87,10 @@ class HPEVADeviceMap(WBEMPlugin):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
         try:
-            cs = results.get("HPEVA_StorageControllerChassis", [{}])[0]
-            cs.update(results.get("HPEVA_StorageSystem", [{}])[0])
+            cs = results.get("HPEVA_StorageSystem", [{}])[0]
             if not cs: return
+            for scc in results.get("HPEVA_StorageControllerChassis", []):
+                if scc['_t'].startswith(cs['snmpSysName'] or '-'):cs.update(scc)
             maps = []
             om = self.objectMap(cs)
 #            om.snmpLocation = ""

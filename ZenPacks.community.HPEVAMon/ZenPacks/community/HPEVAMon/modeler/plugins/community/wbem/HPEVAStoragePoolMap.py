@@ -13,9 +13,9 @@ __doc__="""HPEVAStoragePoolMap
 HPEVAStoragePoolMap maps HPEVA_StoragePool class to
 HPEVAStoragePool class.
 
-$Id: HPEVA_StoragePoolMap.py,v 1.2 2010/10/12 17:48:45 egor Exp $"""
+$Id: HPEVA_StoragePoolMap.py,v 1.3 2010/10/15 20:59:51 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -52,11 +52,9 @@ class HPEVAStoragePoolMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-        instances = results["HPEVA_StoragePool"]
-        if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", None) or device.id
-        for instance in instances:
+        sysname = getattr(device,"snmpSysName","") or device.id.replace("-","")
+        for instance in results.get("HPEVA_StoragePool", []):
             if not instance["id"].startswith(sysname): continue
             if instance["id"].endswith('.Allocated Disks'): continue
             if instance["id"].endswith('.Ungrouped Disks'): continue

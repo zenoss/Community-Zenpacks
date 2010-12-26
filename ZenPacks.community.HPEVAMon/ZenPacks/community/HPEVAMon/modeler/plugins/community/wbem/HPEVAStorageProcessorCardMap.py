@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageProcessorCardMap
 HPEVAStorageProcessorCardMap maps HPEVA_StorageProcessorCard class to
 HPEVAStorageProcessorCard class.
 
-$Id: HPEVA_StorageProcessorCardMap.py,v 1.1 2010/10/12 17:49:46 egor Exp $"""
+$Id: HPEVA_StorageProcessorCardMap.py,v 1.2 2010/10/15 21:01:21 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -51,11 +51,9 @@ class HPEVAStorageProcessorCardMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-        instances = results["HPEVA_StorageProcessorCard"]
-        if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", None) or device.id
-        for instance in instances:
+        sysname = getattr(device,"snmpSysName","") or device.id.replace("-","")
+        for instance in results.get("HPEVA_StorageProcessorCard", []):
             if not instance["id"].startswith(sysname): continue
             try:
                 om = self.objectMap(instance)

@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDriveMap
 
 HPEVADiskDriveMap maps HPEVA_DiskDrive class to HardDisk class.
 
-$Id: HPEVA_DiskDriveMap.py,v 1.1 2010/10/12 17:47:31 egor Exp $"""
+$Id: HPEVA_DiskDriveMap.py,v 1.2 2010/10/15 20:50:33 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -67,16 +67,12 @@ class HPEVADiskDriveMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-        instances = results["HPEVA_DiskModule"]
-        if not instances: return
-        diskModules = {}
-        for instance in instances:
-            diskModules[instance['_id']] = instance
-        instances = results["HPEVA_DiskDrive"]
-        if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, "snmpSysName", None) or device.id
-        for instance in instances:
+        diskModules = {}
+        for instance in results.get("HPEVA_DiskModule", []):
+            diskModules[instance['_id']] = instance
+        sysname = getattr(device,"snmpSysName","") or device.id.replace("-","")
+        for instance in results.get("HPEVA_DiskDrive", []):
             if instance["_sname"] != sysname: continue
             try:
                 instance.update(diskModules.get(instance['id'], {}))

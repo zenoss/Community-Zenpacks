@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDrive
 
 HPEVADiskDrive is an abstraction of a harddisk.
 
-$Id: HPEVADiskDrive.py,v 1.3 2010/06/30 17:07:12 egor Exp $"""
+$Id: HPEVADiskDrive.py,v 1.4 2010/10/18 16:02:40 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -147,8 +147,8 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         else: return self.getEnclosure().id
 
     def getStoragePoolName(self):
-        if not self.getStoragePool(self): return 'Unknown'
-        else: return self.getStoragePool(self).name
+        if not self.getStoragePool(): return 'Unknown'
+        else: return self.getStoragePool().caption
 
     security.declareProtected(ZEN_VIEW, 'getManufacturerLink')
     def getManufacturerLink(self, target=None):

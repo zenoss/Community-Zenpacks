@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageDiskEnclosureMap
 HPEVAStorageDiskEnclosureMap maps HPEVA_StorageDiskEnclosure class to
 HPEVAStorageDiskEnclosure class.
 
-$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.3 2010/10/12 17:48:13 egor Exp $"""
+$Id: HPEVA_StorageDiskEnclosureMap.py,v 1.4 2010/10/15 20:58:16 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -59,15 +59,12 @@ class HPEVAStorageDiskEnclosureMap(WBEMPlugin):
     def process(self, device, results, log):
         """collect WBEM information from this device"""
         log.info("processing %s for device %s", self.name(), device.id)
-        sysmodels = {}
-        instances = results.get("HPEVA_StorageSystem", [])
-        for instance in instances:
-            sysmodels[instance['_sname']] = instance['sysmodel']
-        instances = results.get("HPEVA_StorageDiskEnclosure", None)
-        if not instances: return
         rm = self.relMap()
-        sysname = getattr(device, 'snmpSysName', None) or device.id
-        for instance in instances:
+        sysmodels = {}
+        for instance in results.get("HPEVA_StorageSystem", []):
+            sysmodels[instance['_sname']] = instance['sysmodel']
+        sysname = getattr(device,"snmpSysName","") or device.id.replace("-","")
+        for instance in results.get("HPEVA_StorageDiskEnclosure", []):
             if instance["_sname"] != sysname: continue
             sysmodel = sysmodels.get(sysname, 'Unknown')
             om = self.objectMap(instance)

@@ -27,6 +27,7 @@ class ZenPack(ZenPackBase):
                 'community.wbem.HPEVAStorageProcessorCardMap',
                 'community.wbem.HPEVAHostFCPortMap',
                 'community.wbem.HPEVADiskDriveMap',
+                'community.wbem.HPEVAConsistencySetMap',
                 'community.wbem.HPEVAStorageVolumeMap',
                 ),
                 'lines',
@@ -53,11 +54,23 @@ class ZenPack(ZenPackBase):
         return dc
 
     def install(self, app):
+        if hasattr(self.dmd.Reports, 'Device Reports'):
+            devReports = self.dmd.Reports['Device Reports']
+            rClass = devReports.getReportClass()
+	    if not hasattr(devReports, 'HP EVA Reports'):
+                dc = rClass('HP EVA Reports', None)
+                devReports._setObject('HP EVA Reports', dc)
         for devClass, properties in self.dcProperties.iteritems():
             self.addDeviceClass(app, devClass, properties)
         ZenPackBase.install(self, app)
 
     def upgrade(self, app):
+        if hasattr(self.dmd.Reports, 'Device Reports'):
+            devReports = self.dmd.Reports['Device Reports']
+            rClass = devReports.getReportClass()
+	    if not hasattr(devReports, 'HP EVA Reports'):
+                dc = rClass('HP EVA Reports', None)
+                devReports._setObject('HP EVA Reports', dc)
         for devClass, properties in self.dcProperties.iteritems():
             self.addDeviceClass(app, devClass, properties)
         ZenPackBase.upgrade(self, app)
@@ -72,3 +85,7 @@ class ZenPack(ZenPackBase):
                 dc._delProperty('zWbemMonitorIgnore')
             except: continue
         ZenPackBase.remove(self, app, leaveObjects)
+        if hasattr(self.dmd.Reports, 'Device Reports'):
+            devReports = self.dmd.Reports['Device Reports']
+	    if hasattr(devReports, 'HP EVA Reports'):
+                devReports._delObject('HP EVA Reports')

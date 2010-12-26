@@ -94,7 +94,7 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
         if self.productClass():
             url = self.productClass().manufacturer.getPrimaryLink()
             if target: url = url.replace(">", " target='%s'>" % target, 1)
-            return url    
+            return url
         return ""
 
     security.declareProtected(ZEN_VIEW, 'getProductLink')

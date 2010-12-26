@@ -482,4 +482,76 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
 
 Ext.reg('HPEVAStorageVolumePanel', ZC.HPEVAStorageVolumePanel);
 ZC.registerName('HPEVAStorageVolume', _t('Virtual Disk'), _t('Virtual Disks'));
+
+ZC.HPEVAConsistencySetPanel = Ext.extend(ZC.ComponentGridPanel, {
+    constructor: function(config) {
+        config = Ext.applyIf(config||{}, {
+            componentType: 'HPEVAConsistencySet',
+            fields: [
+                {name: 'uid'},
+                {name: 'severity'},
+                {name: 'status'},
+                {name: 'name'},
+                {name: 'participationType'},
+                {name: 'writeMode'},
+                {name: 'remoteCellName'},
+                {name: 'storagePool'},
+                {name: 'currentPercentLogLevel'},
+                {name: 'hasMonitor'},
+                {name: 'monitor'}
+            ],
+            columns: [{
+                id: 'severity',
+                dataIndex: 'severity',
+                header: _t('Events'),
+                renderer: Zenoss.render.severity,
+                width: 60
+            },{
+                id: 'name',
+                dataIndex: 'name',
+                header: _t('Name'),
+                sortable: true
+            },{
+                id: 'participationType',
+                dataIndex: 'participationType',
+                header: _t('Role')
+            },{
+                id: 'writeMode',
+                dataIndex: 'writeMode',
+                header: _t('Write Mode'),
+                width: 150
+            },{
+                id: 'storagePool',
+                dataIndex: 'storagePool',
+                header: _t('Log Disk Group'),
+                sortable: true,
+                renderer: Zenoss.render.default_uid_renderer
+            },{
+                id: 'currentPercentLogLevel',
+                dataIndex: 'currentPercentLogLevel',
+                header: _t('Log Usage'),
+                width: 60
+            },{
+                id: 'remoteCellName',
+                dataIndex: 'remoteCellName',
+                header: _t('Remote System')
+            },{
+                id: 'monitor',
+                dataIndex: 'monitor',
+                header: _t('Monitored'),
+                renderer: Zenoss.render.monitor,
+                width: 60
+            },{
+                id: 'status',
+                dataIndex: 'status',
+                header: _t('Status'),
+                width: 60
+            }]
+        });
+        ZC.HPEVAConsistencySetPanel.superclass.constructor.call(this, config);
+    }
+});
+
+Ext.reg('HPEVAConsistencySetPanel', ZC.HPEVAConsistencySetPanel);
+ZC.registerName('HPEVAConsistencySet', _t('Data Replication'), _t('Data Replication'));
 })();

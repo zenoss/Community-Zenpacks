@@ -35,6 +35,11 @@
                  provides=".interfaces.IHPEVAStorageVolumeInfo"
                  />
 
+        <adapter factory=".info.HPEVAConsistencySetInfo"
+                 for=".HPEVAConsistencySet.HPEVAConsistencySet"
+                 provides=".interfaces.IHPEVAConsistencySetInfo"
+                 />
+
         <browser:resourceDirectory
                  name="hpevamon"
                  directory="resources"

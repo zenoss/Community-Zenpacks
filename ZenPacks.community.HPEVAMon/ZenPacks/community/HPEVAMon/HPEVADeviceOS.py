@@ -12,9 +12,9 @@ __doc__="""HPEVADeviceOS
 
 HPEVADeviceOS is an abstraction of a HP EVA OperatingSystem
 
-$Id: HPEVADeviceOS.py,v 1.0 2010/05/04 11:10:47 egor Exp $"""
+$Id: HPEVADeviceOS.py,v 1.1 2010/11/28 12:17:41 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.OperatingSystem import OperatingSystem
@@ -39,6 +39,8 @@ class HPEVADeviceOS(OperatingSystem):
             "ZenPacks.community.HPEVAMon.HPEVAStoragePool", "os")),
         ("virtualdisks", ToManyCont(ToOne,
             "ZenPacks.community.HPEVAMon.HPEVAStorageVolume", "os")),
+        ("drgroups", ToManyCont(ToOne,
+            "ZenPacks.community.HPEVAMon.HPEVAConsistencySet", "os")),
     )
 
 

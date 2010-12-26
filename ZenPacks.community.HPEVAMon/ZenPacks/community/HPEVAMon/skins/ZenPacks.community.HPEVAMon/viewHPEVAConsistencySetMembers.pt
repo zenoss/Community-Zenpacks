@@ -6,12 +6,12 @@
 
 <input type="hidden" name="zenScreenName" tal:attributes="value template/id" />
 
-<tal:block metal:define-macro="hostFCPortList"
-    tal:define="tableName string:hostFCPortList;
-    objects here/fcports;
-    tabletitle string:FC Ports;
+<tal:block metal:define-macro="virtualDiskList"
+    tal:define="tableName string:virtualDiskList;
+    objects here/virtualdisks;
+    tabletitle string:Virtual Disks;
     batch python:here.ZenTableManager.getBatch(tableName,objects,
-                                            sortedHeader='interfaceName');"
+                                            sortedHeader='caption');"
     tal:condition="objects">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 <tal:block metal:fill-slot="zentablecontents">
@@ -19,33 +19,33 @@
 <!-- BEGIN TABLE CONTENTS -->
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'interfaceName','Interface Name')"/>
+                            tableName,'caption','Name')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'wwn','WWN')"/>
+                            tableName,'diskType','Disk Type')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'networkString','Network')"/>
+                            tableName,'raidType','Raid Level')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'linkTechnology','Link Technology')"/>
+                            tableName,'preferredPath','Preferred Path')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'type','Type')"/>
+                            tableName,'accessType','Access')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'speedString','Speed')"/>
+                            tableName,'size','Size')"/>
         <th class="tableheader" align="center" width="60">Status</th>
     </tr>
-    <tal:block tal:repeat="port batch">
-    <tr tal:define="odd repeat/port/odd"
+    <tal:block tal:repeat="disk batch">
+    <tr tal:define="odd repeat/disk/odd"
         tal:attributes="class python:test(odd, 'odd', 'even')">
       <td class="tablevalues">
           <tal:block 
-           tal:content="structure python:port.urlLink(text=port.interfaceName,
+           tal:content="structure python:disk.urlLink(text=disk.caption,
                                                     attrs={'target':'_top'})"/>
       </td>
-      <td class="tablevalues" tal:content="port/wwn"/>
-      <td class="tablevalues" tal:content="structure port/networkString"/>
-      <td class="tablevalues" tal:content="port/linkTechnology"/>
-      <td class="tablevalues" tal:content="port/type"/>
-      <td class="tablevalues" tal:content="port/speedString"/>
-      <td tal:define="color port/statusDot|string:grey" 
+      <td class="tablevalues" tal:content="disk/diskType"/>
+      <td class="tablevalues" tal:content="disk/raidType"/>
+      <td class="tablevalues" tal:content="disk/preferredPath"/>
+      <td class="tablevalues" tal:content="disk/accessType"/>
+      <td class="tablevalues" tal:content="disk/totalBytesString"/>
+      <td tal:define="color disk/statusDot|string:grey" 
         class="tablevalues" style="text-align:center;">
         <img tal:attributes="src string:img/${color}_dot.png"/>
       </td>
@@ -62,7 +62,6 @@
 </tal:block>
 </tal:block>
 </tal:block>
-
 
 </form>
 <br/>

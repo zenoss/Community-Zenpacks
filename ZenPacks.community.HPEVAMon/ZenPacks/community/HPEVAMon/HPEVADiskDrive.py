@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDrive
 
 HPEVADiskDrive is an abstraction of a harddisk.
 
-$Id: HPEVADiskDrive.py,v 1.4 2010/10/18 16:02:40 egor Exp $"""
+$Id: HPEVADiskDrive.py,v 1.5 2010/11/28 13:09:44 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -110,18 +110,13 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         Set the enclosure relationship to the enclosure specified by the given
         id.
         """
-        encl = None
-        for enclosure in self.hw().enclosures():
-            if str(enclosure.id) != str(encid): continue
-            encl = enclosure
-            break
+        encl = getattr(self.hw().enclosures, str(encid), None)
         if encl: self.enclosure.addRelation(encl)
         else: log.warn("enclosure id:%s not found", encid)
 
     security.declareProtected(ZEN_VIEW, 'getEnclosure')
     def getEnclosure(self):
-        try: return self.enclosure()
-        except: return None
+        return self.enclosure()
 
     security.declareProtected(ZEN_CHANGE_DEVICE, 'setStoragePool')
     def setStoragePool(self, spid):
@@ -129,26 +124,19 @@ class HPEVADiskDrive(HardDisk, HPEVAComponent):
         Set the storagepool relationship to the storage pool specified by the given
         id.
         """
-        strpool = None
-        for storagepool in self.device().os.storagepools():
-            if storagepool.caption != spid: continue
-            strpool = storagepool
-            break
-        if strpool: self.storagepool.addRelation(strpool)
+        spool=getattr(getattr(self.device().os,'storagepools',''),str(spid),'')
+        if spool: self.storagepool.addRelation(spool)
         else: log.warn("storage pool id:%s not found", spid)
 
     security.declareProtected(ZEN_VIEW, 'getStoragePool')
     def getStoragePool(self):
-        try: return self.storagepool()
-        except: return None
+        return self.storagepool()
 
     def getEnclosureName(self):
-        if not self.getEnclosure(): return 'Unknown'
-        else: return self.getEnclosure().id
+        return getattr(self.getEnclosure(), 'id', 'Unknown')
 
     def getStoragePoolName(self):
-        if not self.getStoragePool(): return 'Unknown'
-        else: return self.getStoragePool().caption
+        return getattr(self.getStoragePool(), 'caption', 'Unknown')
 
     security.declareProtected(ZEN_VIEW, 'getManufacturerLink')
     def getManufacturerLink(self, target=None):

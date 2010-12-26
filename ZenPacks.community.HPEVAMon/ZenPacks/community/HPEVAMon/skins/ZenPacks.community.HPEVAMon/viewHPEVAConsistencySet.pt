@@ -7,7 +7,7 @@
 <input type="hidden" name="zenScreenName" tal:attributes="value template/id" />
 
 <tal:block metal:define-macro="objectperf" tal:define="
-                tabletitle string:Virtual Disk;
+                tabletitle string:;
                 menu_id string:Lockable">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 
@@ -24,32 +24,32 @@
       </td>
     </tr>
     <tr>
-      <td class="tableheader" align=left>Mirror Cache</td>
-      <td class="tablevalues" tal:content="here/mirrorCache">1</td>
-      <td class="tableheader" align=left>Preferred Path</td>
-      <td class="tablevalues" tal:content="here/preferredPath">1</td>
+      <td class="tableheader" align=left>Role</td>
+      <td class="tablevalues" tal:content="here/participationType">1</td>
+      <td class="tableheader" align=left>Write Mode</td>
+      <td class="tablevalues" tal:content="here/writeMode">1</td>
     </tr>      
     <tr>
-      <td class="tableheader" align=left>Storage Group</td>
+      <td class="tableheader" align=left>Remote System</td>
+      <td class="tablevalues" tal:content="here/remoteCellName">1</td>
+      <td class="tableheader" align=left>Host Access Mode</td>
+      <td class="tablevalues" tal:content="here/hostAccessMode">1</td>
+    </tr>      
+    <tr>
+      <td class="tableheader" align=left>Failsafe</td>
+      <td class="tablevalues" tal:content="here/failSafe">1</td>
+      <td class="tableheader" align=left>Suspend Mode</td>
+      <td class="tablevalues" tal:content="here/suspendMode">1</td>
+    </tr>      
+    <tr>
+      <td class="tableheader" align=left>Log Disk Group</td>
       <td class="tablevalues" tal:content="here/getStoragePoolName">1</td>
-      <td class="tableheader" align=left>Access</td>
-      <td class="tablevalues" tal:content="here/accessType">1</td>
+      <td class="tableheader" align=left>Log Disk Reserved Capacity</td>
+      <td class="tablevalues" tal:content="here/getLogDiskReservedCapacity">1</td>
     </tr>      
     <tr>
-      <td class="tableheader" align=left>Raid Type</td>
-      <td class="tablevalues" tal:content="here/raidType">1</td>
-      <td class="tableheader" align=left>Disk Type</td>
-      <td class="tablevalues" tal:content="here/diskType">1</td>
-    </tr>      
-    <tr>
-      <td class="tableheader" align=left>Read Cache Policy</td>
-      <td class="tablevalues" tal:content="here/readCachePolicy">1</td>
-      <td class="tableheader" align=left>Write Cache Policy</td>
-      <td class="tablevalues" tal:content="here/writeCachePolicy">1</td>
-    </tr>      
-    <tr>
-      <td class="tableheader" align=left>Size</td>
-      <td class="tablevalues" tal:content="here/totalBytesString">1</td>
+      <td class="tableheader" align=left>Log Usage</td>
+      <td class="tablevalues" tal:content="here/getCurrentPercentLogLevel">1</td>
       <td class="tableheader" align=left>Status</td>
       <td class="tablevalues" tal:content="here/statusString">1</td>
     </tr>      

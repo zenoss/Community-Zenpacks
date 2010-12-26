@@ -216,6 +216,90 @@
 </form>
 
 <form method="post" tal:attributes="action here/os/absolute_url" 
+    name="consistencySetsListForm">
+
+<tal:block metal:define-macro="consistencySetsList"
+    tal:define="tableName string:consistencySetsList;
+    objects here/os/drgroups/objectValuesAll;
+    tabletitle string:Data Replication;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='caption');">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="objects">
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'caption','Name')">Name
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'participationType','Role')">participationType
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'writeMode','Write Mode')">writeMode
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getStoragePoolName','Log Disk Group')">getStoragePoolName
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getCurrentPercentLogLevel','Log Usage')">10
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'remoteCellName','Remote System')">remoteCellName
+        </th>
+        <th class="tableheader" align="center" width="60">Status</th>
+    </tr>
+    <tr tal:condition="not:objects">
+        <th class="tableheader" align="left">
+            No Data Replication
+        </th>
+    </tr>
+    <tal:block tal:repeat="drgroup batch">
+    <tr tal:define="odd repeat/drgroup/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        
+      <td class="tablevalues">
+          <tal:block 
+           tal:content="structure python:drgroup.urlLink(text=drgroup.caption,
+            attrs={'class':'tablevalues'})"/>
+      </td>
+      <td class="tablevalues"
+        tal:content="drgroup/participationType">source
+      </td>
+      <td class="tablevalues"
+        tal:content="drgroup/writeMode">asynchronous
+      </td>
+      <td class="tablevalues"
+        tal:content="drgroup/getStoragePoolName">EVA
+      </td>
+      <td class="tablevalues"
+        tal:content="drgroup/getCurrentPercentLogLevel">10
+      </td>
+      <td class="tablevalues"
+        tal:content="drgroup/remoteCellName">EVA
+      </td>
+      <td tal:define="color drgroup/statusDot|string:grey" 
+        class="tablevalues" style="text-align:center;">
+        <img tal:attributes="src string:img/${color}_dot.png"/>
+      </td>
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="7" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+<form method="post" tal:attributes="action here/os/absolute_url" 
     name="virtualDisksListForm">
 
 <tal:block metal:define-macro="virtualDisksList"
@@ -298,7 +382,6 @@
 </tal:block>
 
 </form>
-
 </tal:block>
 </tal:block>
 

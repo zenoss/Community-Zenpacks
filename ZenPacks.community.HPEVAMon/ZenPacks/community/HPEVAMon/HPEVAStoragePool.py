@@ -12,9 +12,9 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.3 2010/06/30 17:10:54 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.4 2010/11/28 20:18:41 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from Products.ZenModel.OSComponent import *
@@ -62,6 +62,10 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
         ("virtualdisks", ToMany(
             ToOne,
             "ZenPacks.community.HPEVAMon.HPEVAStorageVolume",
+            "storagepool")),
+        ("drgroups", ToMany(
+            ToOne,
+            "ZenPacks.community.HPEVAMon.HPEVAConsistencySet",
             "storagepool")),
         )
 

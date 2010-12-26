@@ -135,10 +135,12 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
         result = result + "</td>\n</td>\n</tr>\n</table>\n"
         return result
 
+
     def getRRDNames(self):
         """
         Return the datapoint name of this StorageDiskEnclosure
         """
         return ['StorageDiskEnclosure_OperationalStatus']
+
 
 InitializeClass(HPEVAStorageDiskEnclosure)

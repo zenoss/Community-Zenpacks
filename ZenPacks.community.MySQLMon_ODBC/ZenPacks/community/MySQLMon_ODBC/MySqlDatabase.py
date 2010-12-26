@@ -86,7 +86,7 @@ class MySqlDatabase(Database):
         inst = self.getDBSrvInst()
         if inst: return inst.hostname
         else: return self.device().manageIp
-        
+
     def port(self):
         """
         Return the port attribute of DBSrvInst
@@ -94,7 +94,7 @@ class MySqlDatabase(Database):
         inst = self.getDBSrvInst()
         if inst: return inst.port
         else: return 3306
-        
+
     def zMySqlConnectionString(self):
         """
         Return the ODBC connection string

@@ -2,9 +2,6 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'MySqlDatabase') -->
 <object id='/zport/dmd/Devices/Server/rrdTemplates/MySqlDatabase' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property id='zendoc' type='string'>
-MySQL Server Database Statistics
-</property>
 <property type="text" id="description" mode="w" >
 MySQL Server Database Statistics
 </property>
@@ -162,9 +159,6 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Server', 'rrdTemplates', 'MySqlSrvInst') -->
 <object id='/zport/dmd/Devices/Server/rrdTemplates/MySqlSrvInst' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property id='zendoc' type='string'>
-MySQL Server Instance Statistics
-</property>
 <property type="text" id="description" mode="w" >
 MySQL Server Instance Statistics
 </property>
@@ -1439,9 +1433,6 @@ MySQL Server 5.0.45 (x86_64)
 <property type="boolean" id="isOS" mode="w" >
 False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Server/Linux/devices/RS-MGM-07.bmg.local/os/softwaredbsrvinstances/0'/>
-</tomany>
 </object>
 <object id='MySQL-client-standard-5.0.24a-0.rhel4' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
 <property type="string" id="name" mode="w" >
@@ -1562,9 +1553,6 @@ True
 </property>
 <tomanycont id='osProcessClasses'>
 <object id='mysqld' module='Products.ZenModel.OSProcessClass' class='OSProcessClass'>
-<property id='zendoc' type='string'>
-MySQL Server Process
-</property>
 <property type="string" id="name" mode="w" >
 mysqld
 </property>

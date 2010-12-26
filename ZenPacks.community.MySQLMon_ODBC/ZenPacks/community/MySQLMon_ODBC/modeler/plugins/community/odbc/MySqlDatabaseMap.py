@@ -12,9 +12,9 @@ __doc__="""MySqlDatabaseMap.py
 
 MySqlDatabaseMap maps the MySQL Databases table to Database objects
 
-$Id: MySqlDatabaseMap.py,v 1.3 2010/10/06 09:59:28 egor Exp $"""
+$Id: MySqlDatabaseMap.py,v 1.4 2010/12/15 21:04:28 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -38,19 +38,19 @@ class MySqlDatabaseMap(ZenPackPersistence, SQLPlugin):
 
     def queries(self, device):
         queries = {}
-	inst = 0
-	uid = getattr(device, 'zMySqlUsername', None)
-	pwd = getattr(device, 'zMySqlUsername', None)
+        inst = 0
+        uid = getattr(device, 'zMySqlUsername', None)
+        pwd = getattr(device, 'zMySqlPassword', None)
         for cs in getattr(device, 'zMySqlConnectionString', ['DRIVER={MySQL}']):
             options = dict([opt.split('=') for opt in cs.split(';')])
             cs = ['MySQLdb']
-	    cs.append("host='%s'"%options.get('SERVER', device.manageIp))
-	    cs.append("port=%s"%options.get('PORT', '3306'))
+            cs.append("host='%s'"%options.get('SERVER', device.manageIp))
+            cs.append("port=%s"%options.get('PORT', '3306'))
             cs.append("db='information_schema'")
             if uid or 'UID' in options:
-	        cs.append("user='%s'"%options.get('UID', uid))
+                cs.append("user='%s'"%options.get('UID', uid))
             if pwd or 'PWD' in options:
-	        cs.append("passwd='%s'"%options.get('PWD', pwd))
+                cs.append("passwd='%s'"%options.get('PWD', pwd))
             queries['si_%s'%inst] = (
                 "SHOW VARIABLES",
                 None,
@@ -74,7 +74,7 @@ class MySqlDatabaseMap(ZenPackPersistence, SQLPlugin):
                           engine,
                           MIN(create_time) as created,
                           version,
-			  MIN(table_collation) as collation,
+                          MIN(table_collation) as collation,
                           '%s' as instance
                    FROM TABLES
                    GROUP BY table_schema"""%inst,
@@ -90,7 +90,7 @@ class MySqlDatabaseMap(ZenPackPersistence, SQLPlugin):
                 })
             inst = inst + 1
         return queries
-        
+
 
     def process(self, device, results, log):
         log.info('processing %s for device %s', self.name(), device.id)

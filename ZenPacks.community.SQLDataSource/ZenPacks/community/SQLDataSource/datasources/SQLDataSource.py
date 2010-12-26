@@ -13,9 +13,9 @@ __doc__="""SQLDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: SQLDataSource.py,v 1.3 2010/11/22 20:14:51 egor Exp $"""
+$Id: SQLDataSource.py,v 1.4 2010/12/17 16:46:56 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.ZenModel.RRDDataSource import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
@@ -175,7 +175,7 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource):
         try:
             import sys
             cs = self.getConnectionString(device)
-            sql = self.getCommand(device, self.sql)
+            sql = self.getCommand(device, self.sql).replace('$','\\$')
             properties = dict([(
                         dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
                         dp.id) for dp in self.getRRDDataPoints()])

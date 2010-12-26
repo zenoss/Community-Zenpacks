@@ -12,9 +12,9 @@ __doc__="""DellExpansionCardMap
 
 DellExpansionCardMap maps the pCIDeviceTable table to cards objects
 
-$Id: DellExpansionCardMap.py,v 1.4 2010/10/19 22:27:36 egor Exp $"""
+$Id: DellExpansionCardMap.py,v 1.6 2010/11/11 00:07:51 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -88,7 +88,8 @@ class DellExpansionCardMap(SnmpPlugin):
         for oid, cntlr in tabledata.get('storageCntlrTable', {}).iteritems():
             cntlr['snmpindex'] = oid.strip('.')
             cntlrs[cntlr['_model'].translate(ttable, ' /'.lower())] = cntlr
-        drac = tabledata.get('bmcLANInterfaceTable', {0: [{}]}).values()[0]
+        drac = {}
+        for drac in tabledata.get('bmcLANInterfaceTable', {}).values(): break
         for cmp in tabledata.get('applicationTable', {}).values():
             if 'DRAC' in cmp.get('name', ''):
                 drac['FWRev'] = cmp.get('ver', '')
@@ -102,19 +103,21 @@ class DellExpansionCardMap(SnmpPlugin):
                     om = self.objectMap(scntlr)
                     om.modname = "ZenPacks.community.DellMon.DellStorageCntlr"
                     om.controllerType = self.controllerTypes.get(getattr(om, 'controllerType', 0), 'Unknown')
-                    om.cacheSize = "%d" % (getattr(om, '_cacheSizeM', 0) * 1048576 + getattr(om, 'cacheSize', 0))
+                    om.cacheSize = getattr(om, '_cacheSizeM', 0) * 1048576 + getattr(om, 'cacheSize', 0)
                     om.slot = card['slot']
                 elif 'DRAC' in card['_model']:
                     card.update(drac)
                     om = self.objectMap(card)
                     om.modname = "ZenPacks.community.DellMon.DellRemoteAccessCntlr"
-                    om.macaddress = self.asmac(om.macaddress)
+                    if hasattr(om, 'macaddress'):
+                        om.macaddress = self.asmac(om.macaddress)
                     om.snmpindex = oid.strip('.')
                 elif card['_model'].startswith('Remote Access Controller'):
                     card.update(drac)
                     om = self.objectMap(card)
                     om.modname = "ZenPacks.community.DellMon.DellRemoteAccessCntlr"
-                    om.macaddress = self.asmac(om.macaddress)
+                    if hasattr(om, 'macaddress'):
+                        om.macaddress = self.asmac(om.macaddress)
                     om.snmpindex = oid.strip('.')
                 else: 
                     om = self.objectMap(card)

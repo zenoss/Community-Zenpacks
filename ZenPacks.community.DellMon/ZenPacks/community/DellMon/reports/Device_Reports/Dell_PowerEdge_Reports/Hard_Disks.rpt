@@ -1,14 +1,14 @@
 <tal:block tal:define="
-        objects python:[card for card in here.getDmdRoot('Devices').getMonitoredComponents() if card.factory_type_information[0].get('id', '') == 'DellRemoteAccessCntlr'];
-        tableName string: dracboards;
+        objects python:[disk for disk in here.getDmdRoot('Devices').getMonitoredComponents() if disk.factory_type_information[0].get('immediate_view', '') == 'viewDellHardDisk'];
+        tableName string: storagecntlrs;
         batch python:here.ZenTableManager.getBatch(tableName,objects);
         exportFields python:[('getParentDeviceName','Device'), 
+                            ('bay','Bay'), 
                             ('name','Component'), 
-                            ('getProductLink','Model'), 
-                            ('FWRev', 'Firmware'),
-                            ('SWVer', 'Driver'),
-                            ('ipaddress','IP Address'), 
-                            ('macaddress','MAC Address')];">
+                            ('getProductName', 'Model'),
+                            ('diskType','Interface'), 
+                            ('size','Size'), 
+                            ('FWRev','Firmware')];">
 <tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
 <tal:block metal:fill-slot="report">
 
@@ -19,7 +19,7 @@
 <tal:block metal:fill-slot="contentPane">
 
 <form method="POST" tal:attributes="action request/URL;"
-                        tal:define="tabletitle string:DRAC Controllers;
+                        tal:define="tabletitle string:Hard Disks;
                         showfilterbox python:True;
                         tblcolspan string:7">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
@@ -29,30 +29,30 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'hostname','Device')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'bay','Bay')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'name','Component')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'getProductLink','Model')"/>
+                            tableName,'getProductName','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'diskType','Interface')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'size','Size')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'FWRev','Firmware')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'SWVer','Drivers Pack')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'macaddress','IP Address')"/>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'macaddress','MAC Address')"/>
     </tr>
     <tr tal:repeat="comp batch">
         <td class="tablevalues" 
           tal:content="structure comp/getDeviceLink"/>
+        <td class="tablevalues" tal:content="comp/bay"/>
         <td class="tablevalues">
             <a class="tablevalues" tal:attributes="href comp/getPrimaryUrlPath"
                 tal:content="comp/name">smtp</a>
         </td>
         <td class="tablevalues" tal:content="structure comp/getProductLink"/>
+        <td class="tablevalues" tal:content="comp/diskType"/>
+        <td class="tablevalues" tal:content="comp/sizeString"/>
         <td class="tablevalues" tal:content="comp/FWRev"/>
-        <td class="tablevalues" tal:content="comp/SWVer"/>
-        <td class="tablevalues" tal:content="comp/ipaddress"/>
-        <td class="tablevalues" tal:content="comp/macaddress"/>
     </tr>
     <tr>
         <td colspan="7" class="tableheader" align='center'>

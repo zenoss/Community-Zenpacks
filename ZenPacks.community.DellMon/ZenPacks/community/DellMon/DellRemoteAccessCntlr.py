@@ -12,9 +12,9 @@ __doc__="""DellRemoteAccessCntlr
 
 DellRemoteAccessCntlr is an abstraction of a Dell DRAC Controller.
 
-$Id: DellRemoteAccessCntlr.py,v 1.1 2010/10/19 23:48:48 egor Exp $"""
+$Id: DellRemoteAccessCntlr.py,v 1.2 2010/11/15 17:30:16 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from DellExpansionCard import *
 
@@ -68,5 +68,11 @@ class DellRemoteAccessCntlr(DellExpansionCard):
             )
           },
         )
+
+    def getDeviceProductName(self):
+        return self.device().hw.getProductName()
+
+    def getDeviceProductLink(self):
+        return self.device().hw.getProductLink()
 
 InitializeClass(DellRemoteAccessCntlr)

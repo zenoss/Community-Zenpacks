@@ -21,15 +21,15 @@ if os.path.isdir(skinsDir):
     registerDirectory(skinsDir, globals())
 
 from Products.ZenWidgets import messaging
-from Products.ZenUtils.Utils import monkeypatch, zenPath, binPath, executeCommand
-from Products.ZenUtils.Utils import executeStreamCommand
+from Products.ZenUtils.Utils \
+    import monkeypatch, zenPath, binPath, executeCommand, executeStreamCommand
 from Products.ZenModel.PerformanceConf import performancePath
 from Products.ZenModel.ZVersion import VERSION
 
 zpDir = zenPath('ZenPacks')
 updConfZenBin = zenPath('bin/updateConfigs')
 updConfBin = os.path.join(os.path.dirname(__file__), 'bin/updateConfigs')
-masterdaemons=['zeoctl','zopectl','zenhub','zenjobs','zenactions','zenmodeler']
+masterdaemons = ['zeoctl', 'zopectl', 'zenhub', 'zenjobs', 'zenactions']
 
 
 class blackhole:

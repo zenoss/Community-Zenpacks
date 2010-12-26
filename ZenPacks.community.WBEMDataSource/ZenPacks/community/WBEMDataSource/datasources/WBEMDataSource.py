@@ -117,7 +117,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource):
 
     def getInstanceInfo(self, context):
         try:
-            classname = self.getCommand(context, self.wql)
+            classname = self.getCommand(context, self.instance)
             namespace = self.getCommand(context, self.namespace)
             if classname.upper().startswith('SELECT '):
                 classname, kbs = self.parseSqlQuery(classname)
@@ -178,7 +178,7 @@ class WBEMDataSource(ZenPackPersistence, RRDDataSource):
         try:
             tr, inst, kb, namespace = self.getInstanceInfo(device)
             if not tr: raise
-            inst = self.getCommand(device, self.wql)
+            inst = self.getCommand(device, self.instance)
             if inst.startswith("%s:"%namespace): inst = inst[len(namespace)+1:]
             properties = dict([(
                         dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,

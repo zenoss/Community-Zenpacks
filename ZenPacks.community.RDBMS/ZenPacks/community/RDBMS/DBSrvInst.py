@@ -12,11 +12,12 @@ __doc__="""DBSrvInst
 
 DBSrvInst is a DBSrvInst
 
-$Id: DBSrvInst.py,v 1.2 2010/09/26 23:59:39 egor Exp $"""
+$Id: DBSrvInst.py,v 1.3 2010/11/20 15:52:19 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import InitializeClass, DTMLFile
+from AccessControl import ClassSecurityInfo
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenModel.ZenossSecurity import *
@@ -25,7 +26,6 @@ from Products.ZenRelations.RelSchema import *
 from Products.ZenWidgets import messaging
 
 from Products.ZenModel.DeviceComponent import DeviceComponent
-from Products.ZenModel.Software import Software
 from Products.ZenModel.MEProduct import MEProduct
 
 def manage_addDBSrvInst(context, id, userCreated, REQUEST=None):
@@ -41,7 +41,7 @@ def manage_addDBSrvInst(context, id, userCreated, REQUEST=None):
 
 addDBSrvInst = DTMLFile('dtml/addDBSrvInst',globals())
 
-class DBSrvInst(ZenPackPersistence, DeviceComponent, Software, HWStatus):
+class DBSrvInst(ZenPackPersistence, DeviceComponent, MEProduct, HWStatus):
     """
     DBSrvInst object
     """
@@ -56,13 +56,18 @@ class DBSrvInst(ZenPackPersistence, DeviceComponent, Software, HWStatus):
     snmpindex = ""
     dbsiname = ""
     contact = ""
+    procRegex = ""
+    monitorProc = False
     status = 0
 
     statusmap ={0: (DOT_GREEN, SEV_CLEAN, 'Up'),
                 1: (DOT_RED, SEV_CRITICAL, 'Down'),
                 }
 
-    _properties = Software._properties + (
+    _properties = (
+        {'id':'procRegex', 'type':'string', 'mode':'w'},
+        {'id':'monitorProc', 'type':'boolean', 'mode':'w'},
+        {'id':'installDate', 'type':'date', 'mode':''},
         {'id':'snmpindex', 'type':'string', 'mode':'w'},
         {'id':'dbsiname', 'type':'string', 'mode':'w'},
         {'id':'contact', 'type':'string', 'mode':'w'},
@@ -115,6 +120,74 @@ class DBSrvInst(ZenPackPersistence, DeviceComponent, Software, HWStatus):
             )
           },
         )
+
+
+    security = ClassSecurityInfo()
+
+
+    def __init__(self, id, title=""):
+        MEProduct.__init__(self, id, title)
+
+
+    security.declareProtected('Change Device', 'setProduct')
+    def setProduct(self, productName,  manufacturer="Unknown", 
+                    newProductName="", REQUEST=None, **kwargs):
+        """Set the product class of this software.
+        """
+        if not manufacturer: manufacturer = "Unknown"
+        if newProductName: productName = newProductName
+        prodobj = self.getDmdRoot("Manufacturers").createSoftwareProduct(
+                                    productName, manufacturer, **kwargs)
+        self.productClass.addRelation(prodobj)
+        if REQUEST:
+            messaging.IMessageSender(self).sendToBrowser(
+                'Product Set',
+                ("Set Manufacturer %s and Product %s."
+                                    % (manufacturer, productName))
+            )
+            return self.callZenScreen(REQUEST)
+
+
+    def setProductKey(self, prodKey, manufacturer=None):
+        """Set the product class of this software by its productKey.
+        """
+        if prodKey:
+            # Store these so we can return the proper value from getProductKey
+            self._prodKey = prodKey
+            self._manufacturer = manufacturer
+
+            if manufacturer is None:
+                manufacturer = 'Unknown'
+
+            manufs = self.getDmdRoot("Manufacturers")
+            prodobj = manufs.createSoftwareProduct(prodKey, manufacturer)
+            self.productClass.addRelation(prodobj)
+        else:
+            self.productClass.removeRelation()
+
+
+    def name(self):
+        """Return the name of this software (from its softwareClass)
+        """
+        pclass = self.productClass()
+        if pclass: return pclass.name
+        return ""
+
+
+    def version(self):
+        """Return the version of this software (from its softwareClass)
+        """
+        pclass = self.productClass()
+        if pclass: return pclass.version
+        return ""
+
+
+    def build(self):
+        """Return the build of this software (from its softwareClass)
+        """
+        pclass = self.productClass()
+        if pclass: return pclass.build
+        return ""
 
 
     def setUserCreateFlag(self):

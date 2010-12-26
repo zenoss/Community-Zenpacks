@@ -1,0 +1,78 @@
+<tal:block tal:define="
+        objects python:[card for card in here.getDmdRoot('Devices').getSubComponents(meta_type='CiscoExpansionCard', monitored=False)];
+        tableName string: ciscomodules;
+        batch python:here.ZenTableManager.getBatch(tableName,objects);
+        exportFields python:[('getParentDeviceName','Device'), 
+                            ('slot','Slot'), 
+                            ('name','Component'), 
+                            ('getProductLink', 'Model'),
+                            ('getProductPartNumber', 'Part Number'),
+                            ('HWVer','HW Version'),
+                            ('SWVer','SW Version'),
+                            ('FWRev','Firmware'),
+                            ('serialNumber','Serial Number'),
+                            ];">
+<tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
+<tal:block metal:fill-slot="report">
+
+<tal:block metal:use-macro="here/templates/macros/page1">
+<tal:block metal:fill-slot="breadCrumbPane">
+    <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>    
+</tal:block>
+<tal:block metal:fill-slot="contentPane">
+
+<form method="POST" tal:attributes="action request/URL;"
+                        tal:define="tabletitle string:Modules;
+                        showfilterbox python:True;
+                        tblcolspan string:7">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'hostname','Device')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'slot','Slot')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProductLink','Model')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'getProductPartNumber','Part Number')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'HWVer','HW Version')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'SWVer','SW Version')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'FWRev','Firmware')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'serialNumber','Serial Number')"/>
+    </tr>
+    <tr tal:repeat="comp batch">
+        <td class="tablevalues" 
+          tal:content="structure comp/getDeviceLink"/>
+        <td class="tablevalues">
+            <a class="tablevalues" tal:attributes="href comp/getPrimaryUrlPath"
+                tal:content="comp/slot">smtp</a>
+        </td>
+        <td class="tablevalues" tal:content="structure comp/getProductLink"/>
+        <td class="tablevalues" tal:content="comp/getProductPartNumber"/>
+        <td class="tablevalues" tal:content="comp/HWVer"/>
+        <td class="tablevalues" tal:content="comp/SWVer"/>
+        <td class="tablevalues" tal:content="comp/FWRev"/>
+        <td class="tablevalues" tal:content="comp/serialNumber"/>
+    </tr>
+    <tr>
+        <td colspan="7" class="tableheader" align='center'>
+        <form metal:use-macro="here/zenTableNavigation/macros/navtool"/>
+        </td>
+    </tr>
+
+</tal:block>
+</tal:block>
+</form>
+
+</tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+</tal:block>

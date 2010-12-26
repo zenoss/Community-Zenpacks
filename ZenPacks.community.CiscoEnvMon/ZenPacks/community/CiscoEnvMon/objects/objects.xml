@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoFan') -->
+<object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoFan' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Cisco Environment Fans status template
+</property>
+<property type="text" id="description" mode="w" >
+Cisco Environment Fans status template
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.CiscoEnvMon.CiscoFan
+</property>
+<tomanycont id='datasources'>
+<object id='state' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.9.9.13.1.4.1.3
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='state' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='Fan status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['state_state']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+1
+</property>
+<property type="string" id="maxval" mode="w" >
+1
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/CiscoFan
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoPowerSupply') -->
+<object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoPowerSupply' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Cisco Environment PowerSupply status template
+</property>
+<property type="text" id="description" mode="w" >
+Cisco Environment PowerSupply status template
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.CiscoEnvMon.CiscoPowerSupply
+</property>
+<tomanycont id='datasources'>
+<object id='state' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.9.9.13.1.5.1.3
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='state' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='PowerSupply status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['state_state']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+1
+</property>
+<property type="string" id="maxval" mode="w" >
+1
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/CiscoPowerSupply
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoTemperatureSensor') -->
+<object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoTemperatureSensor' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Cisco Environment Temperature Sensors template
+</property>
+<property type="text" id="description" mode="w" >
+Cisco Environment Temperature Sensors template
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.community.CiscoEnvMon.CiscoTemperatureSensor
+</property>
+<tomanycont id='datasources'>
+<object id='state' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.9.9.13.1.3.1.6
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='state' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='temperature' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.9.9.13.1.3.1.3
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='celsius' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='TemperatureSensor status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['state_state']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+1
+</property>
+<property type="string" id="maxval" mode="w" >
+1
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/CiscoTemperatureSensor
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+°C
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='temperature' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+temperature_celsius
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Cisco') -->
+<object id='/zport/dmd/Events/Cisco' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.fans._getOb(evt.component).state = state
+    txnCommit()
+</property>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.fans._getOb(evt.component).state = state
+    txnCommit()
+</property>
+<tomanycont id='instances'>
+<object id='LINK-2-BADVCALL' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+LINK-2-BADVCALL
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<property type="string" id="regex" mode="w" >
+Interface (?P&lt;component&gt;\S+), undefined entry point
+</property>
+<property type="string" id="example" mode="w" >
+Interface FastEthernet3/6, undefined entry point
+</property>
+</object>
+</tomanycont>
+<object id='FW' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='defaultmapping' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="string" id="eventClassKey" mode="w" >
+defaultmapping
+</property>
+<property type="int" id="sequence" mode="w" >
+2
+</property>
+<property type="string" id="regex" mode="w" >
+\d+ \S+ \S+ SEV=\d+ (?P&lt;component&gt;\S+) RPT=\d+ \S+ (?P&lt;summary&gt;Received SNMP .*)
+</property>
+<property type="string" id="example" mode="w" >
+1313851 03/30/2006 14:01:28.540 SEV=3 SNMP/6 RPT=1026 10.1.2.3 Received SNMP request with unsupported community string 'public'
+</property>
+</object>
+</tomanycont>
+</object>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoFan') -->
+<object id='/zport/dmd/Events/Status/CiscoFan' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.fans._getOb(evt.component).state = state
+    txnCommit()
+</property>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.fans._getOb(evt.component).state = state
+    txnCommit()
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoPowerSupply') -->
+<object id='/zport/dmd/Events/Status/CiscoPowerSupply' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.powersupplies._getOb(evt.component).state = state
+    txnCommit()
+</property>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.powersupplies._getOb(evt.component).state = state
+    txnCommit()
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoTemperatureSensor') -->
+<object id='/zport/dmd/Events/Status/CiscoTemperatureSensor' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.temperaturesensors._getOb(evt.component).state = state
+    txnCommit()
+</property>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.hw.temperaturesensors._getOb(evt.component).state = state
+    txnCommit()
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Cisco Devices') -->
+<object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Cisco Devices' module='Products.ZenModel.Report' class='Report'>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Modules') -->
+<object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Modules' module='Products.ZenModel.Report' class='Report'>
+</object>
+</objects>

@@ -1,5 +1,5 @@
 <tal:block tal:define="
-        objects python:[card for card in here.getDmdRoot('Devices').getMonitoredComponents() if card.factory_type_information[0]['id'] == 'DellRemoteAccessCntlr'];
+        objects python:[card for card in here.getDmdRoot('Devices').getMonitoredComponents() if card.factory_type_information[0].get('id', '') == 'DellRemoteAccessCntlr'];
         tableName string: dracboards;
         batch python:here.ZenTableManager.getBatch(tableName,objects);
         exportFields python:[('getParentDeviceName','Device'), 

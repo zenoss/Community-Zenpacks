@@ -12,9 +12,9 @@ __doc__="""WMIClient
 
 Gets WMI performance data.
 
-$Id: WMIClient.py,v 2.4 2010/07/01 13:57:52 egor Exp $"""
+$Id: WMIClient.py,v 2.5 2010/11/09 15:40:47 egor Exp $"""
 
-__version__ = "$Revision: 2.4 $"[11:-2]
+__version__ = "$Revision: 2.5 $"[11:-2]
 
 if __name__ == "__main__":
     import pysamba.twisted.reactor
@@ -71,7 +71,7 @@ class WMIClient(BaseClient):
         elif socket.getfqdn().lower() == device.id.lower(): 
             self.host = "."
             device.zWinUser = device.zWinPassword = ""
-        elif device.manageIp is not None:
+        elif device.manageIp is not "":
             self.host = device.manageIp
         self.name = device.id
         self.user = device.zWinUser
@@ -150,8 +150,9 @@ class WMIClient(BaseClient):
                                 if g[8] == '000':
                                     tz = 'GMT'
                                 else:
-                                    tz = divmod(int(g[8]), 60)
-                                    tz = 'GMT%s%02d%02d' % (g[7],tz[0],tz[1]*60)
+                                    hr, mn = divmod(int(g[8]), 60)
+                                    if 0 < mn < 1: mn = mn * 60
+                                    tz = 'GMT%s%02d%02d' % (g[7], hr, mn)
                                 res = DateTime(int(g[0]), int(g[1]), int(g[2]),
                                                 int(g[3]),int(g[4]),
                                                 float('%s.%s'%(g[5],g[6])), tz)

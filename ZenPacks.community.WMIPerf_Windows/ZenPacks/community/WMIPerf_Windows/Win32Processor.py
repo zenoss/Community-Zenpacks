@@ -12,9 +12,9 @@ __doc__="""Win32Processor
 
 Win32Processor is an abstraction of a Processor.
 
-$Id: Win32Processor.py,v 1.1 2010/04/22 08:16:37 egor Exp $"""
+$Id: Win32Processor.py,v 1.2 2010/12/21 18:44:42 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.CPU import CPU
@@ -29,6 +29,7 @@ class Win32Processor(CPU):
     voltage = 0
     cacheSizeL1 = 0
     cacheSizeL2 = 0
+    monitor = False
 
     _properties = (
          {'id':'core', 'type':'int', 'mode':'w'},

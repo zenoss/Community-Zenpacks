@@ -12,9 +12,9 @@ __doc__="""DiskDriveMap
 
 DiskDriveMap maps Win32_DiskDrive class to HardDisk class.
 
-$Id: DiskDriveMap.py,v 1.5 2010/10/14 19:50:14 egor Exp $"""
+$Id: DiskDriveMap.py,v 1.7 2010/12/21 18:45:35 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -64,7 +64,12 @@ class DiskDriveMap(WMIPlugin):
         rm = self.relMap()
         perfnames = {}
         for inst in results.get("Win32_PerfRawData_PerfDisk_PhysicalDisk", []):
-            perfnames[inst['name'].split()[0]] = inst['snmpindex']
+            name = inst.get('name', None) or ''
+            snmpindex = inst.get('snmpindex', None) or ''
+            if (not name or not snmpindex): continue
+            if ' ' in name: name = name.split()[0]
+            if ':' not in snmpindex: perfnames[name] = snmpindex
+            else: perfnames[name] = snmpindex.split(':', 1)[1]
         for instance in results.get("Win32_DiskDrive", []):
             om = self.objectMap(instance)
             try:
@@ -76,6 +81,7 @@ class DiskDriveMap(WMIPlugin):
                 if om._model and not om._manuf: om._manuf = om._model.split()[0]
                 if not om._manuf: om._manuf = 'Unknown'
                 if om._model: om.setProductKey = MultiArgs(om._model, om._manuf)
+                if ':' in om.snmpindex:om.snmpindex=om.snmpindex.split(':',1)[1]
             except AttributeError:
                 raise
             rm.append(om)

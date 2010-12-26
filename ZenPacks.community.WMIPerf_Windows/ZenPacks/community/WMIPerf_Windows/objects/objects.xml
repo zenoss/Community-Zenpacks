@@ -26,7 +26,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-Win32_LogicalDisk.DeviceID="${here/id}:"
+${here/snmpindex}
 </property>
 <tomanycont id='datapoints'>
 <object id='usedBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -273,140 +273,6 @@ True
 </tomanycont>
 </object>
 </tomanycont>
-<tomanycont id='graphs'>
-<object id='Errors' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['PerfRawData_ifInErrors', 'PerfRawData_ifOutErrors']
-</property>
-<property type="int" id="sequence" mode="w" >
-2
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-Errors/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Packets' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['PerfRawData_ifInUcastPackets', 'PerfRawData_ifOutUcastPackets']
-</property>
-<property type="int" id="sequence" mode="w" >
-1
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-Pkts/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Throughput' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['PerfRawData_ifInOctets', 'PerfRawData_ifOutOctets']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-Bits/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
 <tomanycont id='thresholds'>
 <object id='high utilization' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
@@ -533,7 +399,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -547,7 +413,7 @@ True
 <tomanycont id='graphPoints'>
 <object id='ifInPackets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -576,7 +442,7 @@ AVERAGE
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -605,7 +471,7 @@ AVERAGE
 2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -622,9 +488,6 @@ Outbound
 <property type="long" id="limit" mode="w" >
 -1
 </property>
-<property type="string" id="rpn" mode="w" >
--1,*
-</property>
 <property type="string" id="dpName" mode="w" >
 PerfRawData_ifOutPackets
 </property>
@@ -637,7 +500,7 @@ AVERAGE
 3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -653,9 +516,6 @@ Outbound Unicasts
 </property>
 <property type="long" id="limit" mode="w" >
 -1
-</property>
-<property type="string" id="rpn" mode="w" >
--1,*
 </property>
 <property type="string" id="dpName" mode="w" >
 PerfRawData_ifOutUcastPackets
@@ -924,140 +784,6 @@ True
 </tomanycont>
 </object>
 </tomanycont>
-<tomanycont id='graphs'>
-<object id='CPU' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['cpuPercentProcessorTime_cpuPercentProcessorTime']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-percentage
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Free Memory' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['memoryAvailableKBytes_memoryAvailableKBytes']
-</property>
-<property type="int" id="sequence" mode="w" >
-1
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-bytes
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-True
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Paging' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['memoryPagesPerSec_memoryPagesPerSec']
-</property>
-<property type="int" id="sequence" mode="w" >
-2
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-page/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
 <tomanycont id='thresholds'>
 <object id='CPU Utilization over 90' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
@@ -1323,7 +1049,7 @@ True
 root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-Win32_PerfRawData_PerfDisk_LogicalDisk.Name="${here/id}:"
+Win32_PerfRawData_PerfDisk_LogicalDisk.Name="${here/mount}"
 </property>
 <tomanycont id='datapoints'>
 <object id='CurrentDiskQueueLength' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1385,7 +1111,7 @@ True
 root\cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-Win32_LogicalDisk.DeviceID="${here/id}:"
+${here/snmpindex}
 </property>
 <tomanycont id='datapoints'>
 <object id='usedBlocks' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1494,7 +1220,7 @@ AVERAGE
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1510,9 +1236,6 @@ ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
-</property>
-<property type="string" id="rpn" mode="w" >
--1,*
 </property>
 <property type="string" id="dpName" mode="w" >
 PerfDisk_DiskWriteBytesPersec
@@ -1583,7 +1306,7 @@ AVERAGE
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -1599,9 +1322,6 @@ ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
-</property>
-<property type="string" id="rpn" mode="w" >
--1,*
 </property>
 <property type="string" id="dpName" mode="w" >
 PerfDisk_DiskWritesPersec
@@ -1859,137 +1579,6 @@ True
 </tomanycont>
 </object>
 </tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='graphs'>
-<object id='CPU Utilization' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['cpu_cpu']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-percentage
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Memory' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['mem_mem']
-</property>
-<property type="int" id="sequence" mode="w" >
-1
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-bytes
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-True
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Process Count' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['count_count']
-</property>
-<property type="int" id="sequence" mode="w" >
-2
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
@@ -2343,7 +1932,7 @@ AVERAGE
 HardDisk I/O WMI template
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
-Products.ZenModel.Win32DiskDrive
+ZenPacks.community.WMIPerf_Windows.Win32DiskDrive
 </property>
 <tomanycont id='datasources'>
 <object id='DiskDrive' module='ZenPacks.community.WMIDataSource.datasources.WMIDataSource' class='WMIDataSource'>
@@ -2428,52 +2017,6 @@ True
 </property>
 </object>
 </tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='graphs'>
-<object id='IO Bytes' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['lDiskDiskReadBytesPerSec_lDiskDiskReadBytesPerSec', 'lDiskDiskWriteBytesPerSec_lDiskDiskWriteBytesPerSec']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-bytes/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
@@ -2792,7 +2335,7 @@ True
 root/cimv2
 </property>
 <property type="string" id="wql" mode="w" >
-Win32_NetworkAdapter.DeviceID="${here/snmpindex}"
+${here/snmpindex}
 </property>
 <tomanycont id='datapoints'>
 <object id='ifOperStatus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -2811,140 +2354,6 @@ True
 </tomanycont>
 </object>
 </tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='graphs'>
-<object id='Errors' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['PerfRawData_ifInErrors', 'PerfRawData_ifOutErrors']
-</property>
-<property type="int" id="sequence" mode="w" >
-2
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-Errors/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Packets' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['PerfRawData_ifInUcastPackets', 'PerfRawData_ifOutUcastPackets']
-</property>
-<property type="int" id="sequence" mode="w" >
-1
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-Pkts/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Throughput' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['PerfRawData_ifInOctets', 'PerfRawData_ifOutOctets']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-Bits/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
@@ -3073,7 +2482,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -3087,7 +2496,7 @@ True
 <tomanycont id='graphPoints'>
 <object id='ifInPackets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3116,7 +2525,7 @@ AVERAGE
 1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3145,7 +2554,7 @@ AVERAGE
 2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3162,9 +2571,6 @@ Outbound
 <property type="long" id="limit" mode="w" >
 -1
 </property>
-<property type="string" id="rpn" mode="w" >
--1,*
-</property>
 <property type="string" id="dpName" mode="w" >
 PerfRawData_ifOutPackets
 </property>
@@ -3177,7 +2583,7 @@ AVERAGE
 3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-AREA
+LINE
 </property>
 <property type="long" id="lineWidth" mode="w" >
 1
@@ -3193,9 +2599,6 @@ Outbound Unicasts
 </property>
 <property type="long" id="limit" mode="w" >
 -1
-</property>
-<property type="string" id="rpn" mode="w" >
--1,*
 </property>
 <property type="string" id="dpName" mode="w" >
 PerfRawData_ifOutUcastPackets
@@ -3446,140 +2849,6 @@ True
 </property>
 </object>
 </tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='graphs'>
-<object id='CPU' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['cpuPercentProcessorTime_cpuPercentProcessorTime']
-</property>
-<property type="int" id="sequence" mode="w" >
-0
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-percentage
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Free Memory' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['memoryAvailableKBytes_memoryAvailableKBytes']
-</property>
-<property type="int" id="sequence" mode="w" >
-1
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-bytes
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-True
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
-0
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-['#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000']
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
-</object>
-<object id='Paging' module='Products.ZenModel.RRDGraph' class='RRDGraph'>
-<property type="lines" id="dsnames" mode="w" >
-['memoryPagesPerSec_memoryPagesPerSec']
-</property>
-<property type="int" id="sequence" mode="w" >
-2
-</property>
-<property type="int" id="height" mode="w" >
-100
-</property>
-<property type="int" id="width" mode="w" >
-500
-</property>
-<property type="string" id="units" mode="w" >
-page/sec
-</property>
-<property type="int" id="linewidth" mode="w" >
-1
-</property>
-<property type="boolean" id="log" mode="w" >
-False
-</property>
-<property type="boolean" id="base" mode="w" >
-False
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="boolean" id="summary" mode="w" >
-True
-</property>
-<property type="int" id="miny" mode="w" >
--1
-</property>
-<property type="int" id="maxy" mode="w" >
--1
-</property>
-<property type="lines" id="colors" mode="w" >
-('#00cc00', '#0000ff', '#00ffff', '#ff0000', '#ffff00', '#cc0000', '#0000cc', '#0080c0', '#8080c0', '#ff0080', '#800080', '#0000a0', '#408080', '#808000', '#000000', '#00ff00', '#fb31fb', '#0080ff', '#ff8000', '#800000')
-</property>
-<property type="boolean" id="hasSummary" mode="w" >
-True
-</property>
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>

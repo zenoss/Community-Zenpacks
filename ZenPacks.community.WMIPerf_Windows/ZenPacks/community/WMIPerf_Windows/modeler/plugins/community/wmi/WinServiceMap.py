@@ -12,9 +12,9 @@ __doc__ = """WinServiceMap
 
 WinServiceMap gathers status of Windows services
 
-$Id: WinServiceMap.py,v 1.2 2010/10/14 20:28:35 egor Exp $"""
+$Id: WinServiceMap.py,v 1.3 2010/12/21 18:48:29 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -33,8 +33,8 @@ class WinServiceMap(WMIPlugin):
                 None,
                 "root/cimv2",
                     {
-                    'AcceptPause':'acceptPause',
-                    'AcceptStop':'acceptStop',
+                    'AcceptPause':'_acceptPause',
+                    'AcceptStop':'_acceptStop',
                     'Caption':'_description',
                     'Name':'_name',
                     'PathName':'pathName',

@@ -12,9 +12,9 @@ __doc__ = """RouteMap
 
 RouteMap gathers and stores routing information.
 
-$Id: RouterMap.py,v 1.2 2010/10/14 20:25:37 egor Exp $"""
+$Id: RouterMap.py,v 1.4 2010/12/21 18:47:25 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
@@ -75,13 +75,14 @@ class RouteMap(WMIPlugin):
             if localOnly and om.routeproto != 'local':
                 continue
             if not hasattr(om, 'routetype'): 
-                continue    
+                continue
             om.routetype = self.mapSnmpVal(om.routetype, self.routeTypeMap)
             if indirectOnly and om.routetype != 'indirect':
                 continue
             if len(rm.maps) > maxRoutes:
                 log.error("Maximum number of routes (%d) exceeded", maxRoutes)
                 return 
+            if ':' in om.snmpindex:om.snmpindex=om.snmpindex.split(':',1)[1]
             rm.append(om)
         return rm
 

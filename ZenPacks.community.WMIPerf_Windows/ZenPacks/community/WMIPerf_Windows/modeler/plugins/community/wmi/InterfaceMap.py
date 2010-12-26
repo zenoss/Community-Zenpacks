@@ -13,9 +13,9 @@ __doc__ = """InterfaceMap
 Gather IP network interface information from WMI, and 
 create DMD interface objects
 
-$Id: InterfaceMap.py,v 1.5 2010/10/14 20:08:23 egor Exp $"""
+$Id: InterfaceMap.py,v 1.6 2010/12/20 21:54:31 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 import re
 import types
@@ -165,6 +165,7 @@ class InterfaceMap(WMIPlugin):
                     if ip.__contains__(':'): continue
                     om.setIpAddresses.append(ip)
                 if not om.ifindex: om.ifindex = om.snmpindex
+                om.snmpindex = 'Win32_NetworkAdapter.DeviceID="%s"'%om.snmpindex
                 if om.speed == 0: om.speed = interfaceSpeed.get(om.id, 0)
                 if om.operStatus in [None, 2, 9]: om.operStatus = 1
                 else: om.operStatus = 2

@@ -14,7 +14,7 @@ ProcessMap finds various software packages installed on a device.
 
 $Id: ProcessMap.py,v 1.6 2010/10/14 20:17:12 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 

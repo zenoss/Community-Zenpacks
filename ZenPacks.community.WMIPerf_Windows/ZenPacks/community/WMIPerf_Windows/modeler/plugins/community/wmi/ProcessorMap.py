@@ -12,9 +12,9 @@ __doc__="""ProcessorMap
 
 ProcessorMap maps the CIM_Processor class to cpus objects
 
-$Id: ProcessorMap.py,v 1.4 2010/07/23 00:05:48 egor Exp $"""
+$Id: ProcessorMap.py,v 1.6 2010/12/21 18:46:56 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from ZenPacks.community.WMIDataSource.WMIPlugin import WMIPlugin
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -134,6 +134,7 @@ class ProcessorMap(WMIPlugin):
                 om.cacheSizeL2 = cache.get(2, 0)
 #                om.cacheSizeL3 = cache.get(3, 0)
                 om.setProductKey = getManufacturerAndModel(om._name)
+                if ':' in om.snmpindex:om.snmpindex=om.snmpindex.split(':',1)[1]
             except AttributeError:
                 continue
             rm.append(om)

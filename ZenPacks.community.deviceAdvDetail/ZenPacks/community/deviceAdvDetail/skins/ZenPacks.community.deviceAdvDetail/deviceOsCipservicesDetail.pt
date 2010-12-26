@@ -119,7 +119,7 @@ loader.insert({onSuccess:function(){
     </tr>
     </tal:block>
     <tr>
-    <td colspan="8" class="tableheader" align='center'>
+    <td colspan="9" class="tableheader" align='center'>
     <form metal:use-macro="here/zenTableNavigation/macros/navtoolnoform"></form>
     </td>
     </tr>

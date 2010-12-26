@@ -9,5 +9,10 @@
                  provides=".interfaces.IDellStorageCntlrInfo"
                  />
 
+        <adapter factory=".info.DellRemoteAccessCntlrInfo"
+                 for=".DellRemoteAccessCntlr.DellRemoteAccessCntlr"
+                 provides=".interfaces.IDellRemoteAccessCntlrInfo"
+                 />
+
     </configure>
 </configure>

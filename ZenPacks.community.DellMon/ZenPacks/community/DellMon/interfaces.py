@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/06/30 22:17:08 egor Exp $"""
+$Id: interfaces.py,v 1.2 2010/10/19 23:46:33 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.Zuul.interfaces import IComponentInfo
 from Products.Zuul.form import schema
@@ -36,3 +36,22 @@ class IDellStorageCntlrInfo(IComponentInfo):
     FWRev = schema.Text(title=u"Firmware Revision", readonly=True, group='Details')
     SWVer = schema.Text(title=u"Driver Version", readonly=True, group='Details')
     cacheSize = schema.Int(title=u"Cache Size", readonly=True, group='Details')
+
+class IDellRemoteAccessCntlrInfo(IComponentInfo):
+    """
+    Info adapter for DellRemoteAccessCntlr components.
+    """
+    status = schema.Text(title=u"Status", readonly=True, group='Overview')
+    manufacturer = schema.Entity(title=u"Manufacturer", readonly=True,
+                                group='Details')
+    product = schema.Entity(title=u"Model", readonly=True, group='Details')
+    slot = schema.Int(title=u"Slot", readonly=True, group='Details')
+    FWRev = schema.Text(title=u"Firmware Revision", readonly=True,
+                                group='Details')
+    SWVer = schema.Text(title=u"Drivers Pack Version", readonly=True, group='Details')
+    ipaddress = schema.Text(title=u"IP Address", readonly=True,
+                                group='Network Settings')
+    subnetmask = schema.Text(title=u"Subnet Mask", readonly=True,
+                                group='Network Settings')
+    macaddress = schema.Text(title=u"IP Address", readonly=True,
+                                group='Network Settings')

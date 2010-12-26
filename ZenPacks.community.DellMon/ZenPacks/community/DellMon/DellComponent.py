@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the DellMon Zenpack for Zenoss.
-# Copyright (C) 2009 Egor Puzanov.
+# Copyright (C) 2009, 2010 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""DellComponent
 
 DellComponent is an abstraction
 
-$Id: DellComponent.py,v 1.0 2009/06/23 00:36:24 egor Exp $"""
+$Id: DellComponent.py,v 1.1 2010/10/17 17:55:41 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from ZenPacks.community.deviceAdvDetail.HWStatus import *
 
@@ -31,3 +31,10 @@ class DellComponent(HWStatus):
                 9: (DOT_RED, SEV_CRITICAL, 'Non Recoverable Lower'),
                 10: (DOT_RED, SEV_CRITICAL, 'Failed'),
                 }
+
+    def getRRDTemplates(self):
+        templates = []
+        for tname in [self.__class__.__name__]:
+            templ = self.getRRDTemplateByName(tname)
+            if templ: templates.append(templ)
+        return templates

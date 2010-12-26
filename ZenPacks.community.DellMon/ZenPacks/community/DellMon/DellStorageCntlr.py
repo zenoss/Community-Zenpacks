@@ -12,9 +12,9 @@ __doc__="""DellStorageCntlr
 
 DellStorageCntlr is an abstraction of a Dell Storage Controller.
 
-$Id: DellStorageCntlr.py,v 1.1 2010/06/30 22:08:44 egor Exp $"""
+$Id: DellStorageCntlr.py,v 1.2 2010/10/17 19:13:22 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from DellExpansionCard import *
@@ -22,7 +22,6 @@ from DellExpansionCard import *
 class DellStorageCntlr(DellExpansionCard):
     """Delll Storage Controller object"""
 
-    model = ""
     FWRev = ""
     SWVer = ""
     role = 1
@@ -41,7 +40,6 @@ class DellStorageCntlr(DellExpansionCard):
                 }
 
     _properties = DellExpansionCard._properties + (
-        {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'FWRev', 'type':'string', 'mode':'w'},
         {'id':'SWVer', 'type':'string', 'mode':'w'},
         {'id':'role', 'type':'int', 'mode':'w'},
@@ -96,12 +94,5 @@ class DellStorageCntlr(DellExpansionCard):
         Return the cache size in human readable form ie 10MB
         """
         return convToUnits(self.cacheSize)
-
-    def getRRDTemplates(self):
-        templates = []
-        for tname in [self.__class__.__name__]:
-            templ = self.getRRDTemplateByName(tname)
-            if templ: templates.append(templ)
-        return templates
 
 InitializeClass(DellStorageCntlr)

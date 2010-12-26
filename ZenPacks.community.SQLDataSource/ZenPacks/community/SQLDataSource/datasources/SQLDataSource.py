@@ -13,20 +13,21 @@ __doc__="""SQLDataSource
 Defines attributes for how a datasource will be graphed
 and builds the nessesary DEF and CDEF statements for it.
 
-$Id: SQLDataSource.py,v 1.2 2010/09/02 21:52:48 egor Exp $"""
+$Id: SQLDataSource.py,v 1.3 2010/11/22 20:14:51 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
-from Products.ZenModel import RRDDataSource
+from Products.ZenModel.RRDDataSource import RRDDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from Products.ZenUtils.Utils import executeStreamCommand
 from Products.ZenWidgets import messaging
 from AccessControl import ClassSecurityInfo, Permissions
 
-import cgi, time
+import cgi
+import time
 import os
 
-class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
+class SQLDataSource(ZenPackPersistence, RRDDataSource):
 
     ZENPACKID = 'ZenPacks.community.SQLDataSource'
 
@@ -37,12 +38,12 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
     sqlparsed = ''
     sqlkb = {}
 
-    _properties = RRDDataSource.RRDDataSource._properties + (
+    _properties = RRDDataSource._properties + (
         {'id':'cs', 'type':'string', 'mode':'w'},
         {'id':'sql', 'type':'string', 'mode':'w'},
         )
 
-    _relations = RRDDataSource.RRDDataSource._relations + (
+    _relations = RRDDataSource._relations + (
         )
 
     # Screen action bindings (and tab definitions)
@@ -84,7 +85,7 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
             self.cs = REQUEST.get('cs', '')
             self.sql = REQUEST.get('sql', '')
             self.sqlparsed, self.sqlkb = self.parseSqlQuery(self.sql)
-        return RRDDataSource.RRDDataSource.zmanage_editProperties(self, REQUEST)
+        return RRDDataSource.zmanage_editProperties(self, REQUEST)
 
 
     def parseSqlQuery(self, sql):
@@ -111,20 +112,17 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
 
 
     def getConnectionString(self, context):
-        return RRDDataSource.RRDDataSource.getCommand(self, context, self.cs)
+        return self.getCommand(context, self.cs)
 
 
-    def getQueryInfo(self, context):
-        if self.sqlparsed == '':
-            self.sqlparsed, self.sqlkb = self.parseSqlQuery(self.sql)
-        sql=RRDDataSource.RRDDataSource.getCommand(self,context,self.sqlparsed)
-        if self.sqlkb == {}: keybindings = {}
-        else:
-            keybindings = dict(zip(self.sqlkb.keys(),
-                                RRDDataSource.RRDDataSource.getCommand(self,
-                                context,
-                                ', '.join(self.sqlkb.values())).split(', ')))
-        return (sql, keybindings, self.getConnectionString(context))
+    def getQueryInfo(self, cntx):
+        try:
+            if self.sqlparsed == '':
+                self.sqlparsed, self.sqlkb = self.parseSqlQuery(self.sql)
+            sql = self.getCommand(cntx, self.sqlparsed)
+            kb=dict([(k,self.getCommand(cntx,v)) for k,v in self.sqlkb.items()])
+            return sql, kb, self.getConnectionString(cntx)
+        except: return None
 
 
     def testDataSourceAgainstDevice(self, testDevice, REQUEST, write, errorLog):
@@ -177,7 +175,7 @@ class SQLDataSource(ZenPackPersistence, RRDDataSource.RRDDataSource):
         try:
             import sys
             cs = self.getConnectionString(device)
-            sql = RRDDataSource.RRDDataSource.getCommand(self, device, self.sql)
+            sql = self.getCommand(device, self.sql)
             properties = dict([(
                         dp.getAliasNames() and dp.getAliasNames()[0] or dp.id,
                         dp.id) for dp in self.getRRDDataPoints()])

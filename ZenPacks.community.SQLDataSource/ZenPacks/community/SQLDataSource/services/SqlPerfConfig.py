@@ -12,12 +12,14 @@ __doc__="""SqlPerfConfig
 
 Provides config to zenperfsql clients.
 
-$Id: SqlPerfConfig.py,v 1.0 2010/06/14 08:45:25 egor Exp $"""
+$Id: SqlPerfConfig.py,v 1.1 2010/11/22 20:00:17 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.ZenCollector.services.config import CollectorConfigService
 from Products.ZenUtils.ZenTales import talesEval
+from ZenPacks.community.SQLDataSource.datasources.SQLDataSource \
+    import SQLDataSource as DataSource
 
 import logging
 log = logging.getLogger('zen.SqlPerfConfig')
@@ -55,7 +57,10 @@ def getSqlComponentConfig(comp, queries, datapoints):
     for templ in comp.getRRDTemplates():
         names = []
         for ds in templ.getRRDDataSources():
-            if not hasattr(ds, 'getQueryInfo') or not ds.enabled: continue
+            if not ds.enabled: continue
+            if not isinstance(ds, DataSource): continue
+            qi = ds.getQueryInfo(comp)
+            if not qi: continue
             qid = comp.id + "_" + templ.id + "_" + ds.id
             datapoints[qid] = []
             columns = {}
@@ -79,7 +84,7 @@ def getSqlComponentConfig(comp, queries, datapoints):
                                         dp.rrdtype,
                                         dp.getRRDCreateCommand(perfServer),
                                         (dp.rrdmin, dp.rrdmax)))
-            queries = sortQuery(queries, qid, ds.getQueryInfo(comp)+(columns,))
+            queries = sortQuery(queries, qid, qi + (columns,))
         for threshold in templ.thresholds():
             if not threshold.enabled: continue
             for ds in threshold.dsnames:

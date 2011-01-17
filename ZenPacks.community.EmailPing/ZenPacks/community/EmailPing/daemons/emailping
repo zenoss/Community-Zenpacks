@@ -12,16 +12,16 @@
 
 . $ZENHOME/bin/zenfunctions
 
-THIS_FILE_PATH=`readlink -f $0`
-DAEMON_NAME=`basename $THIS_FILE_PATH`
-DAEMON_DIR=`dirname $THIS_FILE_PATH`
-ZENPACK_DIR=`dirname $DAEMON_DIR`
-PRGHOME=$ZENPACK_DIR
+THIS_FILE_PATH=$(readlink -f $0)
+DAEMON_NAME=$(basename "$THIS_FILE_PATH")
+DAEMON_DIR=$(dirname "$THIS_FILE_PATH")
+ZENPACK_DIR=$(dirname "$DAEMON_DIR")
+PRGHOME="$ZENPACK_DIR"
 
-PRGNAME=$DAEMON_NAME.py
-CFGFILE=$CFGDIR/$DAEMON_NAME.conf
-if [ ! -f $CFGFILE ]; then
-    touch $CFGFILE
+PRGNAME="$DAEMON_NAME".py
+CFGFILE="$CFGDIR"/"$DAEMON_NAME".conf
+if [ ! -f "$CFGFILE" ]; then
+    touch "$CFGFILE"
 fi
 
 generic "$@"

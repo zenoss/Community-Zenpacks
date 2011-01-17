@@ -47,6 +47,7 @@ class ZenPack(ZenPackBase):
         emailpingGraphPoints = []
         for graphPoint in graph.graphPoints.objectIds():
             if graphPoint.startswith( 'emailping' ):
+                #deleting the graph point here would throw off the iterator
                 emailpingGraphPoints.append( graphPoint )
         for graphPoint in emailpingGraphPoints:
             try:
@@ -54,9 +55,9 @@ class ZenPack(ZenPackBase):
             except:
                 pass
         
-        # remove Queue Length and Transit Time graphs
-        graphNames = ['EmailPing Queue Lengths', 'EmailPing Transit Times']
-        for graphName in graphNames:
+        # remove other graphs
+        from ZenPacks.community.EmailPing.emailping import GRAPH_NAMES
+        for graphName in GRAPH_NAMES:
             try:
                 template.graphDefs._delObject( graphName )
             except:

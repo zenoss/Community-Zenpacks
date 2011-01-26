@@ -27122,20 +27122,4 @@ readonly
 </object>
 </tomanycont>
 </object>
-<property id='zendoc' type='string'>
-Cisco 5580-40 Adaptive Security Appliance
-</property>
-<property type="string" id="name" mode="w" >
-5580-40 ASA
-</property>
-<property type="lines" id="productKeys" mode="w" >
-['5580-40 ASA']
-</property>
-<property type="string" id="description" mode="w" >
-Cisco 5580-40 Adaptive Security Appliance
-</property>
-<property type="boolean" id="isOS" mode="w" >
-False
-</property>
-</object>
 </objects>

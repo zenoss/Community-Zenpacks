@@ -15,7 +15,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = 'ZenPacks.Firestar.CiscoASA'
-VERSION = '2.1.1'
+VERSION = '2.1.2'
 AUTHOR = 'Chris Morrison - chris.morrison@sita.aero, R.Esteve'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.Firestar']

@@ -1,0 +1,13 @@
+---+ install
+default zenpack installation (zenpack --install or through the webinterface)
+
+
+---+ configure plugin
+go to infrastructure -> Devices 
+   * Select Device Class
+   * Click blue Details arrow at the top of the left pane
+   * Select Modeler Plugins
+   * add community.snmp.LLDPMap 
+
+remodel
+

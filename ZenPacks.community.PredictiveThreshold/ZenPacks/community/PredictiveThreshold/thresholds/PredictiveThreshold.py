@@ -71,7 +71,7 @@ class PredictiveThreshold(ThresholdClass):
     tkcolor = '#ffffa0'  # Tick Color
 
     _properties = ThresholdClass._properties + (
-        {'id':'pointval',        'type':'string',  'mode':'w'},
+#        {'id':'pointval',        'type':'string',  'mode':'w'},
         {'id':'eventClass',    'type':'string',  'mode':'w'},
         {'id':'severity',      'type':'int',     'mode':'w'},
         {'id':'escalateCount', 'type':'int',     'mode':'w'},
@@ -88,19 +88,19 @@ class PredictiveThreshold(ThresholdClass):
         {'id':'tkcolor', 'type':'string',     'mode':'w'},
         )
 
-    factory_type_information = (
-        {
-        'immediate_view' : 'editRRDPredictiveThreshold',
-        'actions'        :
-        (
-        { 'id'            : 'edit'
-          , 'name'          : 'Predictive Threshold'
-          , 'action'        : 'editRRDPredictiveThreshold'
-          , 'permissions'   : ( Permissions.view, )
-          },
-        )
-        },
-        )
+#    factory_type_information = (
+#        {
+#        'immediate_view' : 'editRRDPredictiveThreshold',
+#        'actions'        :
+#        (
+#        { 'id'            : 'edit'
+#          , 'name'          : 'Predictive Threshold'
+#          , 'action'        : 'editRRDPredictiveThreshold'
+#          , 'permissions'   : ( Permissions.view, )
+#          },
+#        )
+#        },
+#        )
 
 
 # Update for 4 variables

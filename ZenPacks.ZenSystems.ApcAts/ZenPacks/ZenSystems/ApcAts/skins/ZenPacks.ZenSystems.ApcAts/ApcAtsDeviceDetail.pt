@@ -1,0 +1,44 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post"
+    name="ApcAtsDeviceDetail" tal:attributes="action string:${here/absolute_url_path}/${template/id}">
+
+<tal:block metal:define-macro="ApcAtsDeviceInfo" tal:define="tabletitle string:APC ATS Device Information;">
+
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN ApcAts TABLE CONTENTS -->
+    <tr>
+      <td class="tableheader" align=left>Selected Source</td>
+      <td class="tablevalues" tal:content="python:here.statusSelectedSource == 1 and 'Source A' or 'Source B'"> </td>
+      <td class="tableheader" align=left>Redundancy State </td>
+      <td class="tablevalues" tal:content="python:here.statusRedundancyState == 1 and 'Redundancy lost' or 'Fully redundant'"> </td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Source A Status </td>
+      <td class="tablevalues" tal:content="python:here.statusSourceAStatus == 1 and 'Failed' or 'OK'"> </td>
+      <td class="tableheader" align=left>Source B Status </td>
+      <td class="tablevalues" tal:content="python:here.statusSourceBStatus == 1 and 'Failed' or 'OK'"> </td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Phase Sync Status </td>
+      <td class="tablevalues" tal:content="python:here.statusPhaseSyncStatus == 1 and 'In Sync' or 'Out of sync'"> </td>
+    </tr>
+<!-- END ApcAts TABLE CONTENTS -->
+</tal:block>
+</tal:block>
+</tal:block>
+<tr>
+</tr>
+<tal:block metal:define-macro="objectperf" tal:define="tabletitle string:Performance graphs for APS ATC Devices;">
+</tal:block> 
+
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+
+</form>
+
+</tal:block>
+</tal:block>
+              

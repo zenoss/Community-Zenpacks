@@ -1,0 +1,45 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post"
+    name="ApcUpsDeviceDetail" tal:attributes="action string:${here/absolute_url_path}/${template/id}">
+
+<tal:block metal:define-macro="ApcUpsDeviceInfo" tal:define="tabletitle string:APC UPS Device Information;">
+
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN ApcUps TABLE CONTENTS -->
+    <tr>
+      <td class="tableheader" align=left>Number of Battery Packs</td>
+      <td class="tablevalues" tal:content=here/numBatteryPacks> </td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Number of Bad Battery Packs </td>
+      <td class="tablevalues" tal:content=here/numBadBatteryPacks> </td>
+    </tr>
+    <tr>
+      <td class="tableheader" align=left>Basic Output Status </td>
+      <td class="tablevalues" tal:content=here/basicOutputStatusText> </td>
+<!--
+      <td class="tableheader" align=left>Basic Output Status Value </td>
+      <td class="tablevalues" tal:content=here/basicOutputStatus> </td>
+-->
+    </tr>
+<!-- END ApcUps TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+<tr>
+</tr>
+<tal:block metal:define-macro="objectperf" tal:define="tabletitle string:Performance graphs for APS UPS Devices;">
+</tal:block> 
+
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+
+</form>
+
+</tal:block>
+</tal:block>
+              

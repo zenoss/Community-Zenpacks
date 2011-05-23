@@ -1,0 +1,1786 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Power', 'Olson') -->
+<object id='/zport/dmd/Devices/Power/Olson' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property id='zendoc' type='string'>
+Olson PDU power monitor
+</property>
+<property type="string" id="description" mode="w" >
+Olson PDU power monitor
+</property>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['OlsonNewDeviceMap', 'OlsonPowerMap']
+</property>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['Device', 'olson_power', 'olson_power_days']
+</property>
+<property visible="True" type="string" id="zSnmpVer" >
+v1
+</property>
+<property visible="True" type="string" id="zLinks" >
+&lt;a href='http://${here/manageIp}' target='_'&gt;Console: ${here/id}&lt;/a&gt;
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='manual' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+</object>
+<object id='olson_power' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='olsonPower' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+OlsonPower
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.ZenSystems.olsonPower/path}/lib/getPowerValues.sh ${here/manageIp} ${here/zSnmpCommunity} ${here/zSnmpVer}
+</property>
+<property type="int" id="cycletime" mode="w" >
+60
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='current' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='energy' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='power' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='temp' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='voltage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='current' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Amps
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+--alt-autoscale
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='current' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+olsonPower_current
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='energy' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+kWh
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='energy' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+olsonPower_energy
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='power' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Watts
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='power' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+olsonPower_power
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='temp' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Centigrade
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+--alt-autoscale
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='temp' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+olsonPower_temp
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='voltage' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Volts
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+--alt-autoscale
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='voltage' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+olsonPower_voltage
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='olson_power_days' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='olson_energy_days' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property id='zendoc' type='string'>
+sample every day; detailed data kept 1 year; consolidated to weekly kept for 10 years
+</property>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.ZenSystems.olsonPower/path}/lib/getJustEnergy.sh ${here/manageIp} ${here/zSnmpCommunity} ${here/zSnmpVer}
+</property>
+<property type="int" id="cycletime" mode="w" >
+86400
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='energy_days' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property id='zendoc' type='string'>
+sample every day; detailed data kept 1 year; consolidated to weekly kept for 10 years
+</property>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="text" id="createCmd" mode="w" >
+RRA:LAST:0.5:1:366
+RRA:LAST:0.5:7:520
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="description" mode="w" >
+sample every day; detailed data kept 1 year; consolidated to weekly kept for 10 years
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='energy_days' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+kWh
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='energy_days_energy_days' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+olson_energy_days_energy_days
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Power') -->
+<object id='/zport/dmd/Events/Power' module='Products.ZenEvents.EventClass' class='EventClass'>
+<object id='Olson' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='currentHighAlarm' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+for attr in dir(evt):
+  if attr.startswith('currentHighAlarm'):
+    evt.summary =  'High current trap.  Current is now ' + getattr(evt,attr)
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+currentHighAlarm
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap currentHighAlarm
+</property>
+</object>
+<object id='currentLowAlarm' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+for attr in dir(evt):
+  if attr.startswith('currentLowAlarm'):
+    evt.summary =  'Low current trap.  Current is now ' + getattr(evt,attr)
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+currentLowAlarm
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap currentLowAlarm
+</property>
+</object>
+<object id='tempHighAlarm' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+for attr in dir(evt):
+  if attr.startswith('internalTempReading'):
+    evt.summary =  'High temperature trap.  Temperature is now ' + getattr(evt,attr)
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+tempHighAlarm
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap tempHighAlarm
+</property>
+</object>
+<object id='voltsHighAlarm' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+for attr in dir(evt):
+  if attr.startswith('voltsReading'):
+    evt.summary =  'High voltage trap.  Voltage is now ' + getattr(evt,attr)
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+voltsHighAlarm
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap voltsHighAlarm
+</property>
+</object>
+<object id='voltsLowAlarm' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+for attr in dir(evt):
+  if attr.startswith('voltsLowAlarm'):
+    evt.summary =  'Low voltage trap.  Voltage is now ' + getattr(evt,attr)
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+voltsLowAlarm
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Dell' module='Products.ZenEvents.EventClass' class='EventClass'>
+<object id='utility' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='enterprises.674.10902.2.140.47' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = 'Utility not present'
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+enterprises.674.10902.2.140.47
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap enterprises.674.10902.2.140.47
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+4
+</property>
+</object>
+<object id='enterprises.674.10902.2.140.48' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = 'Utility present'
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+enterprises.674.10902.2.140.48
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap enterprises.674.10902.2.140.48
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='battery' module='Products.ZenEvents.EventClass' class='EventClass'>
+<tomanycont id='instances'>
+<object id='enterprises.674.10902.2.140.43' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = 'Battery Low'
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+enterprises.674.10902.2.140.43
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap enterprises.674.10902.2.140.43
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+5
+</property>
+</object>
+<object id='enterprises.674.10902.2.140.44' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = 'Battery OK'
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+enterprises.674.10902.2.140.44
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap enterprises.674.10902.2.140.44
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+0
+</property>
+</object>
+<object id='enterprises.674.10902.2.140.57' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
+<property type="text" id="transform" mode="w" >
+evt.summary = 'UPS on battery'
+</property>
+<property type="string" id="eventClassKey" mode="w" >
+enterprises.674.10902.2.140.57
+</property>
+<property type="int" id="sequence" mode="w" >
+7
+</property>
+<property type="string" id="example" mode="w" >
+snmp trap enterprises.674.10902.2.140.57
+</property>
+<property visible="True" type="int" id="zEventSeverity" >
+3
+</property>
+</object>
+</tomanycont>
+</object>
+</object>
+</object>
+<!-- ('', 'zport', 'dmd', 'Manufacturers', 'Olson') -->
+<object id='/zport/dmd/Manufacturers/Olson' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
+<property type="string" id="url" mode="w" >
+http://www.olson.co.uk/
+</property>
+<property type="string" id="supportNumber" mode="w" >
++44 (0)20 8905 7273
+</property>
+<property type="string" id="address1" mode="w" >
+Olson House
+</property>
+<property type="string" id="address2" mode="w" >
+490 Honeypot Lane
+</property>
+<property type="string" id="city" mode="w" >
+Stanmore
+</property>
+<property type="string" id="state" mode="w" >
+Middlesex
+</property>
+<property type="string" id="zip" mode="w" >
+HA7 1JY
+</property>
+<property type="string" id="country" mode="w" >
+UK
+</property>
+</object>
+<!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'Olson-9016-V01') -->
+<object id='/zport/dmd/Mibs/mibs/Olson-9016-V01' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv1
+</property>
+<tomanycont id='nodes'>
+<object id='ampsReading' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Current RMS AC current reading in the form AA.AA Amps
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current RMS AC current reading in the form AA.AA Amps
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='compulogic' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933
+</property>
+</object>
+<object id='currentHighSet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+High current Alarm Threshold in the form AA.AA
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.31
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+High current Alarm Threshold in the form AA.AA
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='currentIpAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The current IP address in use. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current IP address in use. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='currentLowSet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Low Current Alarm Threshold in the form AA.AA
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.32
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Low Current Alarm Threshold in the form AA.AA
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='defaultIpAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The default IP address used when no DHCP server is available or DHCP is not enabled. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The default IP address used when no DHCP server is available or DHCP is not enabled. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='dhcpClientEnable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Setting this parameter to 'ON' enables the DHCP client. The PicoServ module will attempt to find a DHCP server and set the IP address automatically. Setting this parameter to any other value disables the DHCP client.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Setting this parameter to 'ON' enables the DHCP client. The PicoServ module will attempt to find a DHCP server and set the IP address automatically. Setting this parameter to any other value disables the DHCP client.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='energyReading' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Current energy consumption reading in the form PPPPPPP.P KWh
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current energy consumption reading in the form PPPPPPP.P KWh
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='etherAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The module 48 bit Ethernet address in ASCII hex format. 
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The module 48 bit Ethernet address in ASCII hex format. 
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='firmwareRevision' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Firmeare Revision Format n.nn
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Firmeare Revision Format n.nn
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='firmwareUploadEnable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+If this field = 'Y' firmware upload is enabled, any other value disables firmware upload.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+If this field = 'Y' firmware upload is enabled, any other value disables firmware upload.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='firmwareUploadPassword' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Password of up to 10 characters to allow new firmware to be uploaded. The password is disabled when string is empty.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Password of up to 10 characters to allow new firmware to be uploaded. The password is disabled when string is empty.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='gatewayIpAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Gateway IP Address. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Gateway IP Address. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='httpPassword' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Password of up to 16 characters used for login in conjunction with the HTTP user name to access pages that require authentication. HTTP user authentication is disabled if the user name parameter is empty.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Password of up to 16 characters used for login in conjunction with the HTTP user name to access pages that require authentication. HTTP user authentication is disabled if the user name parameter is empty.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='httpPortNumber' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+The HTTP port number for web server access
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The HTTP port number for web server access
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='httpUserName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+User Name of up to 16 characters used for login in conjunction with the HTTP password to access pages that require authentication. HTTP user authentication is disabled if the user name parameter is empty.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+User Name of up to 16 characters used for login in conjunction with the HTTP password to access pages that require authentication. HTTP user authentication is disabled if the user name parameter is empty.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='internalTempReading' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Current internal temperature reading in deg. C in the form TT
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current internal temperature reading in deg. C in the form TT
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='moduleName' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+32 character string for module identification.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+32 character string for module identification.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='moduleType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Returns the module type description 'Olson 9016-V01 PDU'
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Returns the module type description 'Olson 9016-V01 PDU'
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='olson' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1
+</property>
+</object>
+<object id='parameterUpdatePassword' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Password of up to 10 characters to allow new parameter values to be written. The password is disabled when string is empty.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Password of up to 10 characters to allow new parameter values to be written. The password is disabled when string is empty.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='pdu' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1
+</property>
+</object>
+<object id='pduTraps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.250
+</property>
+</object>
+<object id='powerFactorReading' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Current power factor reading in the form 0.00
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current power factor reading in the form 0.00
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='powerReading' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Current power reading reading in the form PPPP Watts
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current power reading reading in the form PPPP Watts
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='smtpAlarmEn' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+SMTP (email) alarm enable
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.35
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SMTP (email) alarm enable
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='smtpPassword' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+SMTP (email) Server Authentication Password
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.39
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SMTP (email) Server Authentication Password
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='smtpReceiver' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+SMTP (email) alarm notification email address
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.36
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SMTP (email) alarm notification email address
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='smtpSender' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+SMTP (email) alarm notification sender (return) address
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.37
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SMTP (email) alarm notification sender (return) address
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='smtpServerIpAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Ip Address of SMTP mail server. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.28
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Ip Address of SMTP mail server. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='smtpUsername' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+SMTP (email) Server Authentication User name
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.38
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SMTP (email) Server Authentication User name
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='snmpAccessEnable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Single character SNMP access mode 'R' = Read Only 'W'= Read/Write Any other disables SNMP
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Single character SNMP access mode 'R' = Read Only 'W'= Read/Write Any other disables SNMP
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='snmpAlarmTrapEn' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+SNMP Alarm Trap enable
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.34
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SNMP Alarm Trap enable
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='snmpReadCommunity' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+16 character SNMP read community name
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+16 character SNMP read community name
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='snmpWriteCommunity' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+16 character SNMP read/write community name
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+16 character SNMP read/write community name
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='subnetMask' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Subnet Mask. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.26
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subnet Mask. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='tempHighSet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+High Temperature Alarm Threshold in the form TT
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.33
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+High Temperature Alarm Threshold in the form TT
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='trapReceiverIpAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Ip Address for TRAP receiver. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.27
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Ip Address for TRAP receiver. The format is standard 'dotted decimal' notation.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='voltsHighSet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+High Voltage Alarm Threshold in the form VVV.V
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.29
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+High Voltage Alarm Threshold in the form VVV.V
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='voltsLowSet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Low Voltage Alarm Threshold in the form VVV.V
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.30
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Low Voltage Alarm Threshold in the form VVV.V
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='voltsReading' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Current RMS AC Voltage reading in the form VVV.V Volts
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current RMS AC Voltage reading in the form VVV.V Volts
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='webPageUploadEnable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+If this field = 'Y' file upload is enabled, any other value disables file upload.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+If this field = 'Y' file upload is enabled, any other value disables file upload.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='webPageUploadPassword' module='Products.ZenModel.MibNode' class='MibNode'>
+<property id='zendoc' type='string'>
+Password of up to 10 characters to allow new files to be uploaded. The password is disabled when string is empty.
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Password of up to 10 characters to allow new files to be uploaded. The password is disabled when string is empty.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='currentHighAlarm' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+High measured current alarm
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.250.0.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+High measured current alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'powerFactorReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'voltsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'energyReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'internalTempReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'powerReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'ampsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}}
+</property>
+</object>
+<object id='currentLowAlarm' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+Low measured current alarm
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.250.0.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Low measured current alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'powerFactorReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'voltsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'energyReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'internalTempReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'powerReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'ampsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}}
+</property>
+</object>
+<object id='tempHighAlarm' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+High Internal Temperature alarm
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.250.0.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+High Internal Temperature alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'powerFactorReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'voltsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'energyReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'internalTempReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'powerReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'ampsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}}
+</property>
+</object>
+<object id='voltsHighAlarm' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+High measured voltage alarm
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.250.0.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+High measured voltage alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'powerFactorReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'voltsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'energyReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'internalTempReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'powerReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'ampsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}}
+</property>
+</object>
+<object id='voltsLowAlarm' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property id='zendoc' type='string'>
+Low measured voltage alarm
+</property>
+<property type="string" id="moduleName" mode="w" >
+Olson-9016-V01
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.17933.1.1.250.0.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Low measured voltage alarm
+</property>
+<property type="lines" id="objects" mode="w" >
+{'powerFactorReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'voltsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'energyReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'internalTempReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'powerReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}, 'ampsReading': {'nodetype': 'object', 'module': 'Olson-9016-V01'}}
+</property>
+</object>
+</tomanycont>
+</object>
+</objects>

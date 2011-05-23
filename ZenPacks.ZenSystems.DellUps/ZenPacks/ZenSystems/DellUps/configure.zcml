@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.DellUpsBatteryInfo"
+                 for=".DellUpsBattery.DellUpsBattery"
+                 provides=".interfaces.IDellUpsBatteryInfo"
+                 />
+
+        <browser:resourceDirectory
+                 name="DellUps"
+                 directory="resources"
+                 />
+
+        <browser:viewlet
+                 name="js-DellUps"
+                 for=".DellUpsDevice.DellUpsDevice"
+                 paths="/++resource++DellUps/DellUps.js"
+                 weight="10"
+                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                 permission="zope2.Public"
+                 />
+    </configure>
+</configure>
+
+

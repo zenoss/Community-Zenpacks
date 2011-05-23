@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.ApcUpsBatteryInfo"
+                 for=".ApcUpsBattery.ApcUpsBattery"
+                 provides=".interfaces.IApcUpsBatteryInfo"
+                 />
+
+        <browser:resourceDirectory
+                 name="ApcUps"
+                 directory="resources"
+                 />
+
+        <browser:viewlet
+                 name="js-ApcUps"
+                 for=".ApcUpsDevice.ApcUpsDevice"
+                 paths="/++resource++ApcUps/ApcUps.js"
+                 weight="10"
+                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                 permission="zope2.Public"
+                 />
+    </configure>
+</configure>
+
+

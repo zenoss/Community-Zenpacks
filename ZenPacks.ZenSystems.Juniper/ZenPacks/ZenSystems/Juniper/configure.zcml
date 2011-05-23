@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.JuniperContentsInfo"
+                 for=".JuniperContents.JuniperContents"
+                 provides=".interfaces.IJuniperContentsInfo"
+                 />
+
+        <adapter factory=".info.JuniperFanInfo"
+                for=".JuniperFan.JuniperFan"
+                 provides=".interfaces.IJuniperFanInfo"
+                 />
+
+        <adapter factory=".info.JuniperPowerSupplyInfo"
+                for=".JuniperPowerSupply.JuniperPowerSupply"
+                 provides=".interfaces.IJuniperPowerSupplyInfo"
+                 />
+
+        <adapter factory=".info.JuniperFPCInfo"
+                for=".JuniperFPC.JuniperFPC"
+                 provides=".interfaces.IJuniperFPCInfo"
+                 />
+
+        <adapter factory=".info.JuniperPICInfo"
+                for=".JuniperPIC.JuniperPIC"
+                 provides=".interfaces.IJuniperPICInfo"
+                 />
+
+        <adapter factory=".info.JuniperMICInfo"
+                for=".JuniperMIC.JuniperMIC"
+                 provides=".interfaces.IJuniperMICInfo"
+                 />
+
+        <adapter factory=".info.JuniperBaseCompInfo"
+                for=".JuniperBaseComp.JuniperBaseComp"
+                 provides=".interfaces.IJuniperBaseCompInfo"
+                 />
+
+        <adapter factory=".info.JuniperRoutingEngineInfo"
+                for=".JuniperRoutingEngine.JuniperRoutingEngine"
+                 provides=".interfaces.IJuniperRoutingEngineInfo"
+                 />
+
+        <adapter factory=".info.JuniperBGPInfo"
+                for=".JuniperBGP.JuniperBGP"
+                 provides=".interfaces.IJuniperBGPInfo"
+                 />
+
+        <adapter factory=".info.JuniperComponentsInfo"
+                for=".JuniperComponents.JuniperComponents"
+                 provides=".interfaces.IJuniperComponentsInfo"
+                 />
+
+        <browser:resourceDirectory
+                 name="Juniper"
+                 directory="resources"
+                 />
+
+        <adapter factory=".info.JuniperIpSecVPNInfo"
+                for=".JuniperIpSecVPN.JuniperIpSecVPN"
+                 provides=".interfaces.IJuniperIpSecVPNInfo"
+                 />
+
+        <adapter factory=".info.JuniperIpSecNATInfo"
+                for=".JuniperIpSecNAT.JuniperIpSecNAT"
+                 provides=".interfaces.IJuniperIpSecNATInfo"
+                 />
+
+        <adapter factory=".info.JuniperIpSecPolicyInfo"
+                for=".JuniperIpSecPolicy.JuniperIpSecPolicy"
+                 provides=".interfaces.IJuniperIpSecPolicyInfo"
+                 />
+
+        <adapter factory=".info.JuniperVlanInfo"
+                for=".JuniperVlan.JuniperVlan"
+                 provides=".interfaces.IJuniperVlanInfo"
+                 />
+
+        <browser:viewlet
+                 name="js-Juniper"
+                 for=".JuniperDevice.JuniperDevice"
+                 paths="/++resource++Juniper/Juniper.js"
+                 weight="10"
+                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                 permission="zope2.Public"
+                 />
+    </configure>
+</configure>
+
+

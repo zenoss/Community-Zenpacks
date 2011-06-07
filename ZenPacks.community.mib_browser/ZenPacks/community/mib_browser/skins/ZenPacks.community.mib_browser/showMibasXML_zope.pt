@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE smi SYSTEM "http://www.ibr.cs.tu-bs.de/projects/nmrg/smi.dtd">
+<smi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xsi:noNamespaceSchemaLocation="http://www.ibr.cs.tu-bs.de/projects/nmrg/smi.xsd" >
+    <module tal:attributes="name here/id; language here/language" >
+        <contact tal:content="here/contact"></contact>
+        <description tal:content="here/description"></description>
+    </module>
+
+    <nodes >
+        <node tal:repeat="node here/nodes/objectValues" tal:attributes="name node/id; oid node/oid; status node/status; type node/nodetype">
+            <description tal:content="node/description" > </description>
+        </node>
+    </nodes>
+
+    <notifications>
+        <node tal:repeat="node here/nodes/objectValues" tal:attributes="name node/id; oid node/oid; status node/status; type node/nodetype">
+            <description tal:content="node/description" > </description>
+        </node>
+    </notifications>
+
+</smi>
+

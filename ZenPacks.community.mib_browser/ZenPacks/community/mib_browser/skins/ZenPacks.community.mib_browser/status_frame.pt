@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>Status Bar</title>
+  </head>
+  <body>
+       <div color="red" id="status_bar" />
+</body>
+</html>
+

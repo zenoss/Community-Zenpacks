@@ -1,0 +1,15 @@
+
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+<browser:page
+    template="./skins/ZenPacks.community.mib_browser/JCmibOrganizerOverview.pt"
+    name="JCmibOrganizerOverview"
+    for="*"
+    permission="zenoss.View"
+    />
+
+</configure>
+

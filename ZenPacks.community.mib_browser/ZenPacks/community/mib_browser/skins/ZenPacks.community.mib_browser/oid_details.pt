@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+    <title>OID Details</title>
+        <link rel="stylesheet" type="text/css" href="zenoss.css">
+
+        <tal:block metal:use-macro="here/templates/macros/head1"/>
+        <tal:block metal:use-macro="here/zenuimacros/macros/jsutils"/>
+
+    </head>
+	<body>
+<form id="form_save_oid" method="post" tal:attributes="action string:${request/URL1}">
+
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/>
+
+<tal:block tal:define=" tabletitle string:OID Details; ">
+
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr>
+       <td class="tableheader" title="OID name" >Name</td>
+       <td class="tablevalues"> <input title="OID name" type="text" size="20" id="oid_name" name="id:text" /> </td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Object IDentifier" >OID</td>
+       <td class="tablevalues" > <input title="Object IDentifier" type="text" size="20" id="oid_number" name="oid:text" /> </td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Type of the node (eg trap, table, regular)" >Node type</td>
+       <td class="tablevalues" ><input title="Type of the node (eg trap, table, regular)" type="text" size="20" id="oid_node_type" name="nodetype:text" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Readable/Writable?" >Access</td>
+       <td class="tablevalues" ><input title="Readable/Writable?" type="text" size="20" id="oid_access" name="access:text" /></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="Description of the OID" >Description</td>
+       <td class="tablevalues" > <textarea title="Description of the OID" rows="5" cols="20" id="oid_description" name="description:text" > </textarea></td>
+   </tr>
+   <tr>
+       <td class="tableheader" title="eg Current, Deprecated" >Status</td>
+       <td class="tablevalues" ><input title="eg Current, Deprecated" type="text" size="20" id="oid_status" name="status:text" /></td>
+   </tr>
+
+<!-- END TABLE CONTENTS -->
+
+
+    <tr>
+<input type="hidden" name="dontRender" tal:attributes="value python:True" />
+<!--
+<input type="hidden" name="dontRedirect" tal:attributes="value python:True" />
+-->
+        <td class="tableheader" colspan="4">
+            <input class="tableheader" type="submit" value="Save"
+                name="zmanage_editProperties:method" />
+            <input class="tableheader" type="submit" value="New"
+               name="add_MIB_node:method" />
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+</body>
+</html>
+
+
+
+

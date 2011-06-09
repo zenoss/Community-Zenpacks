@@ -1,0 +1,43 @@
+<tal:block metal:use-macro="here/templates/macros/pageClean" >
+
+<tal:block metal:fill-slot="head-local">
+</tal:block>
+
+<tal:block metal:fill-slot="contentPane">
+        <tal:block tal:define="tabletitle string:Command Output">
+        <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+
+        <!--====Optional titlebar slots=============
+
+            <tal:block metal:fill-slot="filterslot">
+            </tal:block>
+
+            <tal:block metal:fill-slot="menuslot">
+            </tal:block>
+
+            ==========================================-->
+
+        <tal:block metal:fill-slot="zentablecontents">
+        <!-- BEGIN TABLE CONTENTS -->
+                    <tr tal:condition="exists: request/cmd/command">
+                        <td class="commandoutput" valign="top">Command:   <tal:block tal:content="request/cmd/command" /></td>
+                    </tr>
+                    <tr tal:condition="exists: request/cmd/description">
+                        <td class="commandoutput" valign="top">Description:   <tal:block tal:content="request/cmd/description" /></td>
+                    </tr>
+                    <tr>
+                        <td class="commandoutput" valign="top">Output:</td>
+                    </tr>
+                    OUTPUT_TOKEN
+                
+        <!-- END TABLE CONTENTS -->
+
+        </tal:block>
+        </tal:block>
+        </tal:block>
+
+</tal:block>
+</tal:block>
+
+
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>
+<span xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      tal:replace="structure python:here.mib2xml( context.absolute_url_path() )" >
+</span>
+
+

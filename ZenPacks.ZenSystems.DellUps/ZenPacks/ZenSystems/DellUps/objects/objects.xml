@@ -314,8 +314,9 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Events', 'Power', 'Dell') -->
-<object id='/zport/dmd/Events/Power/Dell' module='Products.ZenEvents.EventClass' class='EventClass'>
+<!-- ('', 'zport', 'dmd', 'Events', 'Power') -->
+<object id='/zport/dmd/Events/Power' module='Products.ZenEvents.EventClass' class='EventClass'>
+<object id='Dell' module='Products.ZenEvents.EventClass' class='EventClass'>
 <object id='utility' module='Products.ZenEvents.EventClass' class='EventClass'>
 <tomanycont id='instances'>
 <object id='enterprises.674.10902.2.140.47' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
@@ -408,6 +409,7 @@ snmp trap enterprises.674.10902.2.140.57
 </property>
 </object>
 </tomanycont>
+</object>
 </object>
 </object>
 </objects>

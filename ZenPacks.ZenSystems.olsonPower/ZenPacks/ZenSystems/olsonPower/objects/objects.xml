@@ -594,101 +594,6 @@ voltsLowAlarm
 </object>
 </tomanycont>
 </object>
-<object id='Dell' module='Products.ZenEvents.EventClass' class='EventClass'>
-<object id='utility' module='Products.ZenEvents.EventClass' class='EventClass'>
-<tomanycont id='instances'>
-<object id='enterprises.674.10902.2.140.47' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
-<property type="text" id="transform" mode="w" >
-evt.summary = 'Utility not present'
-</property>
-<property type="string" id="eventClassKey" mode="w" >
-enterprises.674.10902.2.140.47
-</property>
-<property type="int" id="sequence" mode="w" >
-7
-</property>
-<property type="string" id="example" mode="w" >
-snmp trap enterprises.674.10902.2.140.47
-</property>
-<property visible="True" type="int" id="zEventSeverity" >
-4
-</property>
-</object>
-<object id='enterprises.674.10902.2.140.48' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
-<property type="text" id="transform" mode="w" >
-evt.summary = 'Utility present'
-</property>
-<property type="string" id="eventClassKey" mode="w" >
-enterprises.674.10902.2.140.48
-</property>
-<property type="int" id="sequence" mode="w" >
-7
-</property>
-<property type="string" id="example" mode="w" >
-snmp trap enterprises.674.10902.2.140.48
-</property>
-<property visible="True" type="int" id="zEventSeverity" >
-0
-</property>
-</object>
-</tomanycont>
-</object>
-<object id='battery' module='Products.ZenEvents.EventClass' class='EventClass'>
-<tomanycont id='instances'>
-<object id='enterprises.674.10902.2.140.43' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
-<property type="text" id="transform" mode="w" >
-evt.summary = 'Battery Low'
-</property>
-<property type="string" id="eventClassKey" mode="w" >
-enterprises.674.10902.2.140.43
-</property>
-<property type="int" id="sequence" mode="w" >
-7
-</property>
-<property type="string" id="example" mode="w" >
-snmp trap enterprises.674.10902.2.140.43
-</property>
-<property visible="True" type="int" id="zEventSeverity" >
-5
-</property>
-</object>
-<object id='enterprises.674.10902.2.140.44' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
-<property type="text" id="transform" mode="w" >
-evt.summary = 'Battery OK'
-</property>
-<property type="string" id="eventClassKey" mode="w" >
-enterprises.674.10902.2.140.44
-</property>
-<property type="int" id="sequence" mode="w" >
-7
-</property>
-<property type="string" id="example" mode="w" >
-snmp trap enterprises.674.10902.2.140.44
-</property>
-<property visible="True" type="int" id="zEventSeverity" >
-0
-</property>
-</object>
-<object id='enterprises.674.10902.2.140.57' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
-<property type="text" id="transform" mode="w" >
-evt.summary = 'UPS on battery'
-</property>
-<property type="string" id="eventClassKey" mode="w" >
-enterprises.674.10902.2.140.57
-</property>
-<property type="int" id="sequence" mode="w" >
-7
-</property>
-<property type="string" id="example" mode="w" >
-snmp trap enterprises.674.10902.2.140.57
-</property>
-<property visible="True" type="int" id="zEventSeverity" >
-3
-</property>
-</object>
-</tomanycont>
-</object>
-</object>
 </object>
 <!-- ('', 'zport', 'dmd', 'Manufacturers', 'Olson') -->
 <object id='/zport/dmd/Manufacturers/Olson' module='Products.ZenModel.Manufacturer' class='Manufacturer'>
@@ -897,7 +802,7 @@ readonly
 </object>
 <object id='etherAddress' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-The module 48 bit Ethernet address in ASCII hex format. 
+The module 48 bit Ethernet address in ASCII hex format.
 </property>
 <property type="string" id="moduleName" mode="w" >
 Olson-9016-V01
@@ -912,7 +817,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-The module 48 bit Ethernet address in ASCII hex format. 
+The module 48 bit Ethernet address in ASCII hex format.
 </property>
 <property type="string" id="access" mode="w" >
 readonly

@@ -1,5 +1,757 @@
 <?xml version="1.0"?>
 <objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Memcached') -->
+<object id='/zport/dmd/Devices/rrdTemplates/Memcached' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+Memcahed Statistics
+</property>
+<property type="text" id="description" mode="w" >
+Memcahed Statistics
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
+</property>
+<tomanycont id='datasources'>
+<object id='Memcached-11211' module='ZenPacks.community.Memcached.datasources.MemcachedDataSource' class='MemcachedDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+MemcachedStats
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+Memcached
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/Memcached
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Nagios
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/Memcached
+</property>
+<property type="string" id="hostname" mode="w" >
+${dev/id}
+</property>
+<property type="string" id="ipAddress" mode="w" >
+${dev/manageIp}
+</property>
+<property type="int" id="port" mode="w" >
+11211
+</property>
+<property type="int" id="timeout" mode="w" >
+3
+</property>
+<tomanycont id='datapoints'>
+<object id='accepting_conns' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+COUNTER
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='bytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='bytes_read' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='bytes_written' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+COUNTER
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='cmd_flush' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='cmd_get' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='cmd_set' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='connection_structures' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='curr_connections' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='curr_items' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='evictions' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='get_hits' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='get_misses' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='get_set_ratio' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='hit_percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='limit_maxbytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='listen_disabled_num' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='missed_percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='rusage_system' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='rusage_user' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='threads' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='time' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='total_connections' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='total_items' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='uptime' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+<object id='usage_percent' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Memcached - CPU Utilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+rusage
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:rusage_system-raw=${here/fullRRDPath}/Memcached-11211_rusage_system.rrd:ds0:AVERAGE
+DEF:rusage_system-raw-max=${here/fullRRDPath}/Memcached-11211_rusage_system.rrd:ds0:MAX
+CDEF:rusage_system=rusage_system-raw
+AREA:rusage_system-raw#ff97117D:
+LINE2:rusage_system-raw#ff9711:system
+GPRINT:rusage_system-raw:LAST:cur\:%5.2lf%s
+GPRINT:rusage_system-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:rusage_system-raw-max:MAX:max\:%5.2lf%s\j
+DEF:rusage_user-raw=${here/fullRRDPath}/Memcached-11211_rusage_user.rrd:ds0:AVERAGE
+DEF:rusage_user-raw-max=${here/fullRRDPath}/Memcached-11211_rusage_user.rrd:ds0:MAX
+CDEF:rusage_user=rusage_user-raw
+AREA:rusage_user-raw#3737377D:
+LINE2:rusage_user-raw#3737377D:user
+GPRINT:rusage_user-raw:LAST:cur\:%5.2lf%s
+GPRINT:rusage_user-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:rusage_user-raw-max:MAX:max\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+9
+</property>
+</object>
+<object id='Memcached - Connections' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Connections
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:total_connections-raw=${here/fullRRDPath}/Memcached-11211_total_connections.rrd:ds0:AVERAGE
+DEF:total_connections-raw-max=${here/fullRRDPath}/Memcached-11211_total_connections.rrd:ds0:MAX
+CDEF:total_connections=total_connections-raw
+AREA:total_connections-raw#3737377d:total
+GPRINT:total_connections-raw:LAST:cur\:%5.2lf%s
+GPRINT:total_connections-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:total_connections-raw-max:MAX:max\:%5.2lf%s\j
+DEF:curr_connections-raw=${here/fullRRDPath}/Memcached-11211_curr_connections.rrd:ds0:AVERAGE
+DEF:curr_connections-raw-max=${here/fullRRDPath}/Memcached-11211_curr_connections.rrd:ds0:MAX
+CDEF:curr_connections=curr_connections-raw
+AREA:curr_connections-raw#ff9711B3:
+LINE:curr_connections-raw#ff9711B3:current
+GPRINT:curr_connections-raw:LAST:cur\:%5.2lf%s
+GPRINT:curr_connections-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:curr_connections-raw-max:MAX:max\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+7
+</property>
+</object>
+<object id='Memcached - Efficiency' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Percent
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+110
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:hit_percent-raw=${here/fullRRDPath}/Memcached-11211_hit_percent.rrd:ds0:AVERAGE
+DEF:hit_percent-raw-max=${here/fullRRDPath}/Memcached-11211_hit_percent.rrd:ds0:MAX
+CDEF:hit_percent=hit_percent-raw
+AREA:hit_percent-raw#ff9711B3:
+LINE2:hit_percent-raw#ff9711ff:hit   
+GPRINT:hit_percent-raw:LAST:cur\:%5.2lf%s
+GPRINT:hit_percent-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:hit_percent-raw-max:MAX:max\:%5.2lf%s\j
+DEF:missed_percent-raw=${here/fullRRDPath}/Memcached-11211_missed_percent.rrd:ds0:AVERAGE
+DEF:missed_percent-raw-max=${here/fullRRDPath}/Memcached-11211_missed_percent.rrd:ds0:MAX
+CDEF:missed_percent=missed_percent-raw
+AREA:missed_percent-raw#373737B3:
+LINE2:missed_percent-raw#373737ff:missed
+GPRINT:missed_percent-raw:LAST:cur\:%5.2lf%s
+GPRINT:missed_percent-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:missed_percent-raw-max:MAX:max\:%5.2lf%s\j
+
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+</object>
+<object id='Memcached - Evictions' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+6
+</property>
+<tomanycont id='graphPoints'>
+<object id='evictions' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+ff9711
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Memcached-11211_evictions
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Memcached - Items' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+items
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:total_items-raw=${here/fullRRDPath}/Memcached-11211_total_items.rrd:ds0:AVERAGE
+DEF:total_items-raw-max=${here/fullRRDPath}/Memcached-11211_total_items.rrd:ds0:MAX
+CDEF:total_items=total_items-raw
+AREA:total_items-raw#3737377D:total
+GPRINT:total_items-raw:LAST:cur\:%5.2lf%s
+GPRINT:total_items-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:total_items-raw-max:MAX:max\:%5.2lf%s\j
+DEF:curr_items-raw=${here/fullRRDPath}/Memcached-11211_curr_items.rrd:ds0:AVERAGE
+DEF:curr_items-raw-max=${here/fullRRDPath}/Memcached-11211_curr_items.rrd:ds0:MAX
+CDEF:curr_items=curr_items-raw
+AREA:curr_items-raw#ff9711B3:
+LINE2:curr_items-raw#ff9711FF:current
+GPRINT:curr_items-raw:LAST:cur\:%5.2lf%s
+GPRINT:curr_items-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:curr_items-raw-max:MAX:max\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+5
+</property>
+</object>
+<object id='Memcached - Memory Utilization' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:bytes-raw=${here/fullRRDPath}/Memcached-11211_bytes.rrd:ds0:AVERAGE
+DEF:bytes-raw-max=${here/fullRRDPath}/Memcached-11211_bytes.rrd:ds0:MAX
+CDEF:bytes=bytes-raw
+AREA:bytes-raw#ff9711B3:
+LINE2:bytes-raw#ff9711ff:bytes        
+GPRINT:bytes-raw:LAST:cur\:%5.2lf%s
+GPRINT:bytes-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:bytes-raw-max:MAX:max\:%5.2lf%s\j
+DEF:limit_maxbytes-raw=${here/fullRRDPath}/Memcached-11211_limit_maxbytes.rrd:ds0:AVERAGE
+DEF:limit_maxbytes-raw-max=${here/fullRRDPath}/Memcached-11211_limit_maxbytes.rrd:ds0:MAX
+CDEF:limit_maxbytes=limit_maxbytes-raw
+AREA:limit_maxbytes-raw#3737377D:limit_maxbytes
+GPRINT:limit_maxbytes-raw:LAST:cur\:%5.2lf%s
+GPRINT:limit_maxbytes-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:limit_maxbytes-raw-max:MAX:max\:%5.2lf%s\j
+DEF:usage_percent-raw=${here/fullRRDPath}/Memcached-11211_usage_percent.rrd:ds0:AVERAGE
+GPRINT:usage_percent-raw:LAST:Usage Percent\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+</object>
+<object id='Memcached - Requests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:cmd_get-raw=${here/fullRRDPath}/Memcached-11211_cmd_get.rrd:ds0:AVERAGE
+DEF:cmd_get-raw-max=${here/fullRRDPath}/Memcached-11211_cmd_get.rrd:ds0:MAX
+CDEF:cmd_get=cmd_get-raw
+AREA:cmd_get-raw#00cc007D:
+LINE2:cmd_get-raw#00cc00ff:cmd_get       
+GPRINT:cmd_get-raw:LAST:cur\:%5.2lf%s
+GPRINT:cmd_get-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:cmd_get-raw-max:MAX:max\:%5.2lf%s\j
+DEF:cmd_set-raw=${here/fullRRDPath}/Memcached-11211_cmd_set.rrd:ds0:AVERAGE
+DEF:cmd_set-raw-max=${here/fullRRDPath}/Memcached-11211_cmd_set.rrd:ds0:MAX
+CDEF:cmd_set=cmd_set-raw
+AREA:cmd_set-raw#ff9711B3:
+LINE2:cmd_set-raw#ff9711FF:cmd_set       
+GPRINT:cmd_set-raw:LAST:cur\:%5.2lf%s
+GPRINT:cmd_set-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:cmd_set-raw-max:MAX:max\:%5.2lf%s\j
+DEF:cmd_flush-raw=${here/fullRRDPath}/Memcached-11211_cmd_flush.rrd:ds0:AVERAGE
+DEF:cmd_flush-raw-max=${here/fullRRDPath}/Memcached-11211_cmd_flush.rrd:ds0:MAX
+CDEF:cmd_flush=cmd_flush-raw
+AREA:cmd_flush-raw#373737FF:cmd_flush     
+GPRINT:cmd_flush-raw:LAST:cur\:%5.2lf%s
+GPRINT:cmd_flush-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:cmd_flush-raw-max:MAX:max\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+</object>
+<object id='Memcached - Requests - Get  vs Set ' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Ratio
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='gets _sets ratio' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="string" id="color" mode="w" >
+ff9711
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+get/set ratio
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+Memcached-11211_get_set_ratio
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Memcached - Traffic' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:bytes_read-raw=${here/fullRRDPath}/Memcached-11211_bytes_read.rrd:ds0:AVERAGE
+DEF:bytes_read-raw-max=${here/fullRRDPath}/Memcached-11211_bytes_read.rrd:ds0:MAX
+CDEF:bytes_read=bytes_read-raw
+AREA:bytes_read-raw#ff97117D:
+LINE2:bytes_read-raw#ff9711:read     
+GPRINT:bytes_read-raw:LAST:cur\:%5.2lf%s
+GPRINT:bytes_read-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:bytes_read-raw-max:MAX:max\:%5.2lf%s\j
+DEF:bytes_written-raw=${here/fullRRDPath}/Memcached-11211_bytes_written.rrd:ds0:AVERAGE
+DEF:bytes_written-raw-max=${here/fullRRDPath}/Memcached-11211_bytes_written.rrd:ds0:MAX
+CDEF:bytes_written=bytes_written-raw,-1,*
+AREA:bytes_written#3737377D:
+LINE2:bytes_written#3737377D:written 
+GPRINT:bytes_written-raw:LAST:cur\:%5.2lf%s
+GPRINT:bytes_written-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:bytes_written-raw-max:MAX:max\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+8
+</property>
+</object>
+<object id='Memcached - Utilization ' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+Percent
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+110
+</property>
+<property type="text" id="custom" mode="w" >
+DEF:usage_percent-raw=${here/fullRRDPath}/Memcached-11211_usage_percent.rrd:ds0:AVERAGE
+DEF:usage_percent-raw-max=${here/fullRRDPath}/Memcached-11211_usage_percent.rrd:ds0:MAX
+CDEF:usage_percent=usage_percent-raw
+LINE1:usage_percent-raw#ff9711ff:usage 
+GPRINT:usage_percent-raw:LAST:cur\:%5.2lf%s
+GPRINT:usage_percent-raw:AVERAGE:avg\:%5.2lf%s
+GPRINT:usage_percent-raw-max:MAX:max\:%5.2lf%s\j
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+</object>
+</tomanycont>
+</object>
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'Memcached') -->
 <object id='/zport/dmd/Events/Status/Memcached' module='Products.ZenEvents.EventClass' class='EventClass'>
 </object>

@@ -1,0 +1,8 @@
+Known Issues. I wan to address these at some point, but I have more urgent tasks at hand right now
+ - There is no value for the "monitor" column
+ - Virtual servers show down, even though they are not.
+
+Enhancement WishList. When I get some more time I'd like to do the following:
+- Add Support for Pools
+- On the VS compontent string, default to graphs instead of events.
+- Put a Nifty F5 Logo for the device class

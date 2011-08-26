@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.PrinterMIBInfo"
+                 for=".PrinterSupply.PrinterSupply"
+                 provides=".interfaces.IPrinterMIBInfo"
+                 />
+
+	<browser:resourceDirectory name="twonmsprintermibresource" directory="resources" />
+
+        <browser:viewlet
+                 name="js-twonmsPrinterMIB"
+                 paths="++resource++twonmsprintermibresource/PrinterMibSupply.js"
+                 weight="10"
+                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                 permission="zope2.Public"
+                 />
+    </configure>
+</configure>
+

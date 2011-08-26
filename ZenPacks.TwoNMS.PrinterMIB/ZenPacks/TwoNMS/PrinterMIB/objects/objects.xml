@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<objects>
+<!-- ('', 'zport', 'dmd', 'Devices', 'Printer', 'PrinterMIB') -->
+<object id='/zport/dmd/Devices/Printer/PrinterMIB' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property id='zendoc' type='string'>
+Map for TwoNMS PrinterMIB
+</property>
+<property type="string" id="description" mode="w" >
+Map for TwoNMS PrinterMIB
+</property>
+<property visible="True" type="string" id="zPythonClass" >
+ZenPacks.TwoNMS.PrinterMIB.Printer
+</property>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'TwoNMS.snmp.PrinterMap']
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='PrinterSupply' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+PrinterMIB supplies - ink utilization
+</property>
+<property type="text" id="description" mode="w" >
+PrinterMIB supplies - ink utilization
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+ZenPacks.TwoNMS.PrinterMIB.PrinterSupply
+</property>
+<tomanycont id='datasources'>
+<object id='InkUsage' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.2.1.43.11.1.1.9.1
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+<tomanycont id='datapoints'>
+<object id='prtMarkerSuppliesLevel' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='Ink Threshold' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property label="DataPoints" type="lines" id="dsnames" mode="w" >
+['InkUsage_prtMarkerSuppliesLevel']
+</property>
+<property label="Enabled" type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+here.prtMarkerSuppliesMaxCapacity * .95
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Perf/Snmp
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Ink Usage' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="text" id="custom" mode="w" >
+--title=${here/prtMarkerSuppliesDescription}
+--vertical-label=${here/PrtMarkerSuppliesSupplyUnitTC}
+--upper-limit=${here/prtMarkerSuppliesMaxCapacity}
+DEF:prtMarkerSuppliesLevel-raw=${here/fullRRDPath}/InkUsage_prtMarkerSuppliesLevel.rrd:ds0:AVERAGE
+AREA:prtMarkerSuppliesLevel-raw#${here/rgbColorCode}:Ink Level
+GPRINT:prtMarkerSuppliesLevel-raw:LAST:current\:%4.0lf%s\l
+HRULE:${here/prtMarkerSuppliesMaxCapacity}#000000:Ink Level  maximum\:  ${here/prtMarkerSuppliesMaxCapacity}
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='Ink Threshold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+Ink Threshold
+</property>
+<property type="string" id="color" mode="w" >
+DD1111
+</property>
+<property type="string" id="legend" mode="w" >
+Threshold
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'PrinterMIB') -->
+<object id='/zport/dmd/Reports/PrinterMIB' module='Products.ZenModel.ReportClass' class='ReportClass'>
+<object id='Ink Usage Graphs' module='Products.ZenModel.Report' class='Report'>
+</object>
+<object id='Inventory Report' module='Products.ZenModel.Report' class='Report'>
+</object>
+</object>
+</objects>

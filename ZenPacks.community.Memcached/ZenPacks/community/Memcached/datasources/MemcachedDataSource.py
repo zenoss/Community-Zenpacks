@@ -1,3 +1,11 @@
+################################################################################
+# This program is part of the Zenpack.community.Memcached Zenpack for Zenoss.
+# Copyright (C) 2011 B Maqueira
+#
+# This program can be used under the GNU General Public License version 2
+# For complete information please visit: http://www.zenoss.com/oss/
+################################################################################
+
 __doc__='''
 
     MemcachedDatasource.py
@@ -6,33 +14,76 @@ __doc__='''
     zenpack by B Maqueira
 
 '''
-from Globals import InitializeClass
+
 import Products.ZenModel.BasicDataSource as BasicDataSource
 from Products.ZenModel.ZenPackPersistence import ZenPackPersistence
 from AccessControl import ClassSecurityInfo, Permissions
 from Products.ZenUtils.ZenTales import talesCompile, getEngine
 from Products.ZenUtils.Utils import binPath
 
-class MemcachedDataSource(ZenPackPersistence, BasicDataSource.BasicDataSource):
+MEMCACHED_STATS = {
+    'accepting_conns':          'GAUGE',
+    'bytes':                    'GAUGE',
+    'bytes_read':               'GAUGE',
+    'bytes_written':            'GAUGE',
+    'cas_badval':               'GAUGE',
+    'cas_hits':                 'GAUGE',
+    'cas_misses':               'GAUGE',
+    'cmd_flush':                'GAUGE',
+    'cmd_get':                  'GAUGE',
+    'cmd_set':                  'GAUGE',
+    'conn_yields':              'GAUGE',
+    'connection_structures':    'GAUGE',
+    'curr_connections':         'GAUGE',
+    'curr_items':               'GAUGE',
+    'decr_hits':                'GAUGE',
+    'decr_misses':              'GAUGE',
+    'delete_hits':              'GAUGE',
+    'delete_misses':            'GAUGE',
+    'evictions':                'GAUGE', 
+    'get_hits':                 'GAUGE',
+    'get_misses':               'GAUGE',
+    'incr_hits':                'GAUGE',
+    'incr_misses':              'GAUGE',
+    'limit_maxbytes':           'GAUGE',
+    'listen_disabled_num':      'GAUGE',
+    'pointer_size':             'GAUGE',
+    'rusage_system':            'GAUGE',
+    'rusage_user':              'GAUGE',
+    'threads':                  'GAUGE',
+    'time':                     'GAUGE',
+    'total_connections':        'GAUGE',
+    'total_items':              'GAUGE',
+    'uptime':                   'GAUGE',
+    'hit_percent':              'GAUGE',
+    'usage_percent':            'GAUGE',
+    'get_set_ratio':            'GAUGE',
+    'missed_percent':           'GAUGE',
+}
+
+class MemcachedDataSource(ZenPackPersistence,
+                          BasicDataSource.BasicDataSource):
 
     ZENPACKID = 'ZenPacks.community.Memcached'
     MEMCACHED_STATS = 'MemcachedStats'
 
     sourcetypes = (MEMCACHED_STATS,)
-    sourcetype = MEMCACHED_STATS
+    sourcetype  = MEMCACHED_STATS
 
-    timeout = 3 
+    timeout    = 3 
     eventClass = '/Status/Memcached'
     component  = 'Memcached'
-    hostname = '${dev/id}'
-    ipAddress = '${dev/manageIp}'
-    port = 11211
+    hostname   = '${dev/id}'
+    ipAddress  = '${dev/manageIp}'
+    port       = 11211
+    parser     = 'Nagios'
 
     _properties = BasicDataSource.BasicDataSource._properties + (
-        {'id':'hostname', 'type':'string', 'mode':'w'},
-        {'id':'ipAddress', 'type':'string', 'mode':'w'},
-        {'id':'port', 'type':'int', 'mode':'w'},
-        {'id':'timeout', 'type':'int', 'mode':'w'},
+        {'id':'eventClass', 'type':'string', 'mode':'w'},
+        {'id':'hostname',   'type':'string', 'mode':'w'},
+        {'id':'ipAddress',  'type':'string', 'mode':'w'},
+        {'id':'port',       'type':'int',    'mode':'w'},
+        {'id':'timeout',    'type':'int',    'mode':'w'},
         )
 
     _relations = BasicDataSource.BasicDataSource._relations + ()
@@ -84,23 +135,16 @@ class MemcachedDataSource(ZenPackPersistence, BasicDataSource.BasicDataSource):
         return zp.path('libexec', cmd)
 
     def addDataPoints(self):
-        # create gauges
-        for stat in [ 'hit_percent', 'usage_percent', 'uptime', 'time',
-                      'rusage_user', 'rusage_system', 'curr_items',
-                      'bytes', 'curr_connections', 'connection_structures',
-                      'cmd_flush', 'cmd_get', 'cmd_set', 'bytes_read',
-                      'bytes_written', 'limit_maxbytes', 'threads', 'accepting_conns',
-                      'listen_disabled_num', 'get_set_ratio', 'missed_percent', 
-                      'get_hits', 'get_misses', 'total_items']:
-            if not self.datapoints._getOb(stat, None):
-                self.manage_addRRDDataPoint(stat)
-
-        # and these as counters
-        for stat in [ 'total_connections', 'evictions' ]:
+        for stat, rrdType in MEMCACHED_STATS.items():
             if not self.datapoints._getOb(stat, None):
                 dp = self.manage_addRRDDataPoint(stat)
-                dp.rrdtype = 'DERIVE'
-                dp.rrdmin  = 0
+
+                if rrdType == 'COUNTER':
+                    dp.rrdtype = 'DERIVE'
+                    dp.rrdmin  = 0
+                else:
+                    dp.rrdtype = rrdType
+
 
     def zmanage_editProperties(self, REQUEST=None):
         '''validation, etc'''
@@ -116,5 +160,3 @@ class MemcachedDataSource(ZenPackPersistence, BasicDataSource.BasicDataSource):
 
         return BasicDataSource.BasicDataSource.zmanage_editProperties(self,
                 REQUEST)
-
-InitializeClass(MemcachedDataSource)

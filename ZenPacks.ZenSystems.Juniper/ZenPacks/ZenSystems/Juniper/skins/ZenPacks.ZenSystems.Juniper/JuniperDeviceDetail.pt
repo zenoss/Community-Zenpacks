@@ -1,0 +1,34 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post"
+    name="JuniperDeviceDetail" tal:attributes="action string:${here/absolute_url_path}/${template/id}">
+
+<tal:block metal:define-macro="JuniperDeviceInfo" tal:define="tabletitle string:Juniper Device Information;">
+
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN Juniper TABLE CONTENTS -->
+    <tr>
+      <td class="tableheader" align=left>Memory Used Percent</td>
+      <td class="tablevalues" tal:content=here/memoryUsedPercent> </td>
+      <td class="tableheader" align=left>PowerSupply Units Available</td>
+      <td class="tablevalues" tal:content=here/psuAvailable> </td>
+    </tr>
+<!-- END Juniper TABLE CONTENTS -->
+</tal:block>
+</tal:block>
+</tal:block>
+<tr>
+</tr>
+<tal:block metal:define-macro="objectperf" tal:define="tabletitle string:Performance graphs for Juniper Devices;">
+</tal:block> 
+
+<table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+
+</form>
+
+</tal:block>
+</tal:block>
+              

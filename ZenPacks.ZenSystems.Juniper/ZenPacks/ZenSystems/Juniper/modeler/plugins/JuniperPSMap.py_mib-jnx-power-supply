@@ -1,0 +1,84 @@
+##########################################################################
+# Author:               Jane Curry,  jane.curry@skills-1st.co.uk
+# Date:                 February 15th, 2011
+# Revised:		
+#
+# JuniperPS modeler plugin
+#
+# This program can be used under the GNU General Public License version 2
+# You can find full information here: http://www.zenoss.com/oss
+#
+##########################################################################
+
+__doc__ = """JuniperPSMap
+
+Gather table information from Juniper Power Supplies
+"""
+
+from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap, GetTableMap
+
+class JuniperPSMap(SnmpPlugin):
+    """Map Juniper Power Supply table to model."""
+    maptype = "JuniperPSMap"
+    modname = "ZenPacks.ZenSystems.Juniper.JuniperPS"
+#    relname = "JuniperP"
+    relname = "powersupplies"
+    compname = "hw"
+
+    snmpGetMap = GetMap({
+        '.1.3.6.1.4.1.2636.3.58.1.2.1.1.0': 'psuAvailable',
+         })
+
+    snmpGetTableMaps = (
+        GetTableMap('JuniperPSEnvironTable',
+                    '.1.3.6.1.4.1.2636.3.58.1.2.3.1',
+                    {
+                        '.1': 'thermalValue',
+                        '.2': 'humidityValue',
+                    }
+        ),
+        GetTableMap('JuniperPSOutletTable',
+                    '.1.3.6.1.4.1.2636.3.58.1.2.4.1',
+                    {
+                        '.1': 'outletName',
+                        '.2': 'outletDesc',
+                        '.5': 'outletCurrent',
+                        '.3': 'outletPower',
+                        '.8': 'outletStatus',
+                    }
+        ),
+    )
+
+    def process(self, device, results, log):
+        """collect snmp information from this device"""
+        log.info('processing %s for device %s', self.name(), device.id)
+        getdata, tabledata = results
+        rm = self.relMap()
+        environTable = tabledata.get('JuniperPSEnvironTable')
+        outputTable = tabledata.get('JuniperPSOutputTable')
+
+# If no data supplied then simply return
+        if not outputTable:
+            log.warn( 'No SNMP response from %s for the %s plugin', device.id, self.name() )
+            log.warn( "Data= %s", tabledata )
+            return
+ 
+        for oid, data in outputTable.items():
+            try:
+                om = self.objectMap(data)
+                for oid1, data1 in environTable.items():
+                    if oid1.startswith(oid):
+                        om.thermalValue = data1['thermalValue']
+                        om.humidityValue = data1['humidityValue']
+                        om.snmpindex = oid1.strip('.')
+                om.psuAvailable = getdata['psuAvailable']
+                om.outletName = om.outletName.replace(' ','_')
+                om.id = self.prepId(om.outletName)
+            except AttributeError:
+                log.info(' Attribute error')
+                continue
+            rm.append(om)
+#            log.info('rm %s' % (rm) )
+
+        return rm
+

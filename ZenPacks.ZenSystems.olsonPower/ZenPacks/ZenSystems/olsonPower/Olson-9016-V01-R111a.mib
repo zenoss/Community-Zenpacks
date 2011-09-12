@@ -1,0 +1,396 @@
+
+-- Olson 9016-V01-R111a PDU MIB
+
+-- Olson Electronics Limited
+-- Olson House
+-- 490 Honeypot Lane
+-- Stanmore
+-- UK
+-- HA7 1JY
+-- email: support@olson.co.uk
+
+
+Olson-9016-V01 DEFINITIONS ::= BEGIN
+
+IMPORTS
+	enterprises
+		FROM RFC1155-SMI
+	OBJECT-TYPE
+		FROM RFC-1212;
+
+compulogic           OBJECT IDENTIFIER ::= { enterprises 17933 }
+
+-- Product Root
+
+olson             OBJECT IDENTIFIER ::= { compulogic 1 }
+
+-- Device Address for PDU Web Server Module
+
+pdu     OBJECT IDENTIFIER ::= { olson 1 }
+
+	DisplayString ::=
+		OCTET STRING
+
+
+moduleType  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..20))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Returns the module type description 'Olson 9016-V01 PDU'"
+	::= { pdu 1 }
+
+firmwareRevision  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..4))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Firmeare Revision Format n.nn"
+	::= { pdu 2 }
+
+moduleName  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..32))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"32 character string for module identification."
+	::= { pdu 3 }
+
+etherAddress  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..12))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"The module 48 bit Ethernet address in ASCII hex format. "
+	::= { pdu 4 }
+
+defaultIpAddress  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"The default IP address used when no DHCP server is available or DHCP is not enabled. The format is standard 'dotted decimal' notation."
+	::= { pdu 5 }
+
+currentIpAddress  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"The current IP address in use. The format is standard 'dotted decimal' notation."
+	::= { pdu 6 }
+
+dhcpClientEnable  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..3))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Setting this parameter to 'ON' enables the DHCP client. The PicoServ module will attempt to find a DHCP server and set the IP address automatically. Setting this parameter to any other value disables the DHCP client."
+	::= { pdu 7 }
+
+httpPortNumber    OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"The HTTP port number for web server access"
+	::= { pdu 8 }
+
+httpUserName  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"User Name of up to 16 characters used for login in conjunction with the HTTP password to access pages that require authentication. HTTP user authentication is disabled if the user name parameter is empty."
+	::= { pdu 9 }
+
+httpPassword  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Password of up to 16 characters used for login in conjunction with the HTTP user name to access pages that require authentication. HTTP user authentication is disabled if the user name parameter is empty."
+	::= { pdu 10 }
+
+snmpReadCommunity   OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"16 character SNMP read community name"
+	::= { pdu 11 }
+
+snmpWriteCommunity   OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"16 character SNMP read/write community name"
+	::= { pdu 12 }
+
+snmpAccessEnable   OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..1))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Single character SNMP access mode 'R' = Read Only 'W'= Read/Write Any other disables SNMP"
+	::= { pdu 13 }
+
+webPageUploadPassword  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..10))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Password of up to 10 characters to allow new files to be uploaded. The password is disabled when string is empty."
+	::= { pdu 14 }
+
+webPageUploadEnable  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..1))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"If this field = 'Y' file upload is enabled, any other value disables file upload."
+	::= { pdu 15 }
+
+firmwareUploadPassword  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..10))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Password of up to 10 characters to allow new firmware to be uploaded. The password is disabled when string is empty."
+	::= { pdu 16 }
+
+firmwareUploadEnable  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..1))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"If this field = 'Y' firmware upload is enabled, any other value disables firmware upload."
+	::= { pdu 17 }
+
+parameterUpdatePassword  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..10))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Password of up to 10 characters to allow new parameter values to be written. The password is disabled when string is empty."
+	::= { pdu 18 }
+
+
+voltsReading  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Current RMS AC Voltage reading in the form VVV.V Volts"
+	::= { pdu 19 }
+
+
+ampsReading  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Current RMS AC current reading in the form AA.AA Amps"
+	::= { pdu 20 }
+
+
+powerReading  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..4))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Current power reading reading in the form PPPP Watts"
+	::= { pdu 21 }
+
+
+energyReading  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..9))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Current energy consumption reading in the form PPPPPPP.P KWh"
+	::= { pdu 22 }
+
+
+powerFactorReading  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..3))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Current power factor reading in the form 0.00"
+	::= { pdu 23 }
+
+internalTempReading  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..3))
+	ACCESS     read-only
+	STATUS     mandatory
+	DESCRIPTION
+		"Current internal temperature reading in deg. C in the form TT"
+	::= { pdu 24 }
+
+ gatewayIpAddress  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Gateway IP Address. The format is standard 'dotted decimal' notation."
+	::= { pdu 25 }
+
+ subnetMask  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Subnet Mask. The format is standard 'dotted decimal' notation."
+	::= { pdu 26 }
+
+ trapReceiverIpAddress  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Ip Address for TRAP receiver. The format is standard 'dotted decimal' notation."
+	::= { pdu 27 }
+
+ smtpServerIpAddress  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Ip Address of SMTP mail server. The format is standard 'dotted decimal' notation."
+	::= { pdu 28 }
+
+
+ voltsHighSet  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"High Voltage Alarm Threshold in the form VVV.V"
+	::= { pdu 29 }
+
+ voltsLowSet  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Low Voltage Alarm Threshold in the form VVV.V"
+	::= { pdu 30 }
+
+ currentHighSet  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"High current Alarm Threshold in the form AA.AA"
+	::= { pdu 31 }
+
+ currentLowSet  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..5))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"Low Current Alarm Threshold in the form AA.AA"
+	::= { pdu 32 }
+
+ tempHighSet  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..1))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"High Temperature Alarm Threshold in the form TT"
+	::= { pdu 33 }
+
+ snmpAlarmTrapEn  OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..1))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"SNMP Alarm Trap enable"
+	::= { pdu 34 }
+
+ smtpAlarmEn  	OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..1))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"SMTP (email) alarm enable"
+	::= { pdu 35 }
+
+ smtpReceiver  	OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..32))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"SMTP (email) alarm notification email address"
+	::= { pdu 36 }
+
+ smtpSender  	OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..32))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"SMTP (email) alarm notification sender (return) address"
+	::= { pdu 37 }
+
+ smtpUsername  	OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"SMTP (email) Server Authentication User name"
+	::= { pdu 38 }
+
+ smtpPassword  	OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE (0..16))
+	ACCESS     read-write
+	STATUS     mandatory
+	DESCRIPTION
+		"SMTP (email) Server Authentication Password"
+	::= { pdu 39 }
+
+pduTraps OBJECT IDENTIFIER ::= { pdu 250 }
+
+  voltsHighAlarm  	TRAP-TYPE
+	ENTERPRISE      pduTraps
+	VARIABLES       { voltsReading, ampsReading, powerReading, energyReading, powerFactorReading, internalTempReading }
+	DESCRIPTION
+		"High measured voltage alarm"
+	::= 1
+
+ voltsLowAlarm  	TRAP-TYPE
+	ENTERPRISE      pduTraps
+	VARIABLES       { voltsReading, ampsReading, powerReading, energyReading, powerFactorReading, internalTempReading }
+	DESCRIPTION
+		"Low measured voltage alarm"
+	::= 2
+
+ currentHighAlarm  	TRAP-TYPE
+	ENTERPRISE      pduTraps
+	VARIABLES       { voltsReading, ampsReading, powerReading, energyReading, powerFactorReading, internalTempReading }
+	DESCRIPTION
+		"High measured current alarm"
+	::= 3
+
+ currentLowAlarm  	TRAP-TYPE
+	ENTERPRISE      pduTraps
+	VARIABLES       { voltsReading, ampsReading, powerReading, energyReading, powerFactorReading, internalTempReading }
+	DESCRIPTION
+		"Low measured current alarm"
+	::= 4
+
+ tempHighAlarm  	TRAP-TYPE
+	ENTERPRISE      pduTraps
+	VARIABLES       { voltsReading, ampsReading, powerReading, energyReading, powerFactorReading, internalTempReading }
+	DESCRIPTION
+		"High Internal Temperature alarm"
+	::= 5
+
+
+
+
+END
+
+
+

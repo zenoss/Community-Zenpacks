@@ -1,0 +1,122 @@
+# ==============================================================================
+# IMMVoltMon object class
+#
+# Zenoss community Zenpack for IBM SystemX Integrated Management Module
+# version: 0.3
+#
+# (C) Copyright IBM Corp. 2011. All Rights Reserved.
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License along
+#  with this program; if not, write to the Free Software Foundation, Inc.,
+#  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# ==============================================================================
+
+__doc__="""IMMVoltMon is the object class for the IMM System Voltage monitors"""
+__author__ = "IBM"
+__copyright__ = "(C) Copyright IBM Corp. 2011. All Rights Reserved."
+__license__ = "GPL"
+__version__ = "0.3.0"
+
+from Globals import DTMLFile
+from Globals import InitializeClass
+
+from Products.ZenRelations.RelSchema import *
+from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_SETTINGS
+
+from Products.ZenModel.DeviceComponent import DeviceComponent
+from Products.ZenModel.ManagedEntity import ManagedEntity
+
+import logging
+log = logging.getLogger('IMMVoltMon')
+
+class IMMVoltMon(DeviceComponent, ManagedEntity):
+    """IMM VPD object"""
+
+    # When Javascript bits are used, this name must match the value of the 1st field in ZC.registerName() in the *.js
+    portal_type = meta_type = 'IMMVoltMon'
+    
+    # Data retrieved from modeling
+    voltIndex = '0'
+    voltDescr = ''
+    voltReading = ''
+    voltNominalReading = ''
+    voltCritLimitHigh = ''
+    voltCritLimitLow = ''
+
+    _properties = (
+        {'id':'voltIndex', 'type':'int', 'mode':''},
+        {'id':'voltDescr', 'type':'string', 'mode':''},
+        {'id':'voltReading', 'type':'string', 'mode':''},
+        {'id':'voltNominalReading', 'type':'string', 'mode':''},
+        {'id':'voltCritLimitHigh', 'type':'string', 'mode':''},
+        {'id':'voltCritLimitLow', 'type':'string', 'mode':''}
+        )
+    
+    _relations = (
+        ("IMMDev", ToOne(ToManyCont,
+            "ZenPacks.community.IBMSystemxIMM.IMMDevice", "IMMVOLTMON")),
+        )
+
+    factory_type_information = ( 
+        { 
+            'id'             : 'IMMVoltMon',
+            'meta_type'      : 'IMMVoltMon',
+            'product'        : 'IBMSystemxIMM',
+            'immediate_view' : 'viewDevicePerformance',
+            'actions'        :
+            ( 
+                { 'id'            : 'viewHistory'
+                , 'name'          : 'Modifications'
+                , 'action'        : 'viewHistory'
+                , 'permissions'   : (ZEN_VIEW, )
+                },
+                { 'id'            : 'perfConf'
+                , 'name'          : 'Monitoring Templates'
+                , 'action'        : 'objTemplates'
+                , 'permissions'   : (ZEN_CHANGE_SETTINGS, )
+                },                
+            )
+          },
+        ) 
+
+    isUserCreatedFlag = True
+
+    def isUserCreated(self):
+        """
+        Returns the value of isUserCreated. True adds SAVE & CANCEL buttons to Details menu
+        """
+        return self.isUserCreatedFlag
+
+    def viewName(self):
+        """ The component name as it will appear in the UI """
+        if self.voltDescr.__len__() == 0:
+            return "Unknown"
+        else:
+           return str( self.voltIndex ) + " - " + self.voltDescr
+#            return self.voltDescr
+
+    # use viewName as titleOrId because that method is used to display a human
+    # readable version of the object in the breadcrumbs
+    titleOrId = name = viewName
+
+    def primarySortKey(self):
+        """ Sort by index is good here """
+        return "%s" % (self.voltIndex)
+
+    def device(self):
+        return self.IMMDev()
+    
+    def monitored(self):
+        return True
+
+InitializeClass(IMMVoltMon)

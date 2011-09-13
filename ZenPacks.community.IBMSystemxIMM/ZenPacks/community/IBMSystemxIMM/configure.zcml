@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.IMMFwVpdInfo"
+            for=".IMMFwVpd.IMMFwVpd"
+            provides=".interfaces.IIMMFwVpdInfo"
+            />
+        <adapter factory=".info.IMMCpuVpdInfo"
+            for=".IMMCpuVpd.IMMCpuVpd"
+            provides=".interfaces.IIMMCpuVpdInfo"
+            />
+        <adapter factory=".info.IMMMemVpdInfo"
+            for=".IMMMemVpd.IMMMemVpd"
+            provides=".interfaces.IIMMMemVpdInfo"
+            />
+        <adapter factory=".info.IMMComponentVpdInfo"
+            for=".IMMComponentVpd.IMMComponentVpd"
+            provides=".interfaces.IIMMComponentVpdInfo"
+            />
+        <adapter factory=".info.IMMComponentLogInfo"
+            for=".IMMComponentLog.IMMComponentLog"
+            provides=".interfaces.IIMMComponentLogInfo"
+            />
+        <adapter factory=".info.IMMFanMonInfo"
+            for=".IMMFanMon.IMMFanMon"
+            provides=".interfaces.IIMMFanMonInfo"
+            />
+        <adapter factory=".info.IMMVoltMonInfo"
+            for=".IMMVoltMon.IMMVoltMon"
+            provides=".interfaces.IIMMVoltMonInfo"
+            />
+
+        <browser:resourceDirectory
+            name="IBMSystemxIMM"
+            directory="resources"
+            />
+            
+        <browser:viewlet
+            name="js-IBMSystemxIMM"
+            paths="/++resource++IBMSystemxIMM/IBMSystemxIMM.js"
+            weight="10"
+            for=".IMMDevice.IMMDevice"
+            manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+            class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+            permission="zope2.Public"
+            />
+    </configure>
+</configure>
+
+

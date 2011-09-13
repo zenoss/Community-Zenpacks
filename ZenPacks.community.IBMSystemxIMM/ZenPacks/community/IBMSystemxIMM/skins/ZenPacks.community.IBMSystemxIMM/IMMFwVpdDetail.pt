@@ -1,0 +1,70 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" 
+    name="IMMComponentDetail" tal:attributes="action string:${here/absolute_url_path}/${template/id}">
+
+<tal:block metal:define-macro="IMMComponentFormList"
+    tal:define="tableName string:IMMComponentFormList;
+    objects here/IMMFWVPD/objectValuesAll;
+    tabletitle string:Firmware VPD Table;
+    batch python:here.ZenTableManager.getBatch(tableName,objects);
+    menu_id string:IMMFWVPD;
+    showfilterbox python:True;">
+<input type='hidden' name='tableName' tal:attributes="value tableName" />
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/> 
+    
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="objects">
+
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'immVpdIndex','Id', attributes='width=5%')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'immVpdType','Firmware Type', attributes='width=15%')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'immVpdVersionString','Version', attributes='width=15%')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'immVpdReleaseDate','Release Date', attributes='width=20%')"/>
+    </tr>
+    <tr tal:condition="not:objects">
+        <th class="tableheader" align="left" colspan="6">
+            No items found. Double check you have the correct collector plugin and you have remodeled.
+        </th>
+    </tr>
+
+    <tal:block tal:repeat="VPD batch">
+
+    <tr tal:define="odd repeat/VPD/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+
+      <!-- This is a 2.0 technique that will only produce a dead link on 3.0 -->
+      <!--td class="tablevalues">
+        <a class=tablevalues tal:content="VPD/immVpdIndex" 
+        tal:attributes="href VPD/getPrimaryUrlPath"/>
+      </td-->
+      
+      <td class="tablevalues" 
+          tal:content="VPD/immVpdIndex"/>
+      
+      <td class="tablevalues" tal:content="VPD/immVpdType"/>
+      <td class="tablevalues" tal:content="VPD/immVpdVersionString"/>
+      <td class="tablevalues" tal:content="VPD/immVpdReleaseDate"/>
+
+     </tr>
+    </tal:block>
+    <tr>
+        <td colspan="6" class="tableheader" align='center'>
+        
+<span metal:use-macro="here/zenTableNavigation/macros/navbodypagedevice" />
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+</tal:block>
+</tal:block>

@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.IBMSystemxIMM = ZenPacks.community.IBMSystemxIMM
+

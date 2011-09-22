@@ -1,0 +1,64 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" 
+    name="IMMComponentDetail" tal:attributes="action string:${here/absolute_url_path}/${template/id}">
+
+<tal:block metal:define-macro="IMMComponentFormList"
+    tal:define="tableName string:IMMComponentFormList;
+    objects here/IMMFANMON/objectValuesAll;
+    tabletitle string:Fan Monitor Table;
+    batch python:here.ZenTableManager.getBatch(tableName,objects);
+    menu_id string:IMMFANMON;
+    showfilterbox python:True;">
+<input type='hidden' name='tableName' tal:attributes="value tableName" />
+<input type="hidden" name="zenScreenName" tal:attributes="value template/id"/> 
+    
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="objects">
+
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'fanIndex','Id', attributes='width=5%')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'fanDescr','Fan Description', attributes='width=20%')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'fanSpeed','Fan Speed', attributes='width=10%')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(tableName,'fanCritLimitLow','Critical Low Limit', attributes='width=10%')"/>
+    </tr>
+    <tr tal:condition="not:objects">
+        <th class="tableheader" align="left" colspan="6">
+            No items found. Double check you have the correct collector plugin and you have remodeled.
+        </th>
+    </tr>
+
+    <tal:block tal:repeat="VPD batch">
+
+    <tr tal:define="odd repeat/VPD/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+
+      <td class="tablevalues" 
+          tal:content="VPD/fanIndex"/>
+      
+      <td class="tablevalues" tal:content="VPD/fanDescr"/>
+      <td class="tablevalues" tal:content="VPD/fanSpeed"/>
+      <td class="tablevalues" tal:content="VPD/fanCritLimitLow"/>
+    
+     </tr>
+    </tal:block>
+    <tr>
+        <td colspan="6" class="tableheader" align='center'>
+        
+<span metal:use-macro="here/zenTableNavigation/macros/navbodypagedevice" />
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+</tal:block>
+</tal:block>

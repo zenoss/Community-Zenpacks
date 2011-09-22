@@ -1,0 +1,87 @@
+# ==============================================================================
+# IBMIMMFanMonMap modeler plugin
+#
+# Zenoss community Zenpack for IBM SystemX Integrated Management Module
+# version: 1.0
+#
+# (C) Copyright IBM Corp. 2011. All Rights Reserved.
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License along
+#  with this program; if not, write to the Free Software Foundation, Inc.,
+#  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# ==============================================================================
+
+__doc__="""IBMIMMFanMonMap maps Fan monitoring entries associated with an IMM"""
+__author__ = "IBM"
+__copyright__ = "(C) Copyright IBM Corp. 2011. All Rights Reserved."
+__license__ = "GPL"
+__version__ = "1.0.0"
+
+from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap, GetMap
+from Products.DataCollector.plugins.DataMaps import ObjectMap
+
+class IBMIMMFanMonMap(SnmpPlugin):
+
+    relname = "IMMFANMON"
+    modname = "ZenPacks.community.IBMSystemxIMM.IMMFanMon"
+    
+    columns = {
+               '.1': 'fanIndex',
+               '.2': 'fanDescr',
+               '.3': 'fanSpeed',
+               '.4': 'fanNonRecovLimitHigh',
+               '.5': 'fanCritLimitHigh',
+               '.6': 'fanNonCritLimitHigh',
+               '.7': 'fanNonRecovLimitLow',
+               '.8': 'fanCritLimitLow',
+               '.9': 'fanNonCritLimitLow',
+              }
+    # snmpGetTableMaps gets tabular data
+    snmpGetTableMaps = (
+        # Fan monitor table
+        GetTableMap('fanEntry', '.1.3.6.1.4.1.2.3.51.3.1.3.2.1', columns),
+    )
+
+    def process(self, device, results, log):
+        """collect snmp information from this device"""
+        log.info('processing %s for device %s', self.name(), device.id)
+        # Collect the data from device
+        getdata, tabledata = results
+
+        # Debug: print data retrieved from device.
+        log.debug( "Get data = %s", getdata )
+        log.debug( "Table data = %s", tabledata )
+
+        VpdTable = tabledata.get("fanEntry")
+
+        # If no data retrieved return nothing.
+        if not VpdTable:
+            log.warn( 'No data collected from %s for the %s plugin', device.id, self.name() )
+            log.debug( "Data = %s", getdata )
+            log.debug( "Columns = %s", self.columns )
+            return
+
+        rm = self.relMap()
+	   
+        for oid, data in VpdTable.items():
+            om = self.objectMap(data)
+            om.id = self.prepId(om.fanDescr)
+            om.snmpindex = int(om.fanIndex)
+            om.fanIndex = int(om.fanIndex)
+
+            # Debug: print values of object map.
+#           for key,value in om.__dict__.items():
+#              log.warn("om key=value: %s = %s", key,value)
+	    
+            rm.append(om) 
+        return rm

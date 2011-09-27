@@ -2,7 +2,7 @@
 # IMMDevice object class
 #
 # Zenoss community Zenpack for IBM SystemX Integrated Management Module
-# version: 0.3
+# version: 1.0
 #
 # (C) Copyright IBM Corp. 2011. All Rights Reserved.
 #
@@ -25,7 +25,7 @@ __doc__="""IMMDevice is the object class for the IMM at the device level"""
 __author__ = "IBM"
 __copyright__ = "(C) Copyright IBM Corp. 2011. All Rights Reserved."
 __license__ = "GPL"
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 from Globals import InitializeClass
 from Products.ZenRelations.RelSchema import *
@@ -53,45 +53,48 @@ class IMMDevice(Device):
             'ZenPacks.community.IBMSystemxIMM.IMMVoltMon', 'IMMDev')),
         )
 
-    # Previously these were tabs but in 3.0 the appear as separate menu item in the device view
-    factory_type_information = deepcopy(Device.factory_type_information)
-    factory_type_information[0]['actions'] += (
-            { 'id'              : 'IMMFWVPD'
-            , 'name'            : 'IMM Firmware VPD'
-            , 'action'          : 'IMMFwVpdDetail'
-            , 'permissions'     : (ZEN_VIEW, ) 
-            },
-            { 'id'              : 'IMMCPUPD'
-            , 'name'            : 'IMM CPU VPD'
-            , 'action'          : 'IMMCpuVpdDetail'
-            , 'permissions'     : (ZEN_VIEW, ) 
-            },
-            { 'id'              : 'IMMMEMVPD'
-            , 'name'            : 'IMM Memory VPD'
-            , 'action'          : 'IMMMemVpdDetail'
-            , 'permissions'     : (ZEN_VIEW, ) 
-            },
-            { 'id'              : 'IMMCOMPVPD'
-            , 'name'            : 'IMM Chassis Component VPD'
-            , 'action'          : 'IMMComponentVpdDetail'
-            , 'permissions'     : (ZEN_VIEW, ) 
-            },
-            { 'id'              : 'IMMCOMPLOG'
-            , 'name'            : 'IMM Chassis Component Log'
-            , 'action'          : 'IMMComponentLogDetail'
-            , 'permissions'     : (ZEN_VIEW, ) 
-            },
-            { 'id'              : 'IMMFANMON'
-            , 'name'            : 'IMM Fan Monitor'
-            , 'action'          : 'IMMFanMonDetail'
-            , 'permissions'     : (ZEN_VIEW, )
-            },
-            { 'id'              : 'IMMVOLTMON'
-            , 'name'            : 'IMM Voltage Monitor'
-            , 'action'          : 'IMMVoltMonDetail'
-            , 'permissions'     : (ZEN_VIEW, )
-            },
-    )
+    # These were tabs in zenoss 2.0 but in 3.0 they appear as separate menu items in the device view
+    # and are redundant with items in the Components list; hence they are commented out.  The .pt files
+    # are present in the skins dir; uncomment this chunk of code to reactivate them.
+    # Note: SHOULD work but NOT TESTED on zenoss 2.0.
+#    factory_type_information = deepcopy(Device.factory_type_information)
+#    factory_type_information[0]['actions'] += (
+#            { 'id'              : 'IMMFWVPD'
+#            , 'name'            : 'IMM Firmware VPD'
+#            , 'action'          : 'IMMFwVpdDetail'
+#            , 'permissions'     : (ZEN_VIEW, ) 
+#            },
+#            { 'id'              : 'IMMCPUPD'
+#            , 'name'            : 'IMM CPU VPD'
+#            , 'action'          : 'IMMCpuVpdDetail'
+#            , 'permissions'     : (ZEN_VIEW, ) 
+#            },
+#            { 'id'              : 'IMMMEMVPD'
+#            , 'name'            : 'IMM Memory VPD'
+#            , 'action'          : 'IMMMemVpdDetail'
+#            , 'permissions'     : (ZEN_VIEW, ) 
+#            },
+#            { 'id'              : 'IMMCOMPVPD'
+#            , 'name'            : 'IMM Chassis Component VPD'
+#            , 'action'          : 'IMMComponentVpdDetail'
+#            , 'permissions'     : (ZEN_VIEW, ) 
+#            },
+#            { 'id'              : 'IMMCOMPLOG'
+#            , 'name'            : 'IMM Chassis Component Log'
+#            , 'action'          : 'IMMComponentLogDetail'
+#            , 'permissions'     : (ZEN_VIEW, ) 
+#            },
+#            { 'id'              : 'IMMFANMON'
+#            , 'name'            : 'IMM Fan Monitor'
+#            , 'action'          : 'IMMFanMonDetail'
+#            , 'permissions'     : (ZEN_VIEW, )
+#            },
+#            { 'id'              : 'IMMVOLTMON'
+#            , 'name'            : 'IMM Voltage Monitor'
+#            , 'action'          : 'IMMVoltMonDetail'
+#            , 'permissions'     : (ZEN_VIEW, )
+#            },
+#    )
 
     def __init__(self, *args, **kw):
         Device.__init__(self, *args, **kw)

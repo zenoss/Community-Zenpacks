@@ -2,7 +2,7 @@
 # IMMVoltMon object class
 #
 # Zenoss community Zenpack for IBM SystemX Integrated Management Module
-# version: 0.3
+# version: 1.0
 #
 # (C) Copyright IBM Corp. 2011. All Rights Reserved.
 #
@@ -25,7 +25,7 @@ __doc__="""IMMVoltMon is the object class for the IMM System Voltage monitors"""
 __author__ = "IBM"
 __copyright__ = "(C) Copyright IBM Corp. 2011. All Rights Reserved."
 __license__ = "GPL"
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 from Globals import DTMLFile
 from Globals import InitializeClass
@@ -103,7 +103,7 @@ class IMMVoltMon(DeviceComponent, ManagedEntity):
             return "Unknown"
         else:
            return str( self.voltIndex ) + " - " + self.voltDescr
-#            return self.voltDescr
+#          return self.voltDescr
 
     # use viewName as titleOrId because that method is used to display a human
     # readable version of the object in the breadcrumbs

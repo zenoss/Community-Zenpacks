@@ -2,7 +2,7 @@
 # IMMMemVpd object class
 #
 # Zenoss community Zenpack for IBM SystemX Integrated Management Module
-# version: 0.3
+# version: 1.0
 #
 # (C) Copyright IBM Corp. 2011. All Rights Reserved.
 #
@@ -25,7 +25,7 @@ __doc__="""IMMMemVpd is the object class for the IMM System memory VPD"""
 __author__ = "IBM"
 __copyright__ = "(C) Copyright IBM Corp. 2011. All Rights Reserved."
 __license__ = "GPL"
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 from Globals import DTMLFile
 from Globals import InitializeClass

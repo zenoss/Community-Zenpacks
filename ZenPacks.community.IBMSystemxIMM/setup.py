@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.IBMSystemxIMM"
-VERSION = "0.3.1"
+VERSION = "1.0.0"
 AUTHOR = "IBM"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

@@ -2,7 +2,7 @@
 # IBMIMMFanMonMap modeler plugin
 #
 # Zenoss community Zenpack for IBM SystemX Integrated Management Module
-# version: 0.3
+# version: 1.0
 #
 # (C) Copyright IBM Corp. 2011. All Rights Reserved.
 #
@@ -25,7 +25,7 @@ __doc__="""IBMIMMFanMonMap maps Fan monitoring entries associated with an IMM"""
 __author__ = "IBM"
 __copyright__ = "(C) Copyright IBM Corp. 2011. All Rights Reserved."
 __license__ = "GPL"
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap, GetMap
 from Products.DataCollector.plugins.DataMaps import ObjectMap
@@ -59,16 +59,16 @@ class IBMIMMFanMonMap(SnmpPlugin):
         getdata, tabledata = results
 
         # Debug: print data retrieved from device.
-        log.warn( "Get data = %s", getdata )
-        log.warn( "Table data = %s", tabledata )
+        log.debug( "Get data = %s", getdata )
+        log.debug( "Table data = %s", tabledata )
 
         VpdTable = tabledata.get("fanEntry")
 
         # If no data retrieved return nothing.
         if not VpdTable:
             log.warn( 'No data collected from %s for the %s plugin', device.id, self.name() )
-            log.warn( "Data = %s", getdata )
-            log.warn( "Columns = %s", self.columns )
+            log.debug( "Data = %s", getdata )
+            log.debug( "Columns = %s", self.columns )
             return
 
         rm = self.relMap()

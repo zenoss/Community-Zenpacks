@@ -9,7 +9,7 @@ Integrated Management Module
 Integrated Management Module
 </property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'community.snmp.IBMIMMDeviceMap', 'community.snmp.IBMIMMFwVpdMap', 'community.snmp.IBMIMMCpuVpdMap', 'community.snmp.IBMIMMMemVpdMap', 'community.snmp.IBMIMMComponentLogMap', 'community.snmp.IBMIMMComponentVpdMap', 'community.snmp.IBMIMMFanMonMap', 'community.snmp.IBMIMMVoltMonMap']
+['zenoss.snmp.NewDeviceMap', 'zenoss.snmp.DeviceMap', 'zenoss.snmp.InterfaceMap', 'zenoss.snmp.RouteMap', 'zenoss.snmp.IpServiceMap', 'community.snmp.IBMIMMDeviceMap', 'community.snmp.IBMIMMFwVpdMap', 'community.snmp.IBMIMMCpuVpdMap', 'community.snmp.IBMIMMMemVpdMap', 'community.snmp.IBMIMMComponentLogMap', 'community.snmp.IBMIMMComponentVpdMap', 'community.snmp.IBMIMMFanMonMap', 'community.snmp.IBMIMMVoltMonMap']
 </property>
 <property visible="True" type="float" id="zSnmpTimeout" >
 10.0

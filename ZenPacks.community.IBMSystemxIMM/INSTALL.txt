@@ -1,1 +1,1 @@
-Add installation notes here.
+See README.TXT
